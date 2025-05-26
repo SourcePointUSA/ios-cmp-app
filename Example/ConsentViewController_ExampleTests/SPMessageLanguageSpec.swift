@@ -22,194 +22,194 @@ class SPMessageLanguageSpec: QuickSpec {
             }
 
             context("English") {
-                it("has the raw value language code is EN") {
-                    expect(SPMessageLanguage.English.rawValue) == "EN"
+                it("has the raw value language code is en") {
+                    expect(SPMessageLanguage.English.rawValue) == "en"
                 }
             }
 
             context("Bulgarian") {
-                it("has the raw value language code is BG") {
-                    expect(SPMessageLanguage.Bulgarian.rawValue) == "BG"
+                it("has the raw value language code is bg") {
+                    expect(SPMessageLanguage.Bulgarian.rawValue) == "bg"
                 }
             }
 
             context("Catalan") {
-                it("has the raw value language code is CA") {
-                    expect(SPMessageLanguage.Catalan.rawValue) == "CA"
+                it("has the raw value language code is ca") {
+                    expect(SPMessageLanguage.Catalan.rawValue) == "ca"
                 }
             }
 
             context("Chinese") {
-                it("has the raw value language code is ZH") {
-                    expect(SPMessageLanguage.Chinese.rawValue) == "ZH"
+                it("has the raw value language code is zh") {
+                    expect(SPMessageLanguage.Chinese_Simplified.rawValue) == "zh"
                 }
             }
 
             context("Croatian") {
-                it("has the raw value language code is HR") {
-                    expect(SPMessageLanguage.Croatian.rawValue) == "HR"
+                it("has the raw value language code is hr") {
+                    expect(SPMessageLanguage.Croatian.rawValue) == "hr"
                 }
             }
 
             context("Czech") {
-                it("has the raw value language code is CS") {
-                    expect(SPMessageLanguage.Czech.rawValue) == "CS"
+                it("has the raw value language code is cs") {
+                    expect(SPMessageLanguage.Czech.rawValue) == "cs"
                 }
             }
 
             context("Danish") {
-                it("has the raw value language code is DA") {
-                    expect(SPMessageLanguage.Danish.rawValue) == "DA"
+                it("has the raw value language code is da") {
+                    expect(SPMessageLanguage.Danish.rawValue) == "da"
                 }
             }
 
             context("Dutch") {
-                it("has the raw value language code is NL") {
-                    expect(SPMessageLanguage.Dutch.rawValue) == "NL"
+                it("has the raw value language code is nl") {
+                    expect(SPMessageLanguage.Dutch.rawValue) == "nl"
                 }
             }
 
             context("Estonian") {
-                it("has the raw value language code is ET") {
-                    expect(SPMessageLanguage.Estonian.rawValue) == "ET"
+                it("has the raw value language code is et") {
+                    expect(SPMessageLanguage.Estonian.rawValue) == "et"
                 }
             }
 
             context("Finnish") {
-                it("has the raw value language code is FI") {
-                    expect(SPMessageLanguage.Finnish.rawValue) == "FI"
+                it("has the raw value language code is fi") {
+                    expect(SPMessageLanguage.Finnish.rawValue) == "fi"
                 }
             }
 
             context("French") {
-                it("has the raw value language code is FR") {
-                    expect(SPMessageLanguage.French.rawValue) == "FR"
+                it("has the raw value language code is fr") {
+                    expect(SPMessageLanguage.French.rawValue) == "fr"
                 }
             }
 
             context("Gaelic") {
-                it("has the raw value language code is GD") {
-                    expect(SPMessageLanguage.Gaelic.rawValue) == "GD"
+                it("has the raw value language code is gd") {
+                    expect(SPMessageLanguage.Galician.rawValue) == "gl"
                 }
             }
 
             context("German") {
-                it("has the raw value language code is DE") {
-                    expect(SPMessageLanguage.German.rawValue) == "DE"
+                it("has the raw value language code is de") {
+                    expect(SPMessageLanguage.German.rawValue) == "de"
                 }
             }
 
             context("Greek") {
-                it("has the raw value language code is EL") {
-                    expect(SPMessageLanguage.Greek.rawValue) == "EL"
+                it("has the raw value language code is el") {
+                    expect(SPMessageLanguage.Greek.rawValue) == "el"
                 }
             }
 
             context("Hungarian") {
-                it("has the raw value language code is HU") {
-                    expect(SPMessageLanguage.Hungarian.rawValue) == "HU"
-                }
-            }
-
-            context("Icelandic") {
-                it("has the raw value language code is IS") {
-                    expect(SPMessageLanguage.Icelandic.rawValue) == "IS"
+                it("has the raw value language code is hu") {
+                    expect(SPMessageLanguage.Hungarian.rawValue) == "hu"
                 }
             }
 
             context("Italian") {
-                it("has the raw value language code is IT") {
-                    expect(SPMessageLanguage.Italian.rawValue) == "IT"
+                it("has the raw value language code is it") {
+                    expect(SPMessageLanguage.Italian.rawValue) == "it"
                 }
             }
 
             context("Japanese") {
-                it("has the raw value language code is JA") {
-                    expect(SPMessageLanguage.Japanese.rawValue) == "JA"
+                it("has the raw value language code is ja") {
+                    expect(SPMessageLanguage.Japanese.rawValue) == "ja"
                 }
             }
 
             context("Latvian") {
-                it("has the raw value language code is LV") {
-                    expect(SPMessageLanguage.Latvian.rawValue) == "LV"
+                it("has the raw value language code is lv") {
+                    expect(SPMessageLanguage.Latvian.rawValue) == "lv"
                 }
             }
 
             context("Lithuanian") {
-                it("has the raw value language code is LT") {
-                    expect(SPMessageLanguage.Lithuanian.rawValue) == "LT"
+                it("has the raw value language code is lt") {
+                    expect(SPMessageLanguage.Lithuanian.rawValue) == "lt"
                 }
             }
 
             context("Norwegian") {
-                it("has the raw value language code is NO") {
-                    expect(SPMessageLanguage.Norwegian.rawValue) == "NO"
+                it("has the raw value language code is no") {
+                    expect(SPMessageLanguage.Norwegian.rawValue) == "no"
                 }
             }
 
             context("Polish") {
-                it("has the raw value language code is PL") {
-                    expect(SPMessageLanguage.Polish.rawValue) == "PL"
+                it("has the raw value language code is pl") {
+                    expect(SPMessageLanguage.Polish.rawValue) == "pl"
                 }
             }
 
             context("Portuguese") {
-                it("has the raw value language code is PT") {
-                    expect(SPMessageLanguage.Portuguese.rawValue) == "PT"
+                it("has the raw value language code is pt") {
+                    expect(SPMessageLanguage.Portuguese_Brazil.rawValue) == "pt-br"
                 }
             }
 
             context("Romanian") {
-                it("has the raw value language code is RO") {
-                    expect(SPMessageLanguage.Romanian.rawValue) == "RO"
+                it("has the raw value language code is ro") {
+                    expect(SPMessageLanguage.Romanian.rawValue) == "ro"
                 }
             }
 
             context("Russian") {
-                it("has the raw value language code is RU") {
-                    expect(SPMessageLanguage.Russian.rawValue) == "RU"
+                it("has the raw value language code is ru") {
+                    expect(SPMessageLanguage.Russian.rawValue) == "ru"
                 }
             }
 
             context("Serbian_Cyrillic") {
-                it("has the raw value language code is SR-CYRL") {
-                    expect(SPMessageLanguage.Serbian_Cyrillic.rawValue) == "SR-CYRL"
+                it("has the raw value language code is sr-cyrl") {
+                    expect(SPMessageLanguage.Serbian_Cyrillic.rawValue) == "sr-cyrl"
                 }
             }
 
             context("Serbian_Latin") {
-                it("has the raw value language code is SR-LATN") {
-                    expect(SPMessageLanguage.Serbian_Latin.rawValue) == "SR-LATN"
+                it("has the raw value language code is sr-latn") {
+                    expect(SPMessageLanguage.Serbian_Latin.rawValue) == "sr-latn"
                 }
             }
 
             context("Slovakian") {
-                it("has the raw value language code is SK") {
-                    expect(SPMessageLanguage.Slovakian.rawValue) == "SK"
+                it("has the raw value language code is sk") {
+                    expect(SPMessageLanguage.Slovak.rawValue) == "sk"
                 }
             }
 
             context("Slovenian") {
-                it("has the raw value language code is SL") {
-                    expect(SPMessageLanguage.Slovenian.rawValue) == "SL"
+                it("has the raw value language code is sl") {
+                    expect(SPMessageLanguage.Slovenian.rawValue) == "sl"
                 }
             }
 
             context("Spanish") {
-                it("has the raw value language code is ES") {
-                    expect(SPMessageLanguage.Spanish.rawValue) == "ES"
+                it("has the raw value language code is es") {
+                    expect(SPMessageLanguage.Spanish.rawValue) == "es"
                 }
             }
 
             context("Swedish") {
-                it("has the raw value language code is SV") {
-                    expect(SPMessageLanguage.Swedish.rawValue) == "SV"
+                it("has the raw value language code is sv") {
+                    expect(SPMessageLanguage.Swedish.rawValue) == "sv"
                 }
             }
 
             context("Turkish") {
-                it("has the raw value language code is TR") {
-                    expect(SPMessageLanguage.Turkish.rawValue) == "TR"
+                it("has the raw value language code is tr") {
+                    expect(SPMessageLanguage.Turkish.rawValue) == "tr"
+                }
+            }
+
+            context("Basque") {
+                it("has the raw value language code is tr") {
+                    expect(SPMessageLanguage.Basque.rawValue) == "eu"
                 }
             }
         }

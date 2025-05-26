@@ -68,11 +68,12 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         setHeader()
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
         backgroundForV14(slider: categorySlider, backgroundHex: "#d8d9dd", activeBackground: "#777a7e")
-        loadSliderSegmentFont(style: SPNativeStyle(), slider: categorySlider)
+        loadSliderButtonFromNativeTexts(firstSegmentForComponentId: "PurposesHeaderText", secondSegmentForComponentId: "DataCategoriesHeaderText", slider: categorySlider)
         if vendor?.description==nil {
             descriptionTextView.isHidden=true
         }
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
+        loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
@@ -122,7 +123,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     func loadVendorDataText() {
         if vendor?.iabDataCategories?.isEmpty ?? true {
-            removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1)
+            categorySlider.isHidden = true
+            addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
             return
         }
         var labels = [String()]

@@ -23,8 +23,10 @@ class ViewController: UIViewController {
         campaigns: SPCampaigns(
             gdpr: SPCampaign(),
             ccpa: SPCampaign(),
-            usnat: nil,
-            ios14: SPCampaign()
+            usnat: SPCampaign(),
+            ios14: SPCampaign(),
+            preferences: SPCampaign(),
+            environment: .Public
         ),
         gdprPmId: "488393",
         ccpaPmId: "509688",
@@ -104,12 +106,13 @@ class ViewController: UIViewController {
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
-        controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
+        print("onAction:", action.type.description)
         action.publisherData = ["foo": .init("any encodable")]
+        updateUI()
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

@@ -1,6 +1,6 @@
 {
   "name": "ConsentViewController",
-  "version": "7.6.10",
+  "version": "7.8.1",
   "summary": "SourcePoint's ConsentViewController to handle privacy consents.",
   "homepage": "https://www.sourcepoint.com",
   "license": {
@@ -12,16 +12,27 @@
   },
   "source": {
     "git": "https://github.com/SourcePointUSA/ios-cmp-app.git",
-    "tag": "7.6.10"
+    "tag": "7.8.1"
   },
   "swift_versions": "5.1",
   "source_files": "ConsentViewController/Classes/**/*",
+  "dependencies": {
+    "SPMobileCore": [
+      "0.1.6"
+    ]
+  },
   "platforms": {
     "ios": "10.0",
     "tvos": "12.0"
   },
   "ios": {
-    "exclude_files": "ConsentViewController/Classes/Views/tvOS"
+    "exclude_files": "ConsentViewController/Classes/Views/tvOS",
+    "resource_bundles": {
+      "ConsentViewController": [
+        "ConsentViewController/Assets/**/*",
+        "Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}"
+      ]
+    }
   },
   "tvos": {
     "exclude_files": "ConsentViewController/Classes/Views/iOS",
@@ -29,13 +40,14 @@
       "Down": [
         "~> 0.11.0"
       ]
+    },
+    "resource_bundles": {
+      "ConsentViewController": [
+        "ConsentViewController/Assets/**/*",
+        "ConsentViewController/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}",
+        "Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}"
+      ]
     }
-  },
-  "resource_bundles": {
-    "ConsentViewController": [
-      "ConsentViewController/Assets/**/*",
-      "Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}"
-    ]
   },
   "resources": "ConsentViewController/**/*.{js,json,png}",
   "info_plist": {

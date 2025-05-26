@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SPMobileCore
 
 // swiftlint:disable file_length function_parameter_count
 @objcMembers public class SPConsentManager: NSObject {
@@ -71,6 +72,7 @@ import UIKit
         let client = SourcePointClient(
             accountId: accountId,
             propertyName: propertyName,
+            propertyId: propertyId,
             campaignEnv: campaigns.environment,
             timeout: Self.DefaultTimeout
         )
@@ -192,25 +194,10 @@ import UIKit
         }
     }
 
-    func storeLegislationConsent(userData: SPUserData) {
-        if let tcData = userData.gdpr?.consents?.tcfData {
-            storage.tcfData = tcData.dictionaryValue
-        }
-        if let uspString = userData.ccpa?.consents?.uspstring {
-            storage.usPrivacyString = uspString
-        }
-        if let ccpaGPPData = userData.ccpa?.consents?.GPPData {
-            storage.gppData = ccpaGPPData.dictionaryValue
-        }
-        if let usnatGPPData = userData.usnat?.consents?.GPPData {
-            storage.gppData = usnatGPPData.dictionaryValue
-        }
-    }
-
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
-            case .ccpa, .gdpr, .usnat:
+            case .ccpa, .gdpr, .usnat, .preferences:
                 spCoordinator.reportAction(action) { [weak self] result in
                     self?.responsesToReceive -= 1
                     switch result {
@@ -236,7 +223,6 @@ import UIKit
     #endif
 
     func onConsentReceived(_ userData: SPUserData) {
-        storeLegislationConsent(userData: userData)
         onConsentReady(userData: userData)
         handleSDKDone()
     }
@@ -263,7 +249,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.6.10"
+    public static let VERSION = "7.8.1"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
@@ -275,7 +261,7 @@ import UIKit
     public var userData: SPUserData { spCoordinator.userData }
 
     public static func clearAllData() {
-        SPUserDefaults(storage: UserDefaults.standard).clear()
+        SPMobileCore.Repository.init().clear()
     }
 
     @nonobjc
@@ -305,8 +291,7 @@ import UIKit
             if let strongSelf = self {
                 strongSelf.responsesToReceive -= 1
                 switch result {
-                    case .success(let (messages, consents)):
-                        strongSelf.storeLegislationConsent(userData: consents)
+                    case .success(let messages):
                         mainSync { [weak self] in
                             self?.messageControllersStack = strongSelf.messagesToViewController(messages)
                         }
@@ -364,7 +349,7 @@ import UIKit
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: storage.gdprChildPmId)
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.gdpr?.groupPmId, childPmId: spCoordinator.gdprChildPmId)
         }
         #if os(iOS)
         guard let pmUrl = buildGDPRPmUrl(usedId: usedId, pmTab: tab, uuid: gdprUUID) else {
@@ -418,7 +403,7 @@ import UIKit
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: spCoordinator.ccpaChildPmId)
         }
         #if os(iOS)
         guard let pmUrl = buildCCPAPmUrl(usedId: usedId, pmTab: tab, uuid: ccpaUUID) else {
@@ -472,7 +457,7 @@ import UIKit
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: storage.ccpaChildPmId)
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.ccpa?.groupPmId, childPmId: spCoordinator.ccpaChildPmId)
         }
 
         guard let pmUrl = buildUSNatPmUrl(usedId: usedId, pmTab: tab, uuid: usnatUUID) else {
@@ -523,6 +508,10 @@ import UIKit
             self?.handleCustomConsentResult(result, handler: handler)
         }
     }
+
+    public func rejectAll(campaignType: SPCampaignType) {
+        report(action: SPAction(type: .RejectAll, campaignType: campaignType))
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
@@ -540,6 +529,7 @@ extension SPConsentManager: SPMessageUIDelegate {
         handleSDKDone()
     }
 
+    // swiftlint:disable cyclomatic_complexity
     public func action(_ action: SPAction, from controller: UIViewController) {
         onAction(action, from: controller)
         switch action.type {
@@ -567,15 +557,24 @@ extension SPConsentManager: SPMessageUIDelegate {
         case .RequestATTAccess:
             SPIDFAStatus.requestAuthorisation { [weak self] status in
                 self?.spCoordinator.reportIdfaStatus(
-                    status: status,
                     osVersion: self?.deviceManager.osVersion ?? ""
                 )
                 if status == .accepted {
-                    action.type = .IDFAAccepted
-                    self?.onAction(action, from: controller)
+                    self?.onAction(
+                        SPAction(
+                            type: .IDFAAccepted,
+                            campaignType: .ios14,
+                            messageId: action.messageId
+                        ),
+                        from: controller
+                    )
                 } else if status == .denied {
-                    action.type = .IDFADenied
-                    self?.onAction(action, from: controller)
+                    self?.onAction(
+                        SPAction(
+                            type: .IDFADenied,
+                            campaignType: .ios14,
+                            messageId: action.messageId
+                        ), from: controller)
                 }
                 self?.nextMessageIfAny(controller)
             }
@@ -584,6 +583,7 @@ extension SPConsentManager: SPMessageUIDelegate {
             nextMessageIfAny(controller)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 }
 
 typealias SPGDPRSecondLayerHandler = (Result<GDPRPrivacyManagerViewResponse, SPError>) -> Void
@@ -642,6 +642,7 @@ extension SPConsentManager: SPDelegate {
     public func onSPUIReady(_ controller: UIViewController) {
         OSLogger.standard.end("MessageFlow")
         OSLogger.standard.event("onSPUIReady")
+        controller.modalPresentationStyle = .overFullScreen
         DispatchQueue.main.async { [weak self] in
             self?.delegate?.onSPUIReady(controller)
         }

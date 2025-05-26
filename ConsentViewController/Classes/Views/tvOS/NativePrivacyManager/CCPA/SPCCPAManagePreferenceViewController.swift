@@ -11,11 +11,16 @@ import UIKit
 class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
+        let definition: SPNativeText?
         let content: [CCPACategory]
 
-        init? (header: SPNativeText?, content: [CCPACategory]?) {
+        init? (header: SPNativeText?,
+               definition: SPNativeText?,
+               content: [CCPACategory]?
+        ) {
             if content == nil || content?.isEmpty == true { return nil }
             self.header = header
+            self.definition = definition
             self.content = content! // swiftlint:disable:this force_unwrapping
         }
     }
@@ -30,7 +35,11 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     var categoryDescription = [String: String]()
 
     var sections: [Section] {[
-        Section(header: viewData.byId("PurposesHeader") as? SPNativeText, content: categories)
+        Section(
+            header: viewData.byId("PurposesHeader") as? SPNativeText,
+            definition: viewData.byId("PurposesDefinition") as? SPNativeText,
+            content: categories
+        )
     ].compactMap { $0 }}
 
     let cellReuseIdentifier = "cell"
@@ -43,6 +52,7 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet var categoriesTableView: UITableView!
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var actionsContainer: UIStackView!
+    @IBOutlet var spacer: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +62,8 @@ class SPCCPAManagePreferenceViewController: SPNativeScreenViewController {
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
         loadButton(forComponentId: "SaveButton", button: saveAndExit)
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", longText: true, label: selectedCategoryTextLabel)
+        nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -112,7 +122,9 @@ extension SPCCPAManagePreferenceViewController: UITableViewDataSource, UITableVi
         guard let sectionComponent = sections[section].header else { return nil }
 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        loadLabelText(forComponent: sectionComponent, label: label)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        loadLabelText(forComponent: sectionComponent, addTextForComponent: sections[section].definition, label: label)
         return label
     }
 
@@ -157,6 +169,11 @@ func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
             selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+            if let description = categoryDescription[cell.identifier], description.isNotEmpty() {
+                spacer.isHidden = true
+            } else {
+                spacer.isHidden = false
+            }
         }
         return true
     }

@@ -32,7 +32,6 @@ extension XCUIApplication: App {
         args.forEach { key, value in
             launchArguments.append("-\(key)=\(value)")
         }
-        // TODO: add UI tests for USNAT campaigns
         launchArguments.append("-usnat=false")
         launch()
     }
@@ -43,6 +42,10 @@ class FirstLayerMessage: XCUIApplication {
     var acceptButton: XCUIElement { buttons["Accept All"].firstMatch }
     var rejectButton: XCUIElement { buttons["Reject All"].firstMatch }
     var showOptionsButton: XCUIElement { buttons["Show Options"].firstMatch }
+}
+
+class PreferencesFirstLayerMessage: FirstLayerMessage {
+    override var acceptButton: XCUIElement { buttons["Accept"].firstMatch }
 }
 
 class ExampleApp: XCUIApplication {
@@ -98,6 +101,12 @@ class ExampleApp: XCUIApplication {
         }
     }
 
+    class PreferencesMessage: PreferencesFirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["We've updated our terms"].firstMatch
+        }
+    }
+
     class ATTPrePrompt: XCUIApplication {
         private let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
 
@@ -120,6 +129,7 @@ class ExampleApp: XCUIApplication {
 
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
+    let preferencesMessage = PreferencesMessage()
     let gdprPM = GDPRPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 

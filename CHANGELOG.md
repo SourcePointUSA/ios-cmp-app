@@ -1,3 +1,51 @@
+# 7.8.1 (Apr, 30, 2025)
+* Fixed several UI issues for tvOS
+  * [DIA-5435](https://sourcepoint.atlassian.net/browse/DIA-5435) added missing category description on categories view [#610](https://github.com/SourcePointUSA/ios-cmp-app/pull/610)
+  * [DIA-5436](https://sourcepoint.atlassian.net/browse/DIA-5436) fixed vendors being incorrectly labeld as "custom" [#609](https://github.com/SourcePointUSA/ios-cmp-app/pull/609)
+  * [DIA-5441](https://sourcepoint.atlassian.net/browse/DIA-5441) fixed purposes name being truncated and illegible [#611](https://github.com/SourcePointUSA/ios-cmp-app/pull/611)
+  * [DIA-5443](https://sourcepoint.atlassian.net/browse/DIA-5443) fixed autosizing causing inconsistent font issues for purpuses/vendor descriptions [#513](https://github.com/SourcePointUSA/ios-cmp-app/pull/513)
+  * [DIA-5445](https://sourcepoint.atlassian.net/browse/DIA-5445) applied translation to a privacy policy label element [#608](https://github.com/SourcePointUSA/ios-cmp-app/pull/608)
+  * [DIA-5446](https://sourcepoint.atlassian.net/browse/DIA-5446) applied translation to the privacy policy QR header [#607](https://github.com/SourcePointUSA/ios-cmp-app/pull/607)
+
+# 7.8.0 (Apr, 04, 2025)
+* [DIA-3501](https://sourcepoint.atlassian.net/browse/DIA-3501) Integrate the (SourcepointUSA/mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This is a major internal change. We moved the majority of our business logic, network, and data layers into our Kotlin Multiplatform library named mobile-core (mobile-core)[https://github.com/SourcePointUSA/mobile-core]. This change not only allows us to move faster when developing new features and addressing issues, but also helps us maintain a standardized approach across multiple platforms. The mobile team did its best to accomplish all of this while keeping the public interface untouched. [#593](https://github.com/SourcePointUSA/ios-cmp-app/pull/593)
+
+# 7.7.8 (Mar, 25, 2025)
+* [DIA-5336](https://sourcepoint.atlassian.net/browse/DIA-5336) [iOS] SDK 7.7.7 is not handling authId Properly. [#601](https://github.com/SourcePointUSA/ios-cmp-app/pull/601)
+
+# 7.7.7 (Mar, 9, 2025)
+* [DIA-5293](https://sourcepoint.atlassian.net/browse/DIA-5293) Fixed an issue causing the SDK to call `onError` when `legalBasisChangeDate` was absent or null in the vendor list. [#598](https://github.com/SourcePointUSA/ios-cmp-app/pull/598)
+
+# 7.7.6 (Feb, 4, 2025)
+* [DIA-5097](https://sourcepoint.atlassian.net/browse/DIA-5097) Added support to Arabic, Basque, Bosnian, Galician and Maltese languages. [#592](https://github.com/SourcePointUSA/ios-cmp-app/pull/592)
+
+# 7.7.5 (Jan, 15, 2025)
+* [DIA-4868](https://sourcepoint.atlassian.net/browse/DIA-4868) Fixed a bug potentially affecting reporting numbers. [#591](https://github.com/SourcePointUSA/ios-cmp-app/pull/591)
+
+# 7.7.4 (Jan, 13, 2025)
+* [DIA-3283](https://sourcepoint.atlassian.net/browse/DIA-3283) Fixed an issue that'd cause the SDK to keep consent data even after the property/account id would change. This is an edge case and won't normally happen. [#589](https://github.com/SourcePointUSA/ios-cmp-app/pull/589)
+* [DIA-2956](https://sourcepoint.atlassian.net/browse/DIA-2956) Fixed an issue causing the SDK to keep consent data when a property would change from vendor list to another. Consent data is now purged for that campaign type. The user is treated as "no action" and will likely be re-messaged (depending on the campaign scenario). [#585](https://github.com/SourcePointUSA/ios-cmp-app/pull/585)
+
+# 7.7.3 (Nov, 25, 2024)
+* [DIA-4610](https://sourcepoint.atlassian.net/browse/DIA-4610) Replace native `/custom-consent` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/custom-consent` implementation. [#584](https://github.com/SourcePointUSA/ios-cmp-app/pull/584)
+* [DIA-3500](https://sourcepoint.atlassian.net/browse/DIA-3500) Replace native `/pv-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/pv-data` implementation. [#583](https://github.com/SourcePointUSA/ios-cmp-app/pull/583)
+* [DIA-4733](https://sourcepoint.atlassian.net/browse/DIA-4733) Fixed an issue causing app crashes when no internet connection [#587](https://github.com/SourcePointUSA/ios-cmp-app/pull/587)
+* Update dependency `mobile_core` to `0.0.9` version
+
+# 7.7.2 (Sep, 30, 2024)
+* [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/meta-data` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/meta-data` implementation. [#580](https://github.com/SourcePointUSA/ios-cmp-app/pull/580) [#581](https://github.com/SourcePointUSA/ios-cmp-app/pull/581)
+* [DIA-4457](https://sourcepoint.atlassian.net/browse/DIA-4457) Replace native `/consent-status` with [mobile-core's](https://github.com/SourcePointUSA/mobile-core/) `/consent-status` implementation. [#582](https://github.com/SourcePointUSA/ios-cmp-app/pull/582)
+
+# 7.7.1 (Aug, 27, 2024)
+* [DIA-3356](https://sourcepoint.atlassian.net/browse/DIA-3356) Add `super.viewWillDisappear` to `SPMessageViewController`
+* [DIA-3942](https://sourcepoint.atlassian.net/browse/DIA-3942) Add Indonesian, Hebrew, Macedonian, Malay, Korean, Tagalog to `SPMessageLanguage` [#578](https://github.com/SourcePointUSA/ios-cmp-app/pull/578)
+* [DIA-4263](https://sourcepoint.atlassian.net/browse/DIA-4263) Fixed an issue causing reporting numbers to be wrong regarding "no action" users. [#579](https://github.com/SourcePointUSA/ios-cmp-app/pull/579)
+
+# 7.7.0 (Aug, 01, 2024)
+* [DIA-3950](https://sourcepoint.atlassian.net/browse/DIA-3950) Fix an issue causing the consent string not take the IDFA into account [#575](https://github.com/SourcePointUSA/ios-cmp-app/pull/575)
+* [DIA-4307](https://sourcepoint.atlassian.net/browse/DIA-4307) Add new programmatic reject-all feature. [#577](https://github.com/SourcePointUSA/ios-cmp-app/pull/577)
+* [DIA-3890](https://sourcepoint.atlassian.net/browse/DIA-3890) Handle accept/reject all actions for USNat campaigns. [#576](https://github.com/SourcePointUSA/ios-cmp-app/pull/576)
+
 # 7.6.10 (Jun, 27, 2024)
 * [DIA-3813](https://sourcepoint.atlassian.net/browse/DIA-3813) Adjust tvOS buttons layout [#573](https://github.com/SourcePointUSA/ios-cmp-app/pull/573)
 

@@ -51,8 +51,7 @@ class CCPAConsentStatusSpec: QuickSpec {
                 signedLspa: false,
                 applies: false,
                 dateCreated: .now(),
-                expirationDate: .distantFuture(),
-                lastMessage: nil
+                expirationDate: .distantFuture()
             )
             expect(consent.uspstring) == "1---"
             consent.applies = true

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SPMobileCore
 
 /// SPPropertyName is the exact name of your property as created in SourcePoint's dashboard.
 /// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons),
@@ -15,6 +16,7 @@ import Foundation
     static let validPattern = "^[a-zA-Z.:/0-9-]*$"
 
     let rawValue: String
+    let coreValue: SPMobileCore.SPPropertyName
 
     override public var description: String {
         rawValue.replacingOccurrences(of: "https://", with: "")
@@ -23,6 +25,11 @@ import Foundation
     /// - Parameter rawValue: the exact name of your property as created in SourcePoint's dashboard.
     /// - Throws: `InvalidArgumentError` if the property name contain anything other than letters, numbers, . (dots), : (semicolons) and / (slashes).
     public init(_ rawValue: String) throws {
+        do {
+            self.coreValue = try SPMobileCore.SPPropertyName.companion.create(rawValue: rawValue)
+        } catch _ as NSError {
+            throw InvalidPropertyNameError(message: "PropertyName can only include letters, numbers, '.', ':', '-' and '/'. \(rawValue) passed is invalid")
+        }
         var validRawValue = try Self.validate(rawValue)
         if !validRawValue.starts(with: "https://") && !validRawValue.starts(with: "http://") {
             validRawValue = "https://" + validRawValue
@@ -33,6 +40,7 @@ import Foundation
     public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.rawValue = try Self.validate(try container.decode(String.self))
+        self.coreValue = try SPMobileCore.SPPropertyName.companion.create(rawValue: rawValue)
     }
 
     private static func validate(_ string: String) throws -> String {

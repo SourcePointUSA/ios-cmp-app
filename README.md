@@ -7,7 +7,13 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.6.10'
+pod 'ConsentViewController', '7.8.1'
+```
+
+The SDK has a static dependency. Make sure to have the following on your Podfile as well:
+
+```
+use_frameworks! :linkage => :static
 ```
 
 ### Carthage
@@ -38,7 +44,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "7.6.10")
+                .upToNextMinor(from: "7.8.1")
         ),
     ],
     targets: [
@@ -88,7 +94,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onCCPAPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadCCPAPrivacyManager(withId: "14967")
+        consentManager.loadUSNATPrivacyManager(withId: "14967")
     }
 
     lazy var consentManager: SPSDK = { SPConsentManager(
@@ -96,9 +102,10 @@ class ViewController: UIViewController {
         propertyId: 16893,
         propertyName: try! SPPropertyName("mobile.multicampaign.demo"),
         campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            usnat: SPCampaign(),
-            ios14: SPCampaign()
+            gdpr: SPCampaign(), //only include if this campaign type is enabled in the Sourcepoint portal
+            usnat: SPCampaign(), //only include if this campaign type is enabled in the Sourcepoint portal
+            ccpa: SPCampaign(), //only include if this campaign type is enabled in the Sourcepoint portal
+            ios14: SPCampaign() //only include if this campaign type is enabled in the Sourcepoint portal
         ),
         delegate: self
     )}()
@@ -111,7 +118,6 @@ class ViewController: UIViewController {
 
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: SPMessageViewController) {
-        controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
     }
 
@@ -163,9 +169,10 @@ extension ViewController: SPDelegate {
         SPCampaign *campaign = [[SPCampaign alloc] initWithTargetingParams: [NSDictionary dictionary]];
 
         SPCampaigns *campaigns = [[SPCampaigns alloc]
-            initWithGdpr: campaign
-            usnat: campaign
-            ios14: campaign
+            initWithGdpr: campaign //only include if this campaign type is enabled in the Sourcepoint portal
+            usnat: campaign //only include if this campaign type is enabled in the Sourcepoint portal
+            ccpa: campaign //only include if this campaign type is enabled in the Sourcepoint portal
+            ios14: campaign //only include if this campaign type is enabled in the Sourcepoint portal
             environment: SPCampaignEnvPublic];
 
         consentManager = [[SPConsentManager alloc]
@@ -249,9 +256,11 @@ The SDK will follow the same exact same lifecycle as with the 1st layer consent 
 
 ## Understanding the `SPDelegate` protocol (delegate methods)
 
-### onSPUIReady(\_ controller: UIViewController
+### onSPUIReady(\_ controller: UIViewController)
 
 The SDK will wrap the web message into a `UIViewController` and call the `onSPUIReady` when there is a message to be displayed.
+
+**_NOTE:_** `onSPUIReady` overrides `modalPresentationStyle` of the ViewController to be `.overFullScreen`. We identified some swiping gestures using other types of `modalPresentationStyle` causes the webview rendering the message to be unresponsive. We encourage you to keep using `.overFullScreen` until this issue is fixed.
 
 ### optional onSPNativeMessageReady(\_ message: SPNativeMessage)
 
@@ -377,6 +386,7 @@ Add the following keys to your app's `info.plist` to define the initial consent 
 Use Google's `setConsent` method to update the relevant consent checks when the appropriate purposes are consented to/rejected.
 
 > The consent checks updated via the `setConsent` method will vary and depends on how you are implementing Google Consent Mode 2.0 on your mobile property within the Sourcepoint portal. The method should only be called with consent checks that are mapped within your vendor list to custom purposes.<br><br>Review Sourcepoint's implementation documentation below for more information:
+>
 > - [Implement Google Consent Mode 2.0 on GDPR TCF (mobile)](https://docs.sourcepoint.com/hc/en-us/articles/26139951882643-Google-Consent-Mode-2-0-GDPR-TCF-mobile#h_01HPHHGSP42A36607MDC7NVBV9)
 > - [Implement Google Consent Mode 2.0 on GDPR Standard (mobile)](https://docs.sourcepoint.com/hc/en-us/articles/26159382698387-Google-Consent-Mode-2-0-GDPR-Standard-mobile#h_01HPJ2MT0F5B1G8ZZVD5PNXT9S)
 
@@ -412,14 +422,14 @@ The vendor grants will be re-generated, this time taking into consideration the 
 
 Using the same strategy for the custom consent, it's possible to programmatically delete the current user consent to a list of vendors, categories and legitimate interest categories by using the following method:
 
- ```swift
+```swift
 func deleteCustomConsentGDPR(
-    vendors: [String],
-    categories: [String],
-    legIntCategories: [String],
-    handler: @escaping (SPGDPRConsent) -> Void
- )
- ```
+   vendors: [String],
+   categories: [String],
+   legIntCategories: [String],
+   handler: @escaping (SPGDPRConsent) -> Void
+)
+```
 
 The method is asynchronous so you must pass a completion handler that will receive back an instance of SPGDPRConsent in case of success or it'll call the delegate method onError in case of failure.
 
@@ -443,6 +453,8 @@ In Obj-C that'd be:
 
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
 
+>If required for your app's log out process, your organization can call the [`clearAllData`](#delete-user-data) method to erase local data. Once cleared, your organization can then call `loadMessage` to collect consent from a non-authenticated user or `loadMessage` with a new `authId` for a new authenticated user. 
+
 ## Sharing consent with a `WKWebView`
 
 After going through the message and consent flow (ie. after `onConsentReady`) the SDK will store the consent data in the `UserDefaults`. That data can then be injected into `WKWebView`s so the web portion of your app doesn't show a consent dialog and it'll contain the same consent data as the native part.
@@ -465,6 +477,7 @@ if let userConsents = userConsents {
     webview.load(URLRequest(URL(string: "https://my-url.com/")!)) // load url without _sp_pass_consent=true
 }
 ```
+
 Note: The desitination url needs to implement the unified script.
 
 A few remarks:
@@ -474,6 +487,7 @@ A few remarks:
 3. Your web content needs to be loaded (or loading) on the webview and our [web SDK](https://docs.sourcepoint.com/hc/en-us/articles/8073421891091-GDPR-TCF-and-U-S-Privacy-CCPA-implementation-guide-web-) should be included in it. Furthermore, you need to add the query param `_sp_pass_consent=true` to your URL, this will signal to Sourcepoint's web SDK it needs to wait for the consent data to be injected from the native code, instead of immediately querying it from our servers.
 
 ## Overwriting default language
+
 By default, the SDK will instruct the message to render itself using the locale defined by the `WKWebView`. If you wish to overwrite this behavior and force a message to be displayed in a certain language, you need to set the `.messageLanguage` attribute of the `SPConsentManager` _before_ calling `.loadMessage() / .loadPrivacyManager()`.
 
 ```swift
@@ -518,7 +532,7 @@ SPCampaign *myCampaign = [[SPCampaign alloc]
 
 When migrating a property from the U.S. Privacy (Legacy) campaign to U.S. Multi-State Privacy campaign, the SDK will automatically detect previously set end-user opt-in/opt-out preferences for U.S. Privacy (Legacy) and have that transferred over to U.S. Multi-State Privacy.
 
-> If an end-user rejected a vendor or category for U.S. Privacy, Sourcepoint will set the *Sharing of Personal Information Targeted Advertisting* and *Sale of Personal Information* privacy choices or the *Sale or Share of Personal Information/Targeted Advertising* privacy choice (depending on your configuration) to **opted-out** when the preferences are transferred.
+> If an end-user rejected a vendor or category for U.S. Privacy, Sourcepoint will set the _Sharing of Personal Information Targeted Advertisting_ and _Sale of Personal Information_ privacy choices or the _Sale or Share of Personal Information/Targeted Advertising_ privacy choice (depending on your configuration) to **opted-out** when the preferences are transferred.
 
 If you ever used authenticated consent for CCPA, you'll have to set the flag `transitionCCPAAuth` manually when configuring the campaigns to be loaded by the SDK. This way, the SDK will look for authenticated consent within CCPA profiles and carry that over to USNat, even if the user currently doesn't have CCPA local data (on a fresh install, for example).
 
@@ -531,6 +545,7 @@ var consentManager = SPConsentManager(
     delegate: self
 )
 ```
+
 ## Check end-user consent status for U.S. Multi-State Privacy
 
 Your organization can check an end-user's consent status for a privacy choice by checking the `statuses` object for `usnat` in `SPUserData`.
@@ -558,11 +573,13 @@ if SPUserData.usnat?.consents?.statuses.{status} {
 
 If you're transitioning from U.S. Privacy (Legacy) to U.S. Multi-State Privacy, you may want to continue supporting the legacy US privacy string (`IABUSPrivacy_String`).
 
-> Since U.S. Privacy (Legacy) does not have support for sensitive data categories, any organization who require sensitive data opt-ins should not use this approach. Additionally, this approach should not be used by organizations who ***only*** require Sharing of Personal Information/Targeted Advertising. A `uspString` will only be set if you use either of the following privacy choices:
+> Since U.S. Privacy (Legacy) does not have support for sensitive data categories, any organization who require sensitive data opt-ins should not use this approach. Additionally, this approach should not be used by organizations who **_only_** require Sharing of Personal Information/Targeted Advertising. A `uspString` will only be set if you use either of the following privacy choices:
+>
 > - Sale of Personal Information
 > - Sale or Sharing of Personal Information/Targeted Advertising
 
 To do so, when instantiating the SDK, make sure to set the flag `.supportLegacyUSPString` to true. Example:
+
 ```swift
 var consentManager = SPConsentManager(
     ...
@@ -622,7 +639,7 @@ The action: `SPAction` parameter, among other data (used internally), contains:
 | Attribute                         | Description                                                                                                                                                                                                                                                        |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `type: SPActionType`              | Indicates the type of action, this is an enumerated value. For example, a response to the ATT message is `RequestATTAccess` or to show the privacy manager is `ShowPrivacyManager`.                                                                                |
-| `campaignType: SPCampaignType`    | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g. **gdpr, ios14, ccpa, usnat, unknown**.                                                                                                                                     |
+| `campaignType: SPCampaignType`    | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g. **gdpr, ios14, ccpa, usnat, unknown**.                                                                                                                              |
 | `customActionId: String`          | If the type of action is Custom, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).                                                                                                      |
 | `consentLanguage`                 | The language used in the messages.                                                                                                                                                                                                                                 |
 | `publisherData: [String: String]` | This is an arbitrary dictionary of [String: String] containing data the publisher wishes to send to our servers so it can be retrieved via API later on. The publisher needs to set this field during the callback if they need the data to be sent to our server. |
@@ -681,8 +698,14 @@ let campaigns = SPCampaigns(
 
 Utilize the following method if an end-user requests to have their data deleted:
 
-```
+```swift
+//Swift
 SPConsentManager.clearAllData()
+```
+
+```obj-c
+//Objective C
+[SPConsentManager clearAllData];
 ```
 
 ## Set a Privacy Manager Id for the Property Group
@@ -709,11 +732,20 @@ consentManager.loadGDPRPrivacyManager(withId: "111", useGroupPmIfAvailable: true
 
 > **Note**: CCPA campaign `Privacy Manager Id for the Property Group` feature is currently not supported.
 
+## Programmatically rejecting all for a user
+
+It's possible to programmatically issue a "reject all" action in behalf of the current user by calling the `rejectAll(campaignType)` function. The `rejectAll` function behaves exactly the same way as if a user would have pressed the "reject all" button on the 1st layer or privacy manager.
+Upon completion, the sdk will call either `onConsentReady` in case of success or `onError` in case of failure.
+
+```swift
+    consentManager.rejectAll(campaignType: .gdpr)
+```
+
 ## Frequently Asked Questions
 
 ### 1. How big is the SDK?
 
-The SDK is pretty slim, there are no assets, no dependencies, just pure code. Since we use Swift, its size will vary depending on the configuration of your project but it should not exceed `500 Kb`.
+The library adds approximately 2.8 MB to your app’s final binary (measured using Xcode’s Archive in Release mode on arm64). Notice this number may vary depending on your app's minimum iOS deployment target and whether you build it for Debug or Release.
 
 ### 2. What's the lowest iOS version supported?
 

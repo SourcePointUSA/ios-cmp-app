@@ -11,16 +11,19 @@ import UIKit
 class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
+        let definition: SPNativeText?
         var contentConsent: [GDPRCategory]
         var contentLegIntCategory: [GDPRCategory]
 
         init? (
             header: SPNativeText?,
+            definition: SPNativeText?,
             contentConsent: [GDPRCategory]? = nil,
             contentLegIntCategory: [GDPRCategory]? = nil,
             contentFeature: [GDPRCategory]? = nil
         ) {
             self.header = header
+            self.definition = definition
             self.contentConsent = contentConsent ?? []
             self.contentLegIntCategory = contentLegIntCategory ?? []
             if contentFeature != nil {
@@ -38,23 +41,26 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var categories: [GDPRCategory] = []
     var legIntCategories: [GDPRCategory] { categories.filter { $0.legIntVendors?.isNotEmpty() ?? false } }
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
-    var legIntSpecialPurposes: [GDPRCategory] { consentsSnapshot.specialPurposes.filter { $0.disclosureOnly == true } }
     var categoryDescription = [String: String]()
 
     var sections: [Section] {[
         Section(
             header: viewData.byId("PurposesHeader") as? SPNativeText,
+            definition: viewData.byId("PurposesDefinition") as? SPNativeText,
             contentConsent: userConsentCategories,
             contentLegIntCategory: legIntCategories),
         Section(
             header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
+            definition: viewData.byId("SpecialPurposesDefinition") as? SPNativeText,
             contentConsent: Array(consentsSnapshot.specialPurposes),
-            contentLegIntCategory: legIntSpecialPurposes),
+            contentLegIntCategory: Array(consentsSnapshot.specialPurposes)),
         Section(
             header: viewData.byId("FeaturesHeader") as? SPNativeText,
+            definition: viewData.byId("FeaturesDefinition") as? SPNativeText,
             contentFeature: Array(consentsSnapshot.features)),
         Section(
             header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText,
+            definition: viewData.byId("SpecialFeaturesDefinition") as? SPNativeText,
             contentFeature: Array(consentsSnapshot.specialFeatures))
     ].compactMap { $0 }}
 
@@ -83,6 +89,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet var categoriesTableView: UITableView!
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var actionsContainer: UIStackView!
+    @IBOutlet var spacer: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,8 +105,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         if emptyLegIntSection {
             removeSliderButtonSegment(slider: categorySlider, removeSegmentNum: 1) }
         loadImage(forComponentId: "LogoImage", imageView: logoImageView)
-        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", label: selectedCategoryTextLabel)
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        loadLabelText(forComponentId: "CategoriesDescriptionText", labelText: "", longText: true, label: selectedCategoryTextLabel)
+        nativeLongButton = viewData.byId("CategoryButton") as? SPNativeLongButton
         categoriesTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
@@ -181,9 +188,10 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = sections[section].header else { return nil }
-
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        loadLabelText(forComponent: sectionComponent, label: label)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        loadLabelText(forComponent: sectionComponent, addTextForComponent: sections[section].definition, label: label)
         label.isHidden = displayingLegIntCategories ?
             sections[section].contentLegIntCategory.isEmpty : sections[section].contentConsent.isEmpty
         return label
@@ -229,7 +237,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
             cell.isOn = nil
         }
         cell.selectable = true
-        cell.isCustom = category.type != .IAB || category.type != .IAB_PURPOSE
+        cell.isCustom = category.type != .IAB && category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         categoryDescription[category._id] = category.friendlyDescription
@@ -244,6 +252,11 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
             selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+            if let description = categoryDescription[cell.identifier], description.isNotEmpty() {
+                spacer.isHidden = true
+            } else {
+                spacer.isHidden = false
+            }
         }
         return true
     }

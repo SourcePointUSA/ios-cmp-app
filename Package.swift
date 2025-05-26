@@ -10,10 +10,14 @@ let package = Package(
     products: [
         .library(
             name: "ConsentViewController",
-            targets: ["ConsentViewController"]
+            targets: ["ConsentViewController", "SPMobileCore"]
         ),
     ],
     targets: [
+        .binaryTarget(
+            name: "SPMobileCore",
+            path: "./Example/Pods/SPMobileCore/SPMobileCore.xcframework"
+        ),
         .binaryTarget(
             name: "ConsentViewController",
             path: "./XCFramework/SPM/ConsentViewController.xcframework"

@@ -143,6 +143,26 @@ public func containQueryParam(_ name: String, withValue value: String) -> Predic
     }
 }
 
+/// expect(url).to(containQueryParam(["name": "value"]))
+public func containQueryParams(_ expectedParams: [String: String?]) -> Predicate<URL> {
+    Predicate { actual in
+        guard let actual = try actual.evaluate(),
+              let params = actual.queryParams
+        else {
+            return PredicateResult(bool: false, message: .fail("could not get query params from URL(\((try? actual.evaluate()?.absoluteString) as Any))"))
+        }
+        var pass = true
+        var message = ""
+        expectedParams.forEach { (key, value) in
+            if params[key] != value {
+                pass = false
+                message += "Expected to contain param \(key) equal to \(String(describing: value)), but found \(params[key] ?? "")\n"
+            }
+        }
+        return PredicateResult(bool: pass, message: .fail(message))
+    }
+}
+
 /// expect(spDate).to(equal(year: 123, month: 123, day: 123))
 public func equal(year: Int? = nil, month: Int? = nil, day: Int? = nil) -> Predicate<SPDate> {
     Predicate { actual in

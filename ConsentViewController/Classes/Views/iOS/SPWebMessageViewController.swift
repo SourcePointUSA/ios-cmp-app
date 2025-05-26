@@ -168,6 +168,7 @@ import WebKit
             contentController.removeScriptMessageHandler(forName: Self.MESSAGE_HANDLER_NAME)
             contentController.removeAllUserScripts()
         }
+        super.viewWillDisappear(animated)
     }
 
     override func loadMessage() {
@@ -211,7 +212,8 @@ import WebKit
             consentLanguage: body["consentLanguage"]?.stringValue,
             pmPayload: body["payload"] ?? SPJson(),
             pmurl: pmUrl,
-            customActionId: body["customActionId"]?.stringValue
+            customActionId: body["customActionId"]?.stringValue,
+            messageId: body["messageId"]?.stringValue
         )
     }
 
@@ -233,14 +235,14 @@ import WebKit
         if
             let messageBody = try? SPJson(message.body),
             let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
-            let body = messageBody["body"]
-        {
+            let body = messageBody["body"] {
             OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
             case .readyForPreload: handleMessagePreload()
 
             case .onMessageReady:
                 timeoutWorkItem.cancel()
+                self.webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
                 messageUIDelegate?.loaded(self)
 
             case .onAction:

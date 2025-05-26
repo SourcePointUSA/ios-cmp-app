@@ -56,6 +56,10 @@ struct Message: Codable, Equatable {
         case messageChoices = "message_choice"
         case propertyId = "site_id"
     }
+    enum CodingKeysCore: String, CodingKey {
+        case category = "categoryId"
+        case subCategory = "subCategoryId"
+    }
 
     var messageJson: MessageJson
     let categories: [GDPRCategory]?
@@ -71,6 +75,24 @@ struct Message: Codable, Equatable {
         self.subCategory = subCategory
         let container = try decoder.container(keyedBy: CodingKeys.self)
         messageJson = try MessageJson(type: subCategory, campaignType: category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let containerCore = try decoder.container(keyedBy: CodingKeysCore.self)
+        self.categories = try container.decodeIfPresent([GDPRCategory].self, forKey: .categories)
+        self.language = try container.decodeIfPresent(String.self, forKey: .language)
+        self.category = try containerCore.decodeIfPresent(MessageCategory.self, forKey: .category) ?? .unknown
+        self.subCategory = try containerCore.decodeIfPresent(MessageSubCategory.self, forKey: .subCategory) ?? .unknown
+        self.messageJson = try MessageJson(type: self.subCategory, campaignType: self.category.campaignType, decoder: try container.superDecoder(forKey: .messageJson))
+        self.messageChoices = try container.decode(SPJson.self, forKey: .messageChoices)
+        self.propertyId = try container.decode(Int.self, forKey: .propertyId)
+    }
+
+    init?(decoderDataString: String) throws {
+        guard let data = decoderDataString.data(using: .utf8) else { return nil }
+        let decoder = JSONDecoder()
+        self = try decoder.decode(Self.self, from: data)
     }
 }
 
@@ -152,7 +174,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPUSNatConsent?, messageMetaData: MessageMetaData?) -> SPUSNatConsent? {
+    func toConsent(defaults: SPUSNatConsent?) -> SPUSNatConsent? {
         switch self {
             case .usnat(let consents):
                 return SPUSNatConsent(
@@ -162,7 +184,6 @@ extension Consent: Codable {
                     expirationDate: consents.expirationDate,
                     consentStrings: consents.consentStrings,
                     webConsentPayload: consents.webConsentPayload,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     categories: consents.categories,
                     vendors: consents.vendors,
                     consentStatus: consents.consentStatus,
@@ -174,7 +195,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPCCPAConsent?, messageMetaData: MessageMetaData?) -> SPCCPAConsent? {
+    func toConsent(defaults: SPCCPAConsent?) -> SPCCPAConsent? {
         switch self {
             case .ccpa(let consents):
                 return SPCCPAConsent(
@@ -187,7 +208,6 @@ extension Consent: Codable {
                     applies: defaults?.applies ?? false,
                     dateCreated: consents.dateCreated,
                     expirationDate: consents.expirationDate,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     consentStatus: consents.consentStatus,
                     webConsentPayload: consents.webConsentPayload,
                     GPPData: consents.GPPData
@@ -198,7 +218,7 @@ extension Consent: Codable {
         }
     }
 
-    func toConsent(defaults: SPGDPRConsent?, messageMetaData: MessageMetaData?) -> SPGDPRConsent? {
+    func toConsent(defaults: SPGDPRConsent?) -> SPGDPRConsent? {
         switch self {
             case .gdpr(let consents):
                 return SPGDPRConsent(
@@ -211,7 +231,6 @@ extension Consent: Codable {
                     expirationDate: consents.expirationDate,
                     applies: defaults?.applies ?? false,
                     consentStatus: consents.consentStatus,
-                    lastMessage: LastMessageData(from: messageMetaData),
                     webConsentPayload: consents.webConsentPayload,
                     acceptedLegIntCategories: consents.acceptedLegIntCategories,
                     acceptedLegIntVendors: consents.acceptedLegIntVendors,

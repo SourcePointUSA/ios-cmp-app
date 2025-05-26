@@ -38,6 +38,7 @@
                               ccpa: NULL
                               usnat: campaign
                               ios14: campaign
+                              preferences: NULL
                               environment: SPCampaignEnvPublic];
 
     consentManager = [[SPConsentManager alloc]
