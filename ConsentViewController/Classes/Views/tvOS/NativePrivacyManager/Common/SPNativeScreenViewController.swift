@@ -194,11 +194,13 @@ class FocusGuideDebugView: UIView {
             button.setTitle(action.settings.text, for: .normal)
             button.setTitleColor(UIColor(hexString: style.onUnfocusTextColor), for: .normal)
             button.setTitleColor(UIColor(hexString: style.onFocusTextColor), for: .focused)
-            button.backgroundColor = UIColor(hexString: style.onUnfocusBackgroundColor)
-            button.onUnfocusBackgroundColor = button.backgroundColor
-            button.onFocusBackgroundColor = UIColor(hexString: style.onFocusBackgroundColor)
             button.titleLabel?.font = UIFont(from: style.font)
-            button.layer.cornerRadius = 12
+            UIColor(hexString: style.onUnfocusBackgroundColor)
+                .map { getImageWithColor(color: $0) }
+                .map { button.setBackgroundImage($0, for: .normal) }
+            UIColor(hexString: style.onFocusBackgroundColor)
+                .map { getImageWithColor(color: $0) }
+                .map { button.setBackgroundImage($0, for: .focused) }
         } else {
             button.isHidden = true
         }
