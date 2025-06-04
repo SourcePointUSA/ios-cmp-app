@@ -94,8 +94,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeaderConsent", textView: descriptionTextView, bounces: false)
-        loadTextView(forComponentId: "CategoriesHeaderLegInt", textView: descriptionTextView, bounces: false)        
+        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, bounces: false)
         descriptionTextView.flashScrollIndicators()
         dynamicFrameForDescription()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
