@@ -62,6 +62,7 @@ extension Config {
                 usnatArg == true ? SPCampaign() : nil,
             ios14: attArg == nil ? defaults.campaigns.ios14 :
                 attArg == true ? SPCampaign() : nil,
+            globalcmp: defaults.campaigns.globalcmp,
             preferences: preferencesArg == nil ? defaults.campaigns.preferences :
                 preferencesArg == true ? SPCampaign() : nil
         )
