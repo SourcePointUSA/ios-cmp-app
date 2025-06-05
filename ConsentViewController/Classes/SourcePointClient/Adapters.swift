@@ -163,6 +163,8 @@ extension SPMobileCore.SPCampaignType {
             return .ios14
         case "Preferences":
             return .preferences
+        case "GlobalCmp":
+            return .globalcmp
 
         default:
             return .unknown
@@ -507,6 +509,7 @@ extension SPCampaignType {
         case .ccpa: return .ccpa
         case .usnat: return .usnat
         case .ios14: return .ios14
+        case .globalcmp: return .globalcmp
         case .preferences: return .preferences
         case .unknown: return .unknown
         }
