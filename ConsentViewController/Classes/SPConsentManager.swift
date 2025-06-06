@@ -197,7 +197,7 @@ import SPMobileCore
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
-            case .ccpa, .gdpr, .usnat, .preferences:
+            case .ccpa, .gdpr, .usnat, .globalcmp, .preferences:
                 spCoordinator.reportAction(action) { [weak self] result in
                     self?.responsesToReceive -= 1
                     switch result {
@@ -544,6 +544,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
             if messageLanguage != .BrowserDefault {
                 url = url.appendQueryItems(["consentLanguage": String(messageLanguage.rawValue)]) ?? url
+            }
+            if action.campaignType == .globalcmp {
+                url = url.appendQueryItems(["is_global_cmp": "true"]) ?? url
             }
             if let spController = controller as? SPMessageViewController {
                 spController.loadPrivacyManager(url: url)
