@@ -545,6 +545,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             if messageLanguage != .BrowserDefault {
                 url = url.appendQueryItems(["consentLanguage": String(messageLanguage.rawValue)]) ?? url
             }
+            if action.campaignType == .globalcmp {
+                url = url.appendQueryItems(["is_global_cmp": "true"]) ?? url
+            }
             if let spController = controller as? SPMessageViewController {
                 spController.loadPrivacyManager(url: url)
             }
