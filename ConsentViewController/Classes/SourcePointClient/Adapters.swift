@@ -259,6 +259,20 @@ extension SPMobileCore.USNatConsent {
     }
 }
 
+extension SPMobileCore.GlobalCmpConsent {
+    func toNative() -> SPGlobalCmpConsent {
+        return .init(
+            uuid: self.uuid,
+            applies: self.applies,
+            dateCreated: SPDate(string: self.dateCreated.instantToString()),
+            expirationDate: SPDate(string: self.expirationDate.instantToString()),
+            categories: self.userConsents.categories.map { $0.toNative() },
+            vendors: self.userConsents.vendors.map { $0.toNative() },
+            consentStatus: self.consentStatus.toNative()
+        )
+    }
+}
+
 extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
     func toNative() -> SPPreferencesConsent.PreferencesSubType {
         switch self {
@@ -328,6 +342,15 @@ extension SPUserDataSPConsent<USNatConsent>? {
     }
 }
 
+extension SPUserDataSPConsent<GlobalCmpConsent>? {
+    func toNative() -> SPConsent<SPGlobalCmpConsent>? {
+        return SPConsent<SPGlobalCmpConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: self?.consents?.applies ?? false
+        )
+    }
+}
+
 extension SPUserDataSPConsent<PreferencesConsent>? {
     func toNative() -> SPConsent<SPPreferencesConsent>? {
         return SPConsent<SPPreferencesConsent>.init(
@@ -343,6 +366,7 @@ extension SPMobileCore.SPUserData {
             gdpr: self.gdpr.toNative(),
             ccpa: self.ccpa.toNative(),
             usnat: self.usnat.toNative(),
+            globalcmp: self.globalcmp.toNative(),
             preferences: self.preferences.toNative()
         )
     }
