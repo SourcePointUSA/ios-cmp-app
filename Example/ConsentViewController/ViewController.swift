@@ -25,12 +25,14 @@ class ViewController: UIViewController {
             ccpa: SPCampaign(),
             usnat: SPCampaign(),
             ios14: SPCampaign(),
+            //globalcmp: SPCampaign(),
             preferences: SPCampaign(),
             environment: .Public
         ),
         gdprPmId: "488393",
         ccpaPmId: "509688",
-        usnatPmId: "943886"
+        usnatPmId: "943886",
+        globalcmpPmId: ""
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
