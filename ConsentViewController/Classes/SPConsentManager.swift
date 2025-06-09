@@ -257,6 +257,8 @@ import SPMobileCore
 
     public var usnatApplies: Bool { spCoordinator.userData.usnat?.applies ?? false }
 
+    public var globalcmpApplies: Bool { spCoordinator.userData.globalcmp?.applies ?? false }
+
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { spCoordinator.userData }
 
@@ -465,6 +467,33 @@ import SPMobileCore
             return
         }
         loadWebPrivacyManager(.usnat, pmUrl, messageId: usedId)
+        #endif
+    }
+
+    func buildGlobalCmpPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+        genericPMUrl(
+            Constants.Urls.GLOBALCMP_PM_URL,
+            pmId: usedId,
+            uuidName: "uuid",
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
+    }
+
+    public func loadGlobalCmpPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        #if os(iOS)
+        messagesToShow += 1
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.globalcmp?.groupPmId, childPmId: spCoordinator.ccpaChildPmId)
+        }
+
+        guard let pmUrl = buildGlobalCmpPmUrl(usedId: usedId, pmTab: tab, uuid: usnatUUID) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
+        loadWebPrivacyManager(.globalcmp, pmUrl, messageId: usedId)
         #endif
     }
 
