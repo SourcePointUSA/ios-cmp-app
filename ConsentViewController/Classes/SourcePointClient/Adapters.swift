@@ -266,8 +266,10 @@ extension SPMobileCore.GlobalCmpConsent {
             applies: self.applies,
             dateCreated: SPDate(string: self.dateCreated.instantToString()),
             expirationDate: SPDate(string: self.expirationDate.instantToString()),
-            categories: self.userConsents.categories.map { $0.toNative() },
-            vendors: self.userConsents.vendors.map { $0.toNative() },
+            userConsents: SPGlobalCmpConsent.UserConsents(
+                vendors: self.userConsents.categories.map { $0.toNative() },
+                categories: self.userConsents.vendors.map { $0.toNative() }
+            ),
             consentStatus: self.consentStatus.toNative()
         )
     }

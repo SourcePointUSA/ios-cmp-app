@@ -34,8 +34,7 @@ import Foundation
         applies: Bool,
         dateCreated: SPDate,
         expirationDate: SPDate,
-        categories: [SPConsentable],
-        vendors: [SPConsentable],
+        userConsents: UserConsents = UserConsents(vendors: [], categories: []),
         consentStatus: ConsentStatus
     ) {
         self.uuid = uuid
@@ -67,6 +66,7 @@ extension SPGlobalCmpConsent {
             - vendors: \(vendors)
             - dateCreated: \(dateCreated)
             - expirationDate: \(expirationDate)
+            - userConsents: \(userConsents)
         )
         """
     }
@@ -75,8 +75,6 @@ extension SPGlobalCmpConsent {
         applies: false,
         dateCreated: .now(),
         expirationDate: .distantFuture(),
-        categories: [],
-        vendors: [],
         consentStatus: ConsentStatus()
     )}
 
@@ -94,8 +92,7 @@ extension SPGlobalCmpConsent {
         applies: applies,
         dateCreated: dateCreated,
         expirationDate: expirationDate,
-        categories: categories,
-        vendors: vendors,
+        userConsents: userConsents,
         consentStatus: consentStatus
     )}
 }
