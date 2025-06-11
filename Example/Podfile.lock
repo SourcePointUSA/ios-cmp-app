@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (7.8.1):
+  - ConsentViewController (7.8.2):
     - Down (~> 0.11.0)
     - SPMobileCore (= 0.1.6)
   - Down (0.11.0)
@@ -173,7 +173,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: ac33c140bce96f9103c6caec782fd624e63bbd76
+  ConsentViewController: 911ade65f0b0358f66634a5250f8fc482487fb2a
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   FirebaseAnalytics: 630349facf4a114a0977e5d7570e104261973287
   FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
