@@ -42,7 +42,7 @@ import Foundation
         self.dateCreated = dateCreated
         self.expirationDate = expirationDate
         self.consentStatus = consentStatus
-        self.userConsents = UserConsents(vendors: vendors, categories: categories)
+        self.userConsents = userConsents
     }
 
     required public init(from decoder: Decoder) throws {
