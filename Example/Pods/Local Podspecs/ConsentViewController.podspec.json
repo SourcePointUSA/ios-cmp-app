@@ -2,6 +2,7 @@
   "name": "ConsentViewController",
   "version": "7.9.0",
   "summary": "SourcePoint's ConsentViewController to handle privacy consents.",
+  "static_framework": true,
   "homepage": "https://www.sourcepoint.com",
   "license": {
     "type": "MIT",

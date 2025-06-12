@@ -1,6 +1,6 @@
 # 7.9.0 (Apr, 30, 2025)
 * [DIA-5359](https://sourcepoint.atlassian.net/browse/DIA-5359) added support to `Preferences` campaign type. Our README will be updated with more info about `Preferences` soon. [#617](https://github.com/SourcePointUSA/ios-cmp-app/pull/617)
-* changed the pod to be built statically instead of a dynamic framework. This is an attempt to fix an issue related to SPM not working well with the SDK's transitive dependencies. [#617](https://github.com/SourcePointUSA/ios-cmp-app/pull/617)
+* changed the pod to be built statically instead of a dynamic framework. If you use `use_frameworks!` in your Podfile, make sure to link it statically: `use_frameworks! :linkage => :static` [#617](https://github.com/SourcePointUSA/ios-cmp-app/pull/617)
 * fixed visual issues for tvOS (thanks to [@asshoffm](https://github.com/asshoffm))[#574](https://github.com/SourcePointUSA/ios-cmp-app/pull/574)
 * * [DIA-5267](https://sourcepoint.atlassian.net/browse/DIA-5267) fixed an issue causing the React Native implementation to crash when loading the USNAT privacy manager. [#620](https://github.com/SourcePointUSA/ios-cmp-app/pull/620)
 

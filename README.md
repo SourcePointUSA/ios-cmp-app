@@ -10,9 +10,9 @@ In your `Podfile` add the following line to your app target:
 pod 'ConsentViewController', '7.9.0'
 ```
 
-The SDK has a static dependency. Make sure to have the following on your Podfile as well:
+The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
 
-```
+```ruby
 use_frameworks! :linkage => :static
 ```
 
