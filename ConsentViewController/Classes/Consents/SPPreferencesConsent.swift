@@ -9,7 +9,7 @@ import Foundation
 
 @objcMembers public class SPPreferencesConsent: NSObject, Codable, CampaignConsent, NSCopying {
     var applies: Bool = true
-    var dateCreated: SPDate
+    public var dateCreated: SPDate
     var messageId: String?
     public var uuid: String?
     public var status: [PreferencesStatus] = []
@@ -59,20 +59,56 @@ extension SPPreferencesConsent {
 }
 
 extension SPPreferencesConsent {
-    public struct PreferencesStatus: Codable {
-        var categoryId: Int
-        var channels: [PreferencesChannels] = []
-        var changed: Bool?
-        var dateConsented: SPDate?
-        var subType: PreferencesSubType? = PreferencesSubType.Unknown
+    @objcMembers public class PreferencesStatus: NSObject, Codable {
+        public let categoryId: Int
+        public let channels: [PreferencesChannels]
+        public let changed: Bool?
+        public let dateConsented: SPDate?
+        public let subType: PreferencesSubType?
+
+        init(categoryId: Int, channels: [PreferencesChannels] = [], changed: Bool? = nil, dateConsented: SPDate? = nil, subType: PreferencesSubType? = nil) {
+            self.categoryId = categoryId
+            self.channels = channels
+            self.changed = changed
+            self.dateConsented = dateConsented
+            self.subType = subType
+        }
     }
 
-    struct PreferencesChannels: Codable {
-        var channelId: Int
-        var status: Bool
+    @objcMembers public class PreferencesChannels: NSObject, Codable {
+        public let channelId: Int
+        public let status: Bool
+
+        init(channelId: Int, status: Bool) {
+            self.channelId = channelId
+            self.status = status
+        }
     }
 
-    public enum PreferencesSubType: Codable {
+    @objc public enum PreferencesSubType: Int, Codable, CustomStringConvertible {
         case AIPolicy, TermsAndConditions, PrivacyPolicy, LegalPolicy, TermsOfSale, Unknown
+
+        public var description: String {
+            return switch self {
+            case .AIPolicy: "AIPolicy"
+            case .TermsAndConditions: "TermsAndConditions"
+            case .PrivacyPolicy: "PrivacyPolicy"
+            case .LegalPolicy: "LegalPolicy"
+            case .TermsOfSale: "TermsOfSale"
+            case .Unknown: "Unknown"
+            }
+        }
+
+        init(rawString: String) {
+            switch rawString.lowercased() {
+            case "aipolicy": self = .AIPolicy
+            case "termsandconditions": self = .TermsAndConditions
+            case "privacypolicy": self = .PrivacyPolicy
+            case "legalpolicy": self = .LegalPolicy
+            case "termsofsale": self = .TermsOfSale
+            case "unknown": self = .Unknown
+            default: self = .Unknown
+            }
+        }
     }
 }
