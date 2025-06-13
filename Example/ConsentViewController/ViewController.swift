@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         ),
         gdprPmId: "488393",
         ccpaPmId: "509688",
-        usnatPmId: "943886"
+        usnatPmId: "988851"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
