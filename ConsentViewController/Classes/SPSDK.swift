@@ -26,7 +26,14 @@ import Foundation
     @objc func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
 }
 
-@objc public protocol SPSDK: SPGDPR, SPCCPA, SPUSNAT, SPMessageUIDelegate {
+@available(iOS 10, *)
+@objc public protocol SPGLOBALCMP {
+    @objc var globalcmpApplies: Bool { get }
+
+    @objc func loadGlobalCmpPrivacyManager(withId id: String, tab: SPPrivacyManagerTab, useGroupPmIfAvailable: Bool)
+}
+
+@objc public protocol SPSDK: SPGDPR, SPCCPA, SPUSNAT, SPGLOBALCMP, SPMessageUIDelegate {
     @objc static var VERSION: String { get }
     @objc var cleanUserDataOnError: Bool { get set }
     @objc var messageTimeoutInSeconds: TimeInterval { get set }
@@ -92,5 +99,9 @@ public extension SPSDK {
 
     func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
         loadUSNatPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
+    }
+
+    func loadGlobalCmpPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        loadGlobalCmpPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 }
