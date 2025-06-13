@@ -258,7 +258,7 @@ extension SPMobileCore.USNatConsent {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
-    func toNative() -> SPPreferencesConsent.PreferencesSubType {
+    func toNative() -> SPPreferencesConsent.SubType {
         switch self {
         case .aipolicy: return .AIPolicy
         case .legalpolicy: return .LegalPolicy
@@ -272,29 +272,31 @@ extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatusPreferencesChannels {
-    func toNative() -> SPPreferencesConsent.PreferencesChannels { return .init(channelId: Int(self.channelId), status: self.status) }
+    func toNative() -> SPPreferencesConsent.Channel {
+        .init(id: Int(channelId), status: status)
+    }
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatus {
-    func toNative() -> SPPreferencesConsent.PreferencesStatus {
-        return .init(
-            categoryId: Int(self.categoryId),
-            channels: self.channels?.map { $0.toNative() } ?? [],
-            changed: self.changed?.boolValue,
-            dateConsented: SPDate(string: self.dateConsented?.instantToString() ?? SPDate.now().originalDateString),
-            subType: self.subType.toNative()
+    func toNative() -> SPPreferencesConsent.Status {
+        .init(
+            categoryId: Int(categoryId),
+            channels: channels?.map { $0.toNative() } ?? [],
+            changed: changed?.boolValue,
+            dateConsented: SPDate(string: dateConsented?.instantToString() ?? SPDate.now().originalDateString),
+            subType: subType.toNative()
         )
     }
 }
 
 extension SPMobileCore.PreferencesConsent {
     func toNative() -> SPPreferencesConsent {
-        return .init(
-            dateCreated: SPDate(string: self.dateCreated?.instantToString() ?? SPDate.now().originalDateString),
-            messageId: self.messageId != nil ? String(Int(truncating: self.messageId ?? 0)) : nil,
-            uuid: self.uuid,
-            status: self.status?.map { $0.toNative() } ?? [],
-            rejectedStatus: self.rejectedStatus?.map { $0.toNative() } ?? []
+        .init(
+            dateCreated: SPDate(string: dateCreated?.instantToString() ?? SPDate.now().originalDateString),
+            messageId: messageId != nil ? String(Int(truncating: messageId ?? 0)) : nil,
+            uuid: uuid,
+            status: status?.map { $0.toNative() } ?? [],
+            rejectedStatus: rejectedStatus?.map { $0.toNative() } ?? []
         )
     }
 }
