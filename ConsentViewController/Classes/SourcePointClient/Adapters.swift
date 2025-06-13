@@ -556,6 +556,40 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
+            globalcmp: State.GlobalCmpState(
+                metaData: State.GlobalCmpStateGlobalCmpMetaData(
+                additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
+                sampleRate: 0,
+                wasSampled: nil,
+                wasSampledAt: nil,
+                vendorListId: nil,
+                applicableSections: []
+                ),
+                consents: GlobalCmpConsent(
+                    applies: false,
+                    categories: [],
+                    consentStatus: SPMobileCore.ConsentStatus(
+                        rejectedAny: nil,
+                        rejectedLI: nil,
+                        rejectedAll: nil,
+                        consentedAll: nil,
+                        consentedToAll: nil,
+                        consentedToAny: nil,
+                        hasConsentData: nil,
+                        vendorListAdditions: nil,
+                        legalBasisChanges: nil,
+                        granularStatus: nil,
+                        rejectedVendors: nil,
+                        rejectedCategories: nil
+                    ),
+                    dateCreated: SPDate(date: Date.distantPast).toCore(),
+                    expirationDate: SPDate(date: Date.distantPast).toCore(),
+                    gpcEnabled: nil,
+                    uuid: nil,
+                    userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: [])
+                ),
+                childPmId: nil
+            ),
             preferences: emptyPreferencesState(),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
@@ -735,6 +769,7 @@ extension SPCampaigns {
             gdpr: gdpr.toCore(),
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
+            globalcmp: nil,
             ios14: ios14.toCore(),
             preferences: preferences.toCore()
         )
