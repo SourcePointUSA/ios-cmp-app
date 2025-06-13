@@ -1,5 +1,5 @@
 //
-//  NativeSharedAdapters.swift
+//  SharedNativeToCoreAdapters.swift
 //  Pods
 //
 //  Created by Dmytro Fedko on 13.06.2025.
