@@ -8,29 +8,18 @@
 import Foundation
 
 @objcMembers public class SPPreferencesConsent: NSObject, Codable, CampaignConsent, NSCopying {
+
+    public static func empty() -> SPPreferencesConsent {
+        SPPreferencesConsent(dateCreated: .now())
+    }
+
     var applies: Bool = true
     public var dateCreated: SPDate
     var messageId: String?
     public var uuid: String?
-    public var status: [PreferencesStatus] = []
-    public var rejectedStatus: [PreferencesStatus] = []
+    public var status: [Status] = []
+    public var rejectedStatus: [Status] = []
 
-    init(
-        dateCreated: SPDate,
-        messageId: String? = nil,
-        uuid: String? = nil,
-        status: [PreferencesStatus] = [],
-        rejectedStatus: [PreferencesStatus] = []
-    ) {
-        self.uuid = uuid
-        self.status = status
-        self.messageId = messageId
-        self.dateCreated = dateCreated
-        self.rejectedStatus = rejectedStatus
-    }
-}
-
-extension SPPreferencesConsent {
     override open var description: String {
         """
         SPPreferencesConsent(
@@ -43,9 +32,19 @@ extension SPPreferencesConsent {
         """
     }
 
-    public static func empty() -> SPPreferencesConsent { SPPreferencesConsent(
-        dateCreated: .now()
-    )}
+    init(
+        dateCreated: SPDate,
+        messageId: String? = nil,
+        uuid: String? = nil,
+        status: [Status] = [],
+        rejectedStatus: [Status] = []
+    ) {
+        self.uuid = uuid
+        self.status = status
+        self.messageId = messageId
+        self.dateCreated = dateCreated
+        self.rejectedStatus = rejectedStatus
+    }
 
     public func copy(with zone: NSZone? = nil) -> Any {
         SPPreferencesConsent(
@@ -59,14 +58,25 @@ extension SPPreferencesConsent {
 }
 
 extension SPPreferencesConsent {
-    @objcMembers public class PreferencesStatus: NSObject, Codable {
+    @objcMembers public class Status: NSObject, Codable {
         public let categoryId: Int
-        public let channels: [PreferencesChannels]
+        public let channels: [Channel]
         public let changed: Bool?
         public let dateConsented: SPDate?
-        public let subType: PreferencesSubType?
+        public let subType: SubType?
 
-        init(categoryId: Int, channels: [PreferencesChannels] = [], changed: Bool? = nil, dateConsented: SPDate? = nil, subType: PreferencesSubType? = nil) {
+        public override var description: String {
+            """
+            SPPreferencesConsent.Status(
+                - categoryId: \(categoryId)
+                - channels: \(channels)
+                - changed: \(changed as Any)
+                - dateConsented: \(dateConsented as Any)
+                - subType: \(subType as Any)
+            """
+        }
+
+        init(categoryId: Int, channels: [Channel] = [], changed: Bool? = nil, dateConsented: SPDate? = nil, subType: SubType? = nil) {
             self.categoryId = categoryId
             self.channels = channels
             self.changed = changed
@@ -75,27 +85,35 @@ extension SPPreferencesConsent {
         }
     }
 
-    @objcMembers public class PreferencesChannels: NSObject, Codable {
-        public let channelId: Int
+    @objcMembers public class Channel: NSObject, Codable {
+        public let id: Int
         public let status: Bool
 
-        init(channelId: Int, status: Bool) {
-            self.channelId = channelId
+        public override var description: String {
+            """
+            SPPreferencesConsent.Channel(
+                - id: \(id)
+                - status: \(status)
+            """
+        }
+
+        init(id: Int, status: Bool) {
+            self.id = id
             self.status = status
         }
     }
 
-    @objc public enum PreferencesSubType: Int, Codable, CustomStringConvertible {
+    @objc public enum SubType: Int, Codable, CustomStringConvertible {
         case AIPolicy, TermsAndConditions, PrivacyPolicy, LegalPolicy, TermsOfSale, Unknown
 
         public var description: String {
             return switch self {
-            case .AIPolicy: "AIPolicy"
-            case .TermsAndConditions: "TermsAndConditions"
-            case .PrivacyPolicy: "PrivacyPolicy"
-            case .LegalPolicy: "LegalPolicy"
-            case .TermsOfSale: "TermsOfSale"
-            case .Unknown: "Unknown"
+            case .AIPolicy: "SPPreferencesConsent.SubType.AIPolicy"
+            case .TermsAndConditions: "SPPreferencesConsent.SubType.TermsAndConditions"
+            case .PrivacyPolicy: "SPPreferencesConsent.SubType.PrivacyPolicy"
+            case .LegalPolicy: "SPPreferencesConsent.SubType.LegalPolicy"
+            case .TermsOfSale: "SPPreferencesConsent.SubType.TermsOfSale"
+            case .Unknown: "SPPreferencesConsent.SubType.Unknown"
             }
         }
 

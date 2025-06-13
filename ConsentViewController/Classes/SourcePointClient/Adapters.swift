@@ -258,7 +258,7 @@ extension SPMobileCore.USNatConsent {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
-    func toNative() -> SPPreferencesConsent.PreferencesSubType {
+    func toNative() -> SPPreferencesConsent.SubType {
         switch self {
         case .aipolicy: return .AIPolicy
         case .legalpolicy: return .LegalPolicy
@@ -272,13 +272,13 @@ extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatusPreferencesChannels {
-    func toNative() -> SPPreferencesConsent.PreferencesChannels {
-        .init(channelId: Int(self.channelId), status: self.status)
+    func toNative() -> SPPreferencesConsent.Channel {
+        .init(id: Int(channelId), status: status)
     }
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatus {
-    func toNative() -> SPPreferencesConsent.PreferencesStatus {
+    func toNative() -> SPPreferencesConsent.Status {
         .init(
             categoryId: Int(categoryId),
             channels: channels?.map { $0.toNative() } ?? [],
