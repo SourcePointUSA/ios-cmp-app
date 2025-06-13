@@ -6,7 +6,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class SPMCKotlinx_serialization_jsonJsonElement, SPMCSPMessageLanguage, SPMCMessageToDisplay, SPMCSPError, SPMCSPAction, SPMCSPUserData, SPMCSPPropertyName, SPMCSPCampaigns, SPMCState, SPMCRepository, SPMCSPIDFAStatus, SPMCOSName, SPMCKotlinEnumCompanion, SPMCKotlinEnum<E>, SPMCKotlinArray<T>, SPMCKotlinThrowable, SPMCKotlinException, SPMCSPCampaignType, SPMCMessagesResponseMessage, SPMCMessagesResponseMessageMetaData, SPMCMessageToDisplayCompanion, SPMCMessagesResponseCampaign<ConsentClass>, SPMCSPActionType, SPMCSPActionCompanion, SPMCIncludeDataGPPConfig, SPMCSPCampaign, SPMCSPCampaignEnvCompanion, SPMCSPCampaignEnv, SPMCSPCampaignTypeCompanion, SPMCSPIDFAStatusCompanion, SPMCSPMessageLanguageSerializer, SPMCSPPropertyNameCompanion, SPMCSPPropertyNameSerializer, SPMCAttCampaignCompanion, SPMCAttCampaign, SPMCKotlinx_datetimeInstant, SPMCCCPAConsentCCPAConsentStatus, SPMCKotlinx_serialization_jsonJsonPrimitive, SPMCCCPAConsentCompanion, SPMCCCPAConsent, SPMCCCPAConsentCCPAConsentStatusCompanion, SPMCConsentStatusConsentStatusGranularStatus, SPMCConsentStatusCompanion, SPMCConsentStatus, SPMCConsentStatusConsentStatusGranularStatusCompanion, SPMCGDPRConsentVendorGrantsValue, SPMCGDPRConsentGCMStatus, SPMCGDPRConsentCompanion, SPMCGDPRConsent, SPMCGDPRConsentGCMStatusCompanion, SPMCGDPRConsentVendorGrantsValueCompanion, SPMCPreferencesConsentPreferencesStatus, SPMCPreferencesConsentCompanion, SPMCPreferencesConsent, SPMCPreferencesConsentPreferencesStatusPreferencesChannels, SPMCPreferencesConsentPreferencesSubType, SPMCPreferencesConsentPreferencesStatusCompanion, SPMCPreferencesConsentPreferencesStatusPreferencesChannelsCompanion, SPMCPreferencesConsentPreferencesSubTypeCompanion, SPMCSPUserDataSPConsent<ConsentType>, SPMCUSNatConsent, SPMCSPUserDataCompanion, SPMCSPUserDataSPWebConsents, SPMCSPUserDataSPConsentCompanion, SPMCSPUserDataSPWebConsentsSPWebConsent, SPMCSPUserDataSPWebConsentsCompanion, SPMCSPUserDataSPWebConsentsSPWebConsentCompanion, SPMCStateGDPRState, SPMCStateCCPAState, SPMCStateUSNatState, SPMCStatePreferencesState, SPMCStateCompanion, SPMCStateCCPAStateCCPAMetaData, SPMCStateCCPAStateCompanion, SPMCStateCCPAStateCCPAMetaDataCompanion, SPMCStateGDPRStateGDPRMetaData, SPMCStateGDPRStateCompanion, SPMCStateGDPRStateGDPRMetaDataCompanion, SPMCStatePreferencesStatePreferencesMetaData, SPMCStatePreferencesStateCompanion, SPMCStatePreferencesStatePreferencesMetaDataCompanion, SPMCStateUSNatStateUsNatMetaData, SPMCStateUSNatStateCompanion, SPMCStateUSNatStateUsNatMetaDataCompanion, SPMCUSNatConsentUSNatConsentSection, SPMCUSNatConsentUSNatUserConsents, SPMCUSNatConsentCompanion, SPMCUSNatConsentUSNatConsentSectionCompanion, SPMCUSNatConsentUSNatConsentableCompanion, SPMCUSNatConsentUSNatConsentable, SPMCUSNatConsentUSNatUserConsentsCompanion, SPMCErrorMetricsRequestCompanion, SPMCErrorMetricsRequest, SPMCPlatformHttpClientCompanion, SPMCKtor_client_coreHttpClient, SPMCChoiceAllRequestChoiceAllCampaigns, SPMCChoiceAllResponse, SPMCConsentStatusRequestMetaData, SPMCConsentStatusResponse, SPMCMessagesRequest, SPMCMessagesResponse, SPMCMetaDataRequestCampaigns, SPMCMetaDataResponse, SPMCCCPAChoiceRequest, SPMCCCPAChoiceResponse, SPMCGDPRChoiceRequest, SPMCGDPRChoiceResponse, SPMCPreferencesChoiceRequest, SPMCPreferencesChoiceResponse, SPMCUSNatChoiceRequest, SPMCUSNatChoiceResponse, SPMCPvDataRequest, SPMCPvDataResponse, SPMCDeviceInformation, SPMCIncludeData, SPMCCCPAChoiceRequestCompanion, SPMCDefaultRequestCompanion, SPMCDefaultRequest, SPMCChoiceAllRequestCompanion, SPMCChoiceAllRequest, SPMCChoiceAllRequestChoiceAllCampaignsCampaign, SPMCChoiceAllRequestChoiceAllCampaignsCompanion, SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion, SPMCConsentStatusRequestCompanion, SPMCConsentStatusRequest, SPMCConsentStatusRequestMetaDataCampaign, SPMCConsentStatusRequestMetaDataUSNatCampaign, SPMCConsentStatusRequestMetaDataPreferencesCampaign, SPMCConsentStatusRequestMetaDataCompanion, SPMCConsentStatusRequestMetaDataCampaignCompanion, SPMCConsentStatusRequestMetaDataPreferencesCampaignCompanion, SPMCConsentStatusRequestMetaDataUSNatCampaignCompanion, SPMCCustomConsentRequestCompanion, SPMCCustomConsentRequest, SPMCDeleteCustomConsentRequestCompanion, SPMCDeleteCustomConsentRequest, SPMCGDPRChoiceRequestCompanion, SPMCIDFAStatusReportRequestAppleTrackingPayload, SPMCIDFAStatusReportRequestCompanion, SPMCIDFAStatusReportRequest, SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion, SPMCIncludeDataTypeString, SPMCIncludeDataCompanion, SPMCIncludeDataMspaBinaryFlag, SPMCIncludeDataMspaTernaryFlag, SPMCIncludeDataGPPConfigCompanion, SPMCIncludeDataMspaBinaryFlagCompanion, SPMCIncludeDataMspaTernaryFlagCompanion, SPMCIncludeDataTypeStringCompanion, SPMCMessagesRequestBody, SPMCMessagesRequestMetaData, SPMCMessagesRequestCompanion, SPMCMessagesRequestBodyCampaigns, SPMCMessagesRequestBodyCompanion, SPMCMessagesRequestBodyCampaignsGDPR, SPMCMessagesRequestBodyCampaignsIOS14, SPMCMessagesRequestBodyCampaignsCCPA, SPMCMessagesRequestBodyCampaignsUSNat, SPMCMessagesRequestBodyCampaignsPreferences, SPMCMessagesRequestBodyCampaignsCompanion, SPMCMessagesRequestBodyCampaignsCCPACompanion, SPMCMessagesRequestBodyCampaignsGDPRCompanion, SPMCMessagesRequestBodyCampaignsIOS14Companion, SPMCMessagesRequestBodyCampaignsPreferencesCompanion, SPMCMessagesRequestBodyCampaignsUSNatCompanion, SPMCMessagesRequestMetaDataCampaign, SPMCMessagesRequestMetaDataCompanion, SPMCMessagesRequestMetaDataCampaignCompanion, SPMCMetaDataRequestCompanion, SPMCMetaDataRequest, SPMCMetaDataRequestCampaignsCampaign, SPMCMetaDataRequestCampaignsCompanion, SPMCMetaDataRequestCampaignsCampaignCompanion, SPMCPreferencesChoiceRequestCompanion, SPMCPvDataRequestGDPR, SPMCPvDataRequestCCPA, SPMCPvDataRequestUSNat, SPMCPvDataRequestCompanion, SPMCPvDataRequestCCPACompanion, SPMCPvDataRequestGDPRCompanion, SPMCPvDataRequestUSNatCompanion, SPMCUSNatChoiceRequestCompanion, SPMCCCPAChoiceResponseCompanion, SPMCChoiceAllResponseGDPR, SPMCChoiceAllResponseCCPA, SPMCChoiceAllResponseUSNAT, SPMCChoiceAllResponseCompanion, SPMCChoiceAllResponseCCPACompanion, SPMCChoiceAllResponseGDPRPostPayload, SPMCChoiceAllResponseGDPRCompanion, SPMCChoiceAllResponseGDPRPostPayloadCompanion, SPMCChoiceAllResponseUSNATCompanion, SPMCConsentStatusResponseConsentStatusData, SPMCConsentStatusResponseCompanion, SPMCConsentStatusResponseConsentStatusDataCompanion, SPMCGDPRChoiceResponseCompanion, SPMCMessagesResponseMessageMetaDataMessageCategory, SPMCMessagesResponseMessageMetaDataMessageSubCategory, SPMCMessagesResponseMessageGDPRCategory, SPMCMessageWithCategorySubCategoryCompanion, SPMCMessageWithCategorySubCategory, SPMCMessagesResponseCompanion, SPMCMessagesResponseCampaignCompanion, SPMCMessagesResponseCCPACompanion, SPMCMessagesResponseCCPA, SPMCMessagesResponseGDPRCompanion, SPMCMessagesResponseGDPR, SPMCKotlinNothing, SPMCMessagesResponseIos14Companion, SPMCMessagesResponseIos14, SPMCMessagesResponseMessageCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryType, SPMCMessagesResponseMessageGDPRCategoryVendor, SPMCMessagesResponseMessageGDPRCategoryCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeCompanion, SPMCStringEnumWithDefaultSerializer<T>, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeSerializer, SPMCMessagesResponseMessageGDPRCategoryVendorVendorType, SPMCMessagesResponseMessageGDPRCategoryVendorCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeSerializer, SPMCMessagesResponseMessageMetaDataCompanion, SPMCMessagesResponseMessageMetaDataMessageCategoryCompanion, SPMCIntEnumSerializer<T>, SPMCMessagesResponseMessageMetaDataMessageCategorySerializer, SPMCMessagesResponseMessageMetaDataMessageSubCategoryCompanion, SPMCMessagesResponseMessageMetaDataMessageSubCategorySerializer, SPMCMessagesResponsePreferencesCompanion, SPMCMessagesResponsePreferences, SPMCMessagesResponseUSNatCompanion, SPMCMessagesResponseUSNat, SPMCMetaDataResponseMetaDataResponseGDPR, SPMCMetaDataResponseMetaDataResponseUSNat, SPMCMetaDataResponseMetaDataResponseCCPA, SPMCMetaDataResponseMetaDataResponsePreferences, SPMCMetaDataResponseCompanion, SPMCMetaDataResponseMetaDataResponseCCPACompanion, SPMCMetaDataResponseMetaDataResponseGDPRCompanion, SPMCMetaDataResponseMetaDataResponsePreferencesCompanion, SPMCMetaDataResponseMetaDataResponseUSNatCompanion, SPMCPreferencesChoiceResponseCompanion, SPMCPvDataResponseCampaign, SPMCPvDataResponseCompanion, SPMCPvDataResponseCampaignCompanion, SPMCUSNatChoiceResponseCompanion, SPMCRepositoryCompanion, SPMCKotlinx_datetimeInstantCompanion, SPMCKotlinx_serialization_jsonJson, SPMCKotlinRuntimeException, SPMCKotlinIllegalStateException, SPMCKotlinx_serialization_jsonJsonElementCompanion, SPMCKotlinx_serialization_coreSerializersModule, SPMCKotlinx_serialization_coreSerialKind, SPMCKotlinx_serialization_jsonJsonPrimitiveCompanion, SPMCKtor_client_coreHttpClientEngineConfig, SPMCKtor_client_coreHttpClientConfig<T>, SPMCKtor_eventsEvents, SPMCKtor_client_coreHttpReceivePipeline, SPMCKtor_client_coreHttpRequestPipeline, SPMCKtor_client_coreHttpResponsePipeline, SPMCKtor_client_coreHttpSendPipeline, SPMCKtor_client_coreHttpRequestData, SPMCKtor_client_coreHttpResponseData, SPMCKotlinx_coroutines_coreCoroutineDispatcher, SPMCKotlinx_serialization_jsonJsonDefault, SPMCKotlinx_serialization_jsonJsonConfiguration, SPMCKtor_utilsAttributeKey<T>, SPMCKtor_client_coreProxyConfig, SPMCKtor_eventsEventDefinition<T>, SPMCKtor_utilsPipelinePhase, SPMCKtor_utilsPipeline<TSubject, TContext>, SPMCKtor_client_coreHttpReceivePipelinePhases, SPMCKtor_client_coreHttpResponse, SPMCKotlinUnit, SPMCKtor_client_coreHttpRequestPipelinePhases, SPMCKtor_client_coreHttpRequestBuilder, SPMCKtor_client_coreHttpResponsePipelinePhases, SPMCKtor_client_coreHttpResponseContainer, SPMCKtor_client_coreHttpClientCall, SPMCKtor_client_coreHttpSendPipelinePhases, SPMCKtor_httpUrl, SPMCKtor_httpHttpMethod, SPMCKtor_httpOutgoingContent, SPMCKtor_httpHttpStatusCode, SPMCKtor_utilsGMTDate, SPMCKtor_httpHttpProtocolVersion, SPMCKotlinAbstractCoroutineContextElement, SPMCKotlinx_coroutines_coreCoroutineDispatcherKey, SPMCKotlinx_serialization_jsonClassDiscriminatorMode, SPMCKtor_utilsTypeInfo, SPMCKtor_httpHeadersBuilder, SPMCKtor_client_coreHttpRequestBuilderCompanion, SPMCKtor_httpURLBuilder, SPMCKtor_client_coreHttpClientCallCompanion, SPMCKtor_httpUrlCompanion, SPMCKtor_httpURLProtocol, SPMCKtor_httpHttpMethodCompanion, SPMCKtor_httpContentType, SPMCKotlinCancellationException, SPMCKtor_httpHttpStatusCodeCompanion, SPMCKtor_utilsWeekDay, SPMCKtor_utilsMonth, SPMCKtor_utilsGMTDateCompanion, SPMCKtor_httpHttpProtocolVersionCompanion, SPMCKotlinAbstractCoroutineContextKey<B, E>, SPMCKtor_utilsStringValuesBuilderImpl, SPMCKtor_httpURLBuilderCompanion, SPMCKtor_httpURLProtocolCompanion, SPMCKtor_httpHeaderValueParam, SPMCKtor_httpHeaderValueWithParametersCompanion, SPMCKtor_httpHeaderValueWithParameters, SPMCKtor_httpContentTypeCompanion, SPMCKtor_utilsWeekDayCompanion, SPMCKtor_utilsMonthCompanion, SPMCKotlinKTypeProjection, SPMCKotlinByteArray, SPMCKotlinx_io_coreBuffer, SPMCKotlinKVariance, SPMCKotlinKTypeProjectionCompanion, SPMCKotlinByteIterator;
+@class SPMCKotlinx_serialization_jsonJsonElement, SPMCSPMessageLanguage, SPMCMessageToDisplay, SPMCSPError, SPMCSPAction, SPMCSPUserData, SPMCSPPropertyName, SPMCSPCampaigns, SPMCState, SPMCRepository, SPMCSPIDFAStatus, SPMCOSName, SPMCKotlinEnumCompanion, SPMCKotlinEnum<E>, SPMCKotlinArray<T>, SPMCKotlinThrowable, SPMCKotlinException, SPMCSPCampaignType, SPMCMessagesResponseMessage, SPMCMessagesResponseMessageMetaData, SPMCMessageToDisplayCompanion, SPMCMessagesResponseCampaign<ConsentClass>, SPMCSPActionType, SPMCSPActionCompanion, SPMCIncludeDataGPPConfig, SPMCSPCampaign, SPMCSPCampaignEnvCompanion, SPMCSPCampaignEnv, SPMCSPCampaignTypeCompanion, SPMCSPIDFAStatusCompanion, SPMCSPMessageLanguageSerializer, SPMCSPPropertyNameCompanion, SPMCSPPropertyNameSerializer, SPMCAttCampaignCompanion, SPMCAttCampaign, SPMCKotlinx_datetimeInstant, SPMCCCPAConsentCCPAConsentStatus, SPMCKotlinx_serialization_jsonJsonPrimitive, SPMCCCPAConsentCompanion, SPMCCCPAConsent, SPMCCCPAConsentCCPAConsentStatusCompanion, SPMCConsentStatusConsentStatusGranularStatus, SPMCConsentStatusCompanion, SPMCConsentStatus, SPMCConsentStatusConsentStatusGranularStatusCompanion, SPMCGDPRConsentVendorGrantsValue, SPMCGDPRConsentGCMStatus, SPMCGDPRConsentCompanion, SPMCGDPRConsent, SPMCGDPRConsentGCMStatusCompanion, SPMCGDPRConsentVendorGrantsValueCompanion, SPMCUSNatConsentUSNatUserConsents, SPMCGlobalCmpConsentCompanion, SPMCGlobalCmpConsent, SPMCPreferencesConsentPreferencesStatus, SPMCPreferencesConsentCompanion, SPMCPreferencesConsent, SPMCPreferencesConsentPreferencesStatusPreferencesChannels, SPMCPreferencesConsentPreferencesSubType, SPMCPreferencesConsentPreferencesStatusCompanion, SPMCPreferencesConsentPreferencesStatusPreferencesChannelsCompanion, SPMCPreferencesConsentPreferencesSubTypeCompanion, SPMCSPUserDataSPConsent<ConsentType>, SPMCUSNatConsent, SPMCSPUserDataCompanion, SPMCSPUserDataSPWebConsents, SPMCSPUserDataSPConsentCompanion, SPMCSPUserDataSPWebConsentsSPWebConsent, SPMCSPUserDataSPWebConsentsCompanion, SPMCSPUserDataSPWebConsentsSPWebConsentCompanion, SPMCStateGDPRState, SPMCStateCCPAState, SPMCStateUSNatState, SPMCStateGlobalCmpState, SPMCStatePreferencesState, SPMCStateCompanion, SPMCStateCCPAStateCCPAMetaData, SPMCStateCCPAStateCompanion, SPMCStateCCPAStateCCPAMetaDataCompanion, SPMCStateGDPRStateGDPRMetaData, SPMCStateGDPRStateCompanion, SPMCStateGDPRStateGDPRMetaDataCompanion, SPMCStateGlobalCmpStateGlobalCmpMetaData, SPMCStateGlobalCmpStateCompanion, SPMCStateGlobalCmpStateGlobalCmpMetaDataCompanion, SPMCStatePreferencesStatePreferencesMetaData, SPMCStatePreferencesStateCompanion, SPMCStatePreferencesStatePreferencesMetaDataCompanion, SPMCStateUSNatStateUsNatMetaData, SPMCStateUSNatStateCompanion, SPMCStateUSNatStateUsNatMetaDataCompanion, SPMCUSNatConsentUSNatConsentSection, SPMCUSNatConsentCompanion, SPMCUSNatConsentUSNatConsentSectionCompanion, SPMCUSNatConsentUSNatConsentableCompanion, SPMCUSNatConsentUSNatConsentable, SPMCUSNatConsentUSNatUserConsentsCompanion, SPMCErrorMetricsRequestCompanion, SPMCErrorMetricsRequest, SPMCPlatformHttpClientCompanion, SPMCKtor_client_coreHttpClient, SPMCChoiceAllRequestChoiceAllCampaigns, SPMCChoiceAllResponse, SPMCConsentStatusRequestMetaData, SPMCConsentStatusResponse, SPMCMessagesRequest, SPMCMessagesResponse, SPMCMetaDataRequestCampaigns, SPMCMetaDataResponse, SPMCCCPAChoiceRequest, SPMCCCPAChoiceResponse, SPMCGDPRChoiceRequest, SPMCGDPRChoiceResponse, SPMCGlobalCmpChoiceRequest, SPMCGlobalCmpChoiceResponse, SPMCPreferencesChoiceRequest, SPMCPreferencesChoiceResponse, SPMCUSNatChoiceRequest, SPMCUSNatChoiceResponse, SPMCPvDataRequest, SPMCPvDataResponse, SPMCDeviceInformation, SPMCIncludeData, SPMCCCPAChoiceRequestCompanion, SPMCDefaultRequestCompanion, SPMCDefaultRequest, SPMCChoiceAllRequestCompanion, SPMCChoiceAllRequest, SPMCChoiceAllRequestChoiceAllCampaignsCampaign, SPMCChoiceAllRequestChoiceAllCampaignsCompanion, SPMCChoiceAllRequestChoiceAllCampaignsCampaignCompanion, SPMCConsentStatusRequestCompanion, SPMCConsentStatusRequest, SPMCConsentStatusRequestMetaDataCampaign, SPMCConsentStatusRequestMetaDataGlobalCmpCampaign, SPMCConsentStatusRequestMetaDataUSNatCampaign, SPMCConsentStatusRequestMetaDataPreferencesCampaign, SPMCConsentStatusRequestMetaDataCompanion, SPMCConsentStatusRequestMetaDataCampaignCompanion, SPMCConsentStatusRequestMetaDataGlobalCmpCampaignCompanion, SPMCConsentStatusRequestMetaDataPreferencesCampaignCompanion, SPMCConsentStatusRequestMetaDataUSNatCampaignCompanion, SPMCCustomConsentRequestCompanion, SPMCCustomConsentRequest, SPMCDeleteCustomConsentRequestCompanion, SPMCDeleteCustomConsentRequest, SPMCGDPRChoiceRequestCompanion, SPMCGlobalCmpChoiceRequestCompanion, SPMCIDFAStatusReportRequestAppleTrackingPayload, SPMCIDFAStatusReportRequestCompanion, SPMCIDFAStatusReportRequest, SPMCIDFAStatusReportRequestAppleTrackingPayloadCompanion, SPMCIncludeDataTypeString, SPMCIncludeDataCompanion, SPMCIncludeDataMspaBinaryFlag, SPMCIncludeDataMspaTernaryFlag, SPMCIncludeDataGPPConfigCompanion, SPMCIncludeDataMspaBinaryFlagCompanion, SPMCIncludeDataMspaTernaryFlagCompanion, SPMCIncludeDataTypeStringCompanion, SPMCMessagesRequestBody, SPMCMessagesRequestMetaData, SPMCMessagesRequestCompanion, SPMCMessagesRequestBodyCampaigns, SPMCMessagesRequestBodyCompanion, SPMCMessagesRequestBodyCampaignsGDPR, SPMCMessagesRequestBodyCampaignsIOS14, SPMCMessagesRequestBodyCampaignsCCPA, SPMCMessagesRequestBodyCampaignsGlobalCmp, SPMCMessagesRequestBodyCampaignsUSNat, SPMCMessagesRequestBodyCampaignsPreferences, SPMCMessagesRequestBodyCampaignsCompanion, SPMCMessagesRequestBodyCampaignsCCPACompanion, SPMCMessagesRequestBodyCampaignsGDPRCompanion, SPMCMessagesRequestBodyCampaignsGlobalCmpCompanion, SPMCMessagesRequestBodyCampaignsIOS14Companion, SPMCMessagesRequestBodyCampaignsPreferencesCompanion, SPMCMessagesRequestBodyCampaignsUSNatCompanion, SPMCMessagesRequestMetaDataCampaign, SPMCMessagesRequestMetaDataCompanion, SPMCMessagesRequestMetaDataCampaignCompanion, SPMCMetaDataRequestCompanion, SPMCMetaDataRequest, SPMCMetaDataRequestCampaignsCampaign, SPMCMetaDataRequestCampaignsCompanion, SPMCMetaDataRequestCampaignsCampaignCompanion, SPMCPreferencesChoiceRequestCompanion, SPMCPvDataRequestGDPR, SPMCPvDataRequestCCPA, SPMCPvDataRequestUSNat, SPMCPvDataRequestGlobalCmp, SPMCPvDataRequestCompanion, SPMCPvDataRequestCCPACompanion, SPMCPvDataRequestGDPRCompanion, SPMCPvDataRequestGlobalCmpCompanion, SPMCPvDataRequestUSNatCompanion, SPMCUSNatChoiceRequestCompanion, SPMCCCPAChoiceResponseCompanion, SPMCChoiceAllResponseGDPR, SPMCChoiceAllResponseCCPA, SPMCChoiceAllResponseUSNAT, SPMCChoiceAllResponseCompanion, SPMCChoiceAllResponseCCPACompanion, SPMCChoiceAllResponseGDPRPostPayload, SPMCChoiceAllResponseGDPRCompanion, SPMCChoiceAllResponseGDPRPostPayloadCompanion, SPMCChoiceAllResponseUSNATCompanion, SPMCConsentStatusResponseConsentStatusData, SPMCConsentStatusResponseCompanion, SPMCConsentStatusResponseConsentStatusDataCompanion, SPMCGDPRChoiceResponseCompanion, SPMCGlobalCmpChoiceResponseCompanion, SPMCMessagesResponseMessageMetaDataMessageCategory, SPMCMessagesResponseMessageMetaDataMessageSubCategory, SPMCMessagesResponseMessageGDPRCategory, SPMCMessageWithCategorySubCategoryCompanion, SPMCMessageWithCategorySubCategory, SPMCMessagesResponseCompanion, SPMCMessagesResponseCampaignCompanion, SPMCMessagesResponseCCPACompanion, SPMCMessagesResponseCCPA, SPMCMessagesResponseGDPRCompanion, SPMCMessagesResponseGDPR, SPMCMessagesResponseGlobalCmpCompanion, SPMCMessagesResponseGlobalCmp, SPMCKotlinNothing, SPMCMessagesResponseIos14Companion, SPMCMessagesResponseIos14, SPMCMessagesResponseMessageCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryType, SPMCMessagesResponseMessageGDPRCategoryVendor, SPMCMessagesResponseMessageGDPRCategoryCompanion, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeCompanion, SPMCStringEnumWithDefaultSerializer<T>, SPMCMessagesResponseMessageGDPRCategoryCategoryTypeSerializer, SPMCMessagesResponseMessageGDPRCategoryVendorVendorType, SPMCMessagesResponseMessageGDPRCategoryVendorCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeCompanion, SPMCMessagesResponseMessageGDPRCategoryVendorVendorTypeSerializer, SPMCMessagesResponseMessageMetaDataCompanion, SPMCMessagesResponseMessageMetaDataMessageCategoryCompanion, SPMCIntEnumSerializer<T>, SPMCMessagesResponseMessageMetaDataMessageCategorySerializer, SPMCMessagesResponseMessageMetaDataMessageSubCategoryCompanion, SPMCMessagesResponseMessageMetaDataMessageSubCategorySerializer, SPMCMessagesResponsePreferencesCompanion, SPMCMessagesResponsePreferences, SPMCMessagesResponseUSNatCompanion, SPMCMessagesResponseUSNat, SPMCMetaDataResponseMetaDataResponseGDPR, SPMCMetaDataResponseMetaDataResponseGlobalCmp, SPMCMetaDataResponseMetaDataResponseUSNat, SPMCMetaDataResponseMetaDataResponseCCPA, SPMCMetaDataResponseMetaDataResponsePreferences, SPMCMetaDataResponseCompanion, SPMCMetaDataResponseMetaDataResponseCCPACompanion, SPMCMetaDataResponseMetaDataResponseGDPRCompanion, SPMCMetaDataResponseMetaDataResponseGlobalCmpCompanion, SPMCMetaDataResponseMetaDataResponsePreferencesCompanion, SPMCMetaDataResponseMetaDataResponseUSNatCompanion, SPMCPreferencesChoiceResponseCompanion, SPMCPvDataResponseCampaign, SPMCPvDataResponseCompanion, SPMCPvDataResponseCampaignCompanion, SPMCUSNatChoiceResponseCompanion, SPMCRepositoryCompanion, SPMCKotlinx_datetimeInstantCompanion, SPMCKotlinx_serialization_jsonJson, SPMCKotlinRuntimeException, SPMCKotlinIllegalStateException, SPMCKotlinx_serialization_jsonJsonElementCompanion, SPMCKotlinx_serialization_coreSerializersModule, SPMCKotlinx_serialization_coreSerialKind, SPMCKotlinx_serialization_jsonJsonPrimitiveCompanion, SPMCKtor_client_coreHttpClientEngineConfig, SPMCKtor_client_coreHttpClientConfig<T>, SPMCKtor_eventsEvents, SPMCKtor_client_coreHttpReceivePipeline, SPMCKtor_client_coreHttpRequestPipeline, SPMCKtor_client_coreHttpResponsePipeline, SPMCKtor_client_coreHttpSendPipeline, SPMCKtor_client_coreHttpRequestData, SPMCKtor_client_coreHttpResponseData, SPMCKotlinx_coroutines_coreCoroutineDispatcher, SPMCKotlinx_serialization_jsonJsonDefault, SPMCKotlinx_serialization_jsonJsonConfiguration, SPMCKtor_utilsAttributeKey<T>, SPMCKtor_client_coreProxyConfig, SPMCKtor_eventsEventDefinition<T>, SPMCKtor_utilsPipelinePhase, SPMCKtor_utilsPipeline<TSubject, TContext>, SPMCKtor_client_coreHttpReceivePipelinePhases, SPMCKtor_client_coreHttpResponse, SPMCKotlinUnit, SPMCKtor_client_coreHttpRequestPipelinePhases, SPMCKtor_client_coreHttpRequestBuilder, SPMCKtor_client_coreHttpResponsePipelinePhases, SPMCKtor_client_coreHttpResponseContainer, SPMCKtor_client_coreHttpClientCall, SPMCKtor_client_coreHttpSendPipelinePhases, SPMCKtor_httpUrl, SPMCKtor_httpHttpMethod, SPMCKtor_httpOutgoingContent, SPMCKtor_httpHttpStatusCode, SPMCKtor_utilsGMTDate, SPMCKtor_httpHttpProtocolVersion, SPMCKotlinAbstractCoroutineContextElement, SPMCKotlinx_coroutines_coreCoroutineDispatcherKey, SPMCKotlinx_serialization_jsonClassDiscriminatorMode, SPMCKtor_utilsTypeInfo, SPMCKtor_httpHeadersBuilder, SPMCKtor_client_coreHttpRequestBuilderCompanion, SPMCKtor_httpURLBuilder, SPMCKtor_client_coreHttpClientCallCompanion, SPMCKtor_httpUrlCompanion, SPMCKtor_httpURLProtocol, SPMCKtor_httpHttpMethodCompanion, SPMCKtor_httpContentType, SPMCKotlinCancellationException, SPMCKtor_httpHttpStatusCodeCompanion, SPMCKtor_utilsWeekDay, SPMCKtor_utilsMonth, SPMCKtor_utilsGMTDateCompanion, SPMCKtor_httpHttpProtocolVersionCompanion, SPMCKotlinAbstractCoroutineContextKey<B, E>, SPMCKtor_utilsStringValuesBuilderImpl, SPMCKtor_httpURLBuilderCompanion, SPMCKtor_httpURLProtocolCompanion, SPMCKtor_httpHeaderValueParam, SPMCKtor_httpHeaderValueWithParametersCompanion, SPMCKtor_httpHeaderValueWithParameters, SPMCKtor_httpContentTypeCompanion, SPMCKtor_utilsWeekDayCompanion, SPMCKtor_utilsMonthCompanion, SPMCKotlinKTypeProjection, SPMCKotlinByteArray, SPMCKotlinx_io_coreBuffer, SPMCKotlinKVariance, SPMCKotlinKTypeProjectionCompanion, SPMCKotlinByteIterator;
 
 @protocol SPMCICoordinator, SPMCSPClient, SPMCKotlinSuspendFunction0, SPMCKotlinComparable, SPMCKotlinx_serialization_coreKSerializer, SPMCKotlinx_serialization_coreEncoder, SPMCKotlinx_serialization_coreSerialDescriptor, SPMCKotlinx_serialization_coreSerializationStrategy, SPMCKotlinx_serialization_coreDecoder, SPMCKotlinx_serialization_coreDeserializationStrategy, SPMCStateSPSampleable, SPMCKtor_client_coreHttpClientEngine, SPMCIntEnum, SPMCMultiplatform_settingsSettings, SPMCKtor_client_coreClientPlugin, SPMCKotlinFunction, SPMCKotlinIterator, SPMCKotlinx_serialization_coreCompositeEncoder, SPMCKotlinAnnotation, SPMCKotlinx_serialization_coreCompositeDecoder, SPMCKotlinCoroutineContext, SPMCKotlinx_coroutines_coreCoroutineScope, SPMCKtor_ioCloseable, SPMCKtor_client_coreHttpClientEngineCapability, SPMCKtor_utilsAttributes, SPMCKotlinx_datetimeDateTimeFormat, SPMCKotlinx_serialization_coreSerialFormat, SPMCKotlinx_serialization_coreStringFormat, SPMCKtor_client_coreHttpClientPlugin, SPMCKotlinx_serialization_coreSerializersModuleCollector, SPMCKotlinKClass, SPMCKotlinCoroutineContextElement, SPMCKotlinCoroutineContextKey, SPMCKotlinx_coroutines_coreDisposableHandle, SPMCKotlinSuspendFunction2, SPMCKtor_httpHeaders, SPMCKotlinx_coroutines_coreJob, SPMCKotlinContinuation, SPMCKotlinContinuationInterceptor, SPMCKotlinx_coroutines_coreRunnable, SPMCKotlinAppendable, SPMCKotlinx_serialization_jsonJsonNamingStrategy, SPMCKotlinKDeclarationContainer, SPMCKotlinKAnnotatedElement, SPMCKotlinKClassifier, SPMCKtor_httpHttpMessage, SPMCKtor_ioByteReadChannel, SPMCKtor_httpHttpMessageBuilder, SPMCKtor_client_coreHttpRequest, SPMCKtor_httpParameters, SPMCKotlinMapEntry, SPMCKtor_utilsStringValues, SPMCKotlinx_coroutines_coreChildHandle, SPMCKotlinx_coroutines_coreChildJob, SPMCKotlinSequence, SPMCKotlinx_coroutines_coreSelectClause0, SPMCKotlinKType, SPMCKotlinx_io_coreSource, SPMCKtor_utilsStringValuesBuilder, SPMCKtor_httpParametersBuilder, SPMCKotlinx_coroutines_coreParentJob, SPMCKotlinx_coroutines_coreSelectInstance, SPMCKotlinx_coroutines_coreSelectClause, SPMCKotlinx_io_coreRawSink, SPMCKotlinAutoCloseable, SPMCKotlinx_io_coreRawSource, SPMCKotlinx_io_coreSink;
 
@@ -505,6 +505,7 @@ __attribute__((swift_name("SPCampaignType")))
 @property (class, readonly) SPMCSPCampaignType *usnat __attribute__((swift_name("usnat")));
 @property (class, readonly) SPMCSPCampaignType *ios14 __attribute__((swift_name("ios14")));
 @property (class, readonly) SPMCSPCampaignType *preferences __attribute__((swift_name("preferences")));
+@property (class, readonly) SPMCSPCampaignType *globalcmp __attribute__((swift_name("globalcmp")));
 @property (class, readonly) SPMCSPCampaignType *unknown __attribute__((swift_name("unknown")));
 + (SPMCKotlinArray<SPMCSPCampaignType *> *)values __attribute__((swift_name("values()")));
 @property (class, readonly) NSArray<SPMCSPCampaignType *> *entries __attribute__((swift_name("entries")));
@@ -524,14 +525,15 @@ __attribute__((swift_name("SPCampaignType.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("SPCampaigns")))
 @interface SPMCSPCampaigns : SPMCBase
-- (instancetype)initWithEnvironment:(SPMCSPCampaignEnv *)environment gdpr:(SPMCSPCampaign * _Nullable)gdpr ccpa:(SPMCSPCampaign * _Nullable)ccpa usnat:(SPMCSPCampaign * _Nullable)usnat ios14:(SPMCSPCampaign * _Nullable)ios14 preferences:(SPMCSPCampaign * _Nullable)preferences __attribute__((swift_name("init(environment:gdpr:ccpa:usnat:ios14:preferences:)"))) __attribute__((objc_designated_initializer));
-- (SPMCSPCampaigns *)doCopyEnvironment:(SPMCSPCampaignEnv *)environment gdpr:(SPMCSPCampaign * _Nullable)gdpr ccpa:(SPMCSPCampaign * _Nullable)ccpa usnat:(SPMCSPCampaign * _Nullable)usnat ios14:(SPMCSPCampaign * _Nullable)ios14 preferences:(SPMCSPCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(environment:gdpr:ccpa:usnat:ios14:preferences:)")));
+- (instancetype)initWithEnvironment:(SPMCSPCampaignEnv *)environment gdpr:(SPMCSPCampaign * _Nullable)gdpr ccpa:(SPMCSPCampaign * _Nullable)ccpa usnat:(SPMCSPCampaign * _Nullable)usnat globalcmp:(SPMCSPCampaign * _Nullable)globalcmp ios14:(SPMCSPCampaign * _Nullable)ios14 preferences:(SPMCSPCampaign * _Nullable)preferences __attribute__((swift_name("init(environment:gdpr:ccpa:usnat:globalcmp:ios14:preferences:)"))) __attribute__((objc_designated_initializer));
+- (SPMCSPCampaigns *)doCopyEnvironment:(SPMCSPCampaignEnv *)environment gdpr:(SPMCSPCampaign * _Nullable)gdpr ccpa:(SPMCSPCampaign * _Nullable)ccpa usnat:(SPMCSPCampaign * _Nullable)usnat globalcmp:(SPMCSPCampaign * _Nullable)globalcmp ios14:(SPMCSPCampaign * _Nullable)ios14 preferences:(SPMCSPCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(environment:gdpr:ccpa:usnat:globalcmp:ios14:preferences:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCSPCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCSPCampaignEnv *environment __attribute__((swift_name("environment")));
 @property (readonly) SPMCSPCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCSPCampaign * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCSPCampaign * _Nullable ios14 __attribute__((swift_name("ios14")));
 @property (readonly) SPMCSPCampaign * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCSPCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
@@ -1038,6 +1040,40 @@ __attribute__((swift_name("GDPRConsent.VendorGrantsValueCompanion")))
  *   kotlinx.serialization.Serializable
 */
 __attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpConsent")))
+@interface SPMCGlobalCmpConsent : SPMCBase
+- (instancetype)initWithApplies:(BOOL)applies categories:(NSArray<NSString *> *)categories consentStatus:(SPMCConsentStatus *)consentStatus dateCreated:(SPMCKotlinx_datetimeInstant *)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant *)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled uuid:(NSString * _Nullable)uuid userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("init(applies:categories:consentStatus:dateCreated:expirationDate:gpcEnabled:uuid:userConsents:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCGlobalCmpConsentCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCGlobalCmpConsent *)doCopyApplies:(BOOL)applies categories:(NSArray<NSString *> *)categories consentStatus:(SPMCConsentStatus *)consentStatus dateCreated:(SPMCKotlinx_datetimeInstant *)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant *)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled uuid:(NSString * _Nullable)uuid userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("doCopy(applies:categories:consentStatus:dateCreated:expirationDate:gpcEnabled:uuid:userConsents:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) BOOL applies __attribute__((swift_name("applies")));
+@property (readonly) NSArray<NSString *> *categories __attribute__((swift_name("categories")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) SPMCKotlinx_datetimeInstant *dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) SPMCKotlinx_datetimeInstant *expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+@property (readonly) SPMCUSNatConsentUSNatUserConsents *userConsents __attribute__((swift_name("userConsents")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpConsent.Companion")))
+@interface SPMCGlobalCmpConsentCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCGlobalCmpConsentCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("PreferencesConsent")))
 @interface SPMCPreferencesConsent : SPMCBase
 - (instancetype)initWithDateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated messageId:(SPMCInt * _Nullable)messageId status:(NSArray<SPMCPreferencesConsentPreferencesStatus *> * _Nullable)status rejectedStatus:(NSArray<SPMCPreferencesConsentPreferencesStatus *> * _Nullable)rejectedStatus uuid:(NSString * _Nullable)uuid __attribute__((swift_name("init(dateCreated:messageId:status:rejectedStatus:uuid:)"))) __attribute__((objc_designated_initializer));
@@ -1164,14 +1200,15 @@ __attribute__((swift_name("PreferencesConsent.PreferencesSubTypeCompanion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("SPUserData")))
 @interface SPMCSPUserData : SPMCBase
-- (instancetype)initWithGdpr:(SPMCSPUserDataSPConsent<SPMCGDPRConsent *> * _Nullable)gdpr ccpa:(SPMCSPUserDataSPConsent<SPMCCCPAConsent *> * _Nullable)ccpa usnat:(SPMCSPUserDataSPConsent<SPMCUSNatConsent *> * _Nullable)usnat preferences:(SPMCSPUserDataSPConsent<SPMCPreferencesConsent *> * _Nullable)preferences __attribute__((swift_name("init(gdpr:ccpa:usnat:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCSPUserDataSPConsent<SPMCGDPRConsent *> * _Nullable)gdpr ccpa:(SPMCSPUserDataSPConsent<SPMCCCPAConsent *> * _Nullable)ccpa usnat:(SPMCSPUserDataSPConsent<SPMCUSNatConsent *> * _Nullable)usnat preferences:(SPMCSPUserDataSPConsent<SPMCPreferencesConsent *> * _Nullable)preferences globalcmp:(SPMCSPUserDataSPConsent<SPMCGlobalCmpConsent *> * _Nullable)globalcmp __attribute__((swift_name("init(gdpr:ccpa:usnat:preferences:globalcmp:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCSPUserDataCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCSPUserData *)doCopyGdpr:(SPMCSPUserDataSPConsent<SPMCGDPRConsent *> * _Nullable)gdpr ccpa:(SPMCSPUserDataSPConsent<SPMCCCPAConsent *> * _Nullable)ccpa usnat:(SPMCSPUserDataSPConsent<SPMCUSNatConsent *> * _Nullable)usnat preferences:(SPMCSPUserDataSPConsent<SPMCPreferencesConsent *> * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:preferences:)")));
+- (SPMCSPUserData *)doCopyGdpr:(SPMCSPUserDataSPConsent<SPMCGDPRConsent *> * _Nullable)gdpr ccpa:(SPMCSPUserDataSPConsent<SPMCCCPAConsent *> * _Nullable)ccpa usnat:(SPMCSPUserDataSPConsent<SPMCUSNatConsent *> * _Nullable)usnat preferences:(SPMCSPUserDataSPConsent<SPMCPreferencesConsent *> * _Nullable)preferences globalcmp:(SPMCSPUserDataSPConsent<SPMCGlobalCmpConsent *> * _Nullable)globalcmp __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:preferences:globalcmp:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCSPUserDataSPConsent<SPMCCCPAConsent *> * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCSPUserDataSPConsent<SPMCGDPRConsent *> * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCSPUserDataSPConsent<SPMCGlobalCmpConsent *> * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCSPUserDataSPConsent<SPMCPreferencesConsent *> * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCSPUserDataSPConsent<SPMCUSNatConsent *> * _Nullable usnat __attribute__((swift_name("usnat")));
 @property (readonly) SPMCSPUserDataSPWebConsents *webConsents __attribute__((swift_name("webConsents")));
@@ -1281,9 +1318,9 @@ __attribute__((swift_name("SPUserData.SPWebConsentsSPWebConsentCompanion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("State")))
 @interface SPMCState : SPMCBase
-- (instancetype)initWithGdpr:(SPMCStateGDPRState *)gdpr ccpa:(SPMCStateCCPAState *)ccpa usNat:(SPMCStateUSNatState *)usNat ios14:(SPMCAttCampaign *)ios14 preferences:(SPMCStatePreferencesState *)preferences authId:(NSString * _Nullable)authId propertyId:(int32_t)propertyId accountId:(int32_t)accountId localVersion:(int32_t)localVersion localState:(NSString *)localState nonKeyedLocalState:(NSString *)nonKeyedLocalState __attribute__((swift_name("init(gdpr:ccpa:usNat:ios14:preferences:authId:propertyId:accountId:localVersion:localState:nonKeyedLocalState:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCStateGDPRState *)gdpr ccpa:(SPMCStateCCPAState *)ccpa usNat:(SPMCStateUSNatState *)usNat ios14:(SPMCAttCampaign *)ios14 globalcmp:(SPMCStateGlobalCmpState *)globalcmp preferences:(SPMCStatePreferencesState *)preferences authId:(NSString * _Nullable)authId propertyId:(int32_t)propertyId accountId:(int32_t)accountId localVersion:(int32_t)localVersion localState:(NSString *)localState nonKeyedLocalState:(NSString *)nonKeyedLocalState __attribute__((swift_name("init(gdpr:ccpa:usNat:ios14:globalcmp:preferences:authId:propertyId:accountId:localVersion:localState:nonKeyedLocalState:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCStateCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCState *)doCopyGdpr:(SPMCStateGDPRState *)gdpr ccpa:(SPMCStateCCPAState *)ccpa usNat:(SPMCStateUSNatState *)usNat ios14:(SPMCAttCampaign *)ios14 preferences:(SPMCStatePreferencesState *)preferences authId:(NSString * _Nullable)authId propertyId:(int32_t)propertyId accountId:(int32_t)accountId localVersion:(int32_t)localVersion localState:(NSString *)localState nonKeyedLocalState:(NSString *)nonKeyedLocalState __attribute__((swift_name("doCopy(gdpr:ccpa:usNat:ios14:preferences:authId:propertyId:accountId:localVersion:localState:nonKeyedLocalState:)")));
+- (SPMCState *)doCopyGdpr:(SPMCStateGDPRState *)gdpr ccpa:(SPMCStateCCPAState *)ccpa usNat:(SPMCStateUSNatState *)usNat ios14:(SPMCAttCampaign *)ios14 globalcmp:(SPMCStateGlobalCmpState *)globalcmp preferences:(SPMCStatePreferencesState *)preferences authId:(NSString * _Nullable)authId propertyId:(int32_t)propertyId accountId:(int32_t)accountId localVersion:(int32_t)localVersion localState:(NSString *)localState nonKeyedLocalState:(NSString *)nonKeyedLocalState __attribute__((swift_name("doCopy(gdpr:ccpa:usNat:ios14:globalcmp:preferences:authId:propertyId:accountId:localVersion:localState:nonKeyedLocalState:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
@@ -1293,8 +1330,10 @@ __attribute__((swift_name("State")))
 @property NSString * _Nullable authId __attribute__((swift_name("authId")));
 @property SPMCStateCCPAState *ccpa __attribute__((swift_name("ccpa")));
 @property SPMCStateGDPRState *gdpr __attribute__((swift_name("gdpr")));
+@property SPMCStateGlobalCmpState *globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) BOOL hasCCPALocalData __attribute__((swift_name("hasCCPALocalData")));
 @property (readonly) BOOL hasGDPRLocalData __attribute__((swift_name("hasGDPRLocalData")));
+@property (readonly) BOOL hasGlobalCmpLocalData __attribute__((swift_name("hasGlobalCmpLocalData")));
 @property (readonly) BOOL hasUSNatLocalData __attribute__((swift_name("hasUSNatLocalData")));
 @property SPMCAttCampaign *ios14 __attribute__((swift_name("ios14")));
 @property NSString *localState __attribute__((swift_name("localState")));
@@ -1442,6 +1481,68 @@ __attribute__((swift_name("State.GDPRStateGDPRMetaDataCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCStateGDPRStateGDPRMetaDataCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("State.GlobalCmpState")))
+@interface SPMCStateGlobalCmpState : SPMCBase
+- (instancetype)initWithMetaData:(SPMCStateGlobalCmpStateGlobalCmpMetaData *)metaData consents:(SPMCGlobalCmpConsent *)consents childPmId:(NSString * _Nullable)childPmId __attribute__((swift_name("init(metaData:consents:childPmId:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCStateGlobalCmpStateCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCStateGlobalCmpState *)doCopyMetaData:(SPMCStateGlobalCmpStateGlobalCmpMetaData *)metaData consents:(SPMCGlobalCmpConsent *)consents childPmId:(NSString * _Nullable)childPmId __attribute__((swift_name("doCopy(metaData:consents:childPmId:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (SPMCStateGlobalCmpState *)resetStateIfVendorListChangesNewVendorListId:(NSString *)newVendorListId __attribute__((swift_name("resetStateIfVendorListChanges(newVendorListId:)")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) NSString * _Nullable childPmId __attribute__((swift_name("childPmId")));
+@property (readonly) SPMCGlobalCmpConsent *consents __attribute__((swift_name("consents")));
+@property (readonly) SPMCStateGlobalCmpStateGlobalCmpMetaData *metaData __attribute__((swift_name("metaData")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("State.GlobalCmpStateCompanion")))
+@interface SPMCStateGlobalCmpStateCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCStateGlobalCmpStateCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("State.GlobalCmpStateGlobalCmpMetaData")))
+@interface SPMCStateGlobalCmpStateGlobalCmpMetaData : SPMCBase <SPMCStateSPSampleable>
+- (instancetype)initWithAdditionsChangeDate:(SPMCKotlinx_datetimeInstant *)additionsChangeDate sampleRate:(float)sampleRate wasSampled:(SPMCBoolean * _Nullable)wasSampled wasSampledAt:(SPMCFloat * _Nullable)wasSampledAt vendorListId:(NSString * _Nullable)vendorListId applicableSections:(NSArray<SPMCInt *> *)applicableSections __attribute__((swift_name("init(additionsChangeDate:sampleRate:wasSampled:wasSampledAt:vendorListId:applicableSections:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCStateGlobalCmpStateGlobalCmpMetaDataCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCStateGlobalCmpStateGlobalCmpMetaData *)doCopyAdditionsChangeDate:(SPMCKotlinx_datetimeInstant *)additionsChangeDate sampleRate:(float)sampleRate wasSampled:(SPMCBoolean * _Nullable)wasSampled wasSampledAt:(SPMCFloat * _Nullable)wasSampledAt vendorListId:(NSString * _Nullable)vendorListId applicableSections:(NSArray<SPMCInt *> *)applicableSections __attribute__((swift_name("doCopy(additionsChangeDate:sampleRate:wasSampled:wasSampledAt:vendorListId:applicableSections:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCKotlinx_datetimeInstant *additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
+@property (readonly) NSArray<SPMCInt *> *applicableSections __attribute__((swift_name("applicableSections")));
+@property float sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) NSString * _Nullable vendorListId __attribute__((swift_name("vendorListId")));
+@property SPMCBoolean * _Nullable wasSampled __attribute__((swift_name("wasSampled")));
+@property SPMCFloat * _Nullable wasSampledAt __attribute__((swift_name("wasSampledAt")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("State.GlobalCmpStateGlobalCmpMetaDataCompanion")))
+@interface SPMCStateGlobalCmpStateGlobalCmpMetaDataCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCStateGlobalCmpStateGlobalCmpMetaDataCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -1807,6 +1908,12 @@ __attribute__((swift_name("SPClient")))
  * @note This method converts instances of SPNetworkError, SPUnableToParseBodyError, CancellationException to errors.
  * Other uncaught Kotlin exceptions are fatal.
 */
+- (void)postChoiceGlobalCmpActionActionType:(SPMCSPActionType *)actionType request:(SPMCGlobalCmpChoiceRequest *)request completionHandler:(void (^)(SPMCGlobalCmpChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceGlobalCmpAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of SPNetworkError, SPUnableToParseBodyError, CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
 - (void)postChoicePreferencesActionActionType:(SPMCSPActionType *)actionType request:(SPMCPreferencesChoiceRequest *)request completionHandler:(void (^)(SPMCPreferencesChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoicePreferencesAction(actionType:request:completionHandler:)")));
 
 /**
@@ -1888,6 +1995,12 @@ __attribute__((swift_name("SourcepointClient")))
  * Other uncaught Kotlin exceptions are fatal.
 */
 - (void)postChoiceGDPRActionActionType:(SPMCSPActionType *)actionType request:(SPMCGDPRChoiceRequest *)request completionHandler:(void (^)(SPMCGDPRChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceGDPRAction(actionType:request:completionHandler:)")));
+
+/**
+ * @note This method converts instances of SPNetworkError, SPUnableToParseBodyError, CancellationException to errors.
+ * Other uncaught Kotlin exceptions are fatal.
+*/
+- (void)postChoiceGlobalCmpActionActionType:(SPMCSPActionType *)actionType request:(SPMCGlobalCmpChoiceRequest *)request completionHandler:(void (^)(SPMCGlobalCmpChoiceResponse * _Nullable, NSError * _Nullable))completionHandler __attribute__((swift_name("postChoiceGlobalCmpAction(actionType:request:completionHandler:)")));
 
 /**
  * @note This method converts instances of SPNetworkError, SPUnableToParseBodyError, CancellationException to errors.
@@ -2107,14 +2220,15 @@ __attribute__((swift_name("ConsentStatusRequest.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("ConsentStatusRequest.MetaData")))
 @interface SPMCConsentStatusRequestMetaData : SPMCBase
-- (instancetype)initWithGdpr:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)gdpr usnat:(SPMCConsentStatusRequestMetaDataUSNatCampaign * _Nullable)usnat ccpa:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)ccpa preferences:(SPMCConsentStatusRequestMetaDataPreferencesCampaign * _Nullable)preferences __attribute__((swift_name("init(gdpr:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)gdpr globalcmp:(SPMCConsentStatusRequestMetaDataGlobalCmpCampaign * _Nullable)globalcmp usnat:(SPMCConsentStatusRequestMetaDataUSNatCampaign * _Nullable)usnat ccpa:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)ccpa preferences:(SPMCConsentStatusRequestMetaDataPreferencesCampaign * _Nullable)preferences __attribute__((swift_name("init(gdpr:globalcmp:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCConsentStatusRequestMetaDataCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCConsentStatusRequestMetaData *)doCopyGdpr:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)gdpr usnat:(SPMCConsentStatusRequestMetaDataUSNatCampaign * _Nullable)usnat ccpa:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)ccpa preferences:(SPMCConsentStatusRequestMetaDataPreferencesCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:preferences:)")));
+- (SPMCConsentStatusRequestMetaData *)doCopyGdpr:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)gdpr globalcmp:(SPMCConsentStatusRequestMetaDataGlobalCmpCampaign * _Nullable)globalcmp usnat:(SPMCConsentStatusRequestMetaDataUSNatCampaign * _Nullable)usnat ccpa:(SPMCConsentStatusRequestMetaDataCampaign * _Nullable)ccpa preferences:(SPMCConsentStatusRequestMetaDataPreferencesCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:globalcmp:usnat:ccpa:preferences:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCConsentStatusRequestMetaDataCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCConsentStatusRequestMetaDataCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCConsentStatusRequestMetaDataGlobalCmpCampaign * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCConsentStatusRequestMetaDataPreferencesCampaign * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCConsentStatusRequestMetaDataUSNatCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
@@ -2157,6 +2271,36 @@ __attribute__((swift_name("ConsentStatusRequest.MetaDataCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCConsentStatusRequestMetaDataCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ConsentStatusRequest.MetaDataGlobalCmpCampaign")))
+@interface SPMCConsentStatusRequestMetaDataGlobalCmpCampaign : SPMCBase
+- (instancetype)initWithApplies:(BOOL)applies dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated uuid:(NSString * _Nullable)uuid hasLocalData:(BOOL)hasLocalData __attribute__((swift_name("init(applies:dateCreated:uuid:hasLocalData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCConsentStatusRequestMetaDataGlobalCmpCampaignCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCConsentStatusRequestMetaDataGlobalCmpCampaign *)doCopyApplies:(BOOL)applies dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated uuid:(NSString * _Nullable)uuid hasLocalData:(BOOL)hasLocalData __attribute__((swift_name("doCopy(applies:dateCreated:uuid:hasLocalData:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) BOOL applies __attribute__((swift_name("applies")));
+@property (readonly) SPMCKotlinx_datetimeInstant * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) BOOL hasLocalData __attribute__((swift_name("hasLocalData")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("ConsentStatusRequest.MetaDataGlobalCmpCampaignCompanion")))
+@interface SPMCConsentStatusRequestMetaDataGlobalCmpCampaignCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCConsentStatusRequestMetaDataGlobalCmpCampaignCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -2328,6 +2472,39 @@ __attribute__((swift_name("GDPRChoiceRequest.Companion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCGDPRChoiceRequestCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpChoiceRequest")))
+@interface SPMCGlobalCmpChoiceRequest : SPMCBase
+- (instancetype)initWithAuthId:(NSString * _Nullable)authId uuid:(NSString * _Nullable)uuid messageId:(NSString * _Nullable)messageId vendorListId:(NSString * _Nullable)vendorListId pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> *)pubData pmSaveAndExitVariables:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> *)pmSaveAndExitVariables sendPVData:(BOOL)sendPVData propertyId:(int32_t)propertyId sampleRate:(float)sampleRate granularStatus:(SPMCConsentStatusConsentStatusGranularStatus * _Nullable)granularStatus includeData:(SPMCIncludeData *)includeData __attribute__((swift_name("init(authId:uuid:messageId:vendorListId:pubData:pmSaveAndExitVariables:sendPVData:propertyId:sampleRate:granularStatus:includeData:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCGlobalCmpChoiceRequestCompanion *companion __attribute__((swift_name("companion")));
+@property (readonly) NSString * _Nullable authId __attribute__((swift_name("authId")));
+@property (readonly) SPMCConsentStatusConsentStatusGranularStatus * _Nullable granularStatus __attribute__((swift_name("granularStatus")));
+@property (readonly) SPMCIncludeData *includeData __attribute__((swift_name("includeData")));
+@property (readonly) NSString * _Nullable messageId __attribute__((swift_name("messageId")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> *pmSaveAndExitVariables __attribute__((swift_name("pmSaveAndExitVariables")));
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> *pubData __attribute__((swift_name("pubData")));
+@property (readonly) float sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) BOOL sendPVData __attribute__((swift_name("sendPVData")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@property (readonly) NSString * _Nullable vendorListId __attribute__((swift_name("vendorListId")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpChoiceRequest.Companion")))
+@interface SPMCGlobalCmpChoiceRequestCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCGlobalCmpChoiceRequestCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -2615,14 +2792,15 @@ __attribute__((swift_name("MessagesRequest.Body")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MessagesRequest.BodyCampaigns")))
 @interface SPMCMessagesRequestBodyCampaigns : SPMCBase
-- (instancetype)initWithGdpr:(SPMCMessagesRequestBodyCampaignsGDPR * _Nullable)gdpr ios14:(SPMCMessagesRequestBodyCampaignsIOS14 * _Nullable)ios14 ccpa:(SPMCMessagesRequestBodyCampaignsCCPA * _Nullable)ccpa usnat:(SPMCMessagesRequestBodyCampaignsUSNat * _Nullable)usnat preferences:(SPMCMessagesRequestBodyCampaignsPreferences * _Nullable)preferences __attribute__((swift_name("init(gdpr:ios14:ccpa:usnat:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCMessagesRequestBodyCampaignsGDPR * _Nullable)gdpr ios14:(SPMCMessagesRequestBodyCampaignsIOS14 * _Nullable)ios14 ccpa:(SPMCMessagesRequestBodyCampaignsCCPA * _Nullable)ccpa globalcmp:(SPMCMessagesRequestBodyCampaignsGlobalCmp * _Nullable)globalcmp usnat:(SPMCMessagesRequestBodyCampaignsUSNat * _Nullable)usnat preferences:(SPMCMessagesRequestBodyCampaignsPreferences * _Nullable)preferences __attribute__((swift_name("init(gdpr:ios14:ccpa:globalcmp:usnat:preferences:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMessagesRequestBodyCampaignsCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMessagesRequestBodyCampaigns *)doCopyGdpr:(SPMCMessagesRequestBodyCampaignsGDPR * _Nullable)gdpr ios14:(SPMCMessagesRequestBodyCampaignsIOS14 * _Nullable)ios14 ccpa:(SPMCMessagesRequestBodyCampaignsCCPA * _Nullable)ccpa usnat:(SPMCMessagesRequestBodyCampaignsUSNat * _Nullable)usnat preferences:(SPMCMessagesRequestBodyCampaignsPreferences * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:ios14:ccpa:usnat:preferences:)")));
+- (SPMCMessagesRequestBodyCampaigns *)doCopyGdpr:(SPMCMessagesRequestBodyCampaignsGDPR * _Nullable)gdpr ios14:(SPMCMessagesRequestBodyCampaignsIOS14 * _Nullable)ios14 ccpa:(SPMCMessagesRequestBodyCampaignsCCPA * _Nullable)ccpa globalcmp:(SPMCMessagesRequestBodyCampaignsGlobalCmp * _Nullable)globalcmp usnat:(SPMCMessagesRequestBodyCampaignsUSNat * _Nullable)usnat preferences:(SPMCMessagesRequestBodyCampaignsPreferences * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:ios14:ccpa:globalcmp:usnat:preferences:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCMessagesRequestBodyCampaignsCCPA * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCMessagesRequestBodyCampaignsGDPR * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCMessagesRequestBodyCampaignsGlobalCmp * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCMessagesRequestBodyCampaignsIOS14 * _Nullable ios14 __attribute__((swift_name("ios14")));
 @property (readonly) SPMCMessagesRequestBodyCampaignsPreferences * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCMessagesRequestBodyCampaignsUSNat * _Nullable usnat __attribute__((swift_name("usnat")));
@@ -2693,6 +2871,35 @@ __attribute__((swift_name("MessagesRequest.BodyCampaignsGDPRCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCMessagesRequestBodyCampaignsGDPRCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MessagesRequest.BodyCampaignsGlobalCmp")))
+@interface SPMCMessagesRequestBodyCampaignsGlobalCmp : SPMCBase
+- (instancetype)initWithTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData consentStatus:(SPMCConsentStatus * _Nullable)consentStatus __attribute__((swift_name("init(targetingParams:hasLocalData:consentStatus:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCMessagesRequestBodyCampaignsGlobalCmpCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCMessagesRequestBodyCampaignsGlobalCmp *)doCopyTargetingParams:(NSDictionary<NSString *, NSString *> * _Nullable)targetingParams hasLocalData:(BOOL)hasLocalData consentStatus:(SPMCConsentStatus * _Nullable)consentStatus __attribute__((swift_name("doCopy(targetingParams:hasLocalData:consentStatus:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCConsentStatus * _Nullable consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) BOOL hasLocalData __attribute__((swift_name("hasLocalData")));
+@property (readonly) NSDictionary<NSString *, NSString *> * _Nullable targetingParams __attribute__((swift_name("targetingParams")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MessagesRequest.BodyCampaignsGlobalCmpCompanion")))
+@interface SPMCMessagesRequestBodyCampaignsGlobalCmpCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCMessagesRequestBodyCampaignsGlobalCmpCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -2810,14 +3017,15 @@ __attribute__((swift_name("MessagesRequest.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MessagesRequest.MetaData")))
 @interface SPMCMessagesRequestMetaData : SPMCBase
-- (instancetype)initWithGdpr:(SPMCMessagesRequestMetaDataCampaign * _Nullable)gdpr usnat:(SPMCMessagesRequestMetaDataCampaign * _Nullable)usnat ccpa:(SPMCMessagesRequestMetaDataCampaign * _Nullable)ccpa __attribute__((swift_name("init(gdpr:usnat:ccpa:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCMessagesRequestMetaDataCampaign * _Nullable)gdpr globalcmp:(SPMCMessagesRequestMetaDataCampaign * _Nullable)globalcmp usnat:(SPMCMessagesRequestMetaDataCampaign * _Nullable)usnat ccpa:(SPMCMessagesRequestMetaDataCampaign * _Nullable)ccpa __attribute__((swift_name("init(gdpr:globalcmp:usnat:ccpa:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMessagesRequestMetaDataCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMessagesRequestMetaData *)doCopyGdpr:(SPMCMessagesRequestMetaDataCampaign * _Nullable)gdpr usnat:(SPMCMessagesRequestMetaDataCampaign * _Nullable)usnat ccpa:(SPMCMessagesRequestMetaDataCampaign * _Nullable)ccpa __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:)")));
+- (SPMCMessagesRequestMetaData *)doCopyGdpr:(SPMCMessagesRequestMetaDataCampaign * _Nullable)gdpr globalcmp:(SPMCMessagesRequestMetaDataCampaign * _Nullable)globalcmp usnat:(SPMCMessagesRequestMetaDataCampaign * _Nullable)usnat ccpa:(SPMCMessagesRequestMetaDataCampaign * _Nullable)ccpa __attribute__((swift_name("doCopy(gdpr:globalcmp:usnat:ccpa:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCMessagesRequestMetaDataCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCMessagesRequestMetaDataCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCMessagesRequestMetaDataCampaign * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCMessagesRequestMetaDataCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
 
@@ -2888,14 +3096,15 @@ __attribute__((swift_name("MetaDataRequest")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MetaDataRequest.Campaigns")))
 @interface SPMCMetaDataRequestCampaigns : SPMCBase
-- (instancetype)initWithGdpr:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)gdpr usnat:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)usnat ccpa:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)ccpa preferences:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)preferences __attribute__((swift_name("init(gdpr:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)gdpr globalcmp:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)globalcmp usnat:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)usnat ccpa:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)ccpa preferences:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)preferences __attribute__((swift_name("init(gdpr:globalcmp:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMetaDataRequestCampaignsCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMetaDataRequestCampaigns *)doCopyGdpr:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)gdpr usnat:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)usnat ccpa:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)ccpa preferences:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:preferences:)")));
+- (SPMCMetaDataRequestCampaigns *)doCopyGdpr:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)gdpr globalcmp:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)globalcmp usnat:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)usnat ccpa:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)ccpa preferences:(SPMCMetaDataRequestCampaignsCampaign * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:globalcmp:usnat:ccpa:preferences:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCMetaDataRequestCampaignsCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCMetaDataRequestCampaignsCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCMetaDataRequestCampaignsCampaign * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCMetaDataRequestCampaignsCampaign * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCMetaDataRequestCampaignsCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
@@ -2988,14 +3197,15 @@ __attribute__((swift_name("PreferencesChoiceRequest.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("PvDataRequest")))
 @interface SPMCPvDataRequest : SPMCBase
-- (instancetype)initWithGdpr:(SPMCPvDataRequestGDPR * _Nullable)gdpr ccpa:(SPMCPvDataRequestCCPA * _Nullable)ccpa usnat:(SPMCPvDataRequestUSNat * _Nullable)usnat __attribute__((swift_name("init(gdpr:ccpa:usnat:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCPvDataRequestGDPR * _Nullable)gdpr ccpa:(SPMCPvDataRequestCCPA * _Nullable)ccpa usnat:(SPMCPvDataRequestUSNat * _Nullable)usnat globalcmp:(SPMCPvDataRequestGlobalCmp * _Nullable)globalcmp __attribute__((swift_name("init(gdpr:ccpa:usnat:globalcmp:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCPvDataRequestCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCPvDataRequest *)doCopyGdpr:(SPMCPvDataRequestGDPR * _Nullable)gdpr ccpa:(SPMCPvDataRequestCCPA * _Nullable)ccpa usnat:(SPMCPvDataRequestUSNat * _Nullable)usnat __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:)")));
+- (SPMCPvDataRequest *)doCopyGdpr:(SPMCPvDataRequestGDPR * _Nullable)gdpr ccpa:(SPMCPvDataRequestCCPA * _Nullable)ccpa usnat:(SPMCPvDataRequestUSNat * _Nullable)usnat globalcmp:(SPMCPvDataRequestGlobalCmp * _Nullable)globalcmp __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:globalcmp:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCPvDataRequestCCPA * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCPvDataRequestGDPR * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCPvDataRequestGlobalCmp * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCPvDataRequestUSNat * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
 
@@ -3088,6 +3298,48 @@ __attribute__((swift_name("PvDataRequest.GDPRCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCPvDataRequestGDPRCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("PvDataRequest.GlobalCmp")))
+@interface SPMCPvDataRequestGlobalCmp : SPMCBase
+- (instancetype)initWithApplies:(BOOL)applies uuid:(NSString * _Nullable)uuid accountId:(int32_t)accountId propertyId:(int32_t)propertyId consentStatus:(SPMCConsentStatus *)consentStatus pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData sampleRate:(SPMCFloat * _Nullable)sampleRate msgId:(SPMCInt * _Nullable)msgId categoryId:(SPMCInt * _Nullable)categoryId subCategoryId:(SPMCInt * _Nullable)subCategoryId prtnUUID:(NSString * _Nullable)prtnUUID __attribute__((swift_name("init(applies:uuid:accountId:propertyId:consentStatus:pubData:sampleRate:msgId:categoryId:subCategoryId:prtnUUID:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCPvDataRequestGlobalCmpCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCPvDataRequestGlobalCmp *)doCopyApplies:(BOOL)applies uuid:(NSString * _Nullable)uuid accountId:(int32_t)accountId propertyId:(int32_t)propertyId consentStatus:(SPMCConsentStatus *)consentStatus pubData:(NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable)pubData sampleRate:(SPMCFloat * _Nullable)sampleRate msgId:(SPMCInt * _Nullable)msgId categoryId:(SPMCInt * _Nullable)categoryId subCategoryId:(SPMCInt * _Nullable)subCategoryId prtnUUID:(NSString * _Nullable)prtnUUID __attribute__((swift_name("doCopy(applies:uuid:accountId:propertyId:consentStatus:pubData:sampleRate:msgId:categoryId:subCategoryId:prtnUUID:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) int32_t accountId __attribute__((swift_name("accountId")));
+@property (readonly) BOOL applies __attribute__((swift_name("applies")));
+@property (readonly) SPMCInt * _Nullable categoryId __attribute__((swift_name("categoryId")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) SPMCInt * _Nullable msgId __attribute__((swift_name("msgId")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="siteId")
+*/
+@property (readonly) int32_t propertyId __attribute__((swift_name("propertyId")));
+@property (readonly) NSString * _Nullable prtnUUID __attribute__((swift_name("prtnUUID")));
+@property (readonly) NSDictionary<NSString *, SPMCKotlinx_serialization_jsonJsonElement *> * _Nullable pubData __attribute__((swift_name("pubData")));
+@property (readonly) SPMCFloat * _Nullable sampleRate __attribute__((swift_name("sampleRate")));
+@property (readonly) SPMCInt * _Nullable subCategoryId __attribute__((swift_name("subCategoryId")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("PvDataRequest.GlobalCmpCompanion")))
+@interface SPMCPvDataRequestGlobalCmpCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCPvDataRequestGlobalCmpCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -3457,14 +3709,15 @@ __attribute__((swift_name("ConsentStatusResponse.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("ConsentStatusResponse.ConsentStatusData")))
 @interface SPMCConsentStatusResponseConsentStatusData : SPMCBase
-- (instancetype)initWithGdpr:(SPMCGDPRConsent * _Nullable)gdpr usnat:(SPMCUSNatConsent * _Nullable)usnat ccpa:(SPMCCCPAConsent * _Nullable)ccpa preferences:(SPMCPreferencesConsent * _Nullable)preferences __attribute__((swift_name("init(gdpr:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCGDPRConsent * _Nullable)gdpr usnat:(SPMCUSNatConsent * _Nullable)usnat ccpa:(SPMCCCPAConsent * _Nullable)ccpa preferences:(SPMCPreferencesConsent * _Nullable)preferences globalcmp:(SPMCGlobalCmpConsent * _Nullable)globalcmp __attribute__((swift_name("init(gdpr:usnat:ccpa:preferences:globalcmp:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCConsentStatusResponseConsentStatusDataCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCConsentStatusResponseConsentStatusData *)doCopyGdpr:(SPMCGDPRConsent * _Nullable)gdpr usnat:(SPMCUSNatConsent * _Nullable)usnat ccpa:(SPMCCCPAConsent * _Nullable)ccpa preferences:(SPMCPreferencesConsent * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:preferences:)")));
+- (SPMCConsentStatusResponseConsentStatusData *)doCopyGdpr:(SPMCGDPRConsent * _Nullable)gdpr usnat:(SPMCUSNatConsent * _Nullable)usnat ccpa:(SPMCCCPAConsent * _Nullable)ccpa preferences:(SPMCPreferencesConsent * _Nullable)preferences globalcmp:(SPMCGlobalCmpConsent * _Nullable)globalcmp __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:preferences:globalcmp:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCCCPAConsent * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCGDPRConsent * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCGlobalCmpConsent * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCPreferencesConsent * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCUSNatConsent * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
@@ -3546,6 +3799,38 @@ __attribute__((swift_name("GDPRChoiceResponse.Companion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCGDPRChoiceResponseCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpChoiceResponse")))
+@interface SPMCGlobalCmpChoiceResponse : SPMCBase
+- (instancetype)initWithUuid:(NSString * _Nullable)uuid consentStatus:(SPMCConsentStatus *)consentStatus dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant * _Nullable)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("init(uuid:consentStatus:dateCreated:expirationDate:gpcEnabled:userConsents:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCGlobalCmpChoiceResponseCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCGlobalCmpChoiceResponse *)doCopyUuid:(NSString * _Nullable)uuid consentStatus:(SPMCConsentStatus *)consentStatus dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant * _Nullable)expirationDate gpcEnabled:(SPMCBoolean * _Nullable)gpcEnabled userConsents:(SPMCUSNatConsentUSNatUserConsents *)userConsents __attribute__((swift_name("doCopy(uuid:consentStatus:dateCreated:expirationDate:gpcEnabled:userConsents:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCConsentStatus *consentStatus __attribute__((swift_name("consentStatus")));
+@property (readonly) SPMCKotlinx_datetimeInstant * _Nullable dateCreated __attribute__((swift_name("dateCreated")));
+@property (readonly) SPMCKotlinx_datetimeInstant * _Nullable expirationDate __attribute__((swift_name("expirationDate")));
+@property (readonly) SPMCBoolean * _Nullable gpcEnabled __attribute__((swift_name("gpcEnabled")));
+@property (readonly) SPMCUSNatConsentUSNatUserConsents *userConsents __attribute__((swift_name("userConsents")));
+@property (readonly) NSString * _Nullable uuid __attribute__((swift_name("uuid")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("GlobalCmpChoiceResponse.Companion")))
+@interface SPMCGlobalCmpChoiceResponseCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCGlobalCmpChoiceResponseCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -3730,6 +4015,36 @@ __attribute__((swift_name("MessagesResponse.GDPRCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCMessagesResponseGDPRCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+ *   kotlinx.serialization.SerialName(value="globalcmp")
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MessagesResponse.GlobalCmp")))
+@interface SPMCMessagesResponseGlobalCmp : SPMCMessagesResponseCampaign<SPMCGlobalCmpConsent *>
+- (instancetype)initWithType:(SPMCSPCampaignType *)type consentStatus:(SPMCConsentStatus * _Nullable)consentStatus userConsents:(SPMCUSNatConsentUSNatUserConsents * _Nullable)userConsents dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant * _Nullable)expirationDate derivedConsents:(SPMCGlobalCmpConsent * _Nullable)derivedConsents __attribute__((swift_name("init(type:consentStatus:userConsents:dateCreated:expirationDate:derivedConsents:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCMessagesResponseGlobalCmpCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCMessagesResponseGlobalCmp *)doCopyType:(SPMCSPCampaignType *)type consentStatus:(SPMCConsentStatus * _Nullable)consentStatus userConsents:(SPMCUSNatConsentUSNatUserConsents * _Nullable)userConsents dateCreated:(SPMCKotlinx_datetimeInstant * _Nullable)dateCreated expirationDate:(SPMCKotlinx_datetimeInstant * _Nullable)expirationDate derivedConsents:(SPMCGlobalCmpConsent * _Nullable)derivedConsents __attribute__((swift_name("doCopy(type:consentStatus:userConsents:dateCreated:expirationDate:derivedConsents:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (SPMCGlobalCmpConsent * _Nullable)toConsentDefault:(SPMCGlobalCmpConsent * _Nullable)default_ __attribute__((swift_name("toConsent(default:)")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCGlobalCmpConsent * _Nullable derivedConsents __attribute__((swift_name("derivedConsents")));
+@property (readonly) SPMCSPCampaignType *type __attribute__((swift_name("type")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MessagesResponse.GlobalCmpCompanion")))
+@interface SPMCMessagesResponseGlobalCmpCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCMessagesResponseGlobalCmpCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -4189,14 +4504,15 @@ __attribute__((swift_name("MessagesResponse.USNatCompanion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("MetaDataResponse")))
 @interface SPMCMetaDataResponse : SPMCBase
-- (instancetype)initWithGdpr:(SPMCMetaDataResponseMetaDataResponseGDPR * _Nullable)gdpr usnat:(SPMCMetaDataResponseMetaDataResponseUSNat * _Nullable)usnat ccpa:(SPMCMetaDataResponseMetaDataResponseCCPA * _Nullable)ccpa preferences:(SPMCMetaDataResponseMetaDataResponsePreferences * _Nullable)preferences __attribute__((swift_name("init(gdpr:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCMetaDataResponseMetaDataResponseGDPR * _Nullable)gdpr globalcmp:(SPMCMetaDataResponseMetaDataResponseGlobalCmp * _Nullable)globalcmp usnat:(SPMCMetaDataResponseMetaDataResponseUSNat * _Nullable)usnat ccpa:(SPMCMetaDataResponseMetaDataResponseCCPA * _Nullable)ccpa preferences:(SPMCMetaDataResponseMetaDataResponsePreferences * _Nullable)preferences __attribute__((swift_name("init(gdpr:globalcmp:usnat:ccpa:preferences:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCMetaDataResponseCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCMetaDataResponse *)doCopyGdpr:(SPMCMetaDataResponseMetaDataResponseGDPR * _Nullable)gdpr usnat:(SPMCMetaDataResponseMetaDataResponseUSNat * _Nullable)usnat ccpa:(SPMCMetaDataResponseMetaDataResponseCCPA * _Nullable)ccpa preferences:(SPMCMetaDataResponseMetaDataResponsePreferences * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:usnat:ccpa:preferences:)")));
+- (SPMCMetaDataResponse *)doCopyGdpr:(SPMCMetaDataResponseMetaDataResponseGDPR * _Nullable)gdpr globalcmp:(SPMCMetaDataResponseMetaDataResponseGlobalCmp * _Nullable)globalcmp usnat:(SPMCMetaDataResponseMetaDataResponseUSNat * _Nullable)usnat ccpa:(SPMCMetaDataResponseMetaDataResponseCCPA * _Nullable)ccpa preferences:(SPMCMetaDataResponseMetaDataResponsePreferences * _Nullable)preferences __attribute__((swift_name("doCopy(gdpr:globalcmp:usnat:ccpa:preferences:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCMetaDataResponseMetaDataResponseCCPA * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCMetaDataResponseMetaDataResponseGDPR * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCMetaDataResponseMetaDataResponseGlobalCmp * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCMetaDataResponseMetaDataResponsePreferences * _Nullable preferences __attribute__((swift_name("preferences")));
 @property (readonly) SPMCMetaDataResponseMetaDataResponseUSNat * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
@@ -4273,6 +4589,42 @@ __attribute__((swift_name("MetaDataResponse.MetaDataResponseGDPRCompanion")))
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
 + (instancetype)companion __attribute__((swift_name("init()")));
 @property (class, readonly, getter=shared) SPMCMetaDataResponseMetaDataResponseGDPRCompanion *shared __attribute__((swift_name("shared")));
+- (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
+@end
+
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.Serializable
+*/
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MetaDataResponse.MetaDataResponseGlobalCmp")))
+@interface SPMCMetaDataResponseMetaDataResponseGlobalCmp : SPMCBase
+- (instancetype)initWithApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(SPMCKotlinx_datetimeInstant * _Nullable)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("init(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)"))) __attribute__((objc_designated_initializer));
+@property (class, readonly, getter=companion) SPMCMetaDataResponseMetaDataResponseGlobalCmpCompanion *companion __attribute__((swift_name("companion")));
+- (SPMCMetaDataResponseMetaDataResponseGlobalCmp *)doCopyApplies:(BOOL)applies sampleRate:(float)sampleRate additionsChangeDate:(SPMCKotlinx_datetimeInstant * _Nullable)additionsChangeDate applicableSections:(NSArray<SPMCInt *> *)applicableSections vendorListId:(NSString *)vendorListId __attribute__((swift_name("doCopy(applies:sampleRate:additionsChangeDate:applicableSections:vendorListId:)")));
+- (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
+- (NSUInteger)hash __attribute__((swift_name("hash()")));
+- (NSString *)description __attribute__((swift_name("description()")));
+@property (readonly) SPMCKotlinx_datetimeInstant * _Nullable additionsChangeDate __attribute__((swift_name("additionsChangeDate")));
+@property (readonly) NSArray<SPMCInt *> *applicableSections __attribute__((swift_name("applicableSections")));
+@property (readonly) BOOL applies __attribute__((swift_name("applies")));
+@property (readonly) float sampleRate __attribute__((swift_name("sampleRate")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="_id")
+*/
+@property (readonly) NSString *vendorListId __attribute__((swift_name("vendorListId")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("MetaDataResponse.MetaDataResponseGlobalCmpCompanion")))
+@interface SPMCMetaDataResponseMetaDataResponseGlobalCmpCompanion : SPMCBase
++ (instancetype)alloc __attribute__((unavailable));
++ (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable));
++ (instancetype)companion __attribute__((swift_name("init()")));
+@property (class, readonly, getter=shared) SPMCMetaDataResponseMetaDataResponseGlobalCmpCompanion *shared __attribute__((swift_name("shared")));
 - (id<SPMCKotlinx_serialization_coreKSerializer>)serializer __attribute__((swift_name("serializer()")));
 @end
 
@@ -4380,14 +4732,15 @@ __attribute__((swift_name("PreferencesChoiceResponse.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("PvDataResponse")))
 @interface SPMCPvDataResponse : SPMCBase
-- (instancetype)initWithGdpr:(SPMCPvDataResponseCampaign * _Nullable)gdpr ccpa:(SPMCPvDataResponseCampaign * _Nullable)ccpa usnat:(SPMCPvDataResponseCampaign * _Nullable)usnat __attribute__((swift_name("init(gdpr:ccpa:usnat:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithGdpr:(SPMCPvDataResponseCampaign * _Nullable)gdpr ccpa:(SPMCPvDataResponseCampaign * _Nullable)ccpa usnat:(SPMCPvDataResponseCampaign * _Nullable)usnat globalcmp:(SPMCPvDataResponseCampaign * _Nullable)globalcmp __attribute__((swift_name("init(gdpr:ccpa:usnat:globalcmp:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCPvDataResponseCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCPvDataResponse *)doCopyGdpr:(SPMCPvDataResponseCampaign * _Nullable)gdpr ccpa:(SPMCPvDataResponseCampaign * _Nullable)ccpa usnat:(SPMCPvDataResponseCampaign * _Nullable)usnat __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:)")));
+- (SPMCPvDataResponse *)doCopyGdpr:(SPMCPvDataResponseCampaign * _Nullable)gdpr ccpa:(SPMCPvDataResponseCampaign * _Nullable)ccpa usnat:(SPMCPvDataResponseCampaign * _Nullable)usnat globalcmp:(SPMCPvDataResponseCampaign * _Nullable)globalcmp __attribute__((swift_name("doCopy(gdpr:ccpa:usnat:globalcmp:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCPvDataResponseCampaign * _Nullable ccpa __attribute__((swift_name("ccpa")));
 @property (readonly) SPMCPvDataResponseCampaign * _Nullable gdpr __attribute__((swift_name("gdpr")));
+@property (readonly) SPMCPvDataResponseCampaign * _Nullable globalcmp __attribute__((swift_name("globalcmp")));
 @property (readonly) SPMCPvDataResponseCampaign * _Nullable usnat __attribute__((swift_name("usnat")));
 @end
 

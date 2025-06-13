@@ -7,12 +7,12 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.8.1'
+pod 'ConsentViewController', '7.9.0'
 ```
 
-The SDK has a static dependency. Make sure to have the following on your Podfile as well:
+The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
 
-```
+```ruby
 use_frameworks! :linkage => :static
 ```
 
@@ -44,7 +44,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "7.8.1")
+                .upToNextMinor(from: "7.9.0")
         ),
     ],
     targets: [
