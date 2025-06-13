@@ -292,7 +292,6 @@
 		3DE8B98413F0219C3FEB4CE64D6FA9D0 /* FailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE6260A630E6C5D6BBC0B39B84DC935 /* FailureMessage.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		3E20D985A552D6BF4D0C08C9AB7D81C6 /* pb_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D4BBACDCFAEB92087C5036C1DF22BC6 /* pb_common.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3E24F1424CE4D5DFFF74B82DFB75E3EA /* Array+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B037B3336404774E2DA8743B7AF0E3 /* Array+Sort.swift */; };
-		3E5EA4520DEEC16BCA38E8B165BE0D38 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B7F9E57CBD422D427A9DA54A901BE6 /* Adapters.swift */; };
 		3ED60E39BB1EC8DAB2511D1601641E2E /* GULMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 9893DBB93245F6454F22EF7641D0B474 /* GULMutableDictionary.m */; };
 		3EF89013A3DD2141E66C6FC796170F99 /* GULNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DFE8AF6D14AF5B70A1F079B111F2F75 /* GULNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3EFABF4C80634B393FE8A0C3B160710C /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060C0337CF70F6B4C5C8BCCD5564822A /* CampaignConsent.swift */; };
@@ -347,7 +346,6 @@
 		4DB397B2754844F0F585B25744E75BEE /* BeNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E286CED05BCD3895C43507D485C87464 /* BeNil.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		4DC315AF158E1F316DD3802EDEB9C27E /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4532BEA3DD60C974178BBC1500A70B45 /* RingBuffer.swift */; };
 		4E1FA2B5D9AB98CE48297BE3470B7B94 /* ConsentViewController-iOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2861EBC403A59C6392B2C0C147320998 /* ConsentViewController-iOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4E31874C91056DEE0912302302C63701 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B7F9E57CBD422D427A9DA54A901BE6 /* Adapters.swift */; };
 		4E345F46FD25DA85406E925C573E70F8 /* FIRInstallationsAuthTokenResultInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = CEEAE18D76D766D06F7927DA01AFD779 /* FIRInstallationsAuthTokenResultInternal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4F226F0FEDAF2B381059BFBD1DF1931C /* SP_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FA6E07003CC9CB38C7EC2DCEDD904A9D /* SP_Icon.png */; };
 		4F23193935E343BAE919B76E0F28355D /* FIRInstallationsStoredAuthToken.h in Headers */ = {isa = PBXBuildFile; fileRef = F935E4B408868A67B8A551B5A689FB88 /* FIRInstallationsStoredAuthToken.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -378,6 +376,14 @@
 		5677346C84E9019FE1D2DC080DB61108 /* Pods-Tests-SPGDPRExampleAppUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 759D3EA383B901D142D2FC3A8CB640DB /* Pods-Tests-SPGDPRExampleAppUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56873A5B141C63013379A18DB279DD0A /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DD304352ED147E09443B42EA7FCB9A70 /* PrivacyInfo.xcprivacy */; };
 		56E5227BDD3CC588B8F2DCACB93E6DA4 /* FIRTimestamp.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9656EFCA66A18B39743F1873CCBF1F /* FIRTimestamp.m */; };
+		56F7E2D42DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D12DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift */; };
+		56F7E2D52DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D02DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift */; };
+		56F7E2D62DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2CF2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift */; };
+		56F7E2D72DFC46F600B03D92 /* StateNativeToCoreAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D22DFC46F600B03D92 /* StateNativeToCoreAdapter.swift */; };
+		56F7E2D82DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D12DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift */; };
+		56F7E2D92DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D02DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift */; };
+		56F7E2DA2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2CF2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift */; };
+		56F7E2DB2DFC46F600B03D92 /* StateNativeToCoreAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7E2D22DFC46F600B03D92 /* StateNativeToCoreAdapter.swift */; };
 		571211200EA75EE1AEE15DFB43AE1306 /* IQKeyboardToolbarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A224D2E8E6B108EF3220F1F8ADB91EAB /* IQKeyboardToolbarConstants.swift */; };
 		5733CA6E576C107C7C9E2EEFE1FEA484 /* BeLessThan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F2E6438C7993AD70860B89AA78233 /* BeLessThan.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		588B375ADC465AFDB8727FB6BD5417A5 /* IQKeyboardNotification-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2EBC14660CC9D06E1536CA642E3274 /* IQKeyboardNotification-dummy.m */; };
@@ -2342,6 +2348,10 @@
 		562395412DF84EF2008AA220 /* SPGlobalCmpConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGlobalCmpConsent.swift; sourceTree = "<group>"; };
 		5665C29491A293DBE53E5B0B1893EDF9 /* FIRTimestampInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRTimestampInternal.h; path = FirebaseCore/Sources/FIRTimestampInternal.h; sourceTree = "<group>"; };
 		566DC6D20B0F5F351EB9C44333DFC8B7 /* Pods-Tests-SourcePointMetaAppUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Tests-SourcePointMetaAppUITests-resources.sh"; sourceTree = "<group>"; };
+		56F7E2CF2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCoreToNativeAdapters.swift; sourceTree = "<group>"; };
+		56F7E2D02DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedNativeToCoreAdapters.swift; sourceTree = "<group>"; };
+		56F7E2D12DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDataCoreToNativeAdapter.swift; sourceTree = "<group>"; };
+		56F7E2D22DFC46F600B03D92 /* StateNativeToCoreAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateNativeToCoreAdapter.swift; sourceTree = "<group>"; };
 		575D795E7365366F0757B8D8DE661A78 /* Nimble-tvOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; name = "Nimble-tvOS.modulemap"; path = "../Nimble-tvOS/Nimble-tvOS.modulemap"; sourceTree = "<group>"; };
 		57668D16E2D2F57A62F4A701E9537AD1 /* IQKeyboardCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQKeyboardCore.release.xcconfig; sourceTree = "<group>"; };
 		57727CBABBE86F340DDB886DBBD537DB /* UIView+RespondersObjc.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+RespondersObjc.swift"; path = "IQKeyboardToolbarManager/Classes/UIKitExtensions/UIView+RespondersObjc.swift"; sourceTree = "<group>"; };
@@ -2927,7 +2937,6 @@
 		F0C59442C2618D8377E0C06144D25923 /* HtmlInline.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HtmlInline.swift; path = Sources/Down/AST/Nodes/HtmlInline.swift; sourceTree = "<group>"; };
 		F0DD959738DC11765571E6DFC1D15A0E /* NSAttributedString+HTML.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSAttributedString+HTML.swift"; path = "Sources/Down/Extensions/NSAttributedString+HTML.swift"; sourceTree = "<group>"; };
 		F1344F1269777275D45CCA00A7F20BAB /* IQKeyboardManager+Internal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IQKeyboardManager+Internal.swift"; path = "IQKeyboardManagerSwift/IQKeyboardManager/IQKeyboardManager+Internal.swift"; sourceTree = "<group>"; };
-		F1B7F9E57CBD422D427A9DA54A901BE6 /* Adapters.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Adapters.swift; sourceTree = "<group>"; };
 		F1E90CB82A75505E59E6D8F0F3A42CB1 /* IQTextInputViewNotification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IQTextInputViewNotification.release.xcconfig; sourceTree = "<group>"; };
 		F2ECF43894480B47EE0B8C0E941E07A8 /* IsAppEncrypted.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IsAppEncrypted.m; path = third_party/IsAppEncrypted/IsAppEncrypted.m; sourceTree = "<group>"; };
 		F34D27F82C66F3BEA8025F58AEAC27B6 /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Sources/Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
@@ -4138,6 +4147,17 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		56F7E2D32DFC46F600B03D92 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				56F7E2CF2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift */,
+				56F7E2D02DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift */,
+				56F7E2D12DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift */,
+				56F7E2D22DFC46F600B03D92 /* StateNativeToCoreAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
 		590599D8E0DB9BEC05AC05031BF54279 /* Pods-Tests-SourcePointMetaAppUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -4459,7 +4479,6 @@
 		7B1E6B326C97562602F73188C6409542 /* SourcePointClient */ = {
 			isa = PBXGroup;
 			children = (
-				F1B7F9E57CBD422D427A9DA54A901BE6 /* Adapters.swift */,
 				23D068AD5CB36C716C2151DE6B4D689F /* ErrorMetricsRequest.swift */,
 				0AA93F654BF70E62207862F6665B5532 /* GDPRPrivacyManagerViewResponse.swift */,
 				E44779D2D4933E885246C03D43A976BD /* MessagesResponse.swift */,
@@ -4471,6 +4490,7 @@
 				E97601C6530B203C03771C7F07AA0C2E /* SPNativeUI.swift */,
 				B9159307B73C211A88E41B9BA6273FFC /* SPPrivacyManagerRequestResponse.swift */,
 				A81B0A5C7A9DF40AF69559CBE49DE3D1 /* SPPublisherData.swift */,
+				56F7E2D32DFC46F600B03D92 /* Adapters */,
 			);
 			name = SourcePointClient;
 			path = ConsentViewController/Classes/SourcePointClient;
@@ -8044,9 +8064,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E5EA4520DEEC16BCA38E8B165BE0D38 /* Adapters.swift in Sources */,
 				6B3DA0C3EA811F8506BB33CFC5C96D44 /* Bundle+Framework.swift in Sources */,
 				3EFABF4C80634B393FE8A0C3B160710C /* CampaignConsent.swift in Sources */,
+				56F7E2D42DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift in Sources */,
+				56F7E2D52DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift in Sources */,
+				56F7E2D62DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift in Sources */,
+				56F7E2D72DFC46F600B03D92 /* StateNativeToCoreAdapter.swift in Sources */,
 				155F58C7BBD66284ED82C8A7039E7F8D /* Collection.swift in Sources */,
 				3CFEA5BB9B39865450604EF0B63896C9 /* ConnectivityManager.swift in Sources */,
 				61EF441685E880C9FE5B278FC96B3785 /* ConsentStatus.swift in Sources */,
@@ -8224,7 +8247,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E31874C91056DEE0912302302C63701 /* Adapters.swift in Sources */,
 				150825FF38A6AFAE35123499756DA345 /* Bundle+Framework.swift in Sources */,
 				20095EE7479CD386A4200C9C4DBF47A7 /* CampaignConsent.swift in Sources */,
 				2135450E94F92A313E61639AA6C8FF84 /* CCPAPMConsentSnapshot.swift in Sources */,
@@ -8285,6 +8307,10 @@
 				9A8268499F8E62E726D51C676B16240E /* SPGDPRNativePrivacyManagerViewController.xib in Sources */,
 				17771BD451B6AEE0838B421AF0819CCC /* SPGDPRPartnersViewController.swift in Sources */,
 				58D0FEC35C5166A13FCF7E0058E0E7C4 /* SPGDPRPartnersViewController.xib in Sources */,
+				56F7E2D82DFC46F600B03D92 /* SPUserDataCoreToNativeAdapter.swift in Sources */,
+				56F7E2D92DFC46F600B03D92 /* SharedNativeToCoreAdapters.swift in Sources */,
+				56F7E2DA2DFC46F600B03D92 /* SharedCoreToNativeAdapters.swift in Sources */,
+				56F7E2DB2DFC46F600B03D92 /* StateNativeToCoreAdapter.swift in Sources */,
 				777FACB3F400B86390756253EF6FC816 /* SPGDPRVendorDetailsViewController.swift in Sources */,
 				FAF0962706C5440A53396FCE8B8D2891 /* SPGDPRVendorDetailsViewController.xib in Sources */,
 				0DCB5A9B53DC870AC2A4C232A85BA724 /* SPGPPConfig.swift in Sources */,
