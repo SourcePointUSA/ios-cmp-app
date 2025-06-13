@@ -38,7 +38,7 @@
                               ccpa: NULL
                               usnat: campaign
                               ios14: campaign
-                              preferences: NULL
+                              preferences: campaign
                               environment: SPCampaignEnvPublic];
 
     consentManager = [[SPConsentManager alloc]
@@ -105,5 +105,6 @@
     NSLog(@"GDPR: %@", userData.objcGDPRConsents);
     NSLog(@"USNAT Applies: %d", userData.objcUSNatApplies);
     NSLog(@"USNAT: %@", userData.objcUSNatConsents);
+    NSLog(@"PREFERENCES: %@", userData.objcPreferencesConsents);
 }
 @end

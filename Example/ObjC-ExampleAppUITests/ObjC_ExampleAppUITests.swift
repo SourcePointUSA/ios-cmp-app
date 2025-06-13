@@ -60,6 +60,10 @@ class ObjCExampleAppUITests: QuickSpec {
             self.app.acceptAllButton.tap()
             expect(self.app.usnatMessage).to(disappear())
 
+            expect(self.app.preferencesMessage).toEventually(showUp())
+            self.app.acceptAllButton.tap()
+            expect(self.app.preferencesMessage).to(disappear())
+
             expect(self.app.sdkStatus).toEventually(containText("Finished"))
 
             self.app.relaunch()
