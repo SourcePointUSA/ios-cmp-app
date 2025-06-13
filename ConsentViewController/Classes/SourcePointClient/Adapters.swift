@@ -697,7 +697,7 @@ func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
             expirationDate: SPDate(date: Date.distantPast).toCore(),
             gpcEnabled: nil,
             uuid: nil,
-            userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: []),
+            userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: [])
         ),
         childPmId: nil
     )
