@@ -493,7 +493,9 @@ import SPMobileCore
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.globalcmp, pmUrl, messageId: usedId)
+        mainSync {
+            loadWebPrivacyManager(.globalcmp, pmUrl, messageId: usedId)
+        }
         #endif
     }
 
