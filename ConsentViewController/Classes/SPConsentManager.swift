@@ -249,7 +249,7 @@ import SPMobileCore
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.8.1"
+    public static let VERSION = "7.9.0"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
@@ -466,7 +466,9 @@ import SPMobileCore
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
-        loadWebPrivacyManager(.usnat, pmUrl, messageId: usedId)
+        mainSync {
+            loadWebPrivacyManager(.usnat, pmUrl, messageId: usedId)
+        }
         #endif
     }
 

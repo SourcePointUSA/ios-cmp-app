@@ -591,7 +591,8 @@ typedef SWIFT_ENUM(NSInteger, SPCampaignType, open) {
   SPCampaignTypeIos14 = 1,
   SPCampaignTypeCcpa = 2,
   SPCampaignTypeUsnat = 3,
-  SPCampaignTypeUnknown = 4,
+  SPCampaignTypePreferences = 4,
+  SPCampaignTypeUnknown = 5,
 };
 
 /// It’s important to notice the campaign you passed as parameter needs to have
@@ -603,8 +604,9 @@ SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable ccpa;
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable usnat;
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable ios14;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable preferences;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
-- (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa usnat:(SPCampaign * _Nullable)usnat ios14:(SPCampaign * _Nullable)ios14 environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa usnat:(SPCampaign * _Nullable)usnat ios14:(SPCampaign * _Nullable)ios14 preferences:(SPCampaign * _Nullable)preferences environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -1023,6 +1025,19 @@ typedef SWIFT_ENUM(NSInteger, SPOptinalBool, open) {
   SPOptinalBoolUnset = 2,
 };
 
+SWIFT_CLASS("_TtC21ConsentViewController20SPPreferencesConsent")
+@interface SPPreferencesConsent : NSObject <NSCopying>
+@property (nonatomic, copy) NSString * _Nullable uuid;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@interface SPPreferencesConsent (SWIFT_EXTENSION(ConsentViewController))
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
++ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
+@end
+
 /// Supported privacy manager tabs in PM
 typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
   SPPrivacyManagerTabDefault = 0,
@@ -1140,6 +1155,10 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 - (SPUSNatConsent * _Nullable)objcUSNatConsents SWIFT_WARN_UNUSED_RESULT;
 /// Indicates whether USNat applies based on the VendorList configuration.
 - (BOOL)objcUSNatApplies SWIFT_WARN_UNUSED_RESULT;
+/// Returns Preferences consent data if any available.
+/// seealso:
+/// <code>SPPreferencesConsent</code>
+- (SPPreferencesConsent * _Nullable)objcPreferencesConsents SWIFT_WARN_UNUSED_RESULT;
 @end
 
 @interface NSURLSessionDataTask (SWIFT_EXTENSION(ConsentViewController))

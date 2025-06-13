@@ -4578,6 +4578,72 @@
           },
           {
             "kind": "Var",
+            "name": "preferences",
+            "printedName": "preferences",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPCampaign?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPCampaign",
+                    "printedName": "ConsentViewController.SPCampaign",
+                    "usr": "c:@M@ConsentViewController@objc(cs)SPCampaign"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPCampaigns(py)preferences",
+            "mangledName": "$s21ConsentViewController11SPCampaignsC11preferencesAA10SPCampaignCSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPCampaign?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPCampaign",
+                        "printedName": "ConsentViewController.SPCampaign",
+                        "usr": "c:@M@ConsentViewController@objc(cs)SPCampaign"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPCampaigns(im)preferences",
+                "mangledName": "$s21ConsentViewController11SPCampaignsC11preferencesAA10SPCampaignCSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "description",
             "printedName": "description",
             "children": [
@@ -4630,13 +4696,28 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(gdpr:ccpa:usnat:ios14:environment:)",
+            "printedName": "init(gdpr:ccpa:usnat:ios14:preferences:environment:)",
             "children": [
               {
                 "kind": "TypeNominal",
                 "name": "SPCampaigns",
                 "printedName": "ConsentViewController.SPCampaigns",
                 "usr": "c:@M@ConsentViewController@objc(cs)SPCampaigns"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPCampaign?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPCampaign",
+                    "printedName": "ConsentViewController.SPCampaign",
+                    "usr": "c:@M@ConsentViewController@objc(cs)SPCampaign"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -4707,8 +4788,8 @@
               }
             ],
             "declKind": "Constructor",
-            "usr": "c:@M@ConsentViewController@objc(cs)SPCampaigns(im)initWithGdpr:ccpa:usnat:ios14:environment:",
-            "mangledName": "$s21ConsentViewController11SPCampaignsC4gdpr4ccpa5usnat5ios1411environmentAcA10SPCampaignCSg_A3kA0J3EnvOtcfc",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPCampaigns(im)initWithGdpr:ccpa:usnat:ios14:preferences:environment:",
+            "mangledName": "$s21ConsentViewController11SPCampaignsC4gdpr4ccpa5usnat5ios1411preferences11environmentAcA10SPCampaignCSg_A4lA0K3EnvOtcfc",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "AccessControl",
@@ -5004,6 +5085,47 @@
           },
           {
             "kind": "Var",
+            "name": "preferences",
+            "printedName": "preferences",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(ConsentViewController.SPCampaignType.Type) -> ConsentViewController.SPCampaignType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPCampaignType",
+                    "printedName": "ConsentViewController.SPCampaignType",
+                    "usr": "c:@M@ConsentViewController@E@SPCampaignType"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "ConsentViewController.SPCampaignType.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPCampaignType",
+                        "printedName": "ConsentViewController.SPCampaignType",
+                        "usr": "c:@M@ConsentViewController@E@SPCampaignType"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@ConsentViewController@E@SPCampaignType@SPCampaignTypePreferences",
+            "mangledName": "$s21ConsentViewController14SPCampaignTypeO11preferencesyA2CmF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 4
+          },
+          {
+            "kind": "Var",
             "name": "unknown",
             "printedName": "unknown",
             "children": [
@@ -5041,7 +5163,7 @@
             "declAttributes": [
               "ObjC"
             ],
-            "fixedbinaryorder": 4
+            "fixedbinaryorder": 5
           },
           {
             "kind": "Var",
@@ -28956,6 +29078,1174 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "SPPreferencesConsent",
+        "printedName": "SPPreferencesConsent",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "uuid",
+            "printedName": "uuid",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(py)uuid",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C4uuidSSSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(im)uuid",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C4uuidSSSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(im)setUuid:",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C4uuidSSSgvs",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C4uuidSSSgvM",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C4uuidSSSgvM",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "status",
+            "printedName": "status",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesStatus",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvp",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesStatus",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvg",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesStatus",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvs",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvs",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvM",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C6statusSayAC17PreferencesStatusVGvM",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "rejectedStatus",
+            "printedName": "rejectedStatus",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesStatus",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvp",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesStatus",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvg",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[ConsentViewController.SPPreferencesConsent.PreferencesStatus]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesStatus",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvs",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvs",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvM",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C14rejectedStatusSayAC011PreferencesF0VGvM",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPPreferencesConsent",
+                "printedName": "ConsentViewController.SPPreferencesConsent",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(im)init",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0CACycfc",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(from:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPPreferencesConsent",
+                "printedName": "ConsentViewController.SPPreferencesConsent",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Decoder",
+                "printedName": "any Swift.Decoder",
+                "usr": "s:s7DecoderP"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C4fromACs7Decoder_p_tKcfc",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C4fromACs7Decoder_p_tKcfc",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "declAttributes": [
+              "Required"
+            ],
+            "throwing": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "encode",
+            "printedName": "encode(to:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Encoder",
+                "printedName": "any Swift.Encoder",
+                "usr": "s:s7EncoderP"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C6encode2toys7Encoder_p_tKF",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C6encode2toys7Encoder_p_tKF",
+            "moduleName": "ConsentViewController",
+            "implicit": true,
+            "throwing": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@CM@ConsentViewController@objc(cs)SPPreferencesConsent(py)description",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C11descriptionSSvp",
+            "moduleName": "ConsentViewController",
+            "overriding": true,
+            "objc_name": "description",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl",
+              "Override"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@CM@ConsentViewController@objc(cs)SPPreferencesConsent(im)description",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C11descriptionSSvg",
+                "moduleName": "ConsentViewController",
+                "overriding": true,
+                "objc_name": "description",
+                "declAttributes": [
+                  "Dynamic",
+                  "ObjC"
+                ],
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "empty",
+            "printedName": "empty()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPPreferencesConsent",
+                "printedName": "ConsentViewController.SPPreferencesConsent",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@ConsentViewController@objc(cs)SPPreferencesConsent(cm)empty",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C5emptyACyFZ",
+            "moduleName": "ConsentViewController",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "copy",
+            "printedName": "copy(with:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ProtocolComposition",
+                "printedName": "Any"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ObjectiveC.NSZone?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSZone",
+                    "printedName": "ObjectiveC.NSZone",
+                    "usr": "s:10ObjectiveC6NSZoneV"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@ConsentViewController@objc(cs)SPPreferencesConsent(im)copyWithZone:",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C4copy4withyp10ObjectiveC6NSZoneVSg_tF",
+            "moduleName": "ConsentViewController",
+            "objc_name": "copyWithZone:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "PreferencesStatus",
+            "printedName": "PreferencesStatus",
+            "children": [
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(from:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesStatus",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesStatus",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Decoder",
+                    "printedName": "any Swift.Decoder",
+                    "usr": "s:s7DecoderP"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV4fromAEs7Decoder_p_tKcfc",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C17PreferencesStatusV4fromAEs7Decoder_p_tKcfc",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "throwing": true,
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Encoder",
+                    "printedName": "any Swift.Encoder",
+                    "usr": "s:s7EncoderP"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV6encode2toys7Encoder_p_tKF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C17PreferencesStatusV6encode2toys7Encoder_p_tKF",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Struct",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C17PreferencesStatusV",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C17PreferencesStatusV",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Decodable",
+                "printedName": "Decodable",
+                "usr": "s:Se",
+                "mangledName": "$sSe"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Encodable",
+                "printedName": "Encodable",
+                "usr": "s:SE",
+                "mangledName": "$sSE"
+              }
+            ]
+          },
+          {
+            "kind": "TypeDecl",
+            "name": "PreferencesSubType",
+            "printedName": "PreferencesSubType",
+            "children": [
+              {
+                "kind": "Var",
+                "name": "AIPolicy",
+                "printedName": "AIPolicy",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO8AIPolicyyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO8AIPolicyyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Var",
+                "name": "TermsAndConditions",
+                "printedName": "TermsAndConditions",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO18TermsAndConditionsyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO18TermsAndConditionsyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Var",
+                "name": "PrivacyPolicy",
+                "printedName": "PrivacyPolicy",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO13PrivacyPolicyyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO13PrivacyPolicyyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Var",
+                "name": "LegalPolicy",
+                "printedName": "LegalPolicy",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO11LegalPolicyyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO11LegalPolicyyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Var",
+                "name": "TermsOfSale",
+                "printedName": "TermsOfSale",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO11TermsOfSaleyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO11TermsOfSaleyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Var",
+                "name": "Unknown",
+                "printedName": "Unknown",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type) -> ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "PreferencesSubType",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                        "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Metatype",
+                        "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType.Type",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "PreferencesSubType",
+                            "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "declKind": "EnumElement",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO7UnknownyA2EmF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO7UnknownyA2EmF",
+                "moduleName": "ConsentViewController"
+              },
+              {
+                "kind": "Function",
+                "name": "==",
+                "printedName": "==(_:_:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesSubType",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesSubType",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO2eeoiySbAE_AEtFZ",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO2eeoiySbAE_AEtFZ",
+                "moduleName": "ConsentViewController",
+                "static": true,
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Var",
+                "name": "hashValue",
+                "printedName": "hashValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO9hashValueSivp",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO9hashValueSivp",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO9hashValueSivg",
+                    "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO9hashValueSivg",
+                    "moduleName": "ConsentViewController",
+                    "implicit": true,
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Function",
+                "name": "hash",
+                "printedName": "hash(into:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Hasher",
+                    "printedName": "Swift.Hasher",
+                    "paramValueOwnership": "InOut",
+                    "usr": "s:s6HasherV"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO4hash4intoys6HasherVz_tF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO4hash4intoys6HasherVz_tF",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "funcSelfKind": "NonMutating"
+              },
+              {
+                "kind": "Constructor",
+                "name": "init",
+                "printedName": "init(from:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "PreferencesSubType",
+                    "printedName": "ConsentViewController.SPPreferencesConsent.PreferencesSubType",
+                    "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Decoder",
+                    "printedName": "any Swift.Decoder",
+                    "usr": "s:s7DecoderP"
+                  }
+                ],
+                "declKind": "Constructor",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO4fromAEs7Decoder_p_tKcfc",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO4fromAEs7Decoder_p_tKcfc",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "throwing": true,
+                "init_kind": "Designated"
+              },
+              {
+                "kind": "Function",
+                "name": "encode",
+                "printedName": "encode(to:)",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Encoder",
+                    "printedName": "any Swift.Encoder",
+                    "usr": "s:s7EncoderP"
+                  }
+                ],
+                "declKind": "Func",
+                "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO6encode2toys7Encoder_p_tKF",
+                "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO6encode2toys7Encoder_p_tKF",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "throwing": true,
+                "funcSelfKind": "NonMutating"
+              }
+            ],
+            "declKind": "Enum",
+            "usr": "s:21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C18PreferencesSubTypeO",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "conformances": [
+              {
+                "kind": "Conformance",
+                "name": "Copyable",
+                "printedName": "Copyable",
+                "usr": "s:s8CopyableP",
+                "mangledName": "$ss8CopyableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Escapable",
+                "printedName": "Escapable",
+                "usr": "s:s9EscapableP",
+                "mangledName": "$ss9EscapableP"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Equatable",
+                "printedName": "Equatable",
+                "usr": "s:SQ",
+                "mangledName": "$sSQ"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Hashable",
+                "printedName": "Hashable",
+                "usr": "s:SH",
+                "mangledName": "$sSH"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Decodable",
+                "printedName": "Decodable",
+                "usr": "s:Se",
+                "mangledName": "$sSe"
+              },
+              {
+                "kind": "Conformance",
+                "name": "Encodable",
+                "printedName": "Encodable",
+                "usr": "s:SE",
+                "mangledName": "$sSE"
+              }
+            ]
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent",
+        "mangledName": "$s21ConsentViewController013SPPreferencesA0C",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "AccessControl",
+          "ObjCMembers",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "hasMissingDesignatedInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ConsentViewController",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
@@ -32550,6 +33840,87 @@
           },
           {
             "kind": "Var",
+            "name": "preferences",
+            "printedName": "preferences",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPConsent",
+                    "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPPreferencesConsent",
+                        "printedName": "ConsentViewController.SPPreferencesConsent",
+                        "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+                      }
+                    ],
+                    "usr": "s:21ConsentViewController9SPConsentC"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:21ConsentViewController10SPUserDataC11preferencesAA9SPConsentCyAA013SPPreferencesA0CGSgvp",
+            "mangledName": "$s21ConsentViewController10SPUserDataC11preferencesAA9SPConsentCyAA013SPPreferencesA0CGSgvp",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPConsent",
+                        "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "SPPreferencesConsent",
+                            "printedName": "ConsentViewController.SPPreferencesConsent",
+                            "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+                          }
+                        ],
+                        "usr": "s:21ConsentViewController9SPConsentC"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:21ConsentViewController10SPUserDataC11preferencesAA9SPConsentCyAA013SPPreferencesA0CGSgvg",
+                "mangledName": "$s21ConsentViewController10SPUserDataC11preferencesAA9SPConsentCyAA013SPPreferencesA0CGSgvg",
+                "moduleName": "ConsentViewController",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "webConsents",
             "printedName": "webConsents",
             "children": [
@@ -32642,7 +34013,7 @@
           {
             "kind": "Constructor",
             "name": "init",
-            "printedName": "init(gdpr:ccpa:usnat:)",
+            "printedName": "init(gdpr:ccpa:usnat:preferences:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -32718,11 +34089,34 @@
                 ],
                 "hasDefaultArg": true,
                 "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPConsent",
+                    "printedName": "ConsentViewController.SPConsent<ConsentViewController.SPPreferencesConsent>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SPPreferencesConsent",
+                        "printedName": "ConsentViewController.SPPreferencesConsent",
+                        "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+                      }
+                    ],
+                    "usr": "s:21ConsentViewController9SPConsentC"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
               }
             ],
             "declKind": "Constructor",
-            "usr": "s:21ConsentViewController10SPUserDataC4gdpr4ccpa5usnatAcA9SPConsentCyAA13SPGDPRConsentCGSg_AHyAA13SPCCPAConsentCGSgAHyAA07SPUSNatA0CGSgtcfc",
-            "mangledName": "$s21ConsentViewController10SPUserDataC4gdpr4ccpa5usnatAcA9SPConsentCyAA13SPGDPRConsentCGSg_AHyAA13SPCCPAConsentCGSgAHyAA07SPUSNatA0CGSgtcfc",
+            "usr": "s:21ConsentViewController10SPUserDataC4gdpr4ccpa5usnat11preferencesAcA9SPConsentCyAA13SPGDPRConsentCGSg_AIyAA13SPCCPAConsentCGSgAIyAA07SPUSNatA0CGSgAIyAA013SPPreferencesA0CGSgtcfc",
+            "mangledName": "$s21ConsentViewController10SPUserDataC4gdpr4ccpa5usnat11preferencesAcA9SPConsentCyAA13SPGDPRConsentCGSg_AIyAA13SPCCPAConsentCGSgAIyAA07SPUSNatA0CGSgAIyAA013SPPreferencesA0CGSgtcfc",
             "moduleName": "ConsentViewController",
             "declAttributes": [
               "AccessControl"
@@ -33058,6 +34452,39 @@
             ],
             "isFromExtension": true,
             "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "objcPreferencesConsents",
+            "printedName": "objcPreferencesConsents()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPPreferencesConsent?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPPreferencesConsent",
+                    "printedName": "ConsentViewController.SPPreferencesConsent",
+                    "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@ConsentViewController@objc(cs)SPUserData(im)objcPreferencesConsents",
+            "mangledName": "$s21ConsentViewController10SPUserDataC23objcPreferencesConsentsAA013SPPreferencesA0CSgyF",
+            "moduleName": "ConsentViewController",
+            "declAttributes": [
+              "Dynamic",
+              "AccessControl",
+              "RawDocComment",
+              "ObjC"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Class",
@@ -33314,6 +34741,36 @@
             "declKind": "Func",
             "usr": "s:21ConsentViewController14SPObjcUserDataP16objcUSNatAppliesSbyF",
             "mangledName": "$s21ConsentViewController14SPObjcUserDataP16objcUSNatAppliesSbyF",
+            "moduleName": "ConsentViewController",
+            "genericSig": "<τ_0_0 where τ_0_0 : ConsentViewController.SPObjcUserData>",
+            "sugared_genericSig": "<Self where Self : ConsentViewController.SPObjcUserData>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "objcPreferencesConsents",
+            "printedName": "objcPreferencesConsents()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "ConsentViewController.SPPreferencesConsent?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SPPreferencesConsent",
+                    "printedName": "ConsentViewController.SPPreferencesConsent",
+                    "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:21ConsentViewController14SPObjcUserDataP23objcPreferencesConsentsAA013SPPreferencesA0CSgyF",
+            "mangledName": "$s21ConsentViewController14SPObjcUserDataP23objcPreferencesConsentsAA013SPPreferencesA0CSgyF",
             "moduleName": "ConsentViewController",
             "genericSig": "<τ_0_0 where τ_0_0 : ConsentViewController.SPObjcUserData>",
             "sugared_genericSig": "<Self where Self : ConsentViewController.SPObjcUserData>",
@@ -38071,42 +39528,42 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 2420,
+      "offset": 2408,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 2657,
+      "offset": 2645,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 2841,
+      "offset": 2829,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 3077,
+      "offset": 3065,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 3233,
+      "offset": 3221,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 4644,
+      "offset": 4632,
       "length": 1,
       "value": "5"
     },
@@ -38359,7 +39816,7 @@
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
       "offset": 1820,
-      "length": 1729,
+      "length": 1742,
       "value": "\"\""
     },
     {
@@ -38386,43 +39843,43 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3555,
+      "offset": 3568,
       "length": 221,
       "value": "\"SPCampaigns\n    - gdpr: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3613,
+      "offset": 3626,
       "length": 1,
       "value": "\"\n    - cppa: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3648,
+      "offset": 3661,
       "length": 1,
       "value": "\"\n    - usnat: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3685,
+      "offset": 3698,
       "length": 1,
       "value": "\"\n    - ios14: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3722,
+      "offset": 3735,
       "length": 1,
       "value": "\"\n    - environment: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaigns.swift",
       "kind": "StringLiteral",
-      "offset": 3764,
-      "length": 366,
+      "offset": 3777,
+      "length": 445,
       "value": "\"\""
     },
     {
@@ -38450,8 +39907,15 @@
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaignType.swift",
       "kind": "IntegerLiteral",
       "offset": 210,
-      "length": 7,
+      "length": 11,
       "value": "4"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPCampaignType.swift",
+      "kind": "IntegerLiteral",
+      "offset": 223,
+      "length": 7,
+      "value": "5"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPCCPAConsent.swift",
@@ -38652,63 +40116,63 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "StringLiteral",
-      "offset": 8515,
+      "offset": 8529,
       "length": 7,
-      "value": "\"7.8.1\""
+      "value": "\"7.9.0\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8599,
+      "offset": 8613,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8683,
+      "offset": 8697,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8769,
+      "offset": 8783,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "Dictionary",
-      "offset": 9482,
+      "offset": 9496,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "Dictionary",
-      "offset": 9692,
+      "offset": 9706,
       "length": 3,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 11926,
+      "offset": 11940,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 14122,
+      "offset": 14136,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 16324,
+      "offset": 16338,
       "length": 5,
       "value": "false"
     },
@@ -40029,6 +41493,104 @@
       "value": "[]"
     },
     {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "BooleanLiteral",
+      "offset": 231,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "Array",
+      "offset": 365,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "Array",
+      "offset": 421,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "Array",
+      "offset": 565,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "Array",
+      "offset": 615,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 893,
+      "length": 274,
+      "value": "\"SPPreferencesConsent(\n    - dateCreated: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 987,
+      "length": 1,
+      "value": "\"\n    - messageId: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1028,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1031,
+      "length": 1,
+      "value": "\"\n    - uuid: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1062,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1065,
+      "length": 1,
+      "value": "\"\n    - status: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1097,
+      "length": 1,
+      "value": "\"\n    - rejectedStatus: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "StringLiteral",
+      "offset": 1145,
+      "length": 1,
+      "value": "\"\n)\""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
+      "kind": "Array",
+      "offset": 1716,
+      "length": 2,
+      "value": "[]"
+    },
+    {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SPPrivacyManagerRequestResponse.swift",
       "kind": "IntegerLiteral",
       "offset": 234,
@@ -40199,28 +41761,35 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3262,
-      "length": 107,
+      "offset": 3554,
+      "length": 156,
       "value": "\"gdpr: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3296,
+      "offset": 3588,
       "length": 1,
       "value": "\", ccpa: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3331,
+      "offset": 3623,
       "length": 1,
       "value": "\", usnat: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3368,
+      "offset": 3660,
+      "length": 1,
+      "value": "\", preferences: \""
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
+      "kind": "StringLiteral",
+      "offset": 3709,
       "length": 1,
       "value": "\"\""
     },
