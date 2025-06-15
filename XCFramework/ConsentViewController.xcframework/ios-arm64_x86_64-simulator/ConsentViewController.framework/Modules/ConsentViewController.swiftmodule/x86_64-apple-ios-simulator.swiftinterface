@@ -888,34 +888,53 @@ extension ConsentViewController.SPJson {
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SPPreferencesConsent : ObjectiveC.NSObject, Swift.Codable, Foundation.NSCopying {
+  @objc public static func empty() -> ConsentViewController.SPPreferencesConsent
+  public var dateCreated: ConsentViewController.SPDate
   @objc public var uuid: Swift.String?
-  public var status: [ConsentViewController.SPPreferencesConsent.PreferencesStatus]
-  public var rejectedStatus: [ConsentViewController.SPPreferencesConsent.PreferencesStatus]
+  @objc public var status: [ConsentViewController.SPPreferencesConsent.Status]
+  @objc public var rejectedStatus: [ConsentViewController.SPPreferencesConsent.Status]
+  @objc override dynamic open var description: Swift.String {
+    @objc get
+  }
+  @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
   @objc deinit
   public func encode(to encoder: any Swift.Encoder) throws
   required public init(from decoder: any Swift.Decoder) throws
 }
 extension ConsentViewController.SPPreferencesConsent {
-  @objc override dynamic open var description: Swift.String {
-    @objc get
-  }
-  @objc public static func empty() -> ConsentViewController.SPPreferencesConsent
-  @objc dynamic public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
-}
-extension ConsentViewController.SPPreferencesConsent {
-  public struct PreferencesStatus : Swift.Codable {
+  @objc @_hasMissingDesignatedInitializers @objcMembers public class Status : ObjectiveC.NSObject, Swift.Codable {
+    @objc final public let categoryId: Swift.Int
+    @objc final public let channels: [ConsentViewController.SPPreferencesConsent.Channel]
+    final public let changed: Swift.Bool?
+    final public let dateConsented: ConsentViewController.SPDate?
+    final public let subType: ConsentViewController.SPPreferencesConsent.SubType?
+    @objc override dynamic public var description: Swift.String {
+      @objc get
+    }
+    @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
-    public init(from decoder: any Swift.Decoder) throws
+    required public init(from decoder: any Swift.Decoder) throws
   }
-  public enum PreferencesSubType : Swift.Codable {
+  @objc @_hasMissingDesignatedInitializers @objcMembers public class Channel : ObjectiveC.NSObject, Swift.Codable {
+    @objc final public let id: Swift.Int
+    @objc final public let status: Swift.Bool
+    @objc override dynamic public var description: Swift.String {
+      @objc get
+    }
+    @objc deinit
+    public func encode(to encoder: any Swift.Encoder) throws
+    required public init(from decoder: any Swift.Decoder) throws
+  }
+  @objc public enum SubType : Swift.Int, Swift.Codable, Swift.CustomStringConvertible {
     case AIPolicy, TermsAndConditions, PrivacyPolicy, LegalPolicy, TermsOfSale, Unknown
-    public static func == (a: ConsentViewController.SPPreferencesConsent.PreferencesSubType, b: ConsentViewController.SPPreferencesConsent.PreferencesSubType) -> Swift.Bool
-    public func encode(to encoder: any Swift.Encoder) throws
-    public func hash(into hasher: inout Swift.Hasher)
-    public var hashValue: Swift.Int {
+    public var description: Swift.String {
       get
     }
-    public init(from decoder: any Swift.Decoder) throws
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
   }
 }
 @objc public enum SPPrivacyManagerTab : Swift.Int {
@@ -1175,8 +1194,9 @@ extension ConsentViewController.SPGCMData.Status : Swift.RawRepresentable {}
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.Equatable {}
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.Hashable {}
 extension ConsentViewController.SPGCMDataObjc.ObjcStatus : Swift.RawRepresentable {}
-extension ConsentViewController.SPPreferencesConsent.PreferencesSubType : Swift.Equatable {}
-extension ConsentViewController.SPPreferencesConsent.PreferencesSubType : Swift.Hashable {}
+extension ConsentViewController.SPPreferencesConsent.SubType : Swift.Equatable {}
+extension ConsentViewController.SPPreferencesConsent.SubType : Swift.Hashable {}
+extension ConsentViewController.SPPreferencesConsent.SubType : Swift.RawRepresentable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.Equatable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.Hashable {}
 extension ConsentViewController.SPPrivacyManagerTab : Swift.RawRepresentable {}

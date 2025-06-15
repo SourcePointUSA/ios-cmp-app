@@ -74,6 +74,10 @@ class ExampleApp: XCUIApplication {
         webViews.first(withLabel: "USNat Message")
     }
 
+    var preferencesMessage: XCUIElement {
+        webViews.first(withLabel: "updated our terms")
+    }
+
     var acceptAllButton: XCUIElement {
         buttons.first(withLabel: "Accept")
     }
