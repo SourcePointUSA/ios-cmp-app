@@ -38,6 +38,7 @@
                               ccpa: NULL
                               usnat: campaign
                               ios14: campaign
+                              globalcmp: NULL
                               preferences: campaign
                               environment: SPCampaignEnvPublic];
 

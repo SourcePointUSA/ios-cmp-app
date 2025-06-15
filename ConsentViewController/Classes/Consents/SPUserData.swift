@@ -70,6 +70,10 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
     /// - SeeAlso: `SPUSNatConsent`
     public let usnat: SPConsent<SPUSNatConsent>?
 
+    /// Consent data for GlobalCmp. This attribute will be nil if your setup doesn't include a GlobalCmp campaign
+    /// - SeeAlso: `SPGlobalCmpConsent`
+    public let globalcmp: SPConsent<SPGlobalCmpConsent>?
+    
     /// Consent data for Preferences. This attribute will be nil if your setup doesn't include a Preferences campaign
     /// - SeeAlso: `SPPreferencesConsent`
     public let preferences: SPConsent<SPPreferencesConsent>?
@@ -85,22 +89,25 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
             gdpr?.consents != SPGDPRConsent.empty() &&
             ccpa?.consents != SPCCPAConsent.empty() &&
             usnat?.consents != SPUSNatConsent.empty() &&
+            globalcmp?.consents != SPGlobalCmpConsent.empty() &&
             preferences?.consents != SPPreferencesConsent.empty()
     }
 
     override public var description: String {
-        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa)), usnat: \(String(describing: usnat)), preferences: \(String(describing: preferences))"
+        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa)), usnat: \(String(describing: usnat)), globalcmp: \(String(describing: globalcmp)), preferences: \(String(describing: preferences))"
     }
 
     public init(
         gdpr: SPConsent<SPGDPRConsent>? = nil,
         ccpa: SPConsent<SPCCPAConsent>? = nil,
         usnat: SPConsent<SPUSNatConsent>? = nil,
+        globalcmp: SPConsent<SPGlobalCmpConsent>? = nil,
         preferences: SPConsent<SPPreferencesConsent>? = nil
     ) {
         self.gdpr = gdpr
         self.ccpa = ccpa
         self.usnat = usnat
+        self.globalcmp = globalcmp
         self.preferences = preferences
     }
 
@@ -109,6 +116,7 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
             gdpr: gdpr?.copy() as? SPConsent<SPGDPRConsent>,
             ccpa: ccpa?.copy() as? SPConsent<SPCCPAConsent>,
             usnat: usnat?.copy() as? SPConsent<SPUSNatConsent>,
+            globalcmp: globalcmp?.copy() as? SPConsent<SPGlobalCmpConsent>,
             preferences: preferences?.copy() as? SPConsent<SPPreferencesConsent>
         )
     }
@@ -121,6 +129,8 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
                     ccpa?.consents == object.ccpa?.consents &&
                     usnat?.applies == object.usnat?.applies &&
                     usnat?.consents == object.usnat?.consents &&
+                    globalcmp?.applies == object.globalcmp?.applies &&
+                    globalcmp?.consents == object.globalcmp?.consents &&
                     preferences?.consents == object.preferences?.consents
         } else {
             return false
@@ -135,6 +145,8 @@ public protocol SPObjcUserData {
     func objcCCPAApplies() -> Bool
     func objcUSNatConsents() -> SPUSNatConsent?
     func objcUSNatApplies() -> Bool
+    func objcGlobalCmpConsents() -> SPGlobalCmpConsent?
+    func objcGlobalCmpApplies() -> Bool
     func objcPreferencesConsents() -> SPPreferencesConsent?
 }
 
@@ -170,6 +182,17 @@ public protocol SPObjcUserData {
     /// Indicates whether USNat applies based on the VendorList configuration.
     public func objcUSNatApplies() -> Bool {
         usnat?.applies ?? false
+    }
+
+    /// Returns GlobalCmp consent data if any available.
+    /// - SeeAlso: `SPUSNatConsent`
+    public func objcGlobalCmpConsents() -> SPGlobalCmpConsent? {
+        globalcmp?.consents
+    }
+
+    /// Indicates whether GlobalCmp applies based on the VendorList configuration.
+    public func objcGlobalCmpApplies() -> Bool {
+        globalcmp?.applies ?? false
     }
 
     /// Returns Preferences consent data if any available.

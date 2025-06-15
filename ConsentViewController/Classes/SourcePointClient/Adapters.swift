@@ -163,6 +163,8 @@ extension SPMobileCore.SPCampaignType {
             return .ios14
         case "Preferences":
             return .preferences
+        case "GlobalCmp":
+            return .globalcmp
 
         default:
             return .unknown
@@ -257,6 +259,22 @@ extension SPMobileCore.USNatConsent {
     }
 }
 
+extension SPMobileCore.GlobalCmpConsent {
+    func toNative() -> SPGlobalCmpConsent {
+        return .init(
+            uuid: self.uuid,
+            applies: self.applies,
+            dateCreated: SPDate(string: self.dateCreated.instantToString()),
+            expirationDate: SPDate(string: self.expirationDate.instantToString()),
+            userConsents: SPGlobalCmpConsent.UserConsents(
+                vendors: self.userConsents.categories.map { $0.toNative() },
+                categories: self.userConsents.vendors.map { $0.toNative() }
+            ),
+            consentStatus: self.consentStatus.toNative()
+        )
+    }
+}
+
 extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
     func toNative() -> SPPreferencesConsent.SubType {
         switch self {
@@ -328,6 +346,15 @@ extension SPUserDataSPConsent<USNatConsent>? {
     }
 }
 
+extension SPUserDataSPConsent<GlobalCmpConsent>? {
+    func toNative() -> SPConsent<SPGlobalCmpConsent>? {
+        return SPConsent<SPGlobalCmpConsent>.init(
+            consents: self?.consents?.toNative(),
+            applies: self?.consents?.applies ?? false
+        )
+    }
+}
+
 extension SPUserDataSPConsent<PreferencesConsent>? {
     func toNative() -> SPConsent<SPPreferencesConsent>? {
         return SPConsent<SPPreferencesConsent>.init(
@@ -343,6 +370,7 @@ extension SPMobileCore.SPUserData {
             gdpr: self.gdpr.toNative(),
             ccpa: self.ccpa.toNative(),
             usnat: self.usnat.toNative(),
+            globalcmp: self.globalcmp.toNative(),
             preferences: self.preferences.toNative()
         )
     }
@@ -509,6 +537,7 @@ extension SPCampaignType {
         case .ccpa: return .ccpa
         case .usnat: return .usnat
         case .ios14: return .ios14
+        case .globalcmp: return .globalcmp
         case .preferences: return .preferences
         case .unknown: return .unknown
         }
@@ -558,40 +587,7 @@ extension SourcepointClientCoordinator.State {
             ccpa: self.ccpa.toCore(metaData: self.ccpaMetaData),
             usNat: self.usnat.toCore(metaData: self.usNatMetaData),
             ios14: self.ios14.toCore(),
-            globalcmp: State.GlobalCmpState(
-                metaData: State.GlobalCmpStateGlobalCmpMetaData(
-                additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
-                sampleRate: 0,
-                wasSampled: nil,
-                wasSampledAt: nil,
-                vendorListId: nil,
-                applicableSections: []
-                ),
-                consents: GlobalCmpConsent(
-                    applies: false,
-                    categories: [],
-                    consentStatus: SPMobileCore.ConsentStatus(
-                        rejectedAny: nil,
-                        rejectedLI: nil,
-                        rejectedAll: nil,
-                        consentedAll: nil,
-                        consentedToAll: nil,
-                        consentedToAny: nil,
-                        hasConsentData: nil,
-                        vendorListAdditions: nil,
-                        legalBasisChanges: nil,
-                        granularStatus: nil,
-                        rejectedVendors: nil,
-                        rejectedCategories: nil
-                    ),
-                    dateCreated: SPDate(date: Date.distantPast).toCore(),
-                    expirationDate: SPDate(date: Date.distantPast).toCore(),
-                    gpcEnabled: nil,
-                    uuid: nil,
-                    userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: [])
-                ),
-                childPmId: nil
-            ),
+            globalcmp: emptyGlobalCmpState(),
             preferences: emptyPreferencesState(),
             authId: self.storedAuthId,
             propertyId: Int32(propertyId),
@@ -685,6 +681,30 @@ extension SourcepointClientCoordinator.State.AttCampaign? {
     }
 }
 
+func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
+    return SPMobileCore.State.GlobalCmpState(
+        metaData: SPMobileCore.State.GlobalCmpStateGlobalCmpMetaData(
+            additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
+            sampleRate: 1,
+            wasSampled: nil,
+            wasSampledAt: nil,
+            vendorListId: nil,
+            applicableSections: []
+        ),
+        consents: SPMobileCore.GlobalCmpConsent(
+            applies: false,
+            categories: [],
+            consentStatus: ConsentStatus().toCore(),
+            dateCreated: SPDate(date: Date.distantPast).toCore(),
+            expirationDate: SPDate(date: Date.distantPast).toCore(),
+            gpcEnabled: nil,
+            uuid: nil,
+            userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: [])
+        ),
+        childPmId: nil
+    )
+}
+
 func emptyPreferencesState() -> SPMobileCore.State.PreferencesState {
     return SPMobileCore.State.PreferencesState(
         metaData: SPMobileCore.State.PreferencesStatePreferencesMetaData(
@@ -771,7 +791,7 @@ extension SPCampaigns {
             gdpr: gdpr.toCore(),
             ccpa: ccpa.toCore(),
             usnat: usnat.toCore(),
-            globalcmp: nil,
+            globalcmp: globalcmp.toCore(),
             ios14: ios14.toCore(),
             preferences: preferences.toCore()
         )
