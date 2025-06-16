@@ -1025,18 +1025,30 @@ typedef SWIFT_ENUM(NSInteger, SPOptinalBool, open) {
   SPOptinalBoolUnset = 2,
 };
 
+@class Status;
 SWIFT_CLASS("_TtC21ConsentViewController20SPPreferencesConsent")
 @interface SPPreferencesConsent : NSObject <NSCopying>
++ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, copy) NSString * _Nullable uuid;
+@property (nonatomic, copy) NSArray<Status *> * _Nonnull status;
+@property (nonatomic, copy) NSArray<Status *> * _Nonnull rejectedStatus;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @interface SPPreferencesConsent (SWIFT_EXTENSION(ConsentViewController))
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-+ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
-- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 @end
+
+typedef SWIFT_ENUM(NSInteger, SubType, open) {
+  SubTypeAIPolicy = 0,
+  SubTypeTermsAndConditions = 1,
+  SubTypePrivacyPolicy = 2,
+  SubTypeLegalPolicy = 3,
+  SubTypeTermsOfSale = 4,
+  SubTypeUnknown = 5,
+};
 
 /// Supported privacy manager tabs in PM
 typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
@@ -2258,18 +2270,30 @@ typedef SWIFT_ENUM(NSInteger, SPOptinalBool, open) {
   SPOptinalBoolUnset = 2,
 };
 
+@class Status;
 SWIFT_CLASS("_TtC21ConsentViewController20SPPreferencesConsent")
 @interface SPPreferencesConsent : NSObject <NSCopying>
++ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, copy) NSString * _Nullable uuid;
+@property (nonatomic, copy) NSArray<Status *> * _Nonnull status;
+@property (nonatomic, copy) NSArray<Status *> * _Nonnull rejectedStatus;
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @interface SPPreferencesConsent (SWIFT_EXTENSION(ConsentViewController))
-@property (nonatomic, readonly, copy) NSString * _Nonnull description;
-+ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
-- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 @end
+
+typedef SWIFT_ENUM(NSInteger, SubType, open) {
+  SubTypeAIPolicy = 0,
+  SubTypeTermsAndConditions = 1,
+  SubTypePrivacyPolicy = 2,
+  SubTypeLegalPolicy = 3,
+  SubTypeTermsOfSale = 4,
+  SubTypeUnknown = 5,
+};
 
 /// Supported privacy manager tabs in PM
 typedef SWIFT_ENUM(NSInteger, SPPrivacyManagerTab, open) {
