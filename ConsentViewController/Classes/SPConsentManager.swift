@@ -488,7 +488,7 @@ import SPMobileCore
         messagesToShow += 1
         var usedId: String = id
         if useGroupPmIfAvailable {
-            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.globalcmp?.groupPmId, childPmId: spCoordinator.ccpaChildPmId)
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.globalcmp?.groupPmId, childPmId: spCoordinator.globalcmpChildPmId)
         }
 
         guard let pmUrl = buildGlobalCmpPmUrl(usedId: usedId, pmTab: tab, uuid: usnatUUID) else {
