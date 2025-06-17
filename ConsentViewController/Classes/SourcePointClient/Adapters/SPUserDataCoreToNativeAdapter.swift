@@ -151,7 +151,7 @@ extension SPMobileCore.PreferencesConsent {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatus {
-    func toNative() -> SPPreferencesConsent.PreferencesStatus {
+    func toNative() -> SPPreferencesConsent.Status {
         return .init(
             categoryId: Int(self.categoryId),
             channels: self.channels?.map { $0.toNative() } ?? [],
@@ -163,11 +163,11 @@ extension SPMobileCore.PreferencesConsent.PreferencesStatus {
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesStatusPreferencesChannels {
-    func toNative() -> SPPreferencesConsent.PreferencesChannels { return .init(channelId: Int(self.channelId), status: self.status) }
+    func toNative() -> SPPreferencesConsent.Channel { return .init(id: Int(self.channelId), status: self.status) }
 }
 
 extension SPMobileCore.PreferencesConsent.PreferencesSubType? {
-    func toNative() -> SPPreferencesConsent.PreferencesSubType {
+    func toNative() -> SPPreferencesConsent.SubType {
         switch self {
         case .aipolicy: return .AIPolicy
         case .legalpolicy: return .LegalPolicy
