@@ -58,6 +58,7 @@ import SPMobileCore
     var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
     var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
     var usnatUUID: String? { spCoordinator.userData.usnat?.consents?.uuid }
+    var globalcmpUUID: String? { spCoordinator.userData.globalcmp?.consents?.uuid }
     var messagesToShow = 0
     var responsesToReceive = 0
 
@@ -491,7 +492,7 @@ import SPMobileCore
             usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.globalcmp?.groupPmId, childPmId: spCoordinator.globalcmpChildPmId)
         }
 
-        guard let pmUrl = buildGlobalCmpPmUrl(usedId: usedId, pmTab: tab, uuid: usnatUUID) else {
+        guard let pmUrl = buildGlobalCmpPmUrl(usedId: usedId, pmTab: tab, uuid: globalcmpUUID) else {
             onError(InvalidURLError(urlString: "Invalid PM URL"))
             return
         }
