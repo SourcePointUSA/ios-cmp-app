@@ -96,7 +96,7 @@ class ExampleApp: XCUIApplication {
 
     class USNatMessage: FirstLayerMessage {
         override var messageTitle: XCUIElement {
-            staticTexts["Global CMP Message"].firstMatch
+            staticTexts["USNat Message"].firstMatch
         }
     }
 
@@ -114,7 +114,7 @@ class ExampleApp: XCUIApplication {
 
     class GlobalCMPMessage: FirstLayerMessage {
         override var messageTitle: XCUIElement {
-            staticTexts["USNat Message"].firstMatch
+            staticTexts["Global CMP Message"].firstMatch
         }
     }
 

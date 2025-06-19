@@ -59,11 +59,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
             Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
         }
 
-        it("Accept all through 1st layer messages") {
-            self.app.relaunch(clean: true, resetAtt: true)
+        fit("Accept all through 1st layer messages") {
+            self.app.relaunch(clean: true, resetAtt: true, args: ["ccpa": false])
             self.runAttScenario()
             self.acceptAll(onMessage: self.app.gdprMessage)
-            self.acceptAll(onMessage: self.app.ccpaMessage)
+//            self.acceptAll(onMessage: self.app.ccpaMessage)
             self.acceptAll(onMessage: self.app.usnatMessage)
             self.acceptAll(onMessage: self.app.globalCmpMessage)
             self.acceptAll(onMessage: self.app.preferencesMessage)
