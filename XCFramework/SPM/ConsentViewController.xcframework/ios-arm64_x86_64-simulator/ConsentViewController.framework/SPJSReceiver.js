@@ -85,7 +85,7 @@ var handleMessageEvent = function(SDK) {
 
 function isFromPM(event) {
     event.settings = event.settings || {};
-    return event.fromPM || event.settings.vendorList;
+    return window.spLegislation == "preferences" || event.fromPM || event.settings.vendorList;
 }
 
 function isError(event) {
