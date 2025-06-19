@@ -48,6 +48,7 @@ extension Config {
         let usnatArg = (values["usnat"] as? NSString)?.boolValue
         let attArg = (values["att"] as? NSString)?.boolValue
         let preferencesArg = (values["preferences"] as? NSString)?.boolValue
+        let globalcmpArg = (values["globalcmp"] as? NSString)?.boolValue
 
         campaigns = SPCampaigns(
             gdpr: gdprArg == nil ? defaults.campaigns.gdpr :
@@ -63,7 +64,8 @@ extension Config {
                 usnatArg == true ? SPCampaign() : nil,
             ios14: attArg == nil ? defaults.campaigns.ios14 :
                 attArg == true ? SPCampaign() : nil,
-            globalcmp: defaults.campaigns.globalcmp, // TODO: Change when default property contains globalcmp
+            globalcmp: globalcmpArg == nil ? defaults.campaigns.globalcmp :
+                globalcmpArg == true ? SPCampaign() : nil,
             preferences: preferencesArg == nil ? defaults.campaigns.preferences :
                 preferencesArg == true ? SPCampaign() : nil
         )
