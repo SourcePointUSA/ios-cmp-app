@@ -90,7 +90,7 @@ extension SPUSNatConsent? {
                 consentStrings: self?.consentStrings.map {
                     USNatConsent.USNatConsentSection(sectionId: Int32($0.sectionId), sectionName: $0.sectionName, consentString: $0.consentString)
                 } ?? [],
-                userConsents: USNatConsent.USNatUserConsents(vendors: self?.userConsents.vendors.toCore() ?? [], categories: self?.userConsents.categories.toCore() ?? []),
+                userConsents: UserConsents(vendors: self?.userConsents.vendors.toCore() ?? [], categories: self?.userConsents.categories.toCore() ?? []),
                 gppData: self?.GPPData?.objectValue?.mapValues { JsonKt.toJsonPrimitive($0) } ?? [:]
             ),
             childPmId: nil
@@ -117,7 +117,8 @@ func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
             wasSampled: nil,
             wasSampledAt: nil,
             vendorListId: nil,
-            applicableSections: []
+            applicableSections: [],
+            legislation: nil
         ),
         consents: SPMobileCore.GlobalCmpConsent(
             applies: false,
@@ -127,7 +128,8 @@ func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
             expirationDate: SPDate(date: Date.distantPast).toCore(),
             gpcEnabled: nil,
             uuid: nil,
-            userConsents: USNatConsent.USNatUserConsents(vendors: [], categories: []),
+            userConsents: UserConsents(vendors: [], categories: []),
+            webConsentPayload: nil
         ),
         childPmId: nil
     )

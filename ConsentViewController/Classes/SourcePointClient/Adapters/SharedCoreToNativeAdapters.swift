@@ -69,13 +69,13 @@ extension SPMobileCore.USNatConsent.USNatConsentSection {
     }
 }
 
-extension SPMobileCore.USNatConsent.USNatConsentable {
+extension SPMobileCore.UserConsents.Consentable {
     func toNative() -> SPConsentable {
         .init(id: id, consented: consented)
     }
 }
 
-extension SPMobileCore.USNatConsent.USNatUserConsents {
+extension SPMobileCore.UserConsents {
     func toNative() -> SPUSNatConsent.UserConsents {
         .init(
             vendors: vendors.map { $0.toNative() },

@@ -71,7 +71,9 @@ extension ConsentStatus.GranularStatus {
             sellStatus: KotlinBoolean(bool: sellStatus),
             shareStatus: KotlinBoolean(bool: shareStatus),
             sensitiveDataStatus: KotlinBoolean(bool: sensitiveDataStatus),
-            gpcStatus: KotlinBoolean(bool: gpcStatus)
+            gpcStatus: KotlinBoolean(bool: gpcStatus),
+            systemCategories: nil,
+            customCategories: nil
         )
     }
 }
@@ -218,8 +220,8 @@ extension SPGCMData {
 }
 
 extension [SPConsentable] {
-    func toCore() -> [SPMobileCore.USNatConsent.USNatConsentable] {
-        return self.map { SPMobileCore.USNatConsent.USNatConsentable(id: $0.id, consented: $0.consented) }
+    func toCore() -> [SPMobileCore.UserConsents.Consentable] {
+        return self.map { SPMobileCore.UserConsents.Consentable(id: $0.id, systemId: nil, consented: $0.consented) }
     }
 }
 
