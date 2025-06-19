@@ -85,6 +85,38 @@ class ExampleApp: XCUIApplication {
         }
     }
 
+    class GlobalCMPPrivacyManager: XCUIApplication {
+        private var container: XCUIElement {
+            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'Global Privacy Manager'")).firstMatch
+        }
+
+        var messageTitle: XCUIElement {
+            container
+        }
+
+        var purposeToggles: [XCUIElement] {
+            (0..<container.switches.count).map {
+                container.switches.element(boundBy: $0)
+            }
+        }
+
+        var acceptAllButton: XCUIElement {
+            container.buttons["Accept All"].firstMatch
+        }
+
+        var rejectAllButton: XCUIElement {
+            container.buttons["Reject All"].firstMatch
+        }
+
+        var saveAndExitButton: XCUIElement {
+            container.buttons["Save & Exit"].firstMatch
+        }
+
+        var cancelButton: XCUIElement {
+            container.buttons["Cancel"].firstMatch
+        }
+    }
+
     class GDPRMessage: FirstLayerMessage {
         override var messageTitle: XCUIElement {
             staticTexts["GDPR Message"].firstMatch
@@ -92,6 +124,16 @@ class ExampleApp: XCUIApplication {
 
         var spanishMessageTitle: XCUIElement {
             staticTexts["Mensaje GDPR"]
+        }
+    }
+
+    class GlobalCMPMessage: FirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["Global CMP Message"].firstMatch
+        }
+
+        var spanishMessageTitle: XCUIElement {
+            staticTexts["Mensaje Global CMP"]
         }
     }
 
@@ -130,6 +172,7 @@ class ExampleApp: XCUIApplication {
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
     let preferencesMessage = PreferencesMessage()
+    let globalCmpMessage = GlobalCMPMessage()
     let gdprPM = GDPRPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 

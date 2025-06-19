@@ -38,6 +38,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
         self.app.preferencesMessage.acceptButton.tap()
     }
 
+    func acceptGlobalCmpMessage() {
+        expect(self.app.globalCmpMessage.messageTitle).toEventually(showUp())
+        self.app.globalCmpMessage.acceptButton.tap()
+    }
+
     func showGDPRPMViaFirstLayerMessage() {
         expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         self.app.gdprMessage.showOptionsButton.tap()
@@ -74,6 +79,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.runAttScenario()
             self.acceptGDPRMessage()
             self.acceptCCPAMessage()
+            self.acceptGlobalCmpMessage()
             self.acceptPreferencesMessage()
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
