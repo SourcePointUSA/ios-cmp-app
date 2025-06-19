@@ -156,7 +156,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             imageView.isHidden = imageView.image == nil
             label.isHidden = imageView.image == nil
         }
-        label.setDefaultTextColorForDarkMode()
+        //label.setDefaultTextColorForDarkMode()
     }
 
     func hideOnOffButtons() {
