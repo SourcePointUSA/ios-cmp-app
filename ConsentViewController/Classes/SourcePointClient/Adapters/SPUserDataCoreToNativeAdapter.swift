@@ -133,7 +133,8 @@ extension SPMobileCore.GlobalCmpConsent {
                 vendors: self.userConsents.categories.map { $0.toNative() },
                 categories: self.userConsents.vendors.map { $0.toNative() }
             ),
-            consentStatus: self.consentStatus.toNative()
+            consentStatus: self.consentStatus.toNative(),
+            webConsentPayload: self.webConsentPayload
         )
     }
 }

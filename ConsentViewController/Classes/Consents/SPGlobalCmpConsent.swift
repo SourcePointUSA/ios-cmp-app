@@ -20,7 +20,7 @@ import Foundation
     /// Whether GlobalCmp applies according to user's location (inferred from IP lookup) and your Vendor List applies scope setting
     public var applies: Bool
 
-    var dateCreated, expirationDate: SPDate
+    public var dateCreated, expirationDate: SPDate
 
     /// Used by SP endpoints and to derive the data inside `statuses`
     var consentStatus: ConsentStatus
@@ -29,13 +29,17 @@ import Foundation
     /// Used to derive the data in `vendors` and `categories`
     var userConsents: UserConsents
 
+    /// Used by the rendering app
+    var webConsentPayload: SPWebConsentPayload?
+
     init(
         uuid: String? = nil,
         applies: Bool,
         dateCreated: SPDate,
         expirationDate: SPDate,
         userConsents: UserConsents = UserConsents(vendors: [], categories: []),
-        consentStatus: ConsentStatus
+        consentStatus: ConsentStatus,
+        webConsentPayload: SPWebConsentPayload? = nil
     ) {
         self.uuid = uuid
         self.applies = applies
@@ -43,6 +47,7 @@ import Foundation
         self.expirationDate = expirationDate
         self.consentStatus = consentStatus
         self.userConsents = userConsents
+        self.webConsentPayload = webConsentPayload
     }
 
     required public init(from decoder: Decoder) throws {
@@ -53,6 +58,7 @@ import Foundation
         expirationDate = try container.decode(SPDate.self, forKey: .expirationDate)
         consentStatus = try container.decode(ConsentStatus.self, forKey: .consentStatus)
         userConsents = try container.decodeIfPresent(UserConsents.self, forKey: .userConsents) ?? UserConsents(vendors: [], categories: [])
+        webConsentPayload = try container.decodeIfPresent(SPWebConsentPayload.self, forKey: .webConsentPayload)
     }
 }
 
@@ -66,7 +72,6 @@ extension SPGlobalCmpConsent {
             - vendors: \(vendors)
             - dateCreated: \(dateCreated)
             - expirationDate: \(expirationDate)
-            - userConsents: \(userConsents)
         )
         """
     }
@@ -93,7 +98,8 @@ extension SPGlobalCmpConsent {
         dateCreated: dateCreated,
         expirationDate: expirationDate,
         userConsents: userConsents,
-        consentStatus: consentStatus
+        consentStatus: consentStatus,
+        webConsentPayload: webConsentPayload
     )}
 }
 
