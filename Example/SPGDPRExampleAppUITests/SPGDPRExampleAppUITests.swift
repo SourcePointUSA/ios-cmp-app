@@ -23,24 +23,9 @@ class SPGDPRExampleAppUITests: QuickSpec {
         app.attPrePrompt.attAlertAllowButton.tap()
     }
 
-    func acceptGDPRMessage() {
-        expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
-        self.app.gdprMessage.acceptButton.tap()
-    }
-
-    func acceptCCPAMessage() {
-        expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
-        self.app.ccpaMessage.acceptButton.tap()
-    }
-
-    func acceptPreferencesMessage() {
-        expect(self.app.preferencesMessage.messageTitle).toEventually(showUp())
-        self.app.preferencesMessage.acceptButton.tap()
-    }
-
-    func acceptGlobalCmpMessage() {
-        expect(self.app.globalCmpMessage.messageTitle).toEventually(showUp())
-        self.app.globalCmpMessage.acceptButton.tap()
+    func acceptAll(onMessage message: FirstLayerMessage) {
+        expect(message.messageTitle).toEventually(showUp())
+        message.acceptButton.tap()
     }
 
     func showGDPRPMViaFirstLayerMessage() {
@@ -77,10 +62,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
         it("Accept all through 1st layer messages") {
             self.app.relaunch(clean: true, resetAtt: true)
             self.runAttScenario()
-            self.acceptGDPRMessage()
-            self.acceptCCPAMessage()
-            self.acceptGlobalCmpMessage()
-            self.acceptPreferencesMessage()
+            self.acceptAll(onMessage: self.app.gdprMessage)
+            self.acceptAll(onMessage: self.app.ccpaMessage)
+            self.acceptAll(onMessage: self.app.usnatMessage)
+            self.acceptAll(onMessage: self.app.globalCmpMessage)
+            self.acceptAll(onMessage: self.app.preferencesMessage)
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
@@ -88,9 +74,8 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accepting All toggles all toggles on PM") {
-            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false, "preferences": false, "globalcmp": false])
-            self.acceptGDPRMessage()
-            self.acceptPreferencesMessage()
+            self.app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false, "usnat": false, "preferences": false, "globalcmp": false])
+            self.acceptAll(onMessage: self.app.gdprMessage)
 
             expect(self.app.gdprPrivacyManagerButton).toEventually(showUp())
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
@@ -107,27 +92,25 @@ class SPGDPRExampleAppUITests: QuickSpec {
         }
 
         it("Accept all through 2nd layer") {
-            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false, "ccpa": false, "preferences": false, "globalcmp": false])
+            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.acceptAllButton.tap()
-            self.acceptPreferencesMessage()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             self.app.relaunch()
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         it("Dismissing 2nd layer returns to first layer message") {
-            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false,"ccpa": false,"preferences": false,"globalcmp": false])
+            self.app.relaunch(clean: true, resetAtt: true, args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
             self.showGDPRPMViaFirstLayerMessage()
             self.app.gdprPM.cancelButton.tap()
             expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
         }
 
         it("Consenting and Deleting custom vendor persist after relaunch") {
-            self.app.relaunch(clean: true, resetAtt: true, args: ["att": true,"ccpa": false,"preferences": false,"globalcmp": false])
+            self.app.relaunch(clean: true, resetAtt: true, args: ["att": true, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
             self.runAttScenario()
-            self.acceptGDPRMessage()
-            self.acceptPreferencesMessage()
+            self.acceptAll(onMessage: self.app.gdprMessage)
 
             expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
@@ -135,7 +118,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.deleteCustomVendorsButton.tap()
             expect(self.app.customVendorLabel).toEventually(containText("Rejected"))
 
-            self.app.relaunch(args: ["att": false, "ccpa": false, "preferences": false, "globalcmp": false])
+            self.app.relaunch(args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beDisabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beEnabled())
@@ -144,7 +127,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             self.app.acceptCustomVendorsButton.tap()
             expect(self.app.customVendorLabel).toEventually(containText("Accepted"))
 
-            self.app.relaunch(args: ["att": false, "ccpa": false, "preferences": false, "globalcmp": false])
+            self.app.relaunch(args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
 
             expect(self.app.deleteCustomVendorsButton).toEventually(beEnabled())
             expect(self.app.acceptCustomVendorsButton).toEventually(beDisabled())

@@ -12,7 +12,7 @@ import Foundation
 struct Config {
     enum Keys: String, CaseIterable {
         case accountId, propertyId, propertyName,
-             gdpr, ccpa, usnat, att, language, gdprPmId,
+             gdpr, ccpa, usnat, preferences, globalcmp, att, language, gdprPmId,
              ccpaPmId, usnatPmId, globalcmpPmId
     }
 
