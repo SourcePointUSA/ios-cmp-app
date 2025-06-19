@@ -91,10 +91,13 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     @IBOutlet var actionsContainer: UIStackView!
     @IBOutlet var spacer: UIView!
 
-    override func viewDidLoad() {
+    override func viewDidLoad() { 
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, bounces: false)
+        
+        // Load the appropriate text based on initial tab selection
+        updateDescriptionTextForCurrentTab()
+        
         descriptionTextView.flashScrollIndicators()
         dynamicFrameForDescription()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
@@ -119,6 +122,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
+        // Update the description text when tab changes
+        updateDescriptionTextForCurrentTab()
         categoriesTableView.reloadData()
     }
 
@@ -163,6 +168,40 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         if descriptionTextView.frame.size.height > height {
             descriptionTextView.frame.size.height = height
         }
+    }
+    
+    // New method to update description text based on current tab
+    private func updateDescriptionTextForCurrentTab() {
+        // Build combined text
+        var combinedAttributedText = NSMutableAttributedString()
+        
+        // Add the main header
+        let headerText = "Wij en onze partners verwerken persoonlijke data om:"
+        let headerAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .foregroundColor: UIColor.white
+        ]
+        combinedAttributedText.append(NSAttributedString(string: headerText, attributes: headerAttributes))
+        
+        // Add tab-specific content
+        if displayingLegIntCategories {
+            // Legitimate Interest tab content
+            let featuresText = "\n\nFeatures\nFeatures are a use of the data that you have already agreed to share with us"
+            combinedAttributedText.append(NSAttributedString(string: featuresText, attributes: headerAttributes))
+        } else {
+            // Consent tab content
+            let purposesText = "\n\nDoeleinden"
+            combinedAttributedText.append(NSAttributedString(string: purposesText, attributes: headerAttributes))
+        }
+        
+        // Apply the combined text to the text view
+        descriptionTextView.attributedText = combinedAttributedText
+        
+        // Update the frame
+        dynamicFrameForDescription()
+        
+        // Flash scroll indicators to show content has changed
+        descriptionTextView.flashScrollIndicators()
     }
 }
 
