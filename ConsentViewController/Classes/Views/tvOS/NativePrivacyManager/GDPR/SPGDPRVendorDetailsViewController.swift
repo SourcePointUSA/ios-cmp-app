@@ -145,7 +145,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     func loadQrCodes() {
         loadQRCode(url: vendor?.policyUrl, imageView: PolicyQrCodeImageView, label: PolicyQrCodeLabel)
         loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
-        ToScanLabel.setDefaultTextColorForDarkMode()
+        //ToScanLabel.setDefaultTextColorForDarkMode()
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
