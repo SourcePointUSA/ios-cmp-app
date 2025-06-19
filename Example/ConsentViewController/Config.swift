@@ -12,14 +12,14 @@ import Foundation
 struct Config {
     enum Keys: String, CaseIterable {
         case accountId, propertyId, propertyName,
-             gdpr, ccpa, usnat, att, language, gdprPmId,
-             ccpaPmId, usnatPmId
+             gdpr, ccpa, usnat, preferences, globalcmp, att, language, gdprPmId,
+             ccpaPmId, usnatPmId, globalcmpPmId
     }
 
     let accountId, propertyId: Int
     let propertyName: String
     let campaigns: SPCampaigns
-    let gdprPmId, ccpaPmId, usnatPmId: String?
+    let gdprPmId, ccpaPmId, usnatPmId, globalcmpPmId: String?
     var language: SPMessageLanguage?
 
     let myVendorId = "5ff4d000a228633ac048be41"
@@ -35,6 +35,7 @@ extension Config {
         gdprPmId = defaults.gdprPmId
         ccpaPmId = defaults.ccpaPmId
         usnatPmId = defaults.usnatPmId
+        globalcmpPmId = defaults.globalcmpPmId
         if let langArg = values["language"] as? String,
             let langEnum = SPMessageLanguage(rawValue: langArg) {
             language = langEnum
@@ -47,6 +48,7 @@ extension Config {
         let usnatArg = (values["usnat"] as? NSString)?.boolValue
         let attArg = (values["att"] as? NSString)?.boolValue
         let preferencesArg = (values["preferences"] as? NSString)?.boolValue
+        let globalcmpArg = (values["globalcmp"] as? NSString)?.boolValue
 
         campaigns = SPCampaigns(
             gdpr: gdprArg == nil ? defaults.campaigns.gdpr :
@@ -62,6 +64,8 @@ extension Config {
                 usnatArg == true ? SPCampaign() : nil,
             ios14: attArg == nil ? defaults.campaigns.ios14 :
                 attArg == true ? SPCampaign() : nil,
+            globalcmp: globalcmpArg == nil ? defaults.campaigns.globalcmp :
+                globalcmpArg == true ? SPCampaign() : nil,
             preferences: preferencesArg == nil ? defaults.campaigns.preferences :
                 preferencesArg == true ? SPCampaign() : nil
         )

@@ -48,6 +48,7 @@ protocol SPClientCoordinator {
     var spClient: SourcePointProtocol { get }
     var gdprChildPmId: String? { get }
     var ccpaChildPmId: String? { get }
+    var globalcmpChildPmId: String? { get }
 
     func loadMessages(forAuthId: String?, pubData: SPPublisherData?, _ handler: @escaping MessagesAndConsentsHandler)
     func reportAction(_ action: SPAction, handler: @escaping (Result<SPUserData, SPError>) -> Void)
@@ -152,6 +153,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
 
     var gdprChildPmId: String? { coreCoordinator.userData.gdpr?.childPmId }
     var ccpaChildPmId: String? { coreCoordinator.userData.ccpa?.childPmId }
+    var globalcmpChildPmId: String? { coreCoordinator.userData.globalcmp?.childPmId }
 
     /// Checks if this user has data from the previous version of the SDK (v6).
     /// This check should only done once so we remove the data stored by the older SDK and return false after that.

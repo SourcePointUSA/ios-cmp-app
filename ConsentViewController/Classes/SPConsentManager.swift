@@ -58,6 +58,7 @@ import SPMobileCore
     var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
     var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
     var usnatUUID: String? { spCoordinator.userData.usnat?.consents?.uuid }
+    var globalcmpUUID: String? { spCoordinator.userData.globalcmp?.consents?.uuid }
     var messagesToShow = 0
     var responsesToReceive = 0
 
@@ -197,7 +198,7 @@ import SPMobileCore
     func report(action: SPAction) {
         responsesToReceive += 1
         switch action.campaignType {
-            case .ccpa, .gdpr, .usnat, .preferences:
+            case .ccpa, .gdpr, .usnat, .globalcmp, .preferences:
                 spCoordinator.reportAction(action) { [weak self] result in
                     self?.responsesToReceive -= 1
                     switch result {
@@ -256,6 +257,8 @@ import SPMobileCore
     public var ccpaApplies: Bool { spCoordinator.userData.ccpa?.applies ?? false }
 
     public var usnatApplies: Bool { spCoordinator.userData.usnat?.applies ?? false }
+
+    public var globalcmpApplies: Bool { spCoordinator.userData.globalcmp?.applies ?? false }
 
     /// Returns the user data **stored in the `UserDefaults`**.
     public var userData: SPUserData { spCoordinator.userData }
@@ -470,6 +473,35 @@ import SPMobileCore
         #endif
     }
 
+    func buildGlobalCmpPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+        genericPMUrl(
+            Constants.Urls.GLOBALCMP_PM_URL,
+            pmId: usedId,
+            uuidName: "uuid",
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
+    }
+
+    public func loadGlobalCmpPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
+        #if os(iOS)
+        messagesToShow += 1
+        var usedId: String = id
+        if useGroupPmIfAvailable {
+            usedId = selectPrivacyManagerId(fallbackId: id, groupPmId: campaigns.globalcmp?.groupPmId, childPmId: spCoordinator.globalcmpChildPmId)
+        }
+
+        guard let pmUrl = buildGlobalCmpPmUrl(usedId: usedId, pmTab: tab, uuid: globalcmpUUID) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
+        mainSync {
+            loadWebPrivacyManager(.globalcmp, pmUrl, messageId: usedId)
+        }
+        #endif
+    }
+
     @nonobjc func handleCustomConsentResult(
         _ result: Result<SPGDPRConsent, SPError>,
         handler: @escaping (SPGDPRConsent) -> Void
@@ -546,6 +578,9 @@ extension SPConsentManager: SPMessageUIDelegate {
             }
             if messageLanguage != .BrowserDefault {
                 url = url.appendQueryItems(["consentLanguage": String(messageLanguage.rawValue)]) ?? url
+            }
+            if action.campaignType == .globalcmp {
+                url = url.appendQueryItems(["is_global_cmp": "true"]) ?? url
             }
             if let spController = controller as? SPMessageViewController {
                 spController.loadPrivacyManager(url: url)

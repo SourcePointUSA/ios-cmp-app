@@ -32,7 +32,6 @@ extension XCUIApplication: App {
         args.forEach { key, value in
             launchArguments.append("-\(key)=\(value)")
         }
-        launchArguments.append("-usnat=false")
         launch()
     }
 }
@@ -95,6 +94,12 @@ class ExampleApp: XCUIApplication {
         }
     }
 
+    class USNatMessage: FirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["USNat Message"].firstMatch
+        }
+    }
+
     class CCPAMessage: FirstLayerMessage {
         override var messageTitle: XCUIElement {
             staticTexts["CCPA Message"].firstMatch
@@ -104,6 +109,12 @@ class ExampleApp: XCUIApplication {
     class PreferencesMessage: PreferencesFirstLayerMessage {
         override var messageTitle: XCUIElement {
             staticTexts["We've updated our terms"].firstMatch
+        }
+    }
+
+    class GlobalCMPMessage: FirstLayerMessage {
+        override var messageTitle: XCUIElement {
+            staticTexts["Global CMP Message"].firstMatch
         }
     }
 
@@ -129,7 +140,9 @@ class ExampleApp: XCUIApplication {
 
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
+    let usnatMessage = USNatMessage()
     let preferencesMessage = PreferencesMessage()
+    let globalCmpMessage = GlobalCMPMessage()
     let gdprPM = GDPRPrivacyManager()
     let attPrePrompt = ATTPrePrompt()
 
