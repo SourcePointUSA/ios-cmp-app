@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
-		Vjgr45ZCHpy9CmTdmuSGV/v6eGk=
+		1sDRMoVH/PwBbOIUNgC0eU3TFxQ=
 		</data>
 		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
 		<data>
@@ -14,47 +14,47 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		0dG7766HPOwFOFUeV0ijPkrgkUQ=
+		NZThzjUIwc1nspJY/3NgbEfisG4=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		MBMxUuudgn2gZbywg13kOtlc5AU=
+		ak4KG/zZSNt2dmbtInyTbuSZ5lw=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		MtafMBOQz1uA/SeFc1AzdZ+lgSI=
+		tZIwlqy9QdVz/NLFvKC35chsYP0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Mxf9o7GWSMp3+Jfxc0+V8p9TucE=
+		Q5J817VzDaqh69339w3PkV0waz8=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		MtafMBOQz1uA/SeFc1AzdZ+lgSI=
+		tZIwlqy9QdVz/NLFvKC35chsYP0=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		7IYnYrjloGgR5xnLZXNH9EhSwlA=
+		YcEXtOEann1URH842tborVrVrBo=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		MBMxUuudgn2gZbywg13kOtlc5AU=
+		ak4KG/zZSNt2dmbtInyTbuSZ5lw=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		gHv19ZDVTxa+iso+SAH7DiVUhgk=
+		fbkq8EwhEHY2mrAYQxc/wXoMa/E=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		DnwqwHUwq4HGb9m+otizyvvSsho=
+		c+RexURbVsMDY+G2Ba9PY7KV2zU=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		gHv19ZDVTxa+iso+SAH7DiVUhgk=
+		fbkq8EwhEHY2mrAYQxc/wXoMa/E=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		2eUC1pO4lhDlUhuKTVC3P3XJQL4=
+		pVPdUXEWNJuifG7CiaDRHkVUTqA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -67,11 +67,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Vjgr45ZCHpy9CmTdmuSGV/v6eGk=
+			1sDRMoVH/PwBbOIUNgC0eU3TFxQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZLMY2CL1boTXmhmU5sAbkLkQR4hT4LBQdRB7lJxEjKQ=
+			LhCYIU/TTUqisSuKHAq6fuMt7XeaQ2Jo7DWcOABzCMM=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController-iOS-umbrella.h</key>
@@ -89,110 +89,110 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			MBMxUuudgn2gZbywg13kOtlc5AU=
+			ak4KG/zZSNt2dmbtInyTbuSZ5lw=
 			</data>
 			<key>hash2</key>
 			<data>
-			XOPM8K9hBFH4Rr2aOZ6cDEiBdz7fp/6LPptSkrZ+Sk8=
+			1l8psTukKKnaASdPgIRaPxBg3CCIrzo03ql3c70TDVw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MtafMBOQz1uA/SeFc1AzdZ+lgSI=
+			tZIwlqy9QdVz/NLFvKC35chsYP0=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ey0ymZmb1PJ8BQZQtNXzHjkaRk8yatFIUitzUnOMoAc=
+			QECsaZv8KdXdUF1Jq3UDNXmI7TADH/oox64QKJPlPls=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Mxf9o7GWSMp3+Jfxc0+V8p9TucE=
+			Q5J817VzDaqh69339w3PkV0waz8=
 			</data>
 			<key>hash2</key>
 			<data>
-			JWSXL6fkUgvQrcwasBCnR5fQtG6+LIAHjoUsLuCCnzo=
+			JqfVmIusqilRfmtnzdP2q5ekEAWbQ9o8jJyJbTWs4LY=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MtafMBOQz1uA/SeFc1AzdZ+lgSI=
+			tZIwlqy9QdVz/NLFvKC35chsYP0=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ey0ymZmb1PJ8BQZQtNXzHjkaRk8yatFIUitzUnOMoAc=
+			QECsaZv8KdXdUF1Jq3UDNXmI7TADH/oox64QKJPlPls=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7IYnYrjloGgR5xnLZXNH9EhSwlA=
+			YcEXtOEann1URH842tborVrVrBo=
 			</data>
 			<key>hash2</key>
 			<data>
-			JRDDmCDg9vqJfmvEBMYUSeWFCSiqGSKLBRD4Lz1hpjY=
+			f5toB6s0cSD6s/X7cu7gAeR2iwWFRyVAcMJTfdKlkBA=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MBMxUuudgn2gZbywg13kOtlc5AU=
+			ak4KG/zZSNt2dmbtInyTbuSZ5lw=
 			</data>
 			<key>hash2</key>
 			<data>
-			XOPM8K9hBFH4Rr2aOZ6cDEiBdz7fp/6LPptSkrZ+Sk8=
+			1l8psTukKKnaASdPgIRaPxBg3CCIrzo03ql3c70TDVw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gHv19ZDVTxa+iso+SAH7DiVUhgk=
+			fbkq8EwhEHY2mrAYQxc/wXoMa/E=
 			</data>
 			<key>hash2</key>
 			<data>
-			qmJY3NXw8KMjcsf/7aEN0GgyQzt6WE4XzjP/SG5GlMQ=
+			iGKDk2jAeFLsoyxF0ya/VFlT5O2LFBoeOQ3WTzoilXs=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			DnwqwHUwq4HGb9m+otizyvvSsho=
+			c+RexURbVsMDY+G2Ba9PY7KV2zU=
 			</data>
 			<key>hash2</key>
 			<data>
-			hwGRNoErO2Wk78KSpPPficj25nMB6sOMRtKCN7n9bfM=
+			TQP0Xu696S6JDaQVaNQjCaMm/jHXafAFbUwkJ3PH62M=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gHv19ZDVTxa+iso+SAH7DiVUhgk=
+			fbkq8EwhEHY2mrAYQxc/wXoMa/E=
 			</data>
 			<key>hash2</key>
 			<data>
-			qmJY3NXw8KMjcsf/7aEN0GgyQzt6WE4XzjP/SG5GlMQ=
+			iGKDk2jAeFLsoyxF0ya/VFlT5O2LFBoeOQ3WTzoilXs=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2eUC1pO4lhDlUhuKTVC3P3XJQL4=
+			pVPdUXEWNJuifG7CiaDRHkVUTqA=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ei1XOu53PHFJfKXRxEwi0KUaBDnCIjk2t2nvrB8yTpA=
+			DbcbyuHqEQAxgQqs4rvIQi8wNoYXcc3PYJGJbNLYGK0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -591,8 +591,9 @@ typedef SWIFT_ENUM(NSInteger, SPCampaignType, open) {
   SPCampaignTypeIos14 = 1,
   SPCampaignTypeCcpa = 2,
   SPCampaignTypeUsnat = 3,
-  SPCampaignTypePreferences = 4,
-  SPCampaignTypeUnknown = 5,
+  SPCampaignTypeGlobalcmp = 4,
+  SPCampaignTypePreferences = 5,
+  SPCampaignTypeUnknown = 6,
 };
 
 /// It’s important to notice the campaign you passed as parameter needs to have
@@ -604,9 +605,10 @@ SWIFT_CLASS("_TtC21ConsentViewController11SPCampaigns")
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable ccpa;
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable usnat;
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable ios14;
+@property (nonatomic, readonly, strong) SPCampaign * _Nullable globalcmp;
 @property (nonatomic, readonly, strong) SPCampaign * _Nullable preferences;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
-- (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa usnat:(SPCampaign * _Nullable)usnat ios14:(SPCampaign * _Nullable)ios14 preferences:(SPCampaign * _Nullable)preferences environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithGdpr:(SPCampaign * _Nullable)gdpr ccpa:(SPCampaign * _Nullable)ccpa usnat:(SPCampaign * _Nullable)usnat ios14:(SPCampaign * _Nullable)ios14 globalcmp:(SPCampaign * _Nullable)globalcmp preferences:(SPCampaign * _Nullable)preferences environment:(enum SPCampaignEnv)environment OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -716,6 +718,12 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController10SPDelegate_")
 - (void)onError:(SPError * _Nonnull)error;
 @end
 
+SWIFT_PROTOCOL("_TtP21ConsentViewController11SPGLOBALCMP_") SWIFT_AVAILABILITY(ios,introduced=10)
+@protocol SPGLOBALCMP
+@property (nonatomic, readonly) BOOL globalcmpApplies;
+- (void)loadGlobalCmpPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+@end
+
 SWIFT_PROTOCOL("_TtP21ConsentViewController7SPUSNAT_") SWIFT_AVAILABILITY(ios,introduced=10)
 @protocol SPUSNAT
 @property (nonatomic, readonly) BOOL usnatApplies;
@@ -730,7 +738,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
 
 @class SPGDPRConsent;
 SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
-@protocol SPSDK <SPCCPA, SPGDPR, SPMessageUIDelegate, SPUSNAT>
+@protocol SPSDK <SPCCPA, SPGDPR, SPGLOBALCMP, SPMessageUIDelegate, SPUSNAT>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
 + (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic) BOOL cleanUserDataOnError;
@@ -753,6 +761,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 @property (nonatomic, readonly) BOOL gdprApplies;
 @property (nonatomic, readonly) BOOL ccpaApplies;
 @property (nonatomic, readonly) BOOL usnatApplies;
+@property (nonatomic, readonly) BOOL globalcmpApplies;
 /// Returns the user data <em>stored in the <code>UserDefaults</code></em>.
 @property (nonatomic, readonly, strong) SPUserData * _Nonnull userData;
 + (void)clearAllData;
@@ -761,6 +770,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadGDPRPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadUSNatPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+- (void)loadGlobalCmpPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
@@ -869,6 +879,27 @@ typedef SWIFT_ENUM(NSInteger, SPMspaTernaryFlag, open) {
   SPMspaTernaryFlagNo = 1,
   SPMspaTernaryFlagNotApplicable = 2,
 };
+
+SWIFT_CLASS("_TtC21ConsentViewController18SPGlobalCmpConsent")
+@interface SPGlobalCmpConsent : NSObject <NSCopying>
+/// A collection of accepted/rejected vendors and their ids
+@property (nonatomic, readonly, copy) NSArray<SPConsentable *> * _Nonnull vendors;
+/// A collection of accepted/rejected categories (aka. purposes) and their ids
+@property (nonatomic, readonly, copy) NSArray<SPConsentable *> * _Nonnull categories;
+/// Identifies this globalcmp consent profile
+@property (nonatomic, copy) NSString * _Nullable uuid;
+/// Whether GlobalCmp applies according to user’s location (inferred from IP lookup) and your Vendor List applies scope setting
+@property (nonatomic) BOOL applies;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@interface SPGlobalCmpConsent (SWIFT_EXTENSION(ConsentViewController))
+@property (nonatomic, readonly, copy) NSString * _Nonnull description;
++ (SPGlobalCmpConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
+- (BOOL)isEqual:(id _Nullable)object SWIFT_WARN_UNUSED_RESULT;
+- (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
+@end
 
 /// Maps <code>ATTrackingManager.requestTrackingAuthorization</code> into our own enum.
 /// It covers also the case when <code>ATTrackingManager.AuthorizationStatus</code> is not available.
@@ -1167,6 +1198,12 @@ SWIFT_CLASS("_TtC21ConsentViewController10SPUserData")
 - (SPUSNatConsent * _Nullable)objcUSNatConsents SWIFT_WARN_UNUSED_RESULT;
 /// Indicates whether USNat applies based on the VendorList configuration.
 - (BOOL)objcUSNatApplies SWIFT_WARN_UNUSED_RESULT;
+/// Returns GlobalCmp consent data if any available.
+/// seealso:
+/// <code>SPUSNatConsent</code>
+- (SPGlobalCmpConsent * _Nullable)objcGlobalCmpConsents SWIFT_WARN_UNUSED_RESULT;
+/// Indicates whether GlobalCmp applies based on the VendorList configuration.
+- (BOOL)objcGlobalCmpApplies SWIFT_WARN_UNUSED_RESULT;
 /// Returns Preferences consent data if any available.
 /// seealso:
 /// <code>SPPreferencesConsent</code>
