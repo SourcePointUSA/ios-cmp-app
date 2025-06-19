@@ -1,3 +1,6 @@
+# 7.10.0 (Jun, 19, 2025)
+* [DIA-5652](https://sourcepoint.atlassian.net/browse/DIA-5652) Add support to `globalcmp` campaign type. README will be updated soon. [#619](https://github.com/SourcePointUSA/ios-cmp-app/pull/619)
+
 # 7.9.1 (Apr, 30, 2025)
 * updated `SPMobileCore` from 0.1.6 to 0.1.7, fixing an issue with preferences.uuid being null. 
 * made Preferences consent fields public and objc compatible [#622](https://github.com/SourcePointUSA/ios-cmp-app/pull/622)

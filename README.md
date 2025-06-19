@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.9.1'
+pod 'ConsentViewController', '7.10.0'
 ```
 
 The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
@@ -44,7 +44,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "7.9.1")
+                .upToNextMinor(from: "7.10.0")
         ),
     ],
     targets: [
