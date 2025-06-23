@@ -145,7 +145,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     func loadQrCodes() {
         loadQRCode(url: vendor?.policyUrl, imageView: PolicyQrCodeImageView, label: PolicyQrCodeLabel)
         loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
-        //ToScanLabel.setDefaultTextColorForDarkMode()
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
@@ -156,7 +155,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             imageView.isHidden = imageView.image == nil
             label.isHidden = imageView.image == nil
         }
-        //label.setDefaultTextColorForDarkMode()
     }
 
     func hideOnOffButtons() {
