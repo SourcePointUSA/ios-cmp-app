@@ -67,10 +67,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 definition: viewData.byId("SpecialFeaturesDefinitionConsent", defaultId: "SpecialFeaturesDefinition") as? SPNativeText,
                 content: Array(consentsSnapshot.specialFeatures)
             )
-        ].compactMap { $0 }.filter { section in
-            // Show only sections with content
-            !section.content.isEmpty
-        }
+        ].compactMap { $0 }
     }
     
     // Sections for Legitimate Interest Mode
@@ -97,10 +94,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 definition: viewData.byId("SpecialFeaturesDefinitionConsent", defaultId: "SpecialFeaturesDefinition") as? SPNativeText,
                 content: Array(consentsSnapshot.specialFeatures)
             )
-        ].compactMap { $0 }.filter { section in
-            // Show only sections with content
-            !section.content.isEmpty
-        }
+        ].compactMap { $0 }
     }
 
     // Legacy sections property for compatibility
@@ -252,23 +246,21 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
 // MARK: UITableViewDataSource
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
     func currentCategory(_ index: IndexPath) -> GDPRCategory? {
-        guard index.section < dynamicSections.count else { return nil }
         let categories = dynamicSections[index.section].content
         guard index.row < categories.count else { return nil }
         return categories[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        50
+        if dynamicSections[section].content.isEmpty { return 1 } else { return 50 }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dynamicSections.count
+        4
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section < dynamicSections.count,
-              let sectionComponent = dynamicSections[section].header else { return nil }
+        guard let sectionComponent = dynamicSections[section].header else { return nil }
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.numberOfLines = 0
@@ -283,16 +275,15 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        UITableView.automaticDimension
+        if dynamicSections[section].content.isEmpty { return 1 } else { return UITableView.automaticDimension }
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard section < dynamicSections.count else { return 0 }
         return dynamicSections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        if dynamicSections[indexPath.section].content.isEmpty { return 1 } else { return UITableView.automaticDimension }
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -306,7 +297,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.labelText = category.name
         
         // Determine the content type based on the section and the content
-        if section < 2 { // Purposes and Special Purposes
+        if section == 0 { // Purposes
             if displayingLegIntCategories {
                 cell.contentType = .legitimate
                 cell.isOn = consentsSnapshot.toggledLICategoriesIds.contains(category._id)
@@ -369,8 +360,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         categoryDetailsVC.categoryType = cell.contentType
         
-        // Purpose toggle is active for the first two sections or special features (Section 3)
-        categoryDetailsVC.purposeToggleActive = indexPath.section < 2 || indexPath.section == 3
+        // Purpose toggle is active for the first section or special features (Section 3)
+        categoryDetailsVC.purposeToggleActive = indexPath.section == 0 || indexPath.section == 3
         
         present(categoryDetailsVC, animated: true)
     }
