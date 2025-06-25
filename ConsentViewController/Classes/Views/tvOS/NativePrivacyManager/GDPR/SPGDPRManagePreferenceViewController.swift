@@ -225,6 +225,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     
     // Hilfsmethode zum Aktualisieren des Headers
     func updateHeaderForCurrentMode() {
+        // HeaderConsent and HeaderLegInt are not present in our test property
         if displayingLegIntCategories {
             // Legitimate Interest spezifische UI-Updates
             if let legIntHeader = viewData.byId("HeaderLegInt") as? SPNativeText {
@@ -337,7 +338,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
-            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]?.stripOutCss(stripHtml: true)
             if let description = categoryDescription[cell.identifier], description.isNotEmpty() {
                 spacer.isHidden = true
             } else {
