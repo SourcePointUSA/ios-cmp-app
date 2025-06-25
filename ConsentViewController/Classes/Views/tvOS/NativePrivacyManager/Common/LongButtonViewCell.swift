@@ -40,9 +40,6 @@ class LongButtonViewCell: UITableViewCell {
     func loadUI() {
         label.text = labelText
         label.font = UIFont(from: style?.font)
-        label.setDefaultTextColorForDarkMode()
-        customLabel.setDefaultTextColorForDarkMode()
-        stateLabel.setDefaultTextColorForDarkMode()
         if let customText = customText {
             customLabel.isHidden = false
             customLabel.text = customText
@@ -59,6 +56,7 @@ class LongButtonViewCell: UITableViewCell {
             stateLabel.isHidden = true
         }
         accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
+        self.contentView.layer.cornerRadius = 10
     }
 
     override func prepareForReuse() {
@@ -73,4 +71,20 @@ class LongButtonViewCell: UITableViewCell {
         loadUI()
         selectionStyle = .none
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let focused = self.isFocused
+        if focused {
+            self.contentView.backgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
+            label.textColor = UIColor(hexString: style?.onFocusTextColor)
+            customLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
+            stateLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
+        } else {
+            self.contentView.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
+            label.textColor = UIColor(hexString: style?.onUnfocusTextColor)
+            customLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
+            stateLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
+        }
+     }
 }
