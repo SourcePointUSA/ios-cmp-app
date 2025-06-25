@@ -31,7 +31,7 @@ class ViewController: UIViewController {
             // swiftlint:disable:next force_try
             propertyName: try! SPPropertyName("appletv.demo"),
             campaigns: campaigns,
-            language: .Dutch,
+            language: SPMessageLanguage(rawValue: UserDefaults.standard.string(forKey: "app.lang") ?? "") ?? .BrowserDefault,
             delegate: self
         )
     }()
@@ -51,11 +51,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "1324447")
+        consentManager.loadGDPRPrivacyManager(withId: "1001706")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "1265459")
+        consentManager.loadCCPAPrivacyManager(withId: "753802")
     }
 }
 
