@@ -82,7 +82,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             hideOnOffButtons()
         }
         loadQrCodes()
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        nativeLongButton = viewData.byId("VendorLongButton", defaultId: "CategoryLongButton") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
@@ -223,6 +223,7 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
         }
         cell.labelText = sections[indexPath.section].content[indexPath.row].name
         cell.customText=sections[indexPath.section].content[indexPath.row].retention
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }

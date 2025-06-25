@@ -38,7 +38,7 @@ struct Constants {
             public var backgroundColor: String = "#575757"
             public var activeBackgroundColor: String = "#707070"
             public var onFocusTextColor: String = "#000000"
-            public var onUnfocusTextColor: String = "#ffffff"
+            public var onUnfocusTextColor: String = "#000000"
             public var onFocusBackgroundColor: String = "#ffffff"
             public var onUnfocusBackgroundColor: String = "#575757"
             public var font: SPNativeFont = SPNativeFont(fontSize: 14, fontWeight: "400", fontFamily: "arial, helvetica, sans-serif", color: "#000000")
