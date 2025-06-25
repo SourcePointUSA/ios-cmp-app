@@ -35,7 +35,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var categoryDescription = [String: String]()
 
-    // Dynamische Sections basierend auf dem aktuellen Modus
+    // Dynamic sections based on the current mode
     var dynamicSections: [Section] {
         if displayingLegIntCategories {
             return legIntSections
@@ -44,7 +44,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         }
     }
     
-    // Sections für Consent-Modus
+    // Sections for Consent Mode
     var consentSections: [Section] {
         [
             Section(
@@ -68,12 +68,12 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 content: Array(consentsSnapshot.specialFeatures)
             )
         ].compactMap { $0 }.filter { section in
-            // Nur Sections mit Inhalt anzeigen
+            // Show only sections with content
             !section.content.isEmpty
         }
     }
     
-    // Sections für Legitimate Interest-Modus
+    // Sections for Legitimate Interest Mode
     var legIntSections: [Section] {
         [
             Section(
@@ -86,7 +86,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 definition: (viewData.byId("SpecialPurposesDefinitionLegInt") ?? viewData.byId("SpecialPurposesDefinitionConsent", defaultId: "SpecialPurposesDefinition")) as? SPNativeText,
                 content: Array(consentsSnapshot.specialPurposes)
             ),
-            // Features und Special Features bleiben gleich für beide Modi
+            // Features and special features remain the same for both modes
             Section(
                 header: viewData.byId("FeaturesHeaderConsent", defaultId: "FeaturesHeader") as? SPNativeText,
                 definition: viewData.byId("FeaturesDefinitionConsent", defaultId: "FeaturesDefinition") as? SPNativeText,
@@ -98,12 +98,12 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 content: Array(consentsSnapshot.specialFeatures)
             )
         ].compactMap { $0 }.filter { section in
-            // Nur Sections mit Inhalt anzeigen
+            // Show only sections with content
             !section.content.isEmpty
         }
     }
 
-    // Legacy sections property für Kompatibilität
+    // Legacy sections property for compatibility
     var sections: [Section] {
         dynamicSections
     }
@@ -163,7 +163,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
-        // Animation beim Wechsel
+        // Animation when changing
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.categoriesTableView.alpha = 0.5
         } completion: { [weak self] _ in
@@ -173,10 +173,10 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             }
         }
         
-        // Header-Text aktualisieren basierend auf dem Modus
+        // Update header text based on mode
         updateHeaderForCurrentMode()
         
-        // Description Text aktualisieren
+        // Update description text
         updateDescriptionForCurrentMode()
     }
 
@@ -223,23 +223,23 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         }
     }
     
-    // Hilfsmethode zum Aktualisieren des Headers
+    // Helper method for updating the header
     func updateHeaderForCurrentMode() {
         // HeaderConsent and HeaderLegInt are not present in our test property
         if displayingLegIntCategories {
-            // Legitimate Interest spezifische UI-Updates
+            // Legitimate Interest specific UI updates
             if let legIntHeader = viewData.byId("HeaderLegInt") as? SPNativeText {
                 header.spTitleText = legIntHeader
             }
         } else {
-            // Consent spezifische UI-Updates
+            // Consent-specific UI updates
             if let consentHeader = viewData.byId("HeaderConsent") as? SPNativeText {
                 header.spTitleText = consentHeader
             }
         }
     }
     
-    // Hilfsmethode zum Aktualisieren der Description
+    // Helper method for updating the description
     func updateDescriptionForCurrentMode() {
         let textComponentId = displayingLegIntCategories ?
             viewData.getContainsIdOrDefault("CategoriesHeaderLegInt", defaultId: "CategoriesHeader")! :
@@ -305,8 +305,8 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         cell.identifier = category._id
         cell.labelText = category.name
         
-        // Bestimme den Content Type basierend auf der Section und dem Inhalt
-        if section < 2 { // Purposes und Special Purposes
+        // Determine the content type based on the section and the content
+        if section < 2 { // Purposes and Special Purposes
             if displayingLegIntCategories {
                 cell.contentType = .legitimate
                 cell.isOn = consentsSnapshot.toggledLICategoriesIds.contains(category._id)
@@ -314,11 +314,11 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 cell.contentType = .consent
                 cell.isOn = consentsSnapshot.toggledConsentCategoriesIds.contains(category._id)
             }
-        } else if section == 3 { // Special Features (basierend auf der Original-Logik)
+        } else if section == 3 { // Special Features (based on the original logic)
             cell.contentType = .specialFeatures
             cell.isOn = consentsSnapshot.toggledSpecialFeatures.contains(category._id)
         } else {
-            // Regular Features und andere
+            // Regular Features and others
             cell.contentType = nil
             cell.isOn = nil
         }
@@ -369,7 +369,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         categoryDetailsVC.categoryType = cell.contentType
         
-        // Purpose toggle ist aktiv für die ersten beiden Sections oder Special Features (Section 3)
+        // Purpose toggle is active for the first two sections or special features (Section 3)
         categoryDetailsVC.purposeToggleActive = indexPath.section < 2 || indexPath.section == 3
         
         present(categoryDetailsVC, animated: true)
