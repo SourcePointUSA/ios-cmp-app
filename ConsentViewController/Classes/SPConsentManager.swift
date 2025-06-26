@@ -250,7 +250,7 @@ import SPMobileCore
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.10.0"
+    public static let VERSION = "7.10.1"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
