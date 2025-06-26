@@ -76,6 +76,8 @@
 		3B05F6DDF799FA4511A2CD57 /* Pods_Tests_ConsentViewController_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D7455929FAE7DB2B82D763 /* Pods_Tests_ConsentViewController_ExampleTests.framework */; };
 		44F9D62721F4B45B424B3BE2 /* Pods_Tests_AuthExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD3A9C5A0D8D124F68BFF2FE /* Pods_Tests_AuthExampleUITests.framework */; };
 		5687C4F227A1B11A003456E7 /* SPPropertyNameSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5687C4F127A1B11A003456E7 /* SPPropertyNameSpec.swift */; };
+		56DBFF2B2E0DF33A001E60E7 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 56DBFF2A2E0DF33A001E60E7 /* SPMobileCore.xcframework */; };
+		56DBFF2C2E0DF344001E60E7 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 56DBFF2A2E0DF33A001E60E7 /* SPMobileCore.xcframework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -178,8 +180,6 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
-		829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
-		829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
 		829DA56425D5573800612517 /* SPConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829DA56325D5573800612517 /* SPConsentSpec.swift */; };
 		829E851729FA9A6500BE5E65 /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829E851629FA9A6500BE5E65 /* Statuses.swift */; };
@@ -544,6 +544,7 @@
 		520CC0B76A61FEA260B24647 /* Pods-Tests-SPGDPRExampleAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-SPGDPRExampleAppUITests.release.xcconfig"; path = "Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5676237D6A630435EBC348C0 /* Pods-Examples-ObjC-ExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-ObjC-ExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5687C4F127A1B11A003456E7 /* SPPropertyNameSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPropertyNameSpec.swift; sourceTree = "<group>"; };
+		56DBFF2A2E0DF33A001E60E7 /* SPMobileCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SPMobileCore.xcframework; path = Pods/SPMobileCore/SPMobileCore.xcframework; sourceTree = "<group>"; };
 		5762823FCE899AF5C777F3A2 /* Pods-Tests-SourcePointMetaAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-SourcePointMetaAppUITests.release.xcconfig"; path = "Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5ACEBFD8D359BD752CB27853 /* Pods-Tests-NativeMessageExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests-NativeMessageExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SPGDPRExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPGDPRExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1396,6 +1397,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				56DBFF2A2E0DF33A001E60E7 /* SPMobileCore.xcframework */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ConsentViewController */,
 				82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */,
@@ -2892,9 +2894,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2931,9 +2937,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2948,9 +2958,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2965,9 +2979,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2982,9 +3000,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2999,9 +3021,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3038,9 +3064,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3055,9 +3085,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3094,9 +3128,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3155,9 +3193,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3269,9 +3311,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3396,9 +3442,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3501,9 +3551,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3518,9 +3572,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3535,9 +3593,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3552,9 +3614,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3568,8 +3634,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56DBFF2B2E0DF33A001E60E7 /* SPMobileCore.xcframework in Sources */,
 				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
-				829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */,
 				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
@@ -3635,8 +3701,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56DBFF2C2E0DF344001E60E7 /* SPMobileCore.xcframework in Sources */,
 				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
-				829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,
 				82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */,
 				82CD6F272B59CA2C00CAD663 /* SPCCPAPartnersViewController.swift in Sources */,
