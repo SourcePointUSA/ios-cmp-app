@@ -27,7 +27,6 @@ protocol SPNativePrivacyManagerHome {
 
     override var preferredFocusedView: UIView? { acceptButton }
 
-    @IBOutlet var categoriesExplainerLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var ourPartners: SPAppleTVButton!
