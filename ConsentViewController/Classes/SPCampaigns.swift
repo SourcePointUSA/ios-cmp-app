@@ -108,7 +108,7 @@ public typealias SPTargetingParams = [String: String]
 /// a active vendor list of that legislation.
 @objcMembers public class SPCampaigns: NSObject {
     public let environment: SPCampaignEnv
-    public let gdpr, ccpa, usnat, ios14, preferences: SPCampaign?
+    public let gdpr, ccpa, usnat, ios14, globalcmp, preferences: SPCampaign?
 
     override public var description: String {
         """
@@ -117,6 +117,8 @@ public typealias SPTargetingParams = [String: String]
             - cppa: \(ccpa as Any)
             - usnat: \(usnat as Any)
             - ios14: \(ios14 as Any)
+            - globalcmp: \(globalcmp as Any)
+            - preferences: \(preferences as Any)
             - environment: \(environment)
         """
     }
@@ -126,6 +128,7 @@ public typealias SPTargetingParams = [String: String]
         ccpa: SPCampaign? = nil,
         usnat: SPCampaign? = nil,
         ios14: SPCampaign? = nil,
+        globalcmp: SPCampaign? = nil,
         preferences: SPCampaign? = nil,
         environment: SPCampaignEnv = .Public
     ) {
@@ -133,6 +136,7 @@ public typealias SPTargetingParams = [String: String]
         self.ccpa = ccpa
         self.usnat = usnat
         self.ios14 = ios14
+        self.globalcmp = globalcmp
         self.preferences = preferences
         self.environment = environment
     }

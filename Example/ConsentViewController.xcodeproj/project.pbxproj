@@ -178,8 +178,6 @@
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
-		829BD47B2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
-		829BD47C2DA02E790043B374 /* Adapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829BD47A2DA02E790043B374 /* Adapters.swift */; };
 		829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */ = {isa = PBXBuildFile; fileRef = 8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */; };
 		829CB4E826FB3BBA004DDB98 /* SpinnerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */; };
@@ -197,6 +195,18 @@
 		82BC13812BB2E96100AD346A /* SPGDPRConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13802BB2E96100AD346A /* SPGDPRConsentObjcSpec.m */; };
 		82BC13832BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */; };
 		82C4936028F17A2D00898E7A /* CampaignSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C4935F28F17A2D00898E7A /* CampaignSpec.swift */; };
+		82C9F20B2E0460EB0033DB4B /* SPGlobalCmpConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2092E0460EB0033DB4B /* SPGlobalCmpConsent.swift */; };
+		82C9F20C2E0460EB0033DB4B /* SPPreferencesConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F20A2E0460EB0033DB4B /* SPPreferencesConsent.swift */; };
+		82C9F20D2E0460EB0033DB4B /* SPGlobalCmpConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2092E0460EB0033DB4B /* SPGlobalCmpConsent.swift */; };
+		82C9F20E2E0460EB0033DB4B /* SPPreferencesConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F20A2E0460EB0033DB4B /* SPPreferencesConsent.swift */; };
+		82C9F2142E0461260033DB4B /* StateNativeToCoreAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2122E0461260033DB4B /* StateNativeToCoreAdapter.swift */; };
+		82C9F2152E0461260033DB4B /* SharedNativeToCoreAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2102E0461260033DB4B /* SharedNativeToCoreAdapters.swift */; };
+		82C9F2162E0461260033DB4B /* SharedCoreToNativeAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F20F2E0461260033DB4B /* SharedCoreToNativeAdapters.swift */; };
+		82C9F2172E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2112E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift */; };
+		82C9F2182E0461260033DB4B /* StateNativeToCoreAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2122E0461260033DB4B /* StateNativeToCoreAdapter.swift */; };
+		82C9F2192E0461260033DB4B /* SharedNativeToCoreAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2102E0461260033DB4B /* SharedNativeToCoreAdapters.swift */; };
+		82C9F21A2E0461260033DB4B /* SharedCoreToNativeAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F20F2E0461260033DB4B /* SharedCoreToNativeAdapters.swift */; };
+		82C9F21B2E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82C9F2112E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift */; };
 		82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */; };
 		82CD6EA12B59CA2C00CAD663 /* ConsentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */; };
 		82CD6EA32B59CA2C00CAD663 /* SPCCPAConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */; };
@@ -673,7 +683,6 @@
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
 		828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentStatusSpec.swift; sourceTree = "<group>"; };
-		829BD47A2DA02E790043B374 /* Adapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adapters.swift; sourceTree = "<group>"; };
 		829CB4E726FB3BBA004DDB98 /* SpinnerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerExtension.swift; sourceTree = "<group>"; };
 		829DA56325D5573800612517 /* SPConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPConsentSpec.swift; sourceTree = "<group>"; };
 		829E851629FA9A6500BE5E65 /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
@@ -691,6 +700,12 @@
 		82BC13822BB2F1E200AD346A /* SPUSNatConsentObjcSpec.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPUSNatConsentObjcSpec.m; sourceTree = "<group>"; };
 		82C4935F28F17A2D00898E7A /* CampaignSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampaignSpec.swift; sourceTree = "<group>"; };
 		82C54E84290814C400379259 /* SPSdkStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPSdkStatus.h; sourceTree = "<group>"; };
+		82C9F2092E0460EB0033DB4B /* SPGlobalCmpConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGlobalCmpConsent.swift; sourceTree = "<group>"; };
+		82C9F20A2E0460EB0033DB4B /* SPPreferencesConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPPreferencesConsent.swift; sourceTree = "<group>"; };
+		82C9F20F2E0461260033DB4B /* SharedCoreToNativeAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCoreToNativeAdapters.swift; sourceTree = "<group>"; };
+		82C9F2102E0461260033DB4B /* SharedNativeToCoreAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedNativeToCoreAdapters.swift; sourceTree = "<group>"; };
+		82C9F2112E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPUserDataCoreToNativeAdapter.swift; sourceTree = "<group>"; };
+		82C9F2122E0461260033DB4B /* StateNativeToCoreAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateNativeToCoreAdapter.swift; sourceTree = "<group>"; };
 		82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampaignConsent.swift; sourceTree = "<group>"; };
 		82CD6E432B59CA2C00CAD663 /* ConsentStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsentStatus.swift; sourceTree = "<group>"; };
 		82CD6E442B59CA2C00CAD663 /* SPCCPAConsent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPCCPAConsent.swift; sourceTree = "<group>"; };
@@ -1794,9 +1809,22 @@
 			path = Objc;
 			sourceTree = "<group>";
 		};
+		82C9F2132E0461260033DB4B /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				82C9F20F2E0461260033DB4B /* SharedCoreToNativeAdapters.swift */,
+				82C9F2102E0461260033DB4B /* SharedNativeToCoreAdapters.swift */,
+				82C9F2112E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift */,
+				82C9F2122E0461260033DB4B /* StateNativeToCoreAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
 		82CD6E412B59CA2C00CAD663 /* Consents */ = {
 			isa = PBXGroup;
 			children = (
+				82C9F2092E0460EB0033DB4B /* SPGlobalCmpConsent.swift */,
+				82C9F20A2E0460EB0033DB4B /* SPPreferencesConsent.swift */,
 				822CF3FE2B975AB000927247 /* SPConsentable.swift */,
 				82BA6E652B72AC2300E318B3 /* GoogleConsentMode */,
 				82CD6E422B59CA2C00CAD663 /* CampaignConsent.swift */,
@@ -1812,7 +1840,7 @@
 		82CD6E492B59CA2C00CAD663 /* SourcePointClient */ = {
 			isa = PBXGroup;
 			children = (
-				829BD47A2DA02E790043B374 /* Adapters.swift */,
+				82C9F2132E0461260033DB4B /* Adapters */,
 				82CD6E4F2B59CA2C00CAD663 /* MessagesResponse.swift */,
 				82CD6E502B59CA2C00CAD663 /* QueryParamEncodableProtocol.swift */,
 				82CD6E512B59CA2C00CAD663 /* SourcepointClientCoordinator.swift */,
@@ -2864,9 +2892,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2903,9 +2935,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ObjC-ExampleAppUITests/Pods-Tests-ObjC-ExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2920,9 +2956,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2937,9 +2977,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SourcePointMetaAppUITests/Pods-Tests-SourcePointMetaAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2954,9 +2998,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2971,9 +3019,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-AuthExampleUITests/Pods-Tests-AuthExampleUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3010,9 +3062,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-NativeMessageExampleUITests/Pods-Tests-NativeMessageExampleUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3027,9 +3083,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TVOSExampleAppUITests/Pods-TVOSExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3066,9 +3126,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ConsentViewController_Example/Pods-Examples-ConsentViewController_Example-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3127,9 +3191,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-ConsentViewController_ExampleTests/Pods-Tests-ConsentViewController_ExampleTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3241,9 +3309,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-SourcePointMetaApp/Pods-Examples-SourcePointMetaApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3368,9 +3440,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-AuthExample/Pods-Examples-AuthExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3473,9 +3549,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests/Pods-Tests-FirebaseTests-SourcepointFirebaseDemoTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3490,9 +3570,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-NativeMessageExample/Pods-Examples-NativeMessageExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3507,9 +3591,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Examples-ObjC-ExampleApp/Pods-Examples-ObjC-ExampleApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3524,9 +3612,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests-SPGDPRExampleAppUITests/Pods-Tests-SPGDPRExampleAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3540,11 +3632,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
 				829BD47D2DA02F180043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F3E2B59CB0600CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6F3F2B59CB0600CAD663 /* ConsentStatus.swift in Sources */,
 				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
 				82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */,
+				82C9F20B2E0460EB0033DB4B /* SPGlobalCmpConsent.swift in Sources */,
+				82C9F20C2E0460EB0033DB4B /* SPPreferencesConsent.swift in Sources */,
 				82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */,
 				82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */,
 				82CD6F452B59CB0700CAD663 /* Date.swift in Sources */,
@@ -3557,12 +3652,10 @@
 				82CD6F512B59CB0700CAD663 /* MessagesResponse.swift in Sources */,
 				82CD6F522B59CB0700CAD663 /* QueryParamEncodableProtocol.swift in Sources */,
 				82CD6F532B59CB0700CAD663 /* SourcepointClientCoordinator.swift in Sources */,
-				822CF3FF2B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F582B59CB0700CAD663 /* ErrorMetricsRequest.swift in Sources */,
 				82CD6F592B59CB0700CAD663 /* GDPRPrivacyManagerViewResponse.swift in Sources */,
 				82CD6F5A2B59CB0700CAD663 /* SPPublisherData.swift in Sources */,
 				82CD6F5C2B59CB0700CAD663 /* PrivacyManagerViewData.swift in Sources */,
-				829BD47C2DA02E790043B374 /* Adapters.swift in Sources */,
 				82CD6F5D2B59CB0700CAD663 /* SPNativeUI.swift in Sources */,
 				82CD6F5E2B59CB0700CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
 				82CD6F5F2B59CB0700CAD663 /* SimpleClient.swift in Sources */,
@@ -3582,6 +3675,10 @@
 				82CD6F712B59CB0700CAD663 /* SPPrivacyManagerTab.swift in Sources */,
 				82CD6F722B59CB0700CAD663 /* SPCampaigns.swift in Sources */,
 				82CD6F732B59CB0700CAD663 /* SPPropertyName.swift in Sources */,
+				82C9F2142E0461260033DB4B /* StateNativeToCoreAdapter.swift in Sources */,
+				82C9F2152E0461260033DB4B /* SharedNativeToCoreAdapters.swift in Sources */,
+				82C9F2162E0461260033DB4B /* SharedCoreToNativeAdapters.swift in Sources */,
+				82C9F2172E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift in Sources */,
 				82CD6F742B59CB0700CAD663 /* SPStringifiedJSON.swift in Sources */,
 				82CD6F752B59CB0700CAD663 /* SPDelegate.swift in Sources */,
 				82CD6F762B59CB0700CAD663 /* Bundle+Framework.swift in Sources */,
@@ -3602,6 +3699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
 				829BD47E2DA02F1E0043B374 /* SPMobileCore.xcframework in Sources */,
 				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,
 				82CD6EDF2B59CA2C00CAD663 /* SPGPPConfig.swift in Sources */,
@@ -3651,19 +3749,23 @@
 				82CD6EC52B59CA2C00CAD663 /* ErrorMetricsRequest.swift in Sources */,
 				0B312FAD2ABC507200B62E23 /* SPMessageUIDelegate.swift in Sources */,
 				82CD6EA72B59CA2C00CAD663 /* SPUSNatConsent.swift in Sources */,
-				829BD47B2DA02E790043B374 /* Adapters.swift in Sources */,
 				0B312FD12ABC507D00B62E23 /* SPError.swift in Sources */,
 				82CD6EC92B59CA2C00CAD663 /* SPPublisherData.swift in Sources */,
+				82C9F2182E0461260033DB4B /* StateNativeToCoreAdapter.swift in Sources */,
+				82C9F2192E0461260033DB4B /* SharedNativeToCoreAdapters.swift in Sources */,
+				82C9F21A2E0461260033DB4B /* SharedCoreToNativeAdapters.swift in Sources */,
+				82C9F21B2E0461260033DB4B /* SPUserDataCoreToNativeAdapter.swift in Sources */,
 				0B312FDB2ABC508600B62E23 /* SPJson.swift in Sources */,
 				82CD6F352B59CA2C00CAD663 /* SPURLExtensions.swift in Sources */,
 				82CD6EF52B59CA2C00CAD663 /* SPGDPRCategoryDetailsViewController.swift in Sources */,
 				82CD6F252B59CA2C00CAD663 /* CCPAPMConsentSnapshot.swift in Sources */,
 				0B312F6C2ABC506700B62E23 /* SPCampaignEnv.swift in Sources */,
+				82C9F20D2E0460EB0033DB4B /* SPGlobalCmpConsent.swift in Sources */,
+				82C9F20E2E0460EB0033DB4B /* SPPreferencesConsent.swift in Sources */,
 				82CD6E9F2B59CA2C00CAD663 /* CampaignConsent.swift in Sources */,
 				82CD6ED12B59CA2C00CAD663 /* SPPrivacyManagerRequestResponse.swift in Sources */,
 				82CD6F312B59CA2C00CAD663 /* Date.swift in Sources */,
 				82CD6EDB2B59CA2C00CAD663 /* SourcePointClient.swift in Sources */,
-				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F392B59CA2C00CAD663 /* NSObjectExtensions.swift in Sources */,
 				82E605352AFB86A10080E782 /* SPDate.swift in Sources */,
 				82CD6EE12B59CA2C00CAD663 /* SPUIColor.swift in Sources */,
