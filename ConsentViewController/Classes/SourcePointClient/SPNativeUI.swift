@@ -190,8 +190,12 @@ class SPNativeView: SPNativeUI {
         try super.init(from: decoder)
     }
 
-    func byId(_ id: String) -> SPNativeUI? {
-        children.first { $0.id == id }
+    func byId(_ id: String, defaultId: String? = nil) -> SPNativeUI? {
+        children.first { $0.id == id } ?? children.first { $0.id == defaultId }
+    }
+
+    func getContainsIdOrDefault(_ id: String, defaultId: String? = nil) -> String? {
+        if children.contains { $0.id == id } { id } else { defaultId }
     }
 }
 

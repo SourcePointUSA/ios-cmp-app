@@ -1,3 +1,9 @@
+# 7.10.1 (Jun, 26, 2025)
+* [DIA-5549](https://sourcepoint.atlassian.net/browse/DIA-5549) Various fixes for tvOS [#625](https://github.com/SourcePointUSA/ios-cmp-app/pull/625), namely:
+* [DIA-5791](https://sourcepoint.atlassian.net/browse/DIA-5791) Headline size may exceed space
+* [DIA-5790](https://sourcepoint.atlassian.net/browse/DIA-5790) "Lorem Ipsum" Text on Purpose Tab
+* [DIA-5789](https://sourcepoint.atlassian.net/browse/DIA-5789) Font-color issue on vendor tab
+
 # 7.10.0 (Jun, 19, 2025)
 * [DIA-5652](https://sourcepoint.atlassian.net/browse/DIA-5652) Add support to `globalcmp` campaign type. README will be updated soon. [#619](https://github.com/SourcePointUSA/ios-cmp-app/pull/619)
 

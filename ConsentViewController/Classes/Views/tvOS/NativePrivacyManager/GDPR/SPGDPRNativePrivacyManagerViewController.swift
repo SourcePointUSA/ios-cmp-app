@@ -26,8 +26,8 @@ protocol SPNativePrivacyManagerHome {
     var snapshot: GDPRPMConsentSnaptshot?
 
     override var preferredFocusedView: UIView? { acceptButton }
+    var nativeLongButton: SPNativeLongButton?
 
-    @IBOutlet var categoriesExplainerLabel: UILabel!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var ourPartners: SPAppleTVButton!
@@ -58,11 +58,11 @@ protocol SPNativePrivacyManagerHome {
         setFocusGuidesForButtons()
         categoryTableView.accessibilityIdentifier = "Categories List"
         categoryTableView.allowsSelection = false
-        if #available(tvOS 14.0, *) {
-            categoryTableView.register(CategoryCellView.self, forCellReuseIdentifier: cellReuseIdentifier)
-        } else {
-            categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        }
+        categoryTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
         disableMenuButton()
@@ -297,9 +297,13 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = categoryTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        loadGenericTableCell(forComponentId: "CategoryButtons", text: categories[indexPath.row].name.trimmingCharacters(in: .whitespacesAndNewlines), cell: cell)
-        cell.textLabel?.font = .preferredFont(forTextStyle: .footnote)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.labelText = categories[indexPath.row].name.trimmingCharacters(in: .whitespacesAndNewlines)
+        cell.setup(from: nativeLongButton)
+        cell.loadUI()
         return cell
     }
 }
