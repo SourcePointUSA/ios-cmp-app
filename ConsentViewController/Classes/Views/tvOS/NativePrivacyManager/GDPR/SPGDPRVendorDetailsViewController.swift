@@ -222,7 +222,7 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
             return UITableViewCell()
         }
         cell.labelText = sections[indexPath.section].content[indexPath.row].name
-        cell.customText=sections[indexPath.section].content[indexPath.row].retention
+        cell.customText = sections[indexPath.section].content[indexPath.row].retention
         cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell

@@ -56,7 +56,7 @@ class LongButtonViewCell: UITableViewCell {
             stateLabel.isHidden = true
         }
         accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
-        self.contentView.layer.cornerRadius = 10
+        self.layer.cornerRadius = 10
     }
 
     override func prepareForReuse() {
@@ -76,12 +76,12 @@ class LongButtonViewCell: UITableViewCell {
         super.layoutSubviews()
         let focused = self.isFocused
         if focused {
-            self.contentView.backgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
+            self.backgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
             label.textColor = UIColor(hexString: style?.onFocusTextColor)
             customLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
             stateLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
         } else {
-            self.contentView.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
+            self.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
             label.textColor = UIColor(hexString: style?.onUnfocusTextColor)
             customLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
             stateLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
