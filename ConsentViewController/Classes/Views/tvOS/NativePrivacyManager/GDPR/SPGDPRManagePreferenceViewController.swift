@@ -12,24 +12,16 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     struct Section {
         let header: SPNativeText?
         let definition: SPNativeText?
-        var contentConsent: [GDPRCategory]
-        var contentLegIntCategory: [GDPRCategory]
+        var content: [GDPRCategory]
 
         init? (
             header: SPNativeText?,
             definition: SPNativeText?,
-            contentConsent: [GDPRCategory]? = nil,
-            contentLegIntCategory: [GDPRCategory]? = nil,
-            contentFeature: [GDPRCategory]? = nil
+            content: [GDPRCategory]? = nil
         ) {
             self.header = header
             self.definition = definition
-            self.contentConsent = contentConsent ?? []
-            self.contentLegIntCategory = contentLegIntCategory ?? []
-            if contentFeature != nil {
-                self.contentConsent.append(contentsOf: contentFeature ?? [])
-                self.contentLegIntCategory.append(contentsOf: contentFeature ?? [])
-            }
+            self.content = content ?? []
         }
     }
 
@@ -43,38 +35,84 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     var userConsentCategories: [GDPRCategory] { categories.filter { $0.requiringConsentVendors?.isNotEmpty() ?? false } }
     var categoryDescription = [String: String]()
 
-    var sections: [Section] {[
-        Section(
-            header: viewData.byId("PurposesHeader") as? SPNativeText,
-            definition: viewData.byId("PurposesDefinition") as? SPNativeText,
-            contentConsent: userConsentCategories,
-            contentLegIntCategory: legIntCategories),
-        Section(
-            header: viewData.byId("SpecialPurposesHeader") as? SPNativeText,
-            definition: viewData.byId("SpecialPurposesDefinition") as? SPNativeText,
-            contentConsent: Array(consentsSnapshot.specialPurposes),
-            contentLegIntCategory: Array(consentsSnapshot.specialPurposes)),
-        Section(
-            header: viewData.byId("FeaturesHeader") as? SPNativeText,
-            definition: viewData.byId("FeaturesDefinition") as? SPNativeText,
-            contentFeature: Array(consentsSnapshot.features)),
-        Section(
-            header: viewData.byId("SpecialFeaturesHeader") as? SPNativeText,
-            definition: viewData.byId("SpecialFeaturesDefinition") as? SPNativeText,
-            contentFeature: Array(consentsSnapshot.specialFeatures))
-    ].compactMap { $0 }}
+    // Dynamic sections based on the current mode
+    var dynamicSections: [Section] {
+        if displayingLegIntCategories {
+            return legIntSections
+        } else {
+            return consentSections
+        }
+    }
+    
+    // Sections for Consent Mode
+    var consentSections: [Section] {
+        [
+            Section(
+                header: viewData.byId("PurposesHeaderConsent", defaultId: "PurposesHeader") as? SPNativeText,
+                definition: viewData.byId("PurposesDefinitionConsent", defaultId: "PurposesDefinition") as? SPNativeText,
+                content: userConsentCategories
+            ),
+            Section(
+                header: viewData.byId("SpecialPurposesHeaderConsent", defaultId: "SpecialPurposesHeader") as? SPNativeText,
+                definition: viewData.byId("SpecialPurposesDefinitionConsent", defaultId: "SpecialPurposesDefinition") as? SPNativeText,
+                content: Array(consentsSnapshot.specialPurposes)
+            ),
+            Section(
+                header: viewData.byId("FeaturesHeaderConsent", defaultId: "FeaturesHeader") as? SPNativeText,
+                definition: viewData.byId("FeaturesDefinitionConsent", defaultId: "FeaturesDefinition") as? SPNativeText,
+                content: Array(consentsSnapshot.features)
+            ),
+            Section(
+                header: viewData.byId("SpecialFeaturesHeaderConsent", defaultId: "SpecialFeaturesHeader") as? SPNativeText,
+                definition: viewData.byId("SpecialFeaturesDefinitionConsent", defaultId: "SpecialFeaturesDefinition") as? SPNativeText,
+                content: Array(consentsSnapshot.specialFeatures)
+            )
+        ].compactMap { $0 }
+    }
+    
+    // Sections for Legitimate Interest Mode
+    var legIntSections: [Section] {
+        [
+            Section(
+                header: (viewData.byId("PurposesHeaderLegInt") ?? viewData.byId("PurposesHeaderConsent", defaultId: "PurposesHeader")) as? SPNativeText,
+                definition: (viewData.byId("PurposesDefinitionLegInt") ?? viewData.byId("PurposesDefinitionConsent", defaultId: "PurposesDefinition")) as? SPNativeText,
+                content: legIntCategories
+            ),
+            Section(
+                header: (viewData.byId("SpecialPurposesHeaderLegInt") ?? viewData.byId("SpecialPurposesHeaderConsent", defaultId: "SpecialPurposesHeader")) as? SPNativeText,
+                definition: (viewData.byId("SpecialPurposesDefinitionLegInt") ?? viewData.byId("SpecialPurposesDefinitionConsent", defaultId: "SpecialPurposesDefinition")) as? SPNativeText,
+                content: Array(consentsSnapshot.specialPurposes)
+            ),
+            // Features and special features remain the same for both modes
+            Section(
+                header: viewData.byId("FeaturesHeaderConsent", defaultId: "FeaturesHeader") as? SPNativeText,
+                definition: viewData.byId("FeaturesDefinitionConsent", defaultId: "FeaturesDefinition") as? SPNativeText,
+                content: Array(consentsSnapshot.features)
+            ),
+            Section(
+                header: viewData.byId("SpecialFeaturesHeaderConsent", defaultId: "SpecialFeaturesHeader") as? SPNativeText,
+                definition: viewData.byId("SpecialFeaturesDefinitionConsent", defaultId: "SpecialFeaturesDefinition") as? SPNativeText,
+                content: Array(consentsSnapshot.specialFeatures)
+            )
+        ].compactMap { $0 }
+    }
+
+    // Legacy sections property for compatibility
+    var sections: [Section] {
+        dynamicSections
+    }
 
     var emptyConsentSection: Bool {
-        return (
-            sections[0].contentConsent.isEmpty &&
-            sections[1].contentConsent.isEmpty
+        return consentSections.isEmpty || (
+            consentSections[0].content.isEmpty &&
+            (consentSections.count < 2 || consentSections[1].content.isEmpty)
         )
     }
 
     var emptyLegIntSection: Bool {
-        return (
-            sections[0].contentLegIntCategory.isEmpty &&
-            sections[1].contentLegIntCategory.isEmpty
+        return legIntSections.isEmpty || (
+            legIntSections[0].content.isEmpty &&
+            (legIntSections.count < 2 || legIntSections[1].content.isEmpty)
         )
     }
 
@@ -94,7 +132,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setHeader()
-        loadTextView(forComponentId: "CategoriesHeader", textView: descriptionTextView, bounces: false)
+        updateDescriptionForCurrentMode()
         descriptionTextView.flashScrollIndicators()
         dynamicFrameForDescription()
         loadButton(forComponentId: "AcceptAllButton", button: acceptButton)
@@ -119,7 +157,21 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
     }
 
     @IBAction func onCategorySliderTap(_ sender: Any) {
-        categoriesTableView.reloadData()
+        // Animation when changing
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.categoriesTableView.alpha = 0.5
+        } completion: { [weak self] _ in
+            self?.categoriesTableView.reloadData()
+            UIView.animate(withDuration: 0.3) {
+                self?.categoriesTableView.alpha = 1.0
+            }
+        }
+        
+        // Update header text based on mode
+        updateHeaderForCurrentMode()
+        
+        // Update description text
+        updateDescriptionForCurrentMode()
     }
 
     @IBAction func onAcceptTap(_ sender: Any) {
@@ -164,22 +216,43 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             descriptionTextView.frame.size.height = height
         }
     }
+    
+    // Helper method for updating the header
+    func updateHeaderForCurrentMode() {
+        // HeaderConsent and HeaderLegInt are not present in our test property
+        if displayingLegIntCategories {
+            // Legitimate Interest specific UI updates
+            if let legIntHeader = viewData.byId("HeaderLegInt") as? SPNativeText {
+                header.spTitleText = legIntHeader
+            }
+        } else {
+            // Consent-specific UI updates
+            if let consentHeader = viewData.byId("HeaderConsent") as? SPNativeText {
+                header.spTitleText = consentHeader
+            }
+        }
+    }
+    
+    // Helper method for updating the description
+    func updateDescriptionForCurrentMode() {
+        let textComponentId = displayingLegIntCategories ?
+            viewData.getContainsIdOrDefault("CategoriesHeaderLegInt", defaultId: "CategoriesHeader")! :
+            viewData.getContainsIdOrDefault("CategoriesHeaderConsent", defaultId: "CategoriesHeader")!
+        loadTextView(forComponentId: textComponentId, textView: descriptionTextView, bounces: false)
+        dynamicFrameForDescription()
+    }
 }
 
 // MARK: UITableViewDataSource
 extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableViewDelegate {
-    func currentCategory(_ index: IndexPath) -> GDPRCategory {
-        if index.section >= 2 {
-            return sections[index.section].contentConsent[index.row]
-        } else {
-            return displayingLegIntCategories ?
-            sections[index.section].contentLegIntCategory[index.row] :
-            sections[index.section].contentConsent[index.row]
-        }
+    func currentCategory(_ index: IndexPath) -> GDPRCategory? {
+        let categories = dynamicSections[index.section].content
+        guard index.row < categories.count else { return nil }
+        return categories[index.row]
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        50
+        if dynamicSections[section].content.isEmpty { return 1 } else { return 50 }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -187,39 +260,44 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionComponent = sections[section].header else { return nil }
+        guard let sectionComponent = dynamicSections[section].header else { return nil }
+        
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        loadLabelText(forComponent: sectionComponent, addTextForComponent: sections[section].definition, label: label)
-        label.isHidden = displayingLegIntCategories ?
-            sections[section].contentLegIntCategory.isEmpty : sections[section].contentConsent.isEmpty
+        loadLabelText(
+            forComponent: sectionComponent,
+            addTextForComponent: dynamicSections[section].definition,
+            label: label
+        )
+        label.isHidden = dynamicSections[section].content.isEmpty
         return label
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        UITableView.automaticDimension
+        if dynamicSections[section].content.isEmpty { return 1 } else { return UITableView.automaticDimension }
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        displayingLegIntCategories ? sections[section].contentLegIntCategory.count : sections[section].contentConsent.count
+        return dynamicSections[section].content.count
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        if dynamicSections[indexPath.section].content.isEmpty { return 1 } else { return UITableView.automaticDimension }
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell,
+              let category = currentCategory(indexPath) else {
             return UITableViewCell()
         }
 
         let section = indexPath.section
-        let category = currentCategory(indexPath)
         cell.identifier = category._id
         cell.labelText = category.name
-        switch section {
-        case 0:
+        
+        // Determine the content type based on the section and the content
+        if section == 0 { // Purposes
             if displayingLegIntCategories {
                 cell.contentType = .legitimate
                 cell.isOn = consentsSnapshot.toggledLICategoriesIds.contains(category._id)
@@ -227,15 +305,15 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
                 cell.contentType = .consent
                 cell.isOn = consentsSnapshot.toggledConsentCategoriesIds.contains(category._id)
             }
-
-        case 3:
+        } else if section == 3 { // Special Features (based on the original logic)
             cell.contentType = .specialFeatures
             cell.isOn = consentsSnapshot.toggledSpecialFeatures.contains(category._id)
-
-        default:
+        } else {
+            // Regular Features and others
             cell.contentType = nil
             cell.isOn = nil
         }
+        
         cell.selectable = true
         cell.isCustom = category.type != .IAB && category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
@@ -251,7 +329,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     public func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
         if let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell {
-            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]
+            selectedCategoryTextLabel.text = categoryDescription[cell.identifier]?.stripOutCss(stripHtml: true)
             if let description = categoryDescription[cell.identifier], description.isNotEmpty() {
                 spacer.isHidden = true
             } else {
@@ -267,7 +345,9 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell
+        guard let category = currentCategory(indexPath),
+              let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell else { return }
+        
         let categoryDetailsVC = SPGDPRCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
@@ -276,10 +356,13 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
             delegate: nil,
             nibName: "SPGDPRCategoryDetailsViewController"
         )
-        categoryDetailsVC.category = currentCategory(indexPath)
+        categoryDetailsVC.category = category
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
-        categoryDetailsVC.categoryType = cell?.contentType
+        categoryDetailsVC.categoryType = cell.contentType
+        
+        // Purpose toggle is active for the first section or special features (Section 3)
         categoryDetailsVC.purposeToggleActive = indexPath.section == 0 || indexPath.section == 3
+        
         present(categoryDetailsVC, animated: true)
     }
 }

@@ -82,7 +82,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             hideOnOffButtons()
         }
         loadQrCodes()
-        nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
+        nativeLongButton = viewData.byId("VendorLongButton", defaultId: "CategoryLongButton") as? SPNativeLongButton
         vendorDetailsTableView.allowsSelection = false
         vendorDetailsTableView.register(
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
@@ -145,7 +145,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
     func loadQrCodes() {
         loadQRCode(url: vendor?.policyUrl, imageView: PolicyQrCodeImageView, label: PolicyQrCodeLabel)
         loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
-        ToScanLabel.setDefaultTextColorForDarkMode()
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
@@ -156,7 +155,6 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             imageView.isHidden = imageView.image == nil
             label.isHidden = imageView.image == nil
         }
-        label.setDefaultTextColorForDarkMode()
     }
 
     func hideOnOffButtons() {
@@ -224,7 +222,8 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
             return UITableViewCell()
         }
         cell.labelText = sections[indexPath.section].content[indexPath.row].name
-        cell.customText=sections[indexPath.section].content[indexPath.row].retention
+        cell.customText = sections[indexPath.section].content[indexPath.row].retention
+        cell.setup(from: nativeLongButton)
         cell.loadUI()
         return cell
     }
