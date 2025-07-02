@@ -59,6 +59,7 @@ import SPMobileCore
     var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
     var usnatUUID: String? { spCoordinator.userData.usnat?.consents?.uuid }
     var globalcmpUUID: String? { spCoordinator.userData.globalcmp?.consents?.uuid }
+    var preferencesUUID: String? { spCoordinator.userData.preferences?.consents?.uuid }
     var messagesToShow = 0
     var responsesToReceive = 0
 
@@ -498,6 +499,30 @@ import SPMobileCore
         }
         mainSync {
             loadWebPrivacyManager(.globalcmp, pmUrl, messageId: usedId)
+        }
+        #endif
+    }
+
+    func buildPreferencesPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+        genericPMUrl(
+            Constants.Urls.PREFERENCES_PM_URL,
+            pmId: usedId,
+            uuidName: "preferencesUUID",
+            uuidValue: uuid,
+            propertyId: propertyId,
+            consentLanguage: messageLanguage
+        )
+    }
+
+    public func loadPreferenceCenter(withId id: String, tab: SPPrivacyManagerTab = .Default) {
+        #if os(iOS)
+        messagesToShow += 1
+        guard let pmUrl = buildPreferencesPmUrl(usedId: id, pmTab: tab, uuid: preferencesUUID) else {
+            onError(InvalidURLError(urlString: "Invalid PM URL"))
+            return
+        }
+        mainSync {
+            loadWebPrivacyManager(.preferences, pmUrl, messageId: id)
         }
         #endif
     }
