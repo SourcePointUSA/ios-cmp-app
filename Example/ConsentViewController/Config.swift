@@ -13,13 +13,13 @@ struct Config {
     enum Keys: String, CaseIterable {
         case accountId, propertyId, propertyName,
              gdpr, ccpa, usnat, preferences, globalcmp, att, language, gdprPmId,
-             ccpaPmId, usnatPmId, globalcmpPmId
+             ccpaPmId, usnatPmId, globalcmpPmId, preferencesPmId
     }
 
     let accountId, propertyId: Int
     let propertyName: String
     let campaigns: SPCampaigns
-    let gdprPmId, ccpaPmId, usnatPmId, globalcmpPmId: String?
+    let gdprPmId, ccpaPmId, usnatPmId, globalcmpPmId, preferencesPmId: String?
     var language: SPMessageLanguage?
 
     let myVendorId = "5ff4d000a228633ac048be41"
@@ -36,6 +36,7 @@ extension Config {
         ccpaPmId = defaults.ccpaPmId
         usnatPmId = defaults.usnatPmId
         globalcmpPmId = defaults.globalcmpPmId
+        preferencesPmId = defaults.preferencesPmId
         if let langArg = values["language"] as? String,
             let langEnum = SPMessageLanguage(rawValue: langArg) {
             language = langEnum

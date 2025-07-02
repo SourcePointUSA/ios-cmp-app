@@ -32,7 +32,8 @@ class ViewController: UIViewController {
         gdprPmId: "488393",
         ccpaPmId: "509688",
         usnatPmId: "988851",
-        globalcmpPmId: "1323762"
+        globalcmpPmId: "1323762",
+        preferencesPmId: "1292630"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
@@ -53,6 +54,7 @@ class ViewController: UIViewController {
     @IBOutlet var ccpaPMButton: UIButton!
     @IBOutlet weak var usnatPMButton: UIButton!
     @IBOutlet weak var globalcmpPMButton: UIButton!
+    @IBOutlet weak var preferencesPMButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +89,10 @@ class ViewController: UIViewController {
 
     @IBAction func onGlobalCmpPrivacyManagerTap(_ sender: Any) {
         consentManager.loadGlobalCmpPrivacyManager(withId: config.globalcmpPmId!)
+    }
+
+    @IBAction func onPreferenceCenterTap(_ sender: Any) {
+        consentManager.loadPreferenceCenter(withId: config.preferencesPmId!)
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
@@ -198,6 +204,7 @@ extension ViewController {
         ccpaPMButton.isEnabled = ccpaApplies
         usnatPMButton.isEnabled = usnatApplies
         globalcmpPMButton.isEnabled = globalcmpApplies
+        preferencesPMButton.isEnabled = true
     }
 
     func updateSDKStatusLabel() {
