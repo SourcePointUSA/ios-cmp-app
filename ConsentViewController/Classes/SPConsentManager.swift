@@ -503,7 +503,7 @@ import SPMobileCore
         #endif
     }
 
-    func buildPreferencesPmUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
+    func buildPreferenceCenterUrl(usedId: String, pmTab: SPPrivacyManagerTab = .Default, uuid: String?) -> URL? {
         genericPMUrl(
             Constants.Urls.PREFERENCES_PM_URL,
             pmId: usedId,
@@ -517,8 +517,8 @@ import SPMobileCore
     public func loadPreferenceCenter(withId id: String, tab: SPPrivacyManagerTab = .Default) {
         #if os(iOS)
         messagesToShow += 1
-        guard let pmUrl = buildPreferencesPmUrl(usedId: id, pmTab: tab, uuid: preferencesUUID) else {
-            onError(InvalidURLError(urlString: "Invalid PM URL"))
+        guard let pmUrl = buildPreferenceCenterUrl(usedId: id, pmTab: tab, uuid: preferencesUUID) else {
+            onError(InvalidURLError(urlString: "Invalid Preference Center URL"))
             return
         }
         mainSync {
