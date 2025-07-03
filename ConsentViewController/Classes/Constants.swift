@@ -28,6 +28,7 @@ struct Constants {
         static let CCPA_PM_URL = URL(string: "./ccpa_pm/index.html", relativeTo: SP_ROOT)!
         static let USNAT_PM_URL = URL(string: "./us_pm/index.html", relativeTo: SP_ROOT)!
         static let GLOBALCMP_PM_URL = URL(string: "./us_pm/index.html?is_global_cmp=true", relativeTo: SP_ROOT)!
+        static let PREFERENCES_PM_URL = URL(string: "./preferences-app/index.html", relativeTo: SP_ROOT)!
         static let GDPR_PM_URL = URL(string: "./privacy-manager/index.html", relativeTo: SP_ROOT)!
     }
 
