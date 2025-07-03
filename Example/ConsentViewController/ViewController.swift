@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         ccpaPmId: "509688",
         usnatPmId: "988851",
         globalcmpPmId: "1323762",
-        preferenceCenterId: "1292630"
+        preferenceCenterId: "1306779"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
@@ -164,7 +164,7 @@ extension ViewController {
             gdprApplies: consentManager.gdprApplies,
             usnatApplies: consentManager.usnatApplies,
             globalcmpApplies: consentManager.globalcmpApplies,
-            preferencesCampaignPresent: config.campaigns.preferences != nil
+            isPreferencesCampaignPresent: config.campaigns.preferences != nil
         )
         updateSDKStatusLabel()
     }
@@ -200,12 +200,12 @@ extension ViewController {
         }
     }
 
-    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool, globalcmpApplies: Bool, preferencesCampaignPresent: Bool) {
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool, globalcmpApplies: Bool, isPreferencesCampaignPresent: Bool) {
         gdprPMButton.isEnabled = gdprApplies
         ccpaPMButton.isEnabled = ccpaApplies
         usnatPMButton.isEnabled = usnatApplies
         globalcmpPMButton.isEnabled = globalcmpApplies
-        preferencesPMButton.isEnabled = preferencesCampaignPresent
+        preferencesPMButton.isEnabled = isPreferencesCampaignPresent
     }
 
     func updateSDKStatusLabel() {
