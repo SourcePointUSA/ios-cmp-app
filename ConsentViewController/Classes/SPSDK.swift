@@ -35,7 +35,7 @@ import Foundation
 
 @available(iOS 10, *)
 @objc public protocol SPPREFERENCES {
-    @objc func loadPreferenceCenter(withId id: String, tab: SPPrivacyManagerTab)
+    @objc func loadPreferenceCenter(withId id: String)
 }
 
 @objc public protocol SPSDK: SPGDPR, SPCCPA, SPUSNAT, SPGLOBALCMP, SPPREFERENCES, SPMessageUIDelegate {
@@ -110,7 +110,7 @@ public extension SPSDK {
         loadGlobalCmpPrivacyManager(withId: id, tab: tab, useGroupPmIfAvailable: useGroupPmIfAvailable)
     }
 
-    func loadPreferenceCenter(withId id: String, tab: SPPrivacyManagerTab = .Default) {
-        loadPreferenceCenter(withId: id, tab: tab)
+    func loadPreferenceCenter(withId id: String) {
+        loadPreferenceCenter(withId: id)
     }
 }
