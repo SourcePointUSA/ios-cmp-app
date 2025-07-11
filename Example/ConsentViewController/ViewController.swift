@@ -32,7 +32,8 @@ class ViewController: UIViewController {
         gdprPmId: "488393",
         ccpaPmId: "509688",
         usnatPmId: "988851",
-        globalcmpPmId: "1323762"
+        globalcmpPmId: "1323762",
+        preferenceCenterId: "1306779"
     ))}()
 
     lazy var consentManager: SPSDK = { SPConsentManager(
@@ -53,6 +54,7 @@ class ViewController: UIViewController {
     @IBOutlet var ccpaPMButton: UIButton!
     @IBOutlet weak var usnatPMButton: UIButton!
     @IBOutlet weak var globalcmpPMButton: UIButton!
+    @IBOutlet weak var preferencesPMButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +89,10 @@ class ViewController: UIViewController {
 
     @IBAction func onGlobalCmpPrivacyManagerTap(_ sender: Any) {
         consentManager.loadGlobalCmpPrivacyManager(withId: config.globalcmpPmId!)
+    }
+
+    @IBAction func onPreferenceCenterTap(_ sender: Any) {
+        consentManager.loadPreferenceCenter(withId: config.preferenceCenterId!)
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
@@ -157,7 +163,8 @@ extension ViewController {
             ccpaApplies: consentManager.ccpaApplies,
             gdprApplies: consentManager.gdprApplies,
             usnatApplies: consentManager.usnatApplies,
-            globalcmpApplies: consentManager.globalcmpApplies
+            globalcmpApplies: consentManager.globalcmpApplies,
+            isPreferencesCampaignPresent: config.campaigns.preferences != nil
         )
         updateSDKStatusLabel()
     }
@@ -193,11 +200,12 @@ extension ViewController {
         }
     }
 
-    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool, globalcmpApplies: Bool) {
+    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool, globalcmpApplies: Bool, isPreferencesCampaignPresent: Bool) {
         gdprPMButton.isEnabled = gdprApplies
         ccpaPMButton.isEnabled = ccpaApplies
         usnatPMButton.isEnabled = usnatApplies
         globalcmpPMButton.isEnabled = globalcmpApplies
+        preferencesPMButton.isEnabled = isPreferencesCampaignPresent
     }
 
     func updateSDKStatusLabel() {
