@@ -118,7 +118,8 @@ func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
             wasSampledAt: nil,
             vendorListId: nil,
             applicableSections: [],
-            legislation: nil
+            legislation: nil,
+            messagePartitionUUID: nil
         ),
         consents: SPMobileCore.GlobalCmpConsent(
             applies: false,
@@ -138,9 +139,13 @@ func emptyGlobalCmpState() -> SPMobileCore.State.GlobalCmpState {
 func emptyPreferencesState() -> SPMobileCore.State.PreferencesState {
     return SPMobileCore.State.PreferencesState(
         metaData: SPMobileCore.State.PreferencesStatePreferencesMetaData(
+            sampleRate: 1,
+            wasSampled: nil,
+            wasSampledAt: nil,
             configurationId: "",
             additionsChangeDate: SPDate(date: Date.distantPast).toCore(),
-            legalDocLiveDate: nil
+            legalDocLiveDate: nil,
+            messagePartitionUUID: nil
         ),
         consents: SPMobileCore.PreferencesConsent(
             dateCreated: nil,
@@ -160,7 +165,8 @@ extension SourcepointClientCoordinator.State.GDPRMetaData? {
             sampleRate: self?.sampleRate ?? 1,
             wasSampled: KotlinBoolean(bool: self?.wasSampled),
             wasSampledAt: KotlinFloat(float: self?.wasSampledAt),
-            vendorListId: self?.vendorListId
+            vendorListId: self?.vendorListId,
+            messagePartitionUUID: nil
         )
     }
 }
@@ -170,7 +176,8 @@ extension SourcepointClientCoordinator.State.CCPAMetaData? {
         return SPMobileCore.State.CCPAStateCCPAMetaData.init(
             sampleRate: self?.sampleRate ?? 1,
             wasSampled: KotlinBoolean(bool: self?.wasSampled),
-            wasSampledAt: KotlinFloat(float: self?.wasSampledAt)
+            wasSampledAt: KotlinFloat(float: self?.wasSampledAt),
+            messagePartitionUUID: nil
         )
     }
 }
@@ -183,7 +190,8 @@ extension SourcepointClientCoordinator.State.UsNatMetaData? {
             wasSampled: KotlinBoolean(bool: self?.wasSampled),
             wasSampledAt: KotlinFloat(float: self?.wasSampledAt),
             vendorListId: self?.vendorListId,
-            applicableSections: self?.applicableSections.compactMap { KotlinInt(integerLiteral: $0) } ?? []
+            applicableSections: self?.applicableSections.compactMap { KotlinInt(integerLiteral: $0) } ?? [],
+            messagePartitionUUID: nil
         )
     }
 }
