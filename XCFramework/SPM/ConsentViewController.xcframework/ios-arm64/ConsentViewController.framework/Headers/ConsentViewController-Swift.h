@@ -718,6 +718,11 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController10SPDelegate_")
 - (void)onError:(SPError * _Nonnull)error;
 @end
 
+SWIFT_PROTOCOL("_TtP21ConsentViewController13SPPREFERENCES_") SWIFT_AVAILABILITY(ios,introduced=10)
+@protocol SPPREFERENCES
+- (void)loadPreferenceCenterWithId:(NSString * _Nonnull)id;
+@end
+
 SWIFT_PROTOCOL("_TtP21ConsentViewController11SPGLOBALCMP_") SWIFT_AVAILABILITY(ios,introduced=10)
 @protocol SPGLOBALCMP
 @property (nonatomic, readonly) BOOL globalcmpApplies;
@@ -738,7 +743,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController6SPGDPR_")
 
 @class SPGDPRConsent;
 SWIFT_PROTOCOL("_TtP21ConsentViewController5SPSDK_")
-@protocol SPSDK <SPCCPA, SPGDPR, SPGLOBALCMP, SPMessageUIDelegate, SPUSNAT>
+@protocol SPSDK <SPCCPA, SPGDPR, SPGLOBALCMP, SPMessageUIDelegate, SPPREFERENCES, SPUSNAT>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull VERSION;)
 + (NSString * _Nonnull)VERSION SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic) BOOL cleanUserDataOnError;
@@ -771,6 +776,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)loadCCPAPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadUSNatPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
 - (void)loadGlobalCmpPrivacyManagerWithId:(NSString * _Nonnull)id tab:(enum SPPrivacyManagerTab)tab useGroupPmIfAvailable:(BOOL)useGroupPmIfAvailable;
+- (void)loadPreferenceCenterWithId:(NSString * _Nonnull)id;
 - (void)customConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)deleteCustomConsentGDPRWithVendors:(NSArray<NSString *> * _Nonnull)vendors categories:(NSArray<NSString *> * _Nonnull)categories legIntCategories:(NSArray<NSString *> * _Nonnull)legIntCategories handler:(void (^ _Nonnull)(SPGDPRConsent * _Nonnull))handler;
 - (void)rejectAllWithCampaignType:(enum SPCampaignType)campaignType;
