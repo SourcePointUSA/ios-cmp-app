@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.10.1'
+pod 'ConsentViewController', '7.11.0'
 ```
 
 The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
@@ -44,7 +44,7 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: "7.10.1")
+                .upToNextMinor(from: '7.11.0')
         ),
     ],
     targets: [
@@ -251,6 +251,8 @@ You can load the Privacy Manager (that UI with the toggles) any time, programmat
 - `.loadGDPRPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
 - `.loadCCPAPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
 - `.loadUSNATPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
+- `.loadGLOBALCMPPrivacyManager(withId: String, tab: SPPrivacyManagerTab = .Default)`
+- `.loadPreferenceCenter(withId: String)`
 
 The SDK will follow the same exact same lifecycle as with the 1st layer consent message. First calling the delegate method `onSPUIReady` when the PM is ready, `onAction` when the user takes an action, `onSPUIFinished` when the PM is ready to be removed from the View stack and, finally, `onConsentReady` once the SDK receives the consent data back from the server.
 

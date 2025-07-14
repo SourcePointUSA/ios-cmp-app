@@ -245,6 +245,7 @@ extension ConsentViewController.SPCampaignType : Swift.Codable {
   @objc dynamic public func loadCCPAPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   @objc dynamic public func loadUSNatPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   @objc dynamic public func loadGlobalCmpPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+  @objc dynamic public func loadPreferenceCenter(withId id: Swift.String)
   @objc dynamic public func customConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc dynamic public func deleteCustomConsentGDPR(vendors: [Swift.String], categories: [Swift.String], legIntCategories: [Swift.String], handler: @escaping (ConsentViewController.SPGDPRConsent) -> Swift.Void)
   @objc dynamic public func rejectAll(campaignType: ConsentViewController.SPCampaignType)
@@ -1020,7 +1021,11 @@ public typealias SPPublisherData = [Swift.String : ConsentViewController.AnyEnco
   @objc var globalcmpApplies: Swift.Bool { get }
   @objc func loadGlobalCmpPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab, useGroupPmIfAvailable: Swift.Bool)
 }
-@objc public protocol SPSDK : ConsentViewController.SPCCPA, ConsentViewController.SPGDPR, ConsentViewController.SPGLOBALCMP, ConsentViewController.SPMessageUIDelegate, ConsentViewController.SPUSNAT {
+@available(iOS 10, *)
+@objc public protocol SPPREFERENCES {
+  @objc func loadPreferenceCenter(withId id: Swift.String)
+}
+@objc public protocol SPSDK : ConsentViewController.SPCCPA, ConsentViewController.SPGDPR, ConsentViewController.SPGLOBALCMP, ConsentViewController.SPMessageUIDelegate, ConsentViewController.SPPREFERENCES, ConsentViewController.SPUSNAT {
   @objc static var VERSION: Swift.String { get }
   @objc var cleanUserDataOnError: Swift.Bool { get set }
   @objc var messageTimeoutInSeconds: Foundation.TimeInterval { get set }
@@ -1042,6 +1047,7 @@ extension ConsentViewController.SPSDK {
   public func loadGDPRPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadUSNatPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
   public func loadGlobalCmpPrivacyManager(withId id: Swift.String, tab: ConsentViewController.SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Swift.Bool = false)
+  public func loadPreferenceCenter(withId id: Swift.String)
 }
 extension UIKit.UIColor {
   convenience public init?(hexString: Swift.String?)
