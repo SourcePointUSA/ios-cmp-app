@@ -1,3 +1,7 @@
+# 7.11.0 (Jul, 14, 2025)
+* [DIA-5863](https://sourcepoint.atlassian.net/browse/DIA-5863) added `loadPreferenceCenter` function for `Preferences` campaign [#626](https://github.com/SourcePointUSA/ios-cmp-app/pull/626)
+* Fixed `userConsents` for `GlobalCmp` campaign [#627](https://github.com/SourcePointUSA/ios-cmp-app/pull/627)
+
 # 7.10.1 (Jun, 26, 2025)
 * [DIA-5549](https://sourcepoint.atlassian.net/browse/DIA-5549) Various fixes for tvOS [#625](https://github.com/SourcePointUSA/ios-cmp-app/pull/625), namely:
 * [DIA-5791](https://sourcepoint.atlassian.net/browse/DIA-5791) Headline size may exceed space
