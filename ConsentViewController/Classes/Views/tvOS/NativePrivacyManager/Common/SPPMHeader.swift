@@ -27,8 +27,6 @@ class SPPMHeader: UIView {
         didSet {
             titleLabel.setup(from: spTitleText)
             titleLabel.text = titleLabel.text?.trimmingCharacters(in: .newlines)
-            // Set left alignment
-            titleLabel.textAlignment = .left
         }
     }
 
@@ -70,7 +68,6 @@ class SPPMHeader: UIView {
         contentView.frame = bounds
         titleLabel.accessibilityIdentifier = "Header Title"
         titleLabel.isAccessibilityElement = true
-        titleLabel.textAlignment = .left  // Set left alignment
         backButton.accessibilityIdentifier = "Back Button"
         backButton.isAccessibilityElement = true
         addSubview(contentView)
