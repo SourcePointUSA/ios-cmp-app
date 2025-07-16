@@ -75,6 +75,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
         loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
+        ToScanLabel.textAlignment = .center
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
@@ -88,6 +89,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
         )
+        vendorDetailsTableView.rowHeight = UITableView.automaticDimension
+        vendorDetailsTableView.estimatedRowHeight = 100
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
 
@@ -118,7 +121,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         if let vendor = vendor {
             vendorManagerDelegate?.onVendorOff(vendor: vendor, legInt: displayingLegIntVendors)
         }
-        dismiss(animated: true)
+        self.dismiss(animated: true)
     }
 
     func loadVendorDataText() {
@@ -211,10 +214,6 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sections[section].content.count
-    }
-
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

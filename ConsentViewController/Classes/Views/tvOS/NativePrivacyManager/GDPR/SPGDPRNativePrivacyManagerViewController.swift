@@ -62,6 +62,8 @@ protocol SPNativePrivacyManagerHome {
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
         )
+        categoryTableView.rowHeight = UITableView.automaticDimension
+        categoryTableView.estimatedRowHeight = 100
         nativeLongButton = viewData.byId("CategoryButtons") as? SPNativeLongButton
         categoryTableView.delegate = self
         categoryTableView.dataSource = self
@@ -290,10 +292,6 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
-    }
-
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
