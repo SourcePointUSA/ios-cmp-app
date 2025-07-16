@@ -32,8 +32,8 @@
                         <action selector="onBackButtonPressed:" destination="-1" eventType="primaryActionTriggered" id="aw1-GY-liT"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmT-ud-kbL">
-                    <rect key="frame" x="360" y="511" width="1400" height="58"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmT-ud-kbL">
+                    <rect key="frame" x="160" y="511" width="1600" height="58"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="50"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -42,7 +42,7 @@
             <viewLayoutGuide key="safeArea" id="Pmt-tb-8Ig"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="bmT-ud-kbL" firstAttribute="leading" secondItem="481-Kg-Rs6" secondAttribute="trailing" constant="40" id="3Xf-eE-hTH"/>
+                <constraint firstItem="bmT-ud-kbL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="IQV-1C-dJF"/>
                 <constraint firstItem="481-Kg-Rs6" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="ffl-TC-hN8"/>
                 <constraint firstItem="481-Kg-Rs6" firstAttribute="leading" secondItem="Pmt-tb-8Ig" secondAttribute="leading" id="jdu-ZT-8aC"/>
                 <constraint firstItem="bmT-ud-kbL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="oXD-cX-BmB"/>
