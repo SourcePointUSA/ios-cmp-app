@@ -199,9 +199,8 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
         headerView.addSubview(label)
         if sections[section].hasAdditionalContent {
             let retentionlabel = UILabel()
-            retentionlabel.text = "Retention"
-            retentionlabel.font = UIFont(from: sections[section].header?.settings.style.font)
-            retentionlabel.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+            retentionlabel.text = ""
+            loadLabelText(forComponentId: "RetentionText", label: retentionlabel)
             retentionlabel.frame = CGRect(x: tableView.frame.width-retentionlabel.intrinsicContentSize.width, y: 0, width: retentionlabel.intrinsicContentSize.width, height: 50)
             headerView.addSubview(retentionlabel)
         }
