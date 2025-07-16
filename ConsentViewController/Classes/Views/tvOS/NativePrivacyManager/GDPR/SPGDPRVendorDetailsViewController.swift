@@ -130,6 +130,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
             return
         }
+        let font = (viewData.byId("DataCategoriesListHeaderText") as? SPNativeText)?.settings.style.font
         var labels = [String()]
         var text = ""
         vendor?.iabDataCategories?.forEach { data in
@@ -137,10 +138,10 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             labels.append(data.name)
             text+=data.description+"\r\n\r\n"
         }
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]) // swiftlint:disable:this line_length
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: font?.color) ?? UIColor.black, NSAttributedString.Key.font: UIFont(from: font) ?? UIFont.systemFont(ofSize: 26)]) // swiftlint:disable:this line_length
         labels.forEach { label in
             let labelRange = (text as NSString).range(of: label)
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
+            attributedText.addAttribute(.font, value: UIFont(from: font) ?? UIFont.boldSystemFont(ofSize: 26), range: labelRange)
         }
         vendorDetailsTextView.attributedText = attributedText
     }
