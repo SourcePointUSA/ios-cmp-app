@@ -50,7 +50,7 @@ enum SPUIRectEdge {
 
 extension UIFont {
     convenience init?(from spFont: SPNativeFont?) {
-        let magicScalingFactor = CGFloat(1.8)
+        let magicScalingFactor = CGFloat(1.2)
         let fontSize = spFont?.fontSize != nil ? // swiftlint:disable:next force_unwrapping
             spFont!.fontSize * magicScalingFactor :
             UIFont.preferredFont(forTextStyle: .body).pointSize
