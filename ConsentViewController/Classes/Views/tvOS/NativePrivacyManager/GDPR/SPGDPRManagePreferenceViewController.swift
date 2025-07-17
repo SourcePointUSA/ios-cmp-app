@@ -153,6 +153,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         categoriesTableView.dataSource = self
         categoriesTableView.rowHeight = UITableView.automaticDimension
         categoriesTableView.estimatedRowHeight = 100
+        categoriesTableView.remembersLastFocusedIndexPath = true
         consentsSnapshot.onConsentsChange = { [weak self] in
             self?.categoriesTableView.reloadData()
         }
@@ -196,10 +197,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         addFocusGuide(from: header.backButton, to: actionsContainer, direction: .bottomTop)
         addFocusGuide(from: categorySlider, to: descriptionTextView, direction: .bottomTop)
         addFocusGuide(from: descriptionTextView, to: categoriesTableView, direction: .bottomTop)
-        addFocusGuide(from: header.backButton, to: categorySlider, direction: .right)
-        addFocusGuide(from: categorySlider, to: header.backButton, direction: .left)
+        addFocusGuide(from: header.backButton, to: categorySlider, direction: .rightLeft)
         addFocusGuide(from: actionsContainer, to: categoriesTableView, direction: .rightLeft)
-        categoriesTableView.remembersLastFocusedIndexPath = true
     }
 
     func setHeader() {
