@@ -151,6 +151,8 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         )
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
+        categoriesTableView.rowHeight = UITableView.automaticDimension
+        categoriesTableView.estimatedRowHeight = 100
         consentsSnapshot.onConsentsChange = { [weak self] in
             self?.categoriesTableView.reloadData()
         }
@@ -280,10 +282,6 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dynamicSections[section].content.count
-    }
-
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if dynamicSections[indexPath.section].content.isEmpty { return 1 } else { return UITableView.automaticDimension }
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
