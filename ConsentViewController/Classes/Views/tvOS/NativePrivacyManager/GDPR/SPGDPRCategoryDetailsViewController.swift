@@ -27,6 +27,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         [viewData.byId("VendorsHeader") as? SPNativeText]
     }
     let cellReuseIdentifier = "cell"
+    var nativeLongButton: SPNativeLongButton?
 
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
@@ -47,7 +48,11 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
             hideOnOffButtons()
         }
         categoryDetailsTableView.allowsSelection = false
-        categoryDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        categoryDetailsTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        nativeLongButton = viewData.byId("VendorLongButton") as? SPNativeLongButton
         categoryDetailsTableView.delegate = self
         categoryDetailsTableView.dataSource = self
     }
@@ -117,9 +122,14 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?) ?? UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.labelText = partners[indexPath.row].trimmingCharacters(in: .whitespacesAndNewlines)
         cell.selectionStyle = .none
-        loadGenericTableCell(forComponentId: "VendorLongButton", text: partners[indexPath.row], cell: cell)
+        cell.setup(from: nativeLongButton)
+        cell.loadUI()
         return cell
     }
 
