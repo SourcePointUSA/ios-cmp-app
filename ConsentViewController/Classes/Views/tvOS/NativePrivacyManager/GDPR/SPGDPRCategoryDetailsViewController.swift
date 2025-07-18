@@ -103,10 +103,17 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = sections[section] else { return nil }
-
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         loadLabelText(forComponent: sectionComponent, label: label)
-        return label
+        headerView.addSubview(label)
+        if partners.count > 0 {
+            let partnersCountLabel = UILabel(frame: CGRect(x: label.intrinsicContentSize.width, y: 0, width: tableView.frame.width, height: 50))
+            loadLabelText(forComponent: sectionComponent, labelText: "(" + String(partners.count) + ")", label: partnersCountLabel)
+            headerView.addSubview(partnersCountLabel)
+        }
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
