@@ -69,7 +69,7 @@ import Foundation
         handler: @escaping (SPGDPRConsent) -> Void
     )
     @objc func rejectAll(campaignType: SPCampaignType)
-    @objc func dismissMessage(_ vc: UIViewController)
+    @objc func dismissMessage(_ vc: UIViewController?)
 }
 
 public extension SPSDK {

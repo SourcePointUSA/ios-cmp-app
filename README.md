@@ -743,6 +743,23 @@ Upon completion, the sdk will call either `onConsentReady` in case of success or
     consentManager.rejectAll(campaignType: .gdpr)
 ```
 
+## Programmatically dismissing a message
+
+You might have the use case in which you want to programmatically dismiss a message without relying on user input.
+
+```swift
+    let messageViewController: UIViewController?
+
+    // keep a reference to the message view controller being presented
+    func onSPUIReady(_ controller: UIViewController) {
+        messageViewController = controller
+        present(controller, animated: true)
+    }   
+
+    // at some point later in your app
+    consentManager.dismissMessage(messageViewController)
+```
+
 ## Frequently Asked Questions
 
 ### 1. How big is the SDK?
