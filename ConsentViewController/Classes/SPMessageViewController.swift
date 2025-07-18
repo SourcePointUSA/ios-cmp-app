@@ -62,6 +62,7 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
     func loadMessage()
     func loadPrivacyManager(url: URL)
     func closePrivacyManager()
+    func dismissMessage()
 }
 
 @objc public protocol SPMessageView: SPRenderingApp, MessageController {
@@ -99,6 +100,10 @@ extension RenderingAppEvents: ExpressibleByStringLiteral {
 
     public func closePrivacyManager() {
         fatalError("not implemented")
+    }
+
+    public func dismissMessage() {
+        messageUIDelegate?.action(SPAction(type: .Dismiss, campaignType: campaignType), from: self)
     }
 }
 

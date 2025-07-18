@@ -571,6 +571,12 @@ import SPMobileCore
     public func rejectAll(campaignType: SPCampaignType) {
         report(action: SPAction(type: .RejectAll, campaignType: campaignType))
     }
+
+    public func dismissMessage(_ vc: UIViewController?) {
+        mainSync {
+            (vc as? SPMessageViewController)?.dismissMessage()
+        }
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
