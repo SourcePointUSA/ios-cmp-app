@@ -54,6 +54,7 @@ import SPMobileCore
     }
     var storage: SPLocalStorage
     var messageControllersStack: [SPMessageView] = []
+    var presentingMessageView: SPMessageView?
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
     var ccpaUUID: String? { spCoordinator.userData.ccpa?.consents?.uuid }
     var gdprUUID: String? { spCoordinator.userData.gdpr?.consents?.uuid }
@@ -128,6 +129,7 @@ import SPMobileCore
         DispatchQueue.main.async { [weak self] in
             if let ui = self?.messageControllersStack.popLast() {
                 ui.loadMessage()
+                self?.presentingMessageView = ui
             }
         }
     }
@@ -571,6 +573,12 @@ import SPMobileCore
     public func rejectAll(campaignType: SPCampaignType) {
         report(action: SPAction(type: .RejectAll, campaignType: campaignType))
     }
+
+    public func dismissMessage() {
+        mainSync {
+            presentingMessageView?.dismissMessage()
+        }
+    }
 }
 
 extension SPConsentManager: SPMessageUIDelegate {
@@ -743,6 +751,7 @@ extension SPConsentManager: SPDelegate {
     public func onSPFinished(userData: SPUserData) {
         OSLogger.standard.event("onSPFinished")
         DispatchQueue.main.async { [weak self] in
+            self?.presentingMessageView = nil
             self?.delegate?.onSPFinished?(userData: userData)
         }
     }
@@ -756,6 +765,7 @@ extension SPConsentManager: SPDelegate {
             Self.clearAllData()
         }
         DispatchQueue.main.async { [weak self] in
+            self?.presentingMessageView = nil
             self?.delegate?.onError?(error: error)
         }
     }

@@ -743,6 +743,14 @@ Upon completion, the sdk will call either `onConsentReady` in case of success or
     consentManager.rejectAll(campaignType: .gdpr)
 ```
 
+## Programmatically dismissing a message
+
+You might have the use case in which you want to programmatically dismiss a message without relying on user input. The `dismissMessage()` method will try to dispatch a dismiss action on the message view controller currently being presented, just as if a user would have pressed the dismiss button on the UI.
+
+```swift
+consentManager.dismissMessage()
+```
+
 ## Frequently Asked Questions
 
 ### 1. How big is the SDK?
