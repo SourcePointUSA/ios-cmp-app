@@ -75,6 +75,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
         loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
+        ToScanLabel.textAlignment = .center
         descriptionTextView.flashScrollIndicators()
         loadButton(forComponentId: "OnButton", button: onButton)
         loadButton(forComponentId: "OffButton", button: offButton)
@@ -88,6 +89,8 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
             forCellReuseIdentifier: cellReuseIdentifier
         )
+        vendorDetailsTableView.rowHeight = UITableView.automaticDimension
+        vendorDetailsTableView.estimatedRowHeight = 100
         vendorDetailsTableView.delegate = self
         vendorDetailsTableView.dataSource = self
 
@@ -118,7 +121,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         if let vendor = vendor {
             vendorManagerDelegate?.onVendorOff(vendor: vendor, legInt: displayingLegIntVendors)
         }
-        dismiss(animated: true)
+        self.dismiss(animated: true)
     }
 
     func loadVendorDataText() {
@@ -127,6 +130,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             addFocusGuide(from: headerView.backButton, to: vendorDetailsTableView, direction: .right)
             return
         }
+        let font = (viewData.byId("DataCategoriesListHeaderText") as? SPNativeText)?.settings.style.font
         var labels = [String()]
         var text = ""
         vendor?.iabDataCategories?.forEach { data in
@@ -134,10 +138,10 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
             labels.append(data.name)
             text+=data.description+"\r\n\r\n"
         }
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 26)]) // swiftlint:disable:this line_length
+        let attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: font?.color) ?? UIColor.black, NSAttributedString.Key.font: UIFont(from: font) ?? UIFont.systemFont(ofSize: 26)]) // swiftlint:disable:this line_length
         labels.forEach { label in
             let labelRange = (text as NSString).range(of: label)
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 26), range: labelRange)
+            attributedText.addAttribute(.font, value: UIFont(from: font) ?? UIFont.boldSystemFont(ofSize: 26), range: labelRange)
         }
         vendorDetailsTextView.attributedText = attributedText
     }
@@ -196,9 +200,8 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
         headerView.addSubview(label)
         if sections[section].hasAdditionalContent {
             let retentionlabel = UILabel()
-            retentionlabel.text = "Retention"
-            retentionlabel.font = UIFont(from: sections[section].header?.settings.style.font)
-            retentionlabel.textColor = UIColor(hexString: sections[section].header?.settings.style.font.color)
+            retentionlabel.text = ""
+            loadLabelText(forComponentId: "RetentionText", label: retentionlabel)
             retentionlabel.frame = CGRect(x: tableView.frame.width-retentionlabel.intrinsicContentSize.width, y: 0, width: retentionlabel.intrinsicContentSize.width, height: 50)
             headerView.addSubview(retentionlabel)
         }
@@ -211,10 +214,6 @@ extension SPGDPRVendorDetailsViewController: UITableViewDataSource, UITableViewD
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sections[section].content.count
-    }
-
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

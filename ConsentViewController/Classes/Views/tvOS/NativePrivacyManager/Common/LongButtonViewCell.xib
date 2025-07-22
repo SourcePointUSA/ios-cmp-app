@@ -18,21 +18,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="WX5-Fd-aH5">
-                        <rect key="frame" x="20" y="0.0" width="1809" height="46"/>
+                        <rect key="frame" x="16" y="8" width="1833" height="28"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" text="Vendor or Category" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lJe-ad-JWG" userLabel="Label">
-                                <rect key="frame" x="0.0" y="0.0" width="1809" height="46"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="Vendor or Category" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJe-ad-JWG" userLabel="Label">
+                                <rect key="frame" x="0.0" y="-1" width="1833" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsP-uu-2cN" userLabel="CustomLabel">
-                                <rect key="frame" x="1809" y="0.0" width="0.0" height="46"/>
+                                <rect key="frame" x="1833" y="0.0" width="0.0" height="28"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="On" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYk-ye-IgP" userLabel="StateLabel">
-                                <rect key="frame" x="1809" y="0.0" width="0.0" height="46"/>
+                                <rect key="frame" x="1833" y="0.0" width="0.0" height="28"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -41,10 +42,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="height" secondItem="S0Q-fX-qc8" secondAttribute="height" multiplier="1.04545" id="SVL-e7-vOf"/>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="width" secondItem="S0Q-fX-qc8" secondAttribute="width" multiplier="0.97" id="T6X-1B-7tM"/>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="top" secondItem="S0Q-fX-qc8" secondAttribute="top" id="gOK-KE-WZ9"/>
-                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="leading" secondItem="S0Q-fX-qc8" secondAttribute="leading" constant="20" symbolic="YES" id="wWx-2g-Q5p"/>
+                    <constraint firstAttribute="trailing" secondItem="WX5-Fd-aH5" secondAttribute="trailing" constant="16" id="1vf-XA-BGJ"/>
+                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="leading" secondItem="S0Q-fX-qc8" secondAttribute="leading" constant="16" id="8yM-rf-fef"/>
+                    <constraint firstAttribute="bottom" secondItem="WX5-Fd-aH5" secondAttribute="bottom" constant="8" id="YEz-Pf-Vt4"/>
+                    <constraint firstItem="WX5-Fd-aH5" firstAttribute="top" secondItem="S0Q-fX-qc8" secondAttribute="top" constant="8" id="paA-K5-xfA"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="1ks-Xo-ai1"/>

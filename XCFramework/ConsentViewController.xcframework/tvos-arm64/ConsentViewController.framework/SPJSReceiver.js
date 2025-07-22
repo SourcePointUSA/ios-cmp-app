@@ -42,9 +42,10 @@ var getActionFromMessage = function (eventData) {
     return {
         id: String(choiceData.choice_id),
         type: choiceData.type,
-        pm_url: choiceData.iframe_url,
+        pmUrl: choiceData.pmUrl || choiceData.iframe_url,
         consentLanguage: eventData.consentLanguage,
-        customActionId: choiceData.customAction
+        customActionId: choiceData.customAction,
+        messageId: eventData.messageId
     };
 };
 
@@ -66,7 +67,9 @@ var handleMessageEvent = function(SDK) {
                         type: eventData.actionType,
                         payload: eventData.payload,
                         consentLanguage: eventData.consentLanguage,
-                        customActionId: eventData.customAction
+                        customActionId: eventData.customAction,
+                        pmUrl: eventData.pmUrl,
+                        messageId: eventData.messageId
                     }) :
                     SDK.onAction(getActionFromMessage(eventData));
                 break;
@@ -107,7 +110,9 @@ var handleMessageOrPMEvent = function (SDK) {
                 actionType: data.actionType,
                 payload: data.payload || data.actions || {},
                 consentLanguage: data.consentLanguage,
-                customAction: data.customAction
+                customAction: data.customAction,
+                pmUrl: data.iframe_url,
+                messageId: data.messageId
             });
         } catch (error) {
             SDK.onError(error);

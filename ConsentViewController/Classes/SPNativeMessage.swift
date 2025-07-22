@@ -131,4 +131,7 @@ import Foundation
     /// is ready to be closed
     public func closePrivacyManager() {
     }
+
+    public func dismissMessage() {
+    }
 }

@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.11.0'
+pod 'ConsentViewController', '7.11.1'
 ```
 
 The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
@@ -741,6 +741,14 @@ Upon completion, the sdk will call either `onConsentReady` in case of success or
 
 ```swift
     consentManager.rejectAll(campaignType: .gdpr)
+```
+
+## Programmatically dismissing a message
+
+You might have the use case in which you want to programmatically dismiss a message without relying on user input. The `dismissMessage()` method will try to dispatch a dismiss action on the message view controller currently being presented, just as if a user would have pressed the dismiss button on the UI.
+
+```swift
+consentManager.dismissMessage()
 ```
 
 ## Frequently Asked Questions

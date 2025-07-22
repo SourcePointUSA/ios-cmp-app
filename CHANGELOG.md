@@ -1,3 +1,8 @@
+# 7.11.1 (Jul, 22, 2025)
+* [DIA-5946](https://sourcepoint.atlassian.net/browse/DIA-5946) implemented `dismissMessage()` function. Allowing developers to programmatically trigger a `dismiss` action in the presenting message. [#630](https://github.com/SourcePointUSA/ios-cmp-app/pull/630)
+* [DIA-5892](https://sourcepoint.atlassian.net/browse/DIA-5892) [DIA-5897](https://sourcepoint.atlassian.net/browse/DIA-5897) [DIA-5900](https://sourcepoint.atlassian.net/browse/DIA-5900) [DIA-5902](https://sourcepoint.atlassian.net/browse/DIA-5902) [DIA-5903](https://sourcepoint.atlassian.net/browse/DIA-5903) improved tvOS UI rendering. [#628](https://github.com/SourcePointUSA/ios-cmp-app/pull/628)
+* [DIA-5922](https://sourcepoint.atlassian.net/browse/DIA-5922) added `versionId` to Preferences consent status. [#629](https://github.com/SourcePointUSA/ios-cmp-app/pull/629)
+
 # 7.11.0 (Jul, 14, 2025)
 * [DIA-5863](https://sourcepoint.atlassian.net/browse/DIA-5863) added `loadPreferenceCenter` function for `Preferences` campaign [#626](https://github.com/SourcePointUSA/ios-cmp-app/pull/626)
 * Fixed `userConsents` for `GlobalCmp` campaign [#627](https://github.com/SourcePointUSA/ios-cmp-app/pull/627)
