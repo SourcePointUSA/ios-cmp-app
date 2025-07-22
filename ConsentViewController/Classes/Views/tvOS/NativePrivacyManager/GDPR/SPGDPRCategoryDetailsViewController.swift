@@ -27,6 +27,7 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
         [viewData.byId("VendorsHeader") as? SPNativeText]
     }
     let cellReuseIdentifier = "cell"
+    var nativeLongButton: SPNativeLongButton?
 
     @IBOutlet var header: SPPMHeader!
     @IBOutlet var descriptionTextView: SPFocusableTextView!
@@ -47,7 +48,11 @@ class SPGDPRCategoryDetailsViewController: SPNativeScreenViewController {
             hideOnOffButtons()
         }
         categoryDetailsTableView.allowsSelection = false
-        categoryDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        categoryDetailsTableView.register(
+            UINib(nibName: "LongButtonViewCell", bundle: Bundle.framework),
+            forCellReuseIdentifier: cellReuseIdentifier
+        )
+        nativeLongButton = viewData.byId("VendorLongButton") as? SPNativeLongButton
         categoryDetailsTableView.delegate = self
         categoryDetailsTableView.dataSource = self
     }
@@ -98,10 +103,17 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = sections[section] else { return nil }
-
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         loadLabelText(forComponent: sectionComponent, label: label)
-        return label
+        headerView.addSubview(label)
+        if partners.count > 0 {
+            let partnersCountLabel = UILabel(frame: CGRect(x: label.intrinsicContentSize.width, y: 0, width: tableView.frame.width, height: 50))
+            loadLabelText(forComponent: sectionComponent, labelText: "(" + String(partners.count) + ")", label: partnersCountLabel)
+            headerView.addSubview(partnersCountLabel)
+        }
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -117,9 +129,14 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (categoryDetailsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?) ?? UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.labelText = partners[indexPath.row].trimmingCharacters(in: .whitespacesAndNewlines)
         cell.selectionStyle = .none
-        loadGenericTableCell(forComponentId: "VendorLongButton", text: partners[indexPath.row], cell: cell)
+        cell.setup(from: nativeLongButton)
+        cell.loadUI()
         return cell
     }
 

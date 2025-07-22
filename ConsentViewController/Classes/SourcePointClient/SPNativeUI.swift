@@ -195,7 +195,7 @@ class SPNativeView: SPNativeUI {
     }
 
     func getContainsIdOrDefault(_ id: String, defaultId: String? = nil) -> String? {
-        if children.contains { $0.id == id } { id } else { defaultId }
+        if children.contains(where: { $0.id == id }) { id } else { defaultId }
     }
 }
 
