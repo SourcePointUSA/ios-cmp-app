@@ -745,19 +745,10 @@ Upon completion, the sdk will call either `onConsentReady` in case of success or
 
 ## Programmatically dismissing a message
 
-You might have the use case in which you want to programmatically dismiss a message without relying on user input. The `dismissMessage(_ vc: UIViewController?)` method will try to dispatch a dismiss action on the message view controller, just as if a user would have pressed the dismiss button on the UI.
+You might have the use case in which you want to programmatically dismiss a message without relying on user input. The `dismissMessage()` method will try to dispatch a dismiss action on the message view controller currently being presented, just as if a user would have pressed the dismiss button on the UI.
 
 ```swift
-let messageViewController: UIViewController?
-
-// keep a reference to the message view controller being presented
-func onSPUIReady(_ controller: UIViewController) {
-    messageViewController = controller
-    present(controller, animated: true)
-}
-
-// at some point later in your app
-consentManager.dismissMessage(messageViewController)
+consentManager.dismissMessage()
 ```
 
 ## Frequently Asked Questions
