@@ -1110,9 +1110,9 @@ __attribute__((swift_name("PreferencesConsent.Companion")))
 __attribute__((objc_subclassing_restricted))
 __attribute__((swift_name("PreferencesConsent.PreferencesStatus")))
 @interface SPMCPreferencesConsentPreferencesStatus : SPMCBase
-- (instancetype)initWithCategoryId:(int32_t)categoryId channels:(NSArray<SPMCPreferencesConsentPreferencesStatusPreferencesChannels *> * _Nullable)channels changed:(SPMCBoolean * _Nullable)changed dateConsented:(SPMCKotlinx_datetimeInstant * _Nullable)dateConsented subType:(SPMCPreferencesConsentPreferencesSubType * _Nullable)subType __attribute__((swift_name("init(categoryId:channels:changed:dateConsented:subType:)"))) __attribute__((objc_designated_initializer));
+- (instancetype)initWithCategoryId:(int32_t)categoryId channels:(NSArray<SPMCPreferencesConsentPreferencesStatusPreferencesChannels *> * _Nullable)channels changed:(SPMCBoolean * _Nullable)changed dateConsented:(SPMCKotlinx_datetimeInstant * _Nullable)dateConsented subType:(SPMCPreferencesConsentPreferencesSubType * _Nullable)subType versionId:(NSString * _Nullable)versionId __attribute__((swift_name("init(categoryId:channels:changed:dateConsented:subType:versionId:)"))) __attribute__((objc_designated_initializer));
 @property (class, readonly, getter=companion) SPMCPreferencesConsentPreferencesStatusCompanion *companion __attribute__((swift_name("companion")));
-- (SPMCPreferencesConsentPreferencesStatus *)doCopyCategoryId:(int32_t)categoryId channels:(NSArray<SPMCPreferencesConsentPreferencesStatusPreferencesChannels *> * _Nullable)channels changed:(SPMCBoolean * _Nullable)changed dateConsented:(SPMCKotlinx_datetimeInstant * _Nullable)dateConsented subType:(SPMCPreferencesConsentPreferencesSubType * _Nullable)subType __attribute__((swift_name("doCopy(categoryId:channels:changed:dateConsented:subType:)")));
+- (SPMCPreferencesConsentPreferencesStatus *)doCopyCategoryId:(int32_t)categoryId channels:(NSArray<SPMCPreferencesConsentPreferencesStatusPreferencesChannels *> * _Nullable)channels changed:(SPMCBoolean * _Nullable)changed dateConsented:(SPMCKotlinx_datetimeInstant * _Nullable)dateConsented subType:(SPMCPreferencesConsentPreferencesSubType * _Nullable)subType versionId:(NSString * _Nullable)versionId __attribute__((swift_name("doCopy(categoryId:channels:changed:dateConsented:subType:versionId:)")));
 - (BOOL)isEqual:(id _Nullable)other __attribute__((swift_name("isEqual(_:)")));
 - (NSUInteger)hash __attribute__((swift_name("hash()")));
 - (NSString *)description __attribute__((swift_name("description()")));
@@ -1121,6 +1121,7 @@ __attribute__((swift_name("PreferencesConsent.PreferencesStatus")))
 @property (readonly) NSArray<SPMCPreferencesConsentPreferencesStatusPreferencesChannels *> * _Nullable channels __attribute__((swift_name("channels")));
 @property (readonly) SPMCKotlinx_datetimeInstant * _Nullable dateConsented __attribute__((swift_name("dateConsented")));
 @property (readonly) SPMCPreferencesConsentPreferencesSubType * _Nullable subType __attribute__((swift_name("subType")));
+@property (readonly) NSString * _Nullable versionId __attribute__((swift_name("versionId")));
 @end
 
 __attribute__((objc_subclassing_restricted))

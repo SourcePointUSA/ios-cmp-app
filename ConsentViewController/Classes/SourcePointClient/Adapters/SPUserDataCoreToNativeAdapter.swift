@@ -158,7 +158,8 @@ extension SPMobileCore.PreferencesConsent.PreferencesStatus {
             channels: self.channels?.map { $0.toNative() } ?? [],
             changed: self.changed?.boolValue,
             dateConsented: SPDate(string: self.dateConsented?.instantToString() ?? SPDate.now().originalDateString),
-            subType: self.subType.toNative()
+            subType: self.subType.toNative(),
+            versionId: self.versionId
         )
     }
 }

@@ -64,6 +64,7 @@ extension SPPreferencesConsent {
         public let changed: Bool?
         public let dateConsented: SPDate?
         public let subType: SubType?
+        public let versionId: String?
 
         public override var description: String {
             """
@@ -73,15 +74,24 @@ extension SPPreferencesConsent {
                 - changed: \(changed as Any)
                 - dateConsented: \(dateConsented as Any)
                 - subType: \(subType as Any)
+                - versionId: \(versionId as Any)
             """
         }
 
-        init(categoryId: Int, channels: [Channel] = [], changed: Bool? = nil, dateConsented: SPDate? = nil, subType: SubType? = nil) {
+        init(
+            categoryId: Int,
+            channels: [Channel] = [],
+            changed: Bool? = nil,
+            dateConsented: SPDate? = nil,
+            subType: SubType? = nil,
+            versionId: String? = nil
+        ) {
             self.categoryId = categoryId
             self.channels = channels
             self.changed = changed
             self.dateConsented = dateConsented
             self.subType = subType
+            self.versionId = versionId
         }
     }
 
