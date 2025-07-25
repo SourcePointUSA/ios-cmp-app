@@ -769,6 +769,13 @@ extension SPConsentManager: SPDelegate {
             self?.delegate?.onError?(error: error)
         }
     }
+
+    public func onUserInactive() {
+        OSLogger.standard.event("onUserInactive")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onUserInactive?()
+        }
+    }
 }
 
 func mainSync<T>(execute work: () throws -> T) rethrows -> T {

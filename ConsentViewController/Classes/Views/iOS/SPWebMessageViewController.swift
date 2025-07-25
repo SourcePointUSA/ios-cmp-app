@@ -265,6 +265,8 @@ import WebKit
                     messageUIDelegate?.loaded(self)
                 }
 
+            case .onUserInactive: messageUIDelegate?.onUserInactive()
+
             case .unknown: break
             }
         } else {
