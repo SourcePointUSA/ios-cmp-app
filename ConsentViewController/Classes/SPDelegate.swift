@@ -39,7 +39,7 @@ import UIKit
     @objc optional func onError(error: SPError)
 
     /// called when the user is inactive
-    @objc optional func onUserInactive()
+    @objc optional func onMessageInactivityTimeout()
 }
 
 /**

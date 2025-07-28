@@ -265,7 +265,7 @@ import WebKit
                     messageUIDelegate?.loaded(self)
                 }
 
-            case .onUserInactive: messageUIDelegate?.onUserInactive()
+            case .onMessageInactivityTimeout: messageUIDelegate?.onMessageInactivityTimeout()
 
             case .unknown: break
             }

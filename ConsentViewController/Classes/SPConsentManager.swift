@@ -770,10 +770,10 @@ extension SPConsentManager: SPDelegate {
         }
     }
 
-    public func onUserInactive() {
-        OSLogger.standard.event("onUserInactive")
+    public func onMessageInactivityTimeout() {
+        OSLogger.standard.event("onMessageInactivityTimeout")
         DispatchQueue.main.async { [weak self] in
-            self?.delegate?.onUserInactive?()
+            self?.delegate?.onMessageInactivityTimeout?()
         }
     }
 }
