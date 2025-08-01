@@ -17,7 +17,7 @@ import UIKit
 }
 
 enum RenderingAppEvents {
-    case readyForPreload, onMessageReady, onPMReady, onAction, onError
+    case readyForPreload, onMessageReady, onPMReady, onAction, onError, onMessageInactivityTimeout
     case unknown(String?)
 }
 
@@ -35,6 +35,7 @@ extension RenderingAppEvents: RawRepresentable {
             case .onPMReady: return "onPMReady"
             case .onAction: return "onAction"
             case .onError: return "onError"
+            case .onMessageInactivityTimeout: return "onMessageInactivityTimeout"
             case let .unknown(event): return event ?? ""
         }
     }
@@ -46,6 +47,7 @@ extension RenderingAppEvents: RawRepresentable {
         case "onPMReady": self = .onPMReady
         case "onAction": self = .onAction
         case "onError": self = .onError
+        case "onMessageInactivityTimeout": self = .onMessageInactivityTimeout
         case let event: self = .unknown(event)
         }
     }

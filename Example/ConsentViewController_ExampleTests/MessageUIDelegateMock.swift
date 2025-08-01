@@ -29,4 +29,6 @@ class MessageUIDelegateSpy: SPMessageUIDelegate {
     }
 
     func finished(_ vcFinished: UIViewController) {}
+
+    func onMessageInactivityTimeout() {}
 }

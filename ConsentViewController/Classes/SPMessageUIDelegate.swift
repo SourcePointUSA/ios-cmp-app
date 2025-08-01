@@ -14,4 +14,7 @@ import UIKit
     func action(_ action: SPAction, from controller: UIViewController)
     func onError(_ error: SPError)
     func finished(_ vcFinished: UIViewController)
+
+    @available(tvOS, unavailable)
+    func onMessageInactivityTimeout()
 }
