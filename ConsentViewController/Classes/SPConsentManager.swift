@@ -253,7 +253,7 @@ import SPMobileCore
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.11.1"
+    public static let VERSION = "7.12.0"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
@@ -767,6 +767,13 @@ extension SPConsentManager: SPDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.presentingMessageView = nil
             self?.delegate?.onError?(error: error)
+        }
+    }
+
+    public func onMessageInactivityTimeout() {
+        OSLogger.standard.event("onMessageInactivityTimeout")
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.onMessageInactivityTimeout?()
         }
     }
 }

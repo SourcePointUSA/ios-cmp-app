@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.11.1'
+pod 'ConsentViewController', '7.12.0'
 ```
 
 The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
@@ -142,6 +142,10 @@ extension ViewController: SPDelegate {
         print("sourcepoint sdk done")
     }
 
+    func onMessageInactivityTimeout() {
+        print("User became inactive")
+    }
+
     func onError(error: SPError) {
         print("Something went wrong: ", error)
     }
@@ -207,6 +211,10 @@ extension ViewController: SPDelegate {
 
     - (void)onSPUIFinished:(SPMessageViewController * _Nonnull)controller {
         NSLog(@"sourcepoint sdk done");
+    }
+
+    - (void)onMessageInactivityTimeout {
+        NSLog(@"User became inactive");
     }
 @end
 ```
@@ -295,6 +303,10 @@ The `onConsentReady` will be called in two different scenarios:
 2. After the SDK receives the response for one of its consent requests. This happens after the user has taken a consent action (`AcceptAll`, `RejectAll`, `Save&Exit`) in the message or Privacy Manager.
 
 Make sure to check XCode's quick help of `SPUserData` for more information on what data is available to your app during `onConsentReady`.
+
+### optional onMessageInactivityTimeout()
+
+The `onMessageInactivityTimeout` callback is called when the user becomes inactive while viewing a consent message. This allows your app to respond to user inactivity events, such as implementing timeouts or custom behavior when users don't interact with the consent interface.
 
 ### optional onError(error: SPError)
 

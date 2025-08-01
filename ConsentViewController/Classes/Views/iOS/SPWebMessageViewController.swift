@@ -265,6 +265,8 @@ import WebKit
                     messageUIDelegate?.loaded(self)
                 }
 
+            case .onMessageInactivityTimeout: messageUIDelegate?.onMessageInactivityTimeout()
+
             case .unknown: break
             }
         } else {

@@ -650,6 +650,8 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController17SPConsentDelegate_")
 - (void)onSPFinishedWithUserData:(SPUserData * _Nonnull)userData;
 /// called if something goes wrong during the entire lifecycle of the SDK
 - (void)onErrorWithError:(SPError * _Nonnull)error;
+/// called when the user is inactive
+- (void)onMessageInactivityTimeout;
 @end
 
 enum SPMessageLanguage : NSInteger;
@@ -687,6 +689,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController19SPMessageUIDelegate_")
 - (void)action:(SPAction * _Nonnull)action from:(UIViewController * _Nonnull)controller;
 - (void)onError:(SPError * _Nonnull)error;
 - (void)finished:(UIViewController * _Nonnull)vcFinished;
+- (void)onMessageInactivityTimeout SWIFT_AVAILABILITY(tvos,unavailable);
 @end
 
 @interface SPConsentManager (SWIFT_EXTENSION(ConsentViewController)) <SPMessageUIDelegate>
@@ -717,6 +720,7 @@ SWIFT_PROTOCOL("_TtP21ConsentViewController10SPDelegate_")
 - (void)onConsentReadyWithUserData:(SPUserData * _Nonnull)userData;
 - (void)onSPFinishedWithUserData:(SPUserData * _Nonnull)userData;
 - (void)onError:(SPError * _Nonnull)error;
+- (void)onMessageInactivityTimeout;
 @end
 
 SWIFT_PROTOCOL("_TtP21ConsentViewController13SPPREFERENCES_") SWIFT_AVAILABILITY(ios,introduced=10)

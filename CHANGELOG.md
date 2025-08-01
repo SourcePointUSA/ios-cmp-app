@@ -1,3 +1,6 @@
+# 7.12.0 (Aug, 01, 2025)
+* [DIA-5954](https://sourcepoint.atlassian.net/browse/DIA-5954) Implement a new, optional, callback `onMessageInactivityTimeout`. Called when the user becomes innactive for an amount of time setup in our message builder, on `preferences` message. Not available on tvOS. [#631](https://github.com/SourcePointUSA/ios-cmp-app/pull/631)
+
 # 7.11.1 (Jul, 22, 2025)
 * [DIA-5946](https://sourcepoint.atlassian.net/browse/DIA-5946) implemented `dismissMessage()` function. Allowing developers to programmatically trigger a `dismiss` action in the presenting message. [#630](https://github.com/SourcePointUSA/ios-cmp-app/pull/630)
 * [DIA-5892](https://sourcepoint.atlassian.net/browse/DIA-5892) [DIA-5897](https://sourcepoint.atlassian.net/browse/DIA-5897) [DIA-5900](https://sourcepoint.atlassian.net/browse/DIA-5900) [DIA-5902](https://sourcepoint.atlassian.net/browse/DIA-5902) [DIA-5903](https://sourcepoint.atlassian.net/browse/DIA-5903) improved tvOS UI rendering. [#628](https://github.com/SourcePointUSA/ios-cmp-app/pull/628)

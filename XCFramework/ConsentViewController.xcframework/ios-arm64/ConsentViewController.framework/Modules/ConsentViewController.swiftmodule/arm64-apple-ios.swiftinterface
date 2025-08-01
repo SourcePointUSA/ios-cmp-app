@@ -254,6 +254,7 @@ extension ConsentViewController.SPConsentManager : ConsentViewController.SPDeleg
   @objc dynamic public func onConsentReady(userData: ConsentViewController.SPUserData)
   @objc dynamic public func onSPFinished(userData: ConsentViewController.SPUserData)
   @objc dynamic public func onError(_ error: ConsentViewController.SPError)
+  @objc dynamic public func onMessageInactivityTimeout()
 }
 public struct SPDate : Swift.Codable, Swift.Equatable {
   public init(from decoder: any Swift.Decoder) throws
@@ -270,6 +271,7 @@ public struct SPDate : Swift.Codable, Swift.Equatable {
   @objc optional func onConsentReady(userData: ConsentViewController.SPUserData)
   @objc optional func onSPFinished(userData: ConsentViewController.SPUserData)
   @objc optional func onError(error: ConsentViewController.SPError)
+  @objc optional func onMessageInactivityTimeout()
 }
 @objc public protocol SPDelegate : ConsentViewController.SPConsentDelegate, ConsentViewController.SPConsentUIDelegate {
 }
@@ -843,6 +845,8 @@ extension ConsentViewController.SPJson {
   @objc func action(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
   @objc func onError(_ error: ConsentViewController.SPError)
   @objc func finished(_ vcFinished: UIKit.UIViewController)
+  @objc @available(tvOS, unavailable)
+  func onMessageInactivityTimeout()
 }
 @objc public protocol SPRenderingApp {
   @objc func loadMessage()
