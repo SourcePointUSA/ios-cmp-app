@@ -14518,6 +14518,32 @@
             ],
             "reqNewWitnessTableEntry": true,
             "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "onMessageInactivityTimeout",
+            "printedName": "onMessageInactivityTimeout()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@ConsentViewController@objc(pl)SPConsentDelegate(im)onMessageInactivityTimeout",
+            "mangledName": "$s21ConsentViewController17SPConsentDelegateP26onMessageInactivityTimeoutyyF",
+            "moduleName": "ConsentViewController",
+            "genericSig": "<τ_0_0 where τ_0_0 : ConsentViewController.SPConsentDelegate>",
+            "sugared_genericSig": "<Self where Self : ConsentViewController.SPConsentDelegate>",
+            "protocolReq": true,
+            "declAttributes": [
+              "Optional",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Protocol",
@@ -21431,6 +21457,30 @@
             "mangledName": "$s21ConsentViewController16SPConsentManagerC7onErroryyAA7SPErrorCF",
             "moduleName": "ConsentViewController",
             "objc_name": "onError:",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "onMessageInactivityTimeout",
+            "printedName": "onMessageInactivityTimeout()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@CM@ConsentViewController@objc(cs)SPConsentManager(im)onMessageInactivityTimeout",
+            "mangledName": "$s21ConsentViewController16SPConsentManagerC26onMessageInactivityTimeoutyyF",
+            "moduleName": "ConsentViewController",
+            "objc_name": "onMessageInactivityTimeout",
             "declAttributes": [
               "Dynamic",
               "ObjC",
@@ -43893,7 +43943,7 @@
       "kind": "StringLiteral",
       "offset": 8808,
       "length": 8,
-      "value": "\"7.11.1\""
+      "value": "\"7.12.0\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
@@ -45627,14 +45677,14 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2201,
+      "offset": 2389,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageViewController.swift",
       "kind": "FloatLiteral",
-      "offset": 2243,
+      "offset": 2431,
       "length": 4,
       "value": "10.0"
     }

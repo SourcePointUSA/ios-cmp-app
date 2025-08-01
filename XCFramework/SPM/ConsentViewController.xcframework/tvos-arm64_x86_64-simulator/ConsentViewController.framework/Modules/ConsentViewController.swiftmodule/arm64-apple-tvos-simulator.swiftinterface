@@ -389,6 +389,7 @@ extension ConsentViewController.SPSDK {
   @objc optional func onConsentReady(userData: ConsentViewController.SPUserData)
   @objc optional func onSPFinished(userData: ConsentViewController.SPUserData)
   @objc optional func onError(error: ConsentViewController.SPError)
+  @objc optional func onMessageInactivityTimeout()
 }
 @objc public protocol SPDelegate : ConsentViewController.SPConsentDelegate, ConsentViewController.SPConsentUIDelegate {
 }
@@ -574,6 +575,7 @@ extension ConsentViewController.SPConsentManager : ConsentViewController.SPDeleg
   @objc dynamic public func onConsentReady(userData: ConsentViewController.SPUserData)
   @objc dynamic public func onSPFinished(userData: ConsentViewController.SPUserData)
   @objc dynamic public func onError(_ error: ConsentViewController.SPError)
+  @objc dynamic public func onMessageInactivityTimeout()
 }
 @objc public protocol SPMessageUIDelegate {
   @objc func loaded(_ controller: UIKit.UIViewController)
@@ -581,6 +583,8 @@ extension ConsentViewController.SPConsentManager : ConsentViewController.SPDeleg
   @objc func action(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
   @objc func onError(_ error: ConsentViewController.SPError)
   @objc func finished(_ vcFinished: UIKit.UIViewController)
+  @objc @available(tvOS, unavailable)
+  func onMessageInactivityTimeout()
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SPUSNatConsent : ObjectiveC.NSObject, Swift.Codable, Foundation.NSCopying {
   @objc public var vendors: [ConsentViewController.SPConsentable] {

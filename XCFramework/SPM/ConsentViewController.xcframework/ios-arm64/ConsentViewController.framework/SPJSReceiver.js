@@ -30,6 +30,9 @@ window.SDK = function (postToWebView) {
         },
         onMessageEvent: function(payload) {
             postToWebView("onMessageEvent", payload);
+        },
+        onMessageInactivityTimeout: function() {
+            postToWebView("onMessageInactivityTimeout");
         }
     };
 }(postToWebView);
@@ -75,6 +78,9 @@ var handleMessageEvent = function(SDK) {
                 break;
             case "sp.renderingAppError":
                 SDK.onError(eventData);
+                break;
+            case "sp.userInactive":
+                SDK.onMessageInactivityTimeout();
                 break;
             default:
                 eventData.payload.action = eventData.name;
