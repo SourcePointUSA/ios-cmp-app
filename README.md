@@ -7,7 +7,7 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.11.1'
+pod 'ConsentViewController', '7.12.0'
 ```
 
 The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
