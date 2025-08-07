@@ -78,6 +78,9 @@ class LongButtonViewCell: UITableViewCell {
         super.didUpdateFocus(in: context, with: coordinator)
         if context.nextFocusedView === self {
             coordinator.addCoordinatedAnimations({
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.layer.transform = CATransform3DMakeScale(1.05, 1.05, 1.01)
+                }, completion: nil)
                 self.backgroundColor = UIColor(hexString: self.style?.onFocusBackgroundColor)
                 self.tintColor = UIColor(hexString: self.style?.onFocusBackgroundColor)
                 self.label.textColor = UIColor(hexString: self.style?.onFocusTextColor)
@@ -85,6 +88,9 @@ class LongButtonViewCell: UITableViewCell {
                 self.stateLabel.textColor = UIColor(hexString: self.style?.onFocusTextColor)
             }, completion: nil)
         } else {
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.layer.transform = CATransform3DMakeScale(1, 1, 1.01)
+                }, completion: nil)
                 self.backgroundColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
                 self.tintColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
                 self.label.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
