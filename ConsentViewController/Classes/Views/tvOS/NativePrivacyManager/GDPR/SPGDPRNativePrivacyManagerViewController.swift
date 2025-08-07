@@ -322,34 +322,3 @@ class FocusableScrollView: UIScrollView {
         true
     }
 }
-
-/// A table view cell with a custom background configuration.
-/// It suppresses unwanted background and border effects that are automatically added by the system
-/// while keeping the drop shadow and scaling effect when being focused.
-@available(tvOS 14.0, *)
-class CategoryCellView: UITableViewCell {
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupBackground()
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupBackground() {
-        var backgroundConfiguration = UIBackgroundConfiguration.listPlainCell()
-        backgroundConfiguration.backgroundColor = .darkGray
-        self.backgroundConfiguration = backgroundConfiguration
-    }
-
-    override func updateConfiguration(using state: UICellConfigurationState) {
-        super.updateConfiguration(using: state)
-        textLabel?.textColor = .white
-        clearBackgroundColors(ignoring: backgroundConfiguration?.backgroundColor)
-    }
-}
-
-// swiftlint:enable function_body_length
