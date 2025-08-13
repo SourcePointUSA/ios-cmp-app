@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "SPMobileCore",
-            path: "./Example/Pods/SPMobileCore/SPMobileCore.xcframework"
+            path: "./Example/SPMobileCore.xcframework"
         ),
         .binaryTarget(
             name: "ConsentViewController",
