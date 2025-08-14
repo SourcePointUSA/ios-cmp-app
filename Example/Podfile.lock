@@ -1,7 +1,7 @@
 PODS:
   - ConsentViewController (7.12.0):
     - Down (~> 0.11.0)
-    - SPMobileCore (= 0.1.11)
+    - SPMobileCore (= 0.1.12-beta-1)
   - Down (0.11.0)
   - FirebaseAnalytics (11.13.0):
     - FirebaseAnalytics/AdIdSupport (= 11.13.0)
@@ -128,7 +128,7 @@ PODS:
   - Nimble (10.0.0)
   - PromisesObjC (2.4.0)
   - Quick (5.0.1)
-  - SPMobileCore (0.1.11)
+  - SPMobileCore (0.1.12-beta-1)
   - SwiftLint (0.59.1)
   - Wormholy (1.7.0)
 
@@ -173,7 +173,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 9adf0d8de93022115c3a398e2b465870ee951a1d
+  ConsentViewController: 1c2bbf74ff822bc08329282e77d4439d5ec04a15
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   FirebaseAnalytics: 630349facf4a114a0977e5d7570e104261973287
   FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
@@ -194,7 +194,7 @@ SPEC CHECKSUMS:
   Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
-  SPMobileCore: 220d109e404cb17169f7e26f2a34c6022b80079a
+  SPMobileCore: 3e213f67275a8e04c426177a8679d2038cd6b988
   SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
   Wormholy: ab1c8c2f02f58587a0941deb0088555ffbf039a1
 
