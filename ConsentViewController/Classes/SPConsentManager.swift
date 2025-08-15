@@ -215,14 +215,15 @@ import SPMobileCore
 
     #if os(iOS)
     func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL, messageId: String) {
-        GenericWebMessageViewController(
+        presentingMessageView = GenericWebMessageViewController(
             url: pmURL,
             messageId: messageId,
             contents: Data(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,
             delegate: self
-        ).loadPrivacyManager(url: pmURL)
+        )
+        presentingMessageView?.loadPrivacyManager(url: pmURL)
     }
     #endif
 
