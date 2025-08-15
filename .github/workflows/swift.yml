@@ -21,7 +21,7 @@ jobs:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_16.2.app
         - name: Building Swift Package
-          run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+          run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload Swift Package build results
@@ -39,8 +39,8 @@ jobs:
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_16.2.app
-        - name: ObjC-ExampleApp testing -> iPhone 16 (iOS 18.2)
-          run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+        - name: ObjC-ExampleApp testing -> iPhone 16 (iOS 18.4)
+          run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload ObjCExampleApp tests results
@@ -51,8 +51,8 @@ jobs:
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_16.2.app
-        - name: ConsentViewController testing -> iPhone 16 (iOS 18.2)
-          run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+        - name: ConsentViewController testing -> iPhone 16 (iOS 18.4)
+          run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload ConsentViewController tests results
@@ -63,8 +63,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo xcode-select -s /Applications/Xcode_16.2.app
-      - name: ConsentViewController testing -> iPhone 16 (iOS 18.2)
-        run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2'
+      - name: ConsentViewController testing -> iPhone 16 (iOS 18.4)
+        run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
       - uses: actions/upload-artifact@v4
         if: failure()
         name: Upload ConsentViewController tests results
@@ -75,8 +75,8 @@ jobs:
       steps:
         - uses: actions/checkout@v4
         - run: sudo xcode-select -s /Applications/Xcode_16.2.app
-        - name: ConsentViewController testing -> Apple TV (tvOS 18.2)
-          run: xcodebuild test -scheme TVOSExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=18.2'
+        - name: ConsentViewController testing -> Apple TV (tvOS 18.4)
+          run: xcodebuild test -scheme TVOSExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=18.4'
         - uses: actions/upload-artifact@v4
           if: failure()
           name: Upload TVOSExampleApp tests results
