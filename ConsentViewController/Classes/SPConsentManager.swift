@@ -215,14 +215,15 @@ import SPMobileCore
 
     #if os(iOS)
     func loadWebPrivacyManager(_ campaignType: SPCampaignType, _ pmURL: URL, messageId: String) {
-        GenericWebMessageViewController(
+        presentingMessageView = GenericWebMessageViewController(
             url: pmURL,
             messageId: messageId,
             contents: Data(),
             campaignType: campaignType,
             timeout: messageTimeoutInSeconds,
             delegate: self
-        ).loadPrivacyManager(url: pmURL)
+        )
+        presentingMessageView?.loadPrivacyManager(url: pmURL)
     }
     #endif
 
@@ -253,7 +254,7 @@ import SPMobileCore
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.12.0"
+    public static let VERSION = "7.12.1"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 

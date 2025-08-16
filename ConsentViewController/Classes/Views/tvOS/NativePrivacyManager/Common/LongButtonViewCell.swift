@@ -35,6 +35,7 @@ class LongButtonViewCell: UITableViewCell {
         onText = nativeCell?.settings.onText ?? "On"
         offText = nativeCell?.settings.offText ?? "Off"
         style = nativeCell?.settings.style
+        resetVisualState()
     }
 
     func loadUI() {
@@ -57,34 +58,53 @@ class LongButtonViewCell: UITableViewCell {
         }
         accessibilityIdentifier = "\(labelText ?? "") \(stateLabel.text ?? "")"
         self.layer.cornerRadius = 10
+        resetVisualState()
     }
 
     override func prepareForReuse() {
         labelText = nil
         isOn = nil
         selectable = false
-        loadUI()
+        resetVisualState()
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        loadUI()
-        selectionStyle = .none
+        resetVisualState()
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let focused = self.isFocused
-        if focused {
-            self.backgroundColor = UIColor(hexString: style?.onFocusBackgroundColor)
-            label.textColor = UIColor(hexString: style?.onFocusTextColor)
-            customLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
-            stateLabel.textColor = UIColor(hexString: style?.onFocusTextColor)
+    
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        self.focusStyle = .custom
+        super.didUpdateFocus(in: context, with: coordinator)
+        if context.nextFocusedView === self {
+            coordinator.addCoordinatedAnimations({
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.layer.transform = CATransform3DMakeScale(1.05, 1.05, 1.01)
+                }, completion: nil)
+                self.backgroundColor = UIColor(hexString: self.style?.onFocusBackgroundColor)
+                self.tintColor = UIColor(hexString: self.style?.onFocusBackgroundColor)
+                self.label.textColor = UIColor(hexString: self.style?.onFocusTextColor)
+                self.customLabel.textColor = UIColor(hexString: self.style?.onFocusTextColor)
+                self.stateLabel.textColor = UIColor(hexString: self.style?.onFocusTextColor)
+            }, completion: nil)
         } else {
-            self.backgroundColor = UIColor(hexString: style?.onUnfocusBackgroundColor)
-            label.textColor = UIColor(hexString: style?.onUnfocusTextColor)
-            customLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
-            stateLabel.textColor = UIColor(hexString: style?.onUnfocusTextColor)
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+                    self.layer.transform = CATransform3DMakeScale(1, 1, 1.01)
+                }, completion: nil)
+                self.backgroundColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
+                self.tintColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
+                self.label.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
+                self.customLabel.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
+                self.stateLabel.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
         }
-     }
+    }
+    
+    func resetVisualState() {
+        self.focusStyle = .custom
+        self.backgroundColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
+        self.tintColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)
+        self.label.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
+        self.customLabel.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
+        self.stateLabel.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
+    }
 }
