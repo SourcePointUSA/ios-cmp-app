@@ -10,16 +10,16 @@ defaults:
     working-directory: Example
 jobs:
   lint:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - run: brew install swiftlint
       - run: swiftlint lint
   BuildSwiftPackage:
-      runs-on: macos-latest
+      runs-on: macos-15
       steps:
         - uses: actions/checkout@v4
-        - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        - run: sudo xcode-select -s /Applications/Xcode_16.3.app
         - name: Building Swift Package
           run: xcodebuild clean build -scheme SPMBuild -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
@@ -28,17 +28,17 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   BuildCarthageProject:
-      runs-on: macos-latest
+      runs-on: macos-15
       steps:
         - uses: actions/checkout@v4
-        - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        - run: sudo xcode-select -s /Applications/Xcode_16.3.app
         - name: Building Carthage Project
           run: cd ./SPCarthageTest && ./build.sh
   ObjC-ExampleApp-tests:
-      runs-on: macos-latest
+      runs-on: macos-15
       steps:
         - uses: actions/checkout@v4
-        - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        - run: sudo xcode-select -s /Applications/Xcode_16.3.app
         - name: ObjC-ExampleApp testing -> iPhone 16 (iOS 18.4)
           run: xcodebuild test -scheme ObjC-ExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
@@ -47,10 +47,10 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   ConsentViewController:
-      runs-on: macos-latest
+      runs-on: macos-15
       steps:
         - uses: actions/checkout@v4
-        - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        - run: sudo xcode-select -s /Applications/Xcode_16.3.app
         - name: ConsentViewController testing -> iPhone 16 (iOS 18.4)
           run: xcodebuild test -scheme ConsentViewController_Example -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
         - uses: actions/upload-artifact@v4
@@ -59,10 +59,10 @@ jobs:
           with:
             path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   AuthExample-tests:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-      - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+      - run: sudo xcode-select -s /Applications/Xcode_16.3.app
       - name: ConsentViewController testing -> iPhone 16 (iOS 18.4)
         run: xcodebuild test -scheme AuthExample -workspace ConsentViewController.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4'
       - uses: actions/upload-artifact@v4
@@ -71,10 +71,10 @@ jobs:
         with:
           path: /Users/runner/Library/Developer/Xcode/DerivedData/**/*.xcresult
   TVOSExampleApp:
-      runs-on: macos-latest
+      runs-on: macos-15
       steps:
         - uses: actions/checkout@v4
-        - run: sudo xcode-select -s /Applications/Xcode_16.2.app
+        - run: sudo xcode-select -s /Applications/Xcode_16.3.app
         - name: ConsentViewController testing -> Apple TV (tvOS 18.4)
           run: xcodebuild test -scheme TVOSExampleApp -workspace ConsentViewController.xcworkspace -destination 'platform=tvOS Simulator,name=Apple TV,OS=18.4'
         - uses: actions/upload-artifact@v4
