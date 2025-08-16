@@ -1,3 +1,7 @@
+# 7.12.1 (Aug, 16, 2025)
+* [DIA-6035](https://sourcepoint.atlassian.net/browse/DIA-6035) fixed an issue preventing `dismissMessage` from dismissing the Privacy Center message. [#633](https://github.com/SourcePointUSA/ios-cmp-app/pull/633)
+* [DIA-4050](https://sourcepoint.atlassian.net/browse/DIA-4050) fixed UI issues on tvOS. [#632](https://github.com/SourcePointUSA/ios-cmp-app/pull/632)
+
 # 7.12.0 (Aug, 01, 2025)
 * [DIA-5954](https://sourcepoint.atlassian.net/browse/DIA-5954) Implement a new, optional, callback `onMessageInactivityTimeout`. Called when the user becomes innactive for an amount of time setup in our message builder, on `preferences` message. Not available on tvOS. [#631](https://github.com/SourcePointUSA/ios-cmp-app/pull/631)
 
