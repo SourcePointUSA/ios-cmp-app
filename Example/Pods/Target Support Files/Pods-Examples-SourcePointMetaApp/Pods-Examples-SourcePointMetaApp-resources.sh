@@ -103,15 +103,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.js"
   install_resource "${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.spec.js"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-iOS/ConsentViewController.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/Wormholy/Wormholy.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardCore/IQKeyboardCore.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardNotification/IQKeyboardNotification.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardReturnManager/IQKeyboardReturnManager.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbar/IQKeyboardToolbar.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbarManager/IQKeyboardToolbarManager.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQTextInputViewNotification/IQTextInputViewNotification.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQTextView/IQTextView.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/../../ConsentViewController/Assets/images/Barcode.png"
@@ -120,15 +111,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.js"
   install_resource "${PODS_ROOT}/../../ConsentViewController/Assets/javascript/SPJSReceiver.spec.js"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-iOS/ConsentViewController.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/Wormholy/Wormholy.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardCore/IQKeyboardCore.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardNotification/IQKeyboardNotification.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardReturnManager/IQKeyboardReturnManager.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbar/IQKeyboardToolbar.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardToolbarManager/IQKeyboardToolbarManager.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQTextInputViewNotification/IQTextInputViewNotification.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IQTextView/IQTextView.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
