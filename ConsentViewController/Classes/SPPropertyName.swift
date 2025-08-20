@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 /// SPPropertyName is the exact name of your property as created in SourcePoint's dashboard.
 /// - Important: notice that it can only contain letters, numbers, . (dots), : (semicolons),
