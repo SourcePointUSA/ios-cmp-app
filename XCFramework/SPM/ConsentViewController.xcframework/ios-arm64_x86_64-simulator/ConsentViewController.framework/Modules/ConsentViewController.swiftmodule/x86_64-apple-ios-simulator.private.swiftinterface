@@ -6,7 +6,6 @@ import AdSupport
 import AppTrackingTransparency
 @_exported import ConsentViewController
 import Foundation
-import SPMobileCore
 import Swift
 import SystemConfiguration
 import UIKit
@@ -632,15 +631,6 @@ public typealias SPTargetingParams = [Swift.String : Swift.String]
   public func encode(to encoder: any Swift.Encoder) throws
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
   @objc deinit
-}
-extension SPMobileCore.KotlinBoolean {
-  convenience public init?(bool value: Swift.Bool?)
-}
-extension SPMobileCore.KotlinInt {
-  convenience public init?(int value: Swift.Int?)
-}
-extension SPMobileCore.KotlinFloat {
-  convenience public init?(float value: Swift.Float?)
 }
 @objc public protocol SPConsentUIDelegate {
   @objc func onAction(_ action: ConsentViewController.SPAction, from controller: UIKit.UIViewController)
