@@ -19,7 +19,6 @@ final class SPAppleTVButton: UIButton {
 }
 
 extension UIView {
-
     /// Sets the background colors of all the view's subviews to ``UIColor.clear``.
     /// - Parameter ignoredColor: Exception that is not overridden.
     func clearBackgroundColors(ignoring ignoredColor: UIColor? = nil) {

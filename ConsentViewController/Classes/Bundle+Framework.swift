@@ -14,7 +14,7 @@ extension Foundation.Bundle {
         return Bundle.module
         #else
         if let url = main.url(forResource: "ConsentViewController", withExtension: "bundle"),
-            let bundle = Bundle(url: url){
+            let bundle = Bundle(url: url) {
             return bundle
         } else {
             return Bundle(for: SPConsentManager.self)

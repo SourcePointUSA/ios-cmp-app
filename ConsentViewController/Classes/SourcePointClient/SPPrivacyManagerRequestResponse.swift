@@ -13,6 +13,10 @@ import Foundation
     }
 
     struct Vendor: Codable {
+        enum Keys: String, CodingKey {
+            case name, vendorId, policyUrl, vendorType
+        }
+
         let name: String
         let vendorId: String?
         let policyUrl: URL?
@@ -31,10 +35,6 @@ import Foundation
             self.vendorId = vendorId
             self.policyUrl = policyUrl
             self.vendorType = vendorType
-        }
-
-        enum Keys: String, CodingKey {
-            case name, vendorId, policyUrl, vendorType
         }
     }
 

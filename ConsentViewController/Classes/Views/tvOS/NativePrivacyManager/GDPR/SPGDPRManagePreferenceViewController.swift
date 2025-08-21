@@ -43,7 +43,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             return consentSections
         }
     }
-    
+
     // Sections for Consent Mode
     var consentSections: [Section] {
         [
@@ -69,7 +69,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             )
         ].compactMap { $0 }
     }
-    
+
     // Sections for Legitimate Interest Mode
     var legIntSections: [Section] {
         [
@@ -80,7 +80,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             ),
             Section(
                 header: (viewData.byId("SpecialPurposesHeaderLegInt") ?? viewData.byId("SpecialPurposesHeaderConsent", defaultId: "SpecialPurposesHeader")) as? SPNativeText,
-                definition: (viewData.byId("SpecialPurposesDefinitionLegInt") ?? viewData.byId("SpecialPurposesDefinitionConsent", defaultId: "SpecialPurposesDefinition")) as? SPNativeText,
+                definition: (
+                    viewData.byId("SpecialPurposesDefinitionLegInt") ?? viewData.byId("SpecialPurposesDefinitionConsent", defaultId: "SpecialPurposesDefinition")
+                ) as? SPNativeText,
                 content: Array(consentsSnapshot.specialPurposes)
             ),
             // Features and special features remain the same for both modes
@@ -169,10 +171,10 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
                 self?.categoriesTableView.alpha = 1.0
             }
         }
-        
+
         // Update header text based on mode
         updateHeaderForCurrentMode()
-        
+
         // Update description text
         updateDescriptionForCurrentMode()
     }
@@ -217,7 +219,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             descriptionTextView.frame.size.height = height
         }
     }
-    
+
     // Helper method for updating the header
     func updateHeaderForCurrentMode() {
         // HeaderConsent and HeaderLegInt are not present in our test property
@@ -233,8 +235,9 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
             }
         }
     }
-    
+
     // Helper method for updating the description
+    // swiftlint:disable force_unwrapping
     func updateDescriptionForCurrentMode() {
         let textComponentId = displayingLegIntCategories ?
             viewData.getContainsIdOrDefault("CategoriesHeaderLegInt", defaultId: "CategoriesHeader")! :
@@ -242,6 +245,7 @@ class SPGDPRManagePreferenceViewController: SPNativeScreenViewController {
         loadTextView(forComponentId: textComponentId, textView: descriptionTextView, bounces: false)
         dynamicFrameForDescription()
     }
+    // swiftlint:enable force_unwrapping
 }
 
 // MARK: UITableViewDataSource
@@ -262,7 +266,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = dynamicSections[section].header else { return nil }
-        
+
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -292,7 +296,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         let section = indexPath.section
         cell.identifier = category._id
         cell.labelText = category.name
-        
+
         // Determine the content type based on the section and the content
         if section == 0 { // Purposes
             if displayingLegIntCategories {
@@ -310,7 +314,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
             cell.contentType = nil
             cell.isOn = nil
         }
-        
+
         cell.selectable = true
         cell.isCustom = category.type != .IAB && category.type != .IAB_PURPOSE
         cell.setup(from: nativeLongButton)
@@ -344,7 +348,7 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let category = currentCategory(indexPath),
               let cell = tableView.cellForRow(at: indexPath) as? LongButtonViewCell else { return }
-        
+
         let categoryDetailsVC = SPGDPRCategoryDetailsViewController(
             messageId: messageId,
             campaignType: campaignType,
@@ -356,10 +360,10 @@ extension SPGDPRManagePreferenceViewController: UITableViewDataSource, UITableVi
         categoryDetailsVC.category = category
         categoryDetailsVC.categoryManagerDelegate = consentsSnapshot
         categoryDetailsVC.categoryType = cell.contentType
-        
+
         // Purpose toggle is active for the first section or special features (Section 3)
         categoryDetailsVC.purposeToggleActive = indexPath.section == 0 || indexPath.section == 3
-        
+
         present(categoryDetailsVC, animated: true)
     }
 }

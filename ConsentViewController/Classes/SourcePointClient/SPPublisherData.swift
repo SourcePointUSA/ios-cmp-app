@@ -19,9 +19,9 @@ extension Encodable {
         try container.encode(self)
     }
 
-    func toJsonString(_ encoder: JSONEncoder = JSONEncoder()) throws -> String {
+    func toJsonString(_ encoder: JSONEncoder = JSONEncoder()) throws -> String? {
         let data = try encoder.encode(self)
-        return String(decoding: data, as: UTF8.self)
+        return String(data: data, encoding: .utf8)
     }
 }
 

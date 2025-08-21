@@ -16,20 +16,24 @@ Pod::Spec.new do |s|
   s.tvos.exclude_files = 'ConsentViewController/Classes/Views/iOS'
   s.tvos.dependency 'Down', '~> 0.11.0'
   s.ios.resource_bundles = {
-      'ConsentViewController' => [
-          'ConsentViewController/Assets/**/*',
-          'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
-      ]
+    'ConsentViewController' => [
+      'ConsentViewController/Assets/**/*',
+      'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
+    ]
   }
   s.tvos.resource_bundles = {
-      'ConsentViewController' => [
-          'ConsentViewController/Assets/**/*',
-          'ConsentViewController/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}',
-          'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
-      ]
+    'ConsentViewController' => [
+      'ConsentViewController/Assets/**/*',
+      'ConsentViewController/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}',
+      'Pod/Classes/**/*.{xcprivacy,storyboard,xib,xcassets,json,imageset,png,js}'
+    ]
   }
   s.resources = "ConsentViewController/**/*.{js,json,png}"
   s.info_plist = {
-      'SPEnv' => 'prod'
+    'SPEnv' => 'prod'
+  }
+  s.pod_target_xcconfig = {
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
+    'DEFINES_MODULE' => 'YES'
   }
 end

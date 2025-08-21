@@ -232,45 +232,45 @@ import WebKit
     }
 
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if
-            let messageBody = try? SPJson(message.body),
-            let eventName = RenderingAppEvents(rawValue: messageBody["name"]?.stringValue ?? ""),
+        if let messageBody = try? SPJson(message.body),
+            let eventName = RenderingAppEvent(rawValue: messageBody["name"]?.stringValue ?? ""),
             let body = messageBody["body"] {
             OSLogger.standard.debug("RenderingApp - event: \(eventName.rawValue), payload: \(body)")
             switch eventName {
             case .readyForPreload: handleMessagePreload()
-
-            case .onMessageReady:
-                timeoutWorkItem.cancel()
-                self.webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
-                messageUIDelegate?.loaded(self)
-
-            case .onAction:
-                if let action = getActionFrom(body: body) {
-                    messageUIDelegate?.action(action, from: self)
-                    if action.type == .ShowPrivacyManager {
-                        isFirstLayerMessage = false
-                    }
-                } else {
-                    messageUIDelegate?.onError(
-                        InvalidOnActionEventPayloadError(campaignType: campaignType, eventName.rawValue, body: body.description)
-                    )
-                }
-
+            case .onMessageReady: onMessageReady()
+            case .onAction: onAction(eventName.rawValue, body)
             case .onError: messageUIDelegate?.onError(RenderingAppError(campaignType: campaignType, body["error"]?.stringValue ?? ""))
-
-            case .onPMReady:
-                timeoutWorkItem.cancel()
-                if isFirstLayerMessage {
-                    messageUIDelegate?.loaded(self)
-                }
-
+            case .onPMReady: onPmReady()
             case .onMessageInactivityTimeout: messageUIDelegate?.onMessageInactivityTimeout()
-
             case .unknown: break
             }
         } else {
             OSLogger.standard.error("RenderingApp - UnknownBody(\(message.body))")
+        }
+    }
+
+    func onAction(_ eventName: String, _ body: SPJson, ) {
+        if let action = getActionFrom(body: body) {
+            messageUIDelegate?.action(action, from: self)
+            if action.type == .ShowPrivacyManager {
+                isFirstLayerMessage = false
+            }
+        } else {
+            messageUIDelegate?.onError(InvalidOnActionEventPayloadError(campaignType: campaignType, eventName, body: body.description))
+        }
+    }
+
+    func onMessageReady() {
+        timeoutWorkItem.cancel()
+        webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
+        messageUIDelegate?.loaded(self)
+    }
+
+    func onPmReady() {
+        timeoutWorkItem.cancel()
+        if isFirstLayerMessage {
+            messageUIDelegate?.loaded(self)
         }
     }
 }

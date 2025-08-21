@@ -5598,30 +5598,6 @@
         "printedName": "SPPreferencesConsent",
         "children": [
           {
-            "kind": "Function",
-            "name": "empty",
-            "printedName": "empty()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "SPPreferencesConsent",
-                "printedName": "ConsentViewController.SPPreferencesConsent",
-                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(cm)empty",
-            "mangledName": "$s21ConsentViewController013SPPreferencesA0C5emptyACyFZ",
-            "moduleName": "ConsentViewController",
-            "static": true,
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "ObjC"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
             "kind": "Var",
             "name": "dateCreated",
             "printedName": "dateCreated",
@@ -6107,6 +6083,30 @@
                 "accessorKind": "get"
               }
             ]
+          },
+          {
+            "kind": "Function",
+            "name": "empty",
+            "printedName": "empty()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SPPreferencesConsent",
+                "printedName": "ConsentViewController.SPPreferencesConsent",
+                "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@ConsentViewController@objc(cs)SPPreferencesConsent(cm)empty",
+            "mangledName": "$s21ConsentViewController013SPPreferencesA0C5emptyACyFZ",
+            "moduleName": "ConsentViewController",
+            "static": true,
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
           },
           {
             "kind": "Function",
@@ -38728,6 +38728,62 @@
               },
               {
                 "kind": "Var",
+                "name": "intValue",
+                "printedName": "intValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.Int?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Int",
+                        "printedName": "Swift.Int",
+                        "usr": "s:Si"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Var",
+                "usr": "s:21ConsentViewController6SPJsonO3KeyV8intValueSiSgvp",
+                "mangledName": "$s21ConsentViewController6SPJsonO3KeyV8intValueSiSgvp",
+                "moduleName": "ConsentViewController",
+                "declAttributes": [
+                  "AccessControl"
+                ],
+                "accessors": [
+                  {
+                    "kind": "Accessor",
+                    "name": "Get",
+                    "printedName": "Get()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Optional",
+                        "printedName": "Swift.Int?",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Int",
+                            "printedName": "Swift.Int",
+                            "usr": "s:Si"
+                          }
+                        ],
+                        "usr": "s:Sq"
+                      }
+                    ],
+                    "declKind": "Accessor",
+                    "usr": "s:21ConsentViewController6SPJsonO3KeyV8intValueSiSgvg",
+                    "mangledName": "$s21ConsentViewController6SPJsonO3KeyV8intValueSiSgvg",
+                    "moduleName": "ConsentViewController",
+                    "accessorKind": "get"
+                  }
+                ]
+              },
+              {
+                "kind": "Var",
                 "name": "stringValue",
                 "printedName": "stringValue",
                 "children": [
@@ -38831,62 +38887,6 @@
                   "AccessControl"
                 ],
                 "init_kind": "Designated"
-              },
-              {
-                "kind": "Var",
-                "name": "intValue",
-                "printedName": "intValue",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Optional",
-                    "printedName": "Swift.Int?",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Int",
-                        "printedName": "Swift.Int",
-                        "usr": "s:Si"
-                      }
-                    ],
-                    "usr": "s:Sq"
-                  }
-                ],
-                "declKind": "Var",
-                "usr": "s:21ConsentViewController6SPJsonO3KeyV8intValueSiSgvp",
-                "mangledName": "$s21ConsentViewController6SPJsonO3KeyV8intValueSiSgvp",
-                "moduleName": "ConsentViewController",
-                "declAttributes": [
-                  "AccessControl"
-                ],
-                "accessors": [
-                  {
-                    "kind": "Accessor",
-                    "name": "Get",
-                    "printedName": "Get()",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "Optional",
-                        "printedName": "Swift.Int?",
-                        "children": [
-                          {
-                            "kind": "TypeNominal",
-                            "name": "Int",
-                            "printedName": "Swift.Int",
-                            "usr": "s:Si"
-                          }
-                        ],
-                        "usr": "s:Sq"
-                      }
-                    ],
-                    "declKind": "Accessor",
-                    "usr": "s:21ConsentViewController6SPJsonO3KeyV8intValueSiSgvg",
-                    "mangledName": "$s21ConsentViewController6SPJsonO3KeyV8intValueSiSgvg",
-                    "moduleName": "ConsentViewController",
-                    "accessorKind": "get"
-                  }
-                ]
               },
               {
                 "kind": "Constructor",
@@ -41598,203 +41598,203 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "BooleanLiteral",
-      "offset": 346,
+      "offset": 231,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "Array",
-      "offset": 476,
+      "offset": 361,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "Array",
-      "offset": 521,
+      "offset": 406,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 577,
+      "offset": 462,
       "length": 274,
       "value": "\"SPPreferencesConsent(\n    - dateCreated: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 671,
+      "offset": 556,
       "length": 1,
       "value": "\"\n    - messageId: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 712,
+      "offset": 597,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 715,
+      "offset": 600,
       "length": 1,
       "value": "\"\n    - uuid: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 746,
+      "offset": 631,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 749,
+      "offset": 634,
       "length": 1,
       "value": "\"\n    - status: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 781,
+      "offset": 666,
       "length": 1,
       "value": "\"\n    - rejectedStatus: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 829,
+      "offset": 714,
       "length": 1,
       "value": "\"\n)\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "Array",
-      "offset": 988,
+      "offset": 873,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "Array",
-      "offset": 1027,
+      "offset": 912,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 1869,
+      "offset": 1868,
       "length": 340,
       "value": "\"SPPreferencesConsent.Status(\n    - categoryId: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 1957,
+      "offset": 1956,
       "length": 1,
       "value": "\"\n    - channels: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 1997,
+      "offset": 1996,
       "length": 1,
       "value": "\"\n    - changed: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2042,
+      "offset": 2041,
       "length": 1,
       "value": "\"\n    - dateConsented: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2099,
+      "offset": 2098,
       "length": 1,
       "value": "\"\n    - subType: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2144,
+      "offset": 2143,
       "length": 1,
       "value": "\"\n    - versionId: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2193,
+      "offset": 2192,
       "length": 693,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "Array",
-      "offset": 2298,
+      "offset": 2297,
       "length": 2,
       "value": "[]"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2896,
+      "offset": 2895,
       "length": 125,
       "value": "\"SPPreferencesConsent.Channel(\n    - id: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 2969,
+      "offset": 2968,
       "length": 1,
       "value": "\"\n    - status: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "StringLiteral",
-      "offset": 3005,
+      "offset": 3004,
       "length": 1302,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "IntegerLiteral",
-      "offset": 3240,
+      "offset": 3239,
       "length": 18,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "IntegerLiteral",
-      "offset": 3260,
+      "offset": 3259,
       "length": 13,
       "value": "2"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "IntegerLiteral",
-      "offset": 3275,
+      "offset": 3274,
       "length": 11,
       "value": "3"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "IntegerLiteral",
-      "offset": 3288,
+      "offset": 3287,
       "length": 11,
       "value": "4"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPPreferencesConsent.swift",
       "kind": "IntegerLiteral",
-      "offset": 3301,
+      "offset": 3300,
       "length": 7,
       "value": "5"
     },
@@ -42032,44 +42032,44 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3835,
-      "length": 201,
-      "value": "\"gdpr: \""
+      "offset": 3831,
+      "length": 311,
+      "value": "\"SPUserData(\n    - gdpr: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3869,
+      "offset": 3902,
       "length": 1,
-      "value": "\", ccpa: \""
+      "value": "\"\n    - ccpa: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3904,
+      "offset": 3950,
       "length": 1,
-      "value": "\", usnat: \""
+      "value": "\"\n    - usnat: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3941,
+      "offset": 4000,
       "length": 1,
-      "value": "\", globalcmp: \""
+      "value": "\"\n    - globalcmp: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 3986,
+      "offset": 4058,
       "length": 1,
-      "value": "\", preferences: \""
+      "value": "\"\n    - preferences: \""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Consents\/SPUserData.swift",
       "kind": "StringLiteral",
-      "offset": 4035,
+      "offset": 4120,
       "length": 1,
-      "value": "\"\""
+      "value": "\"\n)\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Extensions\/SPString.swift",
@@ -42333,37 +42333,37 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 2473,
-      "length": 1,
-      "value": "4"
-    },
-    {
-      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
-      "kind": "IntegerLiteral",
-      "offset": 2710,
+      "offset": 2678,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 2894,
+      "offset": 2862,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "IntegerLiteral",
-      "offset": 3130,
+      "offset": 3098,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
       "kind": "Array",
-      "offset": 3286,
+      "offset": 3254,
       "length": 2,
       "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 3484,
+      "length": 1,
+      "value": "4"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SourcePointClient\/SourcepointClientCoordinator.swift",
@@ -44573,14 +44573,14 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageViewController.swift",
       "kind": "StringLiteral",
-      "offset": 2389,
+      "offset": 2384,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPMessageViewController.swift",
       "kind": "FloatLiteral",
-      "offset": 2431,
+      "offset": 2426,
       "length": 4,
       "value": "10.0"
     }

@@ -72,7 +72,7 @@ class LongButtonViewCell: UITableViewCell {
         super.awakeFromNib()
         resetVisualState()
     }
-    
+
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         self.focusStyle = .custom
         super.didUpdateFocus(in: context, with: coordinator)
@@ -98,7 +98,7 @@ class LongButtonViewCell: UITableViewCell {
                 self.stateLabel.textColor = UIColor(hexString: self.style?.onUnfocusTextColor)
         }
     }
-    
+
     func resetVisualState() {
         self.focusStyle = .custom
         self.backgroundColor = UIColor(hexString: self.style?.onUnfocusBackgroundColor)

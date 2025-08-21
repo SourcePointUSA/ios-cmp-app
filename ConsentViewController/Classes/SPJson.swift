@@ -20,10 +20,11 @@ public enum SPJson: Codable, CustomStringConvertible, Equatable, QueryParamEncod
             stringValue
         }
 
+        public var intValue: Int? { nil }
+
         public let stringValue: String
         public init(_ string: String) { self.stringValue = string }
         public init?(stringValue: String) { self.init(stringValue) }
-        public var intValue: Int? { nil }
         public init?(intValue: Int) { nil }
     }
 

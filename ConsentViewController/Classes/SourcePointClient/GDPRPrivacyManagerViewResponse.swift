@@ -22,17 +22,17 @@ struct GDPRVendor: Decodable {
     }
 
     struct Category: Decodable {
-        let type: GDPRCategory.CategoryType?
-        let iabId: Int?
-        let name: String
-        var retention: String?
-
         enum CodingKeys: CodingKey {
             case type
             case iabId
             case name
             case retention
         }
+
+        let type: GDPRCategory.CategoryType?
+        let iabId: Int?
+        let name: String
+        var retention: String?
 
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
