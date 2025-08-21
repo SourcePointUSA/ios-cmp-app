@@ -1,3 +1,6 @@
+# 7.12.2 (Aug, 21, 2025)
+* [DIA-5956](https://sourcepoint.atlassian.net/browse/DIA-5956) fixed an issue causing runtime exceptions when integrating the SDK via SPM and setting the `-ObjC` in `Other Linker Flags`. [#634](https://github.com/SourcePointUSA/ios-cmp-app/pull/634)
+
 # 7.12.1 (Aug, 16, 2025)
 * [DIA-6035](https://sourcepoint.atlassian.net/browse/DIA-6035) fixed an issue preventing `dismissMessage` from dismissing the Privacy Center message. [#633](https://github.com/SourcePointUSA/ios-cmp-app/pull/633)
 * [DIA-4050](https://sourcepoint.atlassian.net/browse/DIA-4050) fixed UI issues on tvOS. [#632](https://github.com/SourcePointUSA/ios-cmp-app/pull/632)
