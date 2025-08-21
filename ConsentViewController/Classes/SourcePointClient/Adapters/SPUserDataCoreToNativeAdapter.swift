@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 extension SPMobileCore.SPUserData {
     func toNative() -> SPUserData {
