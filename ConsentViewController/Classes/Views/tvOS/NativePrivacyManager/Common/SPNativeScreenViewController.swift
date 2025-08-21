@@ -7,10 +7,10 @@
 
 import UIKit
 
-#if SPM
-@_implementationOnly import Down
+#if compiler(>=6.0)
+internal import Down
 #else
-import Down
+@_implementationOnly import Down
 #endif
 
 extension UIImageView {
