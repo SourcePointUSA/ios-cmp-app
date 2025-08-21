@@ -6,24 +6,24 @@
 //
 
 import Foundation
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 extension KotlinBoolean {
-    public convenience init?(bool value: Bool?) {
+    convenience init?(bool value: Bool?) {
         guard let bool = value else { return nil }
         self.init(bool: bool)
     }
 }
 
 extension KotlinInt {
-    public convenience init?(int value: Int?) {
+    convenience init?(int value: Int?) {
         guard let int = value else { return nil }
         self.init(int: Int32(int))
     }
 }
 
 extension KotlinFloat {
-    public convenience init?(float value: Float?) {
+    convenience init?(float value: Float?) {
         guard let float = value else { return nil }
         self.init(float: float)
     }

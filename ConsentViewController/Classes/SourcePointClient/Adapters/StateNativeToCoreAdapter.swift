@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 extension SourcepointClientCoordinator.State {
     func toCore(propertyId: Int, accountId: Int) -> SPMobileCore.State {

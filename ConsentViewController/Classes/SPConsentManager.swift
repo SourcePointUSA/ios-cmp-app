@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import SPMobileCore
+@_implementationOnly import SPMobileCore
 
 // swiftlint:disable file_length function_parameter_count
 @objcMembers public class SPConsentManager: NSObject {
@@ -254,7 +254,7 @@ import SPMobileCore
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.12.1"
+    public static let VERSION = "7.12.2"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 

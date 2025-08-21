@@ -7,10 +7,10 @@
 In your `Podfile` add the following line to your app target:
 
 ```
-pod 'ConsentViewController', '7.12.1'
+pod 'ConsentViewController', '7.12.2'
 ```
 
-The SDK has a static transitive dependency. If you use `use_frameworks!` in your Podfile, make sure to link it statically:
+The SDK has a static transitive dependency. If you use `use_frameworks!` on your Podfile, make sure to link it statically:
 
 ```ruby
 use_frameworks! :linkage => :static
@@ -44,15 +44,13 @@ let package = Package(
         .package(
             name: "ConsentViewController",
             url: "https://github.com/SourcePointUSA/ios-cmp-app",
-                .upToNextMinor(from: '7.11.0')
+                .upToNextMinor(from: '7.12.2')
         ),
     ],
     targets: [
         .target(
             name: "MyPackage",
-            dependencies: [
-                "ConsentViewController"
-            ]
+            dependencies: ["ConsentViewController"]
         )
     ]
 )
@@ -241,16 +239,18 @@ lazy var consentManager: SPConsentManager = { SPConsentManager(
 | `accountId`    | Organization's account ID found in the Sourcepoint portal                                                                                                                 |
 | `propertyId`   | ID for property found in the Sourcepoint portal                                                                                                                           |
 | `propertyName` | Name of property found in the Sourcepoint portal                                                                                                                          |
-| `campaigns`    | Campaigns launched on the property through the Sourcepoint portal. Accepts `gdpr` \| `ccpa` \| `usnat` \| `ios14`. See table below for information on each campaign type. |
+| `campaigns`    | Campaigns launched on the property through the Sourcepoint portal. Accepts `gdpr` \| `ccpa` \| `usnat` \| `ios14` \| `globalcmp` \| `preferences`. See table below for information on each campaign type. |
 
 Refer to the table below regarding the different campaigns that can be implemented via the SDK:
 
 | Campaign | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `gdpr`   | Used if your property runs a GDPR TCF or GDPR Standard campaign                                                                                                                                                                                                                                                                                                                                                                                    |
-| `ccpa`   | Used if your property runs a U.S. Privacy (Legacy) campaign                                                                                                                                                                                                                                                                                                                                                                                        |
+| `gdpr`   | Used if your property runs a GDPR TCF or GDPR Standard campaign |
+| `ccpa` | Used if your property runs a U.S. Privacy (Legacy) campaign |
 | `usnat`  | Used if your property runs a U.S. Multi-State Privacy campaign. Please do not attempt to utilize both `ccpa` and `usnat` simultaneously as this poses a compliance risk for your organization. <br><br>This campaign type should only be implemented via `SPConsentManager` on mobile devices. [Click here](#global-privacy-platform-multi-state-privacy-msps-support-for-tvos) to learn more about implementing U.S. Multi-State Privacy on tvOS. |
-| `ios14`  | Used if your property runs a iOS Tracking Message campaign                                                                                                                                                                                                                                                                                                                                                                                         |
+| `ios14` | Used if your property runs a iOS Tracking Message campaign|
+| `globalcmp` | Used if your property runs a Global Enterprise campaign|
+| `preferences` | Used if your property runs a Preferences campaign|
 
 ## Loading the Privacy Manager on demand
 
@@ -285,7 +285,7 @@ Whenever the user takes an action (e.g. tapping on a button), the SDK will call 
 Among other internal data, you'll find:
 
 - `type: SPActionType`: an enum signaling the type of action. Use XCode's quick help on `SPActionType` for more info.
-- `campaignType: SPCampaignType`: an enum signaling the type of campaign in which the action was taken (`gdpr, ios14, ccpa, usnat, unknown`)
+- `campaignType: SPCampaignType`: an enum signaling the type of campaign in which the action was taken (`gdpr, ios14, ccpa, usnat, globalcmp, preferences, unknown`)
 - `customActionId: String`: if the type of action is `Custom`, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).
 - `publisherPayload: [String: AnyEncodable]`: also known as `pubData` in some of SP services, this is an arbitrary dictionary of key value pairs (set by your app) to be sent to our servers and later retrieved using the pubData API.
 
@@ -319,64 +319,143 @@ Set `consentManager.cleanUserDataOnError` flag to `true` after you initialize `S
 
 `SPUserData` contains all the information related to the user consent action. The structure of `SPUserData` is as follows:
 
-```
-SPUserData(
-    gdpr: SPConsent<SPGDPRConsent>?(
-        applies: Bool,
-        consents: SPGDPRConsents(
-            acceptedCategories: [String],
-            applies: Bool,
-            consentStatus: ConsentStatus,
-            googleConsentMode: SPGCMData?,
-            objcGoogleConsentMode: SPGCMDataObjc?, // available only on ObjC
-            dateCreated: SPDate,
-            euconsent: String,
-            tcfData: SPJson?,
-            uuid: String?,
-            vendorGrants: Dictionary<String, SPGDPRVendorGrant>,
-        )
-    ),
-    usnat: SPConsent<SPUSNatConsent>?(
-        applies: Bool,
-        consents: SPUSNatConsent(
-            GPPData: GPPSpec
-            statuses: {
-                rejectedAny: Bool?,
-                consentedToAll: Bool?,
-                consentedToAny: Bool?,
-                sellStatus: Bool?,
-                shareStatus: Bool,
-                sensitiveDataStatus: Bool?,
-                gpcStatus: Bool?,
-                hasConsentData: Bool?
+<details>
+<summary>Click here to view the structure for SPUserData</summary>
+
+```swift
+SPUserData: {
+    gdpr: {
+        applies: Boolean,
+        consents: {
+            SPGDPRConsents: {
+                vendorGrants: Dictionary<String, SPGDPRVendorGrant>,
+                euconsent: String,
+                tcfData: SPJson?,
+                uuid: String?,
+                dateCreated: SPDate,
+                applies: Boolean,
+                consentStatus: ConsentStatus,
+                googleConsentMode: SPGCMData?,
+                acceptedCategories: [String],
+                objcGoogleConsentMode: SPGCMDataObjc?, // available only on ObjC
             }
-            consentStrings: [
-                {
-                    sectionId: String,
-                    sectionName: String,
-                    consentString: String
-                }
-            ]
-            vendors: [{ id: String, consented: Bool }]
-            categories: [{ id: String, consented: Bool }]
-            uuid: String?
-        )
-    ),
-    ccpa: SPConsent<SPCCPAConsent>?(
-        applies: Bool,
-        consents: SPCCPAConsent(
-            dateCreated: SPDate
-            GPPData: SPJson,
-            rejectedCategories: [String],
-            rejectedVendors: [String],
-            signedLspa: Bool,
-            status: String,
-            uspstring: String,
-            uuid: String?,
-        )
-    )
-)
+        }
+    },
+    usnat: {
+        applies: Boolean,
+        consents: {
+            SPUSNatConsent: {
+                vendors: [
+                    {
+                        id: String,
+                        consented: Boolean
+                    }
+                ],
+                categories: [
+                    {
+                        id: String,
+                        consented: Bool
+                    }
+                ],
+                uuid: String?,
+                applies: Boolean,
+                consentStrings: [
+                    {
+                        sectionId: String,
+                        sectionName: String,
+                        consentString: String,
+                    }
+                ],
+                statuses: {
+                    rejectedAny: Boolean?,
+                    consentedToAll: Boolean?,
+                    consentedToAny: Boolean?,
+                    sellStatus: Boolean?,
+                    shareStatus: Boolean,
+                    sensitiveDataStatus: Boolean?,
+                    gpcStatus: Boolean?,
+                    hasConsentData: Boolean?
+                },
+                GPPData: GPPSpec
+            }
+        }
+    },
+    ccpa: {
+        applies: Boolean,
+        consents: {
+            SPCCPAConsent: {
+                status: String,
+                rejectedVendors: [String],
+                rejectedCategories: [String],
+                uspstring: String,
+                uuid: String?,
+                applies: Boolean,
+                dateCreated: SPDate
+                GPPData: GPPSpec
+            }
+        }
+    },
+    globalcmp: {
+        applies: Boolean,
+        consents: {
+            SPGlobalCmpConsent: {
+                vendors: [
+                    {
+                        id: String,
+                        consented: Boolean
+                    }
+                ],
+                categories: [
+                    {
+                        id: String,
+                        consented: Boolean
+                    }
+                ],
+                uuid: String?,
+                applies: Boolean
+            }
+        }
+    },
+    preferences: {
+        applies: Boolean,
+        consents: {
+            SPPreferencesConsent: {
+                uuid: String?,
+                status: [
+                    {
+                        categoryId: Integer,
+                        channels: [
+                            {
+                                channelId: Integer,
+                                status: Boolean,
+                            }
+                        ],
+                        changed: Boolean,
+                        dateConsented: SPDate?
+                        subType: PreferencesSubType?
+                    }
+                ],
+                rejectedStatus:[
+                    {
+                        categoryId: Integer,
+                        channels: [
+                            {
+                                channelId: Integer,
+                                status: Boolean,
+                            }
+                        ],
+                        changed: Boolean,
+                        dateConsented: SPDate?
+                        subType: PreferencesSubType?
+                    }
+                ],
+            }
+        }
+    }
+}
 ```
+
+</details>
 
 > [Click here](https://github.com/InteractiveAdvertisingBureau/Global-Privacy-Platform/blob/main/Core/CMP%20API%20Specification.md#in-app-key-names) to view the keys in `GPPSpec`.
 
@@ -467,7 +546,7 @@ In Obj-C that'd be:
 
 This way, if we already have consent for that token (`"JohDoe"`) we'll bring the consent profile from the server, overwriting whatever was stored in the device.
 
->If required for your app's log out process, your organization can call the [`clearAllData`](#delete-user-data) method to erase local data. Once cleared, your organization can then call `loadMessage` to collect consent from a non-authenticated user or `loadMessage` with a new `authId` for a new authenticated user. 
+> If required for your app's log out process, your organization can call the [`clearAllData`](#delete-user-data) method to erase local data. Once cleared, your organization can then call `loadMessage` to collect consent from a non-authenticated user or `loadMessage` with a new `authId` for a new authenticated user.
 
 ## Sharing consent with a `WKWebView`
 
@@ -653,7 +732,7 @@ The action: `SPAction` parameter, among other data (used internally), contains:
 | Attribute                         | Description                                                                                                                                                                                                                                                        |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `type: SPActionType`              | Indicates the type of action, this is an enumerated value. For example, a response to the ATT message is `RequestATTAccess` or to show the privacy manager is `ShowPrivacyManager`.                                                                                |
-| `campaignType: SPCampaignType`    | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g. **gdpr, ios14, ccpa, usnat, unknown**.                                                                                                                              |
+| `campaignType: SPCampaignType`    | Indicates the type of campaign in which the action was taken. This is an enumerated value e.g. **gdpr, ios14, ccpa, usnat, globalcmp, preferences unknown**.                                                                                                                              |
 | `customActionId: String`          | If the type of action is Custom, this attribute will contain the id you assigned to it when building the message in our message builder (publisher's portal).                                                                                                      |
 | `consentLanguage`                 | The language used in the messages.                                                                                                                                                                                                                                 |
 | `publisherData: [String: String]` | This is an arbitrary dictionary of [String: String] containing data the publisher wishes to send to our servers so it can be retrieved via API later on. The publisher needs to set this field during the callback if they need the data to be sent to our server. |
