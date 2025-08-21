@@ -6034,7 +6034,7 @@
         "declKind": "Import",
         "moduleName": "ConsentViewController",
         "declAttributes": [
-          "ImplementationOnly"
+          "AccessControl"
         ]
       },
       {
@@ -41745,49 +41745,49 @@
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 2033,
+      "offset": 2054,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 3100,
+      "offset": 3121,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 7926,
+      "offset": 7947,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 8694,
+      "offset": 8715,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "BooleanLiteral",
-      "offset": 9386,
+      "offset": 9407,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 13708,
+      "offset": 13729,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/Views\/tvOS\/NativePrivacyManager\/Common\/SPNativeScreenViewController.swift",
       "kind": "IntegerLiteral",
-      "offset": 13719,
+      "offset": 13740,
       "length": 1,
       "value": "1"
     },

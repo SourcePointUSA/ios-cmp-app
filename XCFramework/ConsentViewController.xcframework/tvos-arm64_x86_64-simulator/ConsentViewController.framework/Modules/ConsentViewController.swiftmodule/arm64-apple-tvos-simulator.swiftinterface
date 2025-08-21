@@ -5,7 +5,6 @@
 import AdSupport
 import AppTrackingTransparency
 @_exported import ConsentViewController
-import Down
 import Foundation
 import Swift
 import SystemConfiguration
