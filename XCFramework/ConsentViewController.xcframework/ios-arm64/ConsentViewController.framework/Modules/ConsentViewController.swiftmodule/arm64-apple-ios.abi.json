@@ -42328,7 +42328,7 @@
       "kind": "StringLiteral",
       "offset": 8884,
       "length": 8,
-      "value": "\"7.12.1\""
+      "value": "\"7.12.2\""
     },
     {
       "filePath": "\/Users\/andreherculano\/dev\/sourcepoint\/ios-cmp-app\/ConsentViewController\/Classes\/SPConsentManager.swift",
