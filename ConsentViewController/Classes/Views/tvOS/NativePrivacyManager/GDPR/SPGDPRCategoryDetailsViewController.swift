@@ -103,7 +103,7 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionComponent = sections[section] else { return nil }
-        
+
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50))
         loadLabelText(forComponent: sectionComponent, label: label)
@@ -132,7 +132,7 @@ extension SPGDPRCategoryDetailsViewController: UITableViewDataSource, UITableVie
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             return UITableViewCell()
         }
-        
+
         cell.labelText = partners[indexPath.row].trimmingCharacters(in: .whitespacesAndNewlines)
         cell.selectionStyle = .none
         cell.setup(from: nativeLongButton)

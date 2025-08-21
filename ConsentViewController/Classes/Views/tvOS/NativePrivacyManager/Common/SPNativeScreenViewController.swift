@@ -220,7 +220,7 @@ class FocusGuideDebugView: UIView {
         if let text = text {
             label.attributedText = text.htmlToAttributedString
         } else {
-            let addText = addComponent?.settings.text != nil ? "<br>"+(addComponent?.settings.text)! : ""
+            let addText = addComponent?.settings.text != nil ? "<br>"+(addComponent?.settings.text ?? "") : ""
             label.attributedText = (component.settings.text + addText).htmlToAttributedString
         }
         label.textColor = UIColor(hexString: style.font.color)
@@ -269,7 +269,11 @@ class FocusGuideDebugView: UIView {
     }
 
     @discardableResult
-    func loadSliderButtonFromNativeTexts(firstSegmentForComponentId firstId: String, secondSegmentForComponentId secondId: String, slider: UISegmentedControl) -> UISegmentedControl {
+    func loadSliderButtonFromNativeTexts(
+        firstSegmentForComponentId firstId: String,
+        secondSegmentForComponentId secondId: String,
+        slider: UISegmentedControl
+    ) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == firstId }) as? SPNativeText {
             slider.setTitle(sliderDetails.settings.text, forSegmentAt: 0)
             let style = sliderDetails.settings.style
@@ -319,7 +323,7 @@ class FocusGuideDebugView: UIView {
         slider.removeSegment(at: removeSegmentNum, animated: false)
         slider.selectedSegmentIndex = 0
     }
-    
+
     func loadGenericTableCell(forComponentId id: String, text: String, cell: UITableViewCell) {
         cell.textLabel?.text = text
         cell.textLabel?.setDefaultTextColorForDarkMode()

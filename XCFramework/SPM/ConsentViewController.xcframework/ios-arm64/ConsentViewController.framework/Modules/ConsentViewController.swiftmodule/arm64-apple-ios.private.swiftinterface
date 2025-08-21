@@ -131,7 +131,6 @@ extension ConsentViewController.SPGlobalCmpConsent {
   @objc dynamic public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class SPPreferencesConsent : ObjectiveC.NSObject, Swift.Codable, Foundation.NSCopying {
-  @objc public static func empty() -> ConsentViewController.SPPreferencesConsent
   public var dateCreated: ConsentViewController.SPDate
   @objc public var uuid: Swift.String?
   @objc public var status: [ConsentViewController.SPPreferencesConsent.Status]
@@ -139,6 +138,7 @@ extension ConsentViewController.SPGlobalCmpConsent {
   @objc override dynamic open var description: Swift.String {
     @objc get
   }
+  @objc public static func empty() -> ConsentViewController.SPPreferencesConsent
   @objc public func copy(with zone: ObjectiveC.NSZone? = nil) -> Any
   @objc deinit
   public func encode(to encoder: any Swift.Encoder) throws
@@ -1146,12 +1146,12 @@ public enum SPJson : Swift.Codable, Swift.CustomStringConvertible, Swift.Equatab
     public var description: Swift.String {
       get
     }
-    public let stringValue: Swift.String
-    public init(_ string: Swift.String)
-    public init?(stringValue: Swift.String)
     public var intValue: Swift.Int? {
       get
     }
+    public let stringValue: Swift.String
+    public init(_ string: Swift.String)
+    public init?(stringValue: Swift.String)
     public init?(intValue: Swift.Int)
     public static func == (a: ConsentViewController.SPJson.Key, b: ConsentViewController.SPJson.Key) -> Swift.Bool
     public func hash(into hasher: inout Swift.Hasher)

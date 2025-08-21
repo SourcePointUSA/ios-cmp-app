@@ -16,14 +16,14 @@ import UIKit
     func closePrivacyManager()
 }
 
-enum RenderingAppEvents {
+enum RenderingAppEvent {
     case readyForPreload, onMessageReady, onPMReady, onAction, onError, onMessageInactivityTimeout
     case unknown(String?)
 }
 
-extension RenderingAppEvents: Equatable {}
+extension RenderingAppEvent: Equatable {}
 
-extension RenderingAppEvents: RawRepresentable {
+extension RenderingAppEvent: RawRepresentable {
     typealias StringLiteralType = String
 
     typealias RawValue = String
@@ -53,9 +53,9 @@ extension RenderingAppEvents: RawRepresentable {
     }
 }
 
-extension RenderingAppEvents: ExpressibleByStringLiteral {
+extension RenderingAppEvent: ExpressibleByStringLiteral {
     init(stringLiteral value: String) {
-        let event = RenderingAppEvents(rawValue: value)
+        let event = RenderingAppEvent(rawValue: value)
         self = event ?? .unknown(value)
     }
 }

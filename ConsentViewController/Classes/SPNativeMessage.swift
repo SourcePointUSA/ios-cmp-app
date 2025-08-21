@@ -41,6 +41,10 @@ import Foundation
     }
 
     @objc public class Action: Attribute {
+        enum CodingKeys: String, CodingKey {
+            case text, style, customFields, choiceType, url
+        }
+
         public let choiceType: SPActionType
         let url: URL?
         public var pmId: String? {
@@ -74,10 +78,6 @@ import Foundation
 
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(choiceType, forKey: .choiceType)
-        }
-
-        enum CodingKeys: String, CodingKey {
-            case text, style, customFields, choiceType, url
         }
     }
 

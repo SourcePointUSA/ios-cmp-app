@@ -77,8 +77,6 @@ protocol SPSampleable {
 
 class SourcepointClientCoordinator: SPClientCoordinator {
     struct State: Codable {
-        static let version = 4
-
         struct GDPRMetaData: Codable, SPSampleable, Equatable {
             var vendorListId: String?
             var additionsChangeDate = SPDate.now()
@@ -108,6 +106,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             var messageId: String?
             var partitionUUID: String?
         }
+
+        static let version = 4
 
         var accountId, propertyId: Int?
 

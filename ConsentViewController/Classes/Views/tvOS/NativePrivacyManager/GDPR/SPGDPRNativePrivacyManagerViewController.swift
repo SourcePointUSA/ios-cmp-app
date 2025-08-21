@@ -298,7 +298,7 @@ extension SPGDPRNativePrivacyManagerViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? LongButtonViewCell else {
             return UITableViewCell()
         }
-        
+
         cell.labelText = categories[indexPath.row].name.trimmingCharacters(in: .whitespacesAndNewlines)
         cell.setup(from: nativeLongButton)
         cell.loadUI()
@@ -322,3 +322,5 @@ class FocusableScrollView: UIScrollView {
         true
     }
 }
+
+// swiftlint:enable function_body_length

@@ -8,11 +8,6 @@
 import Foundation
 
 @objcMembers public class SPPreferencesConsent: NSObject, Codable, CampaignConsent, NSCopying {
-
-    public static func empty() -> SPPreferencesConsent {
-        SPPreferencesConsent(dateCreated: .now())
-    }
-
     var applies: Bool = true
     public var dateCreated: SPDate
     var messageId: String?
@@ -44,6 +39,10 @@ import Foundation
         self.messageId = messageId
         self.dateCreated = dateCreated
         self.rejectedStatus = rejectedStatus
+    }
+
+    public static func empty() -> SPPreferencesConsent {
+        SPPreferencesConsent(dateCreated: .now())
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {

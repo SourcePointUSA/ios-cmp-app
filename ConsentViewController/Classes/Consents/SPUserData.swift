@@ -73,7 +73,7 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
     /// Consent data for GlobalCmp. This attribute will be nil if your setup doesn't include a GlobalCmp campaign
     /// - SeeAlso: `SPGlobalCmpConsent`
     public let globalcmp: SPConsent<SPGlobalCmpConsent>?
-    
+
     /// Consent data for Preferences. This attribute will be nil if your setup doesn't include a Preferences campaign
     /// - SeeAlso: `SPPreferencesConsent`
     public let preferences: SPConsent<SPPreferencesConsent>?
@@ -94,7 +94,15 @@ public class SPConsent<ConsentType: Codable & Equatable & NSCopying>: NSObject, 
     }
 
     override public var description: String {
-        "gdpr: \(String(describing: gdpr)), ccpa: \(String(describing: ccpa)), usnat: \(String(describing: usnat)), globalcmp: \(String(describing: globalcmp)), preferences: \(String(describing: preferences))"
+        """
+        SPUserData(
+            - gdpr: \(String(describing: gdpr))
+            - ccpa: \(String(describing: ccpa))
+            - usnat: \(String(describing: usnat))
+            - globalcmp: \(String(describing: globalcmp))
+            - preferences: \(String(describing: preferences))
+        )
+        """
     }
 
     public init(

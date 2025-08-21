@@ -257,6 +257,10 @@ class SPNativeImage: SPNativeUI {
 
 class SPNativeLongButton: SPNativeUI {
     class Settings: SPNativeUISettings {
+        enum Keys: CodingKey {
+            case onText, offText, customText, text
+        }
+
         let onText, offText, customText: String
         let text: String?
 
@@ -267,10 +271,6 @@ class SPNativeLongButton: SPNativeUI {
             customText = try container.decode(String.self, forKey: .customText)
             text = try? container.decodeIfPresent(String.self, forKey: .text)
             try super.init(from: decoder)
-        }
-
-        enum Keys: CodingKey {
-            case onText, offText, customText, text
         }
     }
 

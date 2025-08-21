@@ -1074,11 +1074,11 @@ typedef SWIFT_ENUM(NSInteger, SPOptinalBool, open) {
 @class Status;
 SWIFT_CLASS("_TtC21ConsentViewController20SPPreferencesConsent")
 @interface SPPreferencesConsent : NSObject <NSCopying>
-+ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, copy) NSString * _Nullable uuid;
 @property (nonatomic, copy) NSArray<Status *> * _Nonnull status;
 @property (nonatomic, copy) NSArray<Status *> * _Nonnull rejectedStatus;
 @property (nonatomic, readonly, copy) NSString * _Nonnull description;
++ (SPPreferencesConsent * _Nonnull)empty SWIFT_WARN_UNUSED_RESULT;
 - (id _Nonnull)copyWithZone:(struct _NSZone * _Nullable)zone SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");

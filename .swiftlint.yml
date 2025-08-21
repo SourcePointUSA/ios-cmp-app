@@ -22,7 +22,6 @@ opt_in_rules:
   - unneeded_parentheses_in_closure_argument
   - unowned_variable_capture
   - untyped_error_in_catch
-  - unused_capture_list
   - unused_closure_parameter
   - unused_control_flow_label
   - unused_enumerated
@@ -54,7 +53,7 @@ identifier_name:
     - 1
   allowed_symbols:
     - _
-  validates_start_with_lowercase: false
+  validates_start_with_lowercase: "off"
 line_length:
   warning: 180
   error: 220
