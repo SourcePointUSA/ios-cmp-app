@@ -209,7 +209,7 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             repository: coreStorage,
             timeoutInSeconds: Int32(5),
             spClient: coreClient,
-            authId: nil,
+            authId: coreStorage.state?.authId,
             state: {
                 if let localState = storage.spState {
                     storage.clear()
