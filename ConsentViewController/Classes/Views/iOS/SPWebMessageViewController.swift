@@ -250,7 +250,7 @@ import WebKit
         }
     }
 
-    func onAction(_ eventName: String, _ body: SPJson, ) {
+    func onAction(_ eventName: String, _ body: SPJson) {
         if let action = getActionFrom(body: body) {
             messageUIDelegate?.action(action, from: self)
             if action.type == .ShowPrivacyManager {
