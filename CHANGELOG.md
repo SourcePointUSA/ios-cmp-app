@@ -1,3 +1,7 @@
+# 7.12.3 (Sep, 04, 2025)
+* [DIA-6046](https://sourcepoint.atlassian.net/browse/DIA-6046) fixed an issue breaking authenticated consent for the privacy manager when using a second instance of the SDK. [#636](https://github.com/SourcePointUSA/ios-cmp-app/pull/636)
+*  fixed an issue preventing the SDK from compiling on Swift < 6.1. [#635](https://github.com/SourcePointUSA/ios-cmp-app/pull/635) (thanks to [@jonas-collide](https://github.com/jonas-collide))
+
 # 7.12.2 (Aug, 21, 2025)
 * [DIA-5956](https://sourcepoint.atlassian.net/browse/DIA-5956) fixed an issue causing runtime exceptions when integrating the SDK via SPM and setting the `-ObjC` in `Other Linker Flags`. [#634](https://github.com/SourcePointUSA/ios-cmp-app/pull/634)
 
