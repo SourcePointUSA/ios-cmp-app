@@ -136,12 +136,19 @@ import WebKit
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
 
+    static var jsReceiverSource: String? {
+        guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
+              let jsReceiverScript = try? String(contentsOfFile: path)
+        else {
+            return nil
+        }
+        return jsReceiverScript + "\ndocument.documentElement.style.setProperty('--font-scale', \(UIApplication.shared.systemFontScale));"
+    }
+
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
-              let scriptSource = try? String(contentsOfFile: path)
-        else {
+        guard let scriptSource = Self.jsReceiverSource else {
             messageUIDelegate?.onError(UnableToLoadJSReceiver(campaignType: campaignType))
             return nil
         }
