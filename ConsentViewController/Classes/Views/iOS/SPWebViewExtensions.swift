@@ -29,6 +29,10 @@ import WebKit
         """
     }
 
+    func setFontScale(_ scale: Float) {
+        evaluateJavaScript("document.documentElement.style.setProperty('--font-scale', \(scale))")
+    }
+
     /// Injects Sourcepoint's user data into the webview.
     /// This method is used in cases when your app has a web-based portion that also needs consent information. Make sure to check the discussion below.
     ///
