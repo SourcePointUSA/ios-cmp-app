@@ -1,3 +1,6 @@
+# 7.12.4 (Sep, 11, 2025)
+* [DIA-6063](https://sourcepoint.atlassian.net/browse/DIA-6063) Handle [iOS' accessibility font scaling](https://developer.apple.com/design/human-interface-guidelines/typography#Supporting-Dynamic-Type). [#637](https://github.com/SourcePointUSA/ios-cmp-app/pull/637)
+
 # 7.12.3 (Sep, 04, 2025)
 * [DIA-6046](https://sourcepoint.atlassian.net/browse/DIA-6046) fixed an issue breaking authenticated consent for the privacy manager when using a second instance of the SDK. [#636](https://github.com/SourcePointUSA/ios-cmp-app/pull/636)
 *  fixed an issue preventing the SDK from compiling on Swift < 6.1. [#635](https://github.com/SourcePointUSA/ios-cmp-app/pull/635) (thanks to [@jonas-collide](https://github.com/jonas-collide))
