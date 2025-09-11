@@ -13,6 +13,7 @@ import WebKit
     let url: URL
     let contents: Data
     let consentUUID: String?
+    private var fontScaleObserver: NSObjectProtocol?
 
     lazy var webview: WKWebView? = {
         if let config = self.webviewConfig {
@@ -58,6 +59,7 @@ import WebKit
             timeout: timeout,
             delegate: delegate
         )
+        addFontScaleObserver()
     }
 
     @available(*, unavailable)
@@ -75,6 +77,16 @@ import WebKit
          */
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         view = webview
+    }
+
+    private func addFontScaleObserver() {
+        fontScaleObserver = NotificationCenter.default.addObserver(
+            forName: UIContentSizeCategory.didChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.webview?.setFontScale(UIApplication.shared.systemFontScale)
+        }
     }
 
     func keyboardWillHide(notification: NSNotification) {
@@ -131,17 +143,30 @@ import WebKit
         }
         messageUIDelegate?.onError(spError)
     }
+
+    deinit {
+        if fontScaleObserver != nil {
+            NotificationCenter.default.removeObserver(fontScaleObserver as Any)
+        }
+    }
 }
 
 @objcMembers class GenericWebMessageViewController: SPWebMessageViewController {
     static let MESSAGE_HANDLER_NAME = "SPJSReceiver"
 
+    static var jsReceiverSource: String? {
+        guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
+              let jsReceiverScript = try? String(contentsOfFile: path)
+        else {
+            return nil
+        }
+        return jsReceiverScript + "\ndocument.documentElement.style.setProperty('--font-scale', \(UIApplication.shared.systemFontScale));"
+    }
+
     override var webviewConfig: WKWebViewConfiguration? {
         let config = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
-        guard let path = Bundle.framework.path(forResource: Self.MESSAGE_HANDLER_NAME, ofType: "js"),
-              let scriptSource = try? String(contentsOfFile: path)
-        else {
+        guard let scriptSource = Self.jsReceiverSource else {
             messageUIDelegate?.onError(UnableToLoadJSReceiver(campaignType: campaignType))
             return nil
         }
