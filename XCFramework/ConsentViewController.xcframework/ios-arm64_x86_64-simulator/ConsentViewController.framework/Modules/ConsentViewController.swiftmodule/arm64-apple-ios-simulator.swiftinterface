@@ -1200,6 +1200,7 @@ extension ConsentViewController.SPUSNatConsent {
   public struct PreloadConsentsPayload : Swift.Encodable {
     public func encode(to encoder: any Swift.Encoder) throws
   }
+  @objc @_Concurrency.MainActor @preconcurrency dynamic public func setFontScale(_ scale: Swift.Float)
   @objc @_Concurrency.MainActor @preconcurrency dynamic public func preloadConsent(from consents: ConsentViewController.SPUserData)
   @objc @available(*, deprecated, message: "This method relies on a legacy way of sharing consent with the webview and will not work on newer versions. You should use preloadConsent(from: SPUserData) instead.")
   @_Concurrency.MainActor @preconcurrency dynamic public func getAuthId(handler: @escaping (_ authId: Swift.String?, _ error: (any Swift.Error)?) -> Swift.Void)

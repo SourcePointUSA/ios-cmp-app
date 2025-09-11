@@ -1253,6 +1253,7 @@ SWIFT_CLASS("_TtC21ConsentViewController22UnableToLoadJSReceiver")
 @end
 
 @interface WKWebView (SWIFT_EXTENSION(ConsentViewController))
+- (void)setFontScale:(float)scale;
 /// Injects Sourcepoint’s user data into the webview.
 /// This method is used in cases when your app has a web-based portion that also needs consent information. Make sure to check the discussion below.
 /// There are a few things to notice:
