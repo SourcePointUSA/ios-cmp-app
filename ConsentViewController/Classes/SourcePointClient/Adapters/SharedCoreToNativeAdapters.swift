@@ -135,7 +135,10 @@ extension SPMobileCore.ConsentStatus.ConsentStatusGranularStatus {
             purposeConsent: purposeConsent,
             purposeLegInt: purposeLegInt,
             previousOptInAll: previousOptInAll?.boolValue,
-            defaultConsent: defaultConsent?.boolValue
+            defaultConsent: defaultConsent?.boolValue,
+            sellStatus: sellStatus?.boolValue,
+            shareStatus: shareStatus?.boolValue,
+            sensitiveDataStatus: sensitiveDataStatus?.boolValue
         )
     }
 }
