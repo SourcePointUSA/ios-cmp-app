@@ -239,14 +239,14 @@ extension SPCampaign? {
         if self != nil { return SPMobileCore.SPCampaign(
             targetingParams: self?.targetingParams ?? [:],
             groupPmId: self?.groupPmId,
+            supportLegacyUSPString: KotlinBoolean(bool: self?.supportLegacyUSPString),
             gppConfig: SPMobileCore.IncludeData.GPPConfig(
                 MspaCoveredTransaction: self?.GPPConfig?.MspaCoveredTransaction?.toCore(),
                 MspaOptOutOptionMode: self?.GPPConfig?.MspaOptOutOptionMode?.toCore(),
                 MspaServiceProviderMode: self?.GPPConfig?.MspaServiceProviderMode?.toCore(),
-                uspString: KotlinBoolean(bool: self?.GPPConfig?.uspString)
+                uspString: (KotlinBoolean(bool: self?.supportLegacyUSPString) != nil)
             ),
-            transitionCCPAAuth: KotlinBoolean(bool: self?.transitionCCPAAuth),
-            supportLegacyUSPString: KotlinBoolean(bool: self?.supportLegacyUSPString)
+            transitionCCPAAuth: KotlinBoolean(bool: self?.transitionCCPAAuth)
         )} else { return nil }
     }
 }

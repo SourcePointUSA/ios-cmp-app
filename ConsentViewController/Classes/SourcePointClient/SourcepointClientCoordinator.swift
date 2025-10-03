@@ -209,7 +209,6 @@ class SourcepointClientCoordinator: SPClientCoordinator {
             repository: coreStorage,
             timeoutInSeconds: Int32(5),
             spClient: coreClient,
-            authId: coreStorage.state?.authId,
             state: {
                 if let localState = storage.spState {
                     storage.clear()
@@ -217,7 +216,8 @@ class SourcepointClientCoordinator: SPClientCoordinator {
                 } else {
                     return coreStorage.state ?? State().toCore(propertyId: propertyId, accountId: accountId)
                 }
-            }()
+            }(),
+            authId: coreStorage.state?.authId
         )
         self.coreCoordinator.getIDFAStatus = { return self.idfaStatus.toCore() }
         #if os(tvOS)
