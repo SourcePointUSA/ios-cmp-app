@@ -34,7 +34,7 @@ extension SPError {
         return CoreSPError(
             code: String(code),
             description: description,
-            cause: nil,
+            causedBy: nil,
             campaignType: campaignType.toCore()
         )
     }
