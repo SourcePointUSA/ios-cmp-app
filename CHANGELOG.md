@@ -1,3 +1,8 @@
+# 7.12.5 (Sep, 24, 2025)
+* [DIA-6102](https://sourcepoint.atlassian.net/browse/DIA-6102) SDKs Are Setting US Privacy String Even When supportLegacyUSPString: true Is Not Used [#639](https://github.com/SourcePointUSA/ios-cmp-app/pull/639)
+* [DIA-6103](https://sourcepoint.atlassian.net/browse/DIA-6103)
+The onConsentReady Callback is Returning nil for sellStatus, shareStatus and sensitiveDataStatus [638](https://github.com/SourcePointUSA/ios-cmp-app/pull/638)
+
 # 7.12.4 (Sep, 11, 2025)
 * [DIA-6063](https://sourcepoint.atlassian.net/browse/DIA-6063) Handle [iOS' accessibility font scaling](https://developer.apple.com/design/human-interface-guidelines/typography#Supporting-Dynamic-Type). [#637](https://github.com/SourcePointUSA/ios-cmp-app/pull/637)
 
