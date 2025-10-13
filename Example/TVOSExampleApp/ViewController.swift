@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGDPRTap(_ sender: Any) {
-        consentManager.loadGDPRPrivacyManager(withId: "1001706")
+        consentManager.loadGDPRPrivacyManager(withId: "1386487")
     }
 
     @IBAction func onCCPATap(_ sender: Any) {
