@@ -1,11 +1,11 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Down" "${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS" "${PODS_ROOT}/SPMobileCore" "${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks" "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS" "${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS" "${PODS_ROOT}/SPMobileCore" "${PODS_XCFRAMEWORKS_BUILD_DIR}/SPMobileCore"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS/ConsentViewController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Down/Down.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS/Nimble.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS/Quick.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS/ConsentViewController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS/Nimble.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS/Quick.framework/Headers"
 LIBRARY_SEARCH_PATHS = $(inherited) "${TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
-OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -framework "ConsentViewController" -framework "Down" -framework "Nimble" -framework "Quick" -framework "SPMobileCore" -framework "XCTest" -weak_framework "XCTest"
-OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/SPMobileCore-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Down"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -framework "ConsentViewController" -framework "Nimble" -framework "Quick" -framework "SPMobileCore" -framework "XCTest" -weak_framework "XCTest"
+OTHER_MODULE_VERIFIER_FLAGS = $(inherited) "-F${PODS_CONFIGURATION_BUILD_DIR}/ConsentViewController-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/SPMobileCore-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Nimble-tvOS" "-F${PODS_CONFIGURATION_BUILD_DIR}/Quick-tvOS"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

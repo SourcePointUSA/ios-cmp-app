@@ -1,8 +1,6 @@
 PODS:
   - ConsentViewController (7.12.5):
-    - Down (~> 0.11.0)
     - SPMobileCore (= 0.1.12)
-  - Down (0.11.0)
   - FirebaseAnalytics (11.13.0):
     - FirebaseAnalytics/AdIdSupport (= 11.13.0)
     - FirebaseCore (~> 11.13.0)
@@ -144,7 +142,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Down
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreInternal
@@ -173,8 +170,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: e4bd58a6882491215b4e5c9de7a8d647c98fb908
-  Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
+  ConsentViewController: afa1dfaa856b5d3b6c2ab55e35a5b12a31e38d27
   FirebaseAnalytics: 630349facf4a114a0977e5d7570e104261973287
   FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
   FirebaseCoreInternal: 29d7b3af4aaf0b8f3ed20b568c13df399b06f68c
