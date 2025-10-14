@@ -19,12 +19,12 @@ extension SPError {
 
         case let coreLoadMessagesException as SPMobileCore.LoadMessagesException:
             let translated = InvalidResponseGetMessagesEndpointError()
-            translated.optionalDecription = coreLoadMessagesException.causedBy?.description_ ?? InvalidResponseGetMessagesEndpointError.description()
+            translated.optionalDecription = coreLoadMessagesException.cause?.description ?? InvalidResponseGetMessagesEndpointError.description()
             return translated
 
         case let coreReportActionException as SPMobileCore.ReportActionException:
             let translated = ReportActionError()
-            translated.optionalDecription = coreReportActionException.causedBy?.description_ ?? ReportActionError.description()
+            translated.optionalDecription = coreReportActionException.cause?.description ?? ReportActionError.description()
             return translated
 
         case _ as SPMobileCore.InvalidCustomConsentUUIDError:
@@ -32,12 +32,12 @@ extension SPError {
 
         case let corePostCustomConsentGDPRException as SPMobileCore.PostCustomConsentGDPRException:
             let translated = InvalidResponseCustomError()
-            translated.optionalDecription = corePostCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseCustomError.description()
+            translated.optionalDecription = corePostCustomConsentGDPRException.cause?.description ?? InvalidResponseCustomError.description()
             return translated
 
         case let coreDeleteCustomConsentGDPRException as SPMobileCore.DeleteCustomConsentGDPRException:
             let translated = InvalidResponseDeleteCustomError()
-            translated.optionalDecription = coreDeleteCustomConsentGDPRException.causedBy?.description_ ?? InvalidResponseDeleteCustomError.description()
+            translated.optionalDecription = coreDeleteCustomConsentGDPRException.cause?.description ?? InvalidResponseDeleteCustomError.description()
             return translated
 
         default:
