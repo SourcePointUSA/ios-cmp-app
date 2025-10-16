@@ -173,6 +173,8 @@
 		8255B6D427A9661200C9A70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8255B6D327A9661200C9A70D /* Assets.xcassets */; };
 		8255B6D727A9661200C9A70D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8255B6D527A9661200C9A70D /* LaunchScreen.storyboard */; };
 		8258D626272191A1005AAB2E /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8258D625272191A1005AAB2E /* ExampleApp.swift */; };
+		826503D02E9E5F0200D73C46 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826503CF2E9E5F0200D73C46 /* UIApplicationExtensions.swift */; };
+		826503D12E9E5F0200D73C46 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826503CF2E9E5F0200D73C46 /* UIApplicationExtensions.swift */; };
 		82665C312444ECF600CCE738 /* SPJsonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82665C302444ECF600CCE738 /* SPJsonSpec.swift */; };
 		826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */; };
 		826D31B1249A46C40026A6B9 /* GDPRUIiDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826D31B0249A46C40026A6B9 /* GDPRUIiDelegateMock.swift */; };
@@ -677,6 +679,7 @@
 		8255B6D627A9661200C9A70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8255B6D827A9661200C9A70D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8258D625272191A1005AAB2E /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
+		826503CF2E9E5F0200D73C46 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		82665C302444ECF600CCE738 /* SPJsonSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPJsonSpec.swift; sourceTree = "<group>"; };
 		826D31AC2498DE340026A6B9 /* MockConsentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockConsentDelegate.swift; path = Helpers/MockConsentDelegate.swift; sourceTree = "<group>"; };
 		826D31B0249A46C40026A6B9 /* GDPRUIiDelegateMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GDPRUIiDelegateMock.swift; path = Helpers/GDPRUIiDelegateMock.swift; sourceTree = "<group>"; };
@@ -1972,6 +1975,7 @@
 		82CD6E952B59CA2C00CAD663 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				826503CF2E9E5F0200D73C46 /* UIApplicationExtensions.swift */,
 				82CD6E962B59CA2C00CAD663 /* Date.swift */,
 				82CD6E972B59CA2C00CAD663 /* Collection.swift */,
 				82CD6E982B59CA2C00CAD663 /* SPURLExtensions.swift */,
@@ -3577,6 +3581,7 @@
 				82CD6F402B59CB0600CAD663 /* SPCCPAConsent.swift in Sources */,
 				82CD6F412B59CB0600CAD663 /* SPGDPRConsent.swift in Sources */,
 				82C9F20B2E0460EB0033DB4B /* SPGlobalCmpConsent.swift in Sources */,
+				826503D12E9E5F0200D73C46 /* UIApplicationExtensions.swift in Sources */,
 				82C9F20C2E0460EB0033DB4B /* SPPreferencesConsent.swift in Sources */,
 				82CD6F422B59CB0600CAD663 /* SPUSNatConsent.swift in Sources */,
 				82CD6F432B59CB0700CAD663 /* SPUserData.swift in Sources */,
@@ -3637,6 +3642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				826503D02E9E5F0200D73C46 /* UIApplicationExtensions.swift in Sources */,
 				56DBFF2C2E0DF344001E60E7 /* SPMobileCore.xcframework in Sources */,
 				822CF4002B975AB000927247 /* SPConsentable.swift in Sources */,
 				82CD6F1F2B59CA2C00CAD663 /* SPCCPANativePrivacyManagerViewController.swift in Sources */,

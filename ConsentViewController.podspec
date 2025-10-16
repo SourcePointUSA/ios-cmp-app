@@ -14,7 +14,6 @@ Pod::Spec.new do |s|
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'
   s.tvos.deployment_target = '12.0'
   s.tvos.exclude_files = 'ConsentViewController/Classes/Views/iOS'
-  s.tvos.dependency 'Down', '~> 0.11.0'
   s.ios.resource_bundles = {
     'ConsentViewController' => [
       'ConsentViewController/Assets/**/*',

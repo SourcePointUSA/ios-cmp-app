@@ -7,12 +7,6 @@
 
 import UIKit
 
-#if compiler(>=6.0)
-internal import Down
-#else
-@_implementationOnly import Down
-#endif
-
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in
@@ -239,22 +233,11 @@ class FocusGuideDebugView: UIView {
         return label
     }
 
-    func parseText(_ rawText: String) -> NSAttributedString? {
-        guard let markdownText = try? Down(markdownString: rawText).toAttributedString(),
-              markdownText.length != 0 else {
-            return rawText.htmlToAttributedString
-        }
-        return markdownText
-    }
-
     @discardableResult
     func loadTextView(forComponentId id: String, textView: UITextView, text: String? = nil, bounces: Bool = true) -> UITextView {
         if let textViewComponent = components.first(where: { $0.id == id }) as? SPNativeText {
             let style = textViewComponent.settings.style
-            textView.attributedText = parseText(text != nil ?
-                text! : // swiftlint:disable:this force_unwrapping
-                textViewComponent.settings.text
-            )
+            textView.attributedText = text?.htmlToAttributedString ?? textViewComponent.settings.text.htmlToAttributedString
             textView.textColor = UIColor(hexString: style.font.color)
             textView.isUserInteractionEnabled = true
             textView.isScrollEnabled = true
