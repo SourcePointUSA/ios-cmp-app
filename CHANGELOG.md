@@ -1,3 +1,8 @@
+# 7.12.6 (Oct, 16, 2025)
+* [DIA-6040](https://sourcepoint.atlassian.net/browse/DIA-6040) Update `SPMobileCore` to minimize run time errors due to unhandled `HttpRequestTimeout` [#640](https://github.com/SourcePointUSA/ios-cmp-app/pull/640)
+* [DIA-6136](https://sourcepoint.atlassian.net/browse/DIA-6136) Fixed an issue preventing the SDK from building on tvOS 26. Remove tvOS dependency on `Down`. [#641](https://github.com/SourcePointUSA/ios-cmp-app/pull/641)
+* Fixed an issue preventing Swift Package from being published correctly during the SDK release process.
+
 # 7.12.5 (Sep, 24, 2025)
 * [DIA-6102](https://sourcepoint.atlassian.net/browse/DIA-6102) SDKs Are Setting US Privacy String Even When supportLegacyUSPString: true Is Not Used [#639](https://github.com/SourcePointUSA/ios-cmp-app/pull/639)
 * [DIA-6103](https://sourcepoint.atlassian.net/browse/DIA-6103)

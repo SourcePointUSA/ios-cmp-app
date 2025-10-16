@@ -5,6 +5,8 @@
 //  Created by Andre Herculano on 8/9/25.
 //
 
+import UIKit
+
 extension UIApplication {
     var systemFontScale: Float {
         switch preferredContentSizeCategory {
