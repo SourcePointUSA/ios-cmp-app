@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/ConsentViewController-Swift.h</key>
 		<data>
-		BuQC2WzLufuLc4MsGGjkcvuvc2o=
+		/L1sa2wQZrGiGQZM9xwBewHqjFg=
 		</data>
 		<key>Headers/ConsentViewController.h</key>
 		<data>
@@ -18,51 +18,51 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		7o3ONXdcqdAE25IdmC4FNAc6jJk=
+		vQ4QSeNkOzJbGIlXiEzaokP5SPY=
 		</data>
 		<key>LongButtonViewCell.nib</key>
 		<data>
-		w5zfR3164bsDy0KEJCstLdImjDI=
+		KOwPBa0vzpB6x6c+ue4l5JijMgs=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<data>
-		cvoDC7vZtQPkcKfGhRydDX+/Ku4=
+		+pQk/1p1b7qjS6NSomkqrEstwfc=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		VQ00X5xdpX//mfcN0MBPw1BlP64=
+		W0dF0S8zYcJ+dNPia9UN61E7RNQ=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		XuCLNb6QYnEOquKX7eAvlmKCZlQ=
+		Jpy4cpoDbJ9uIRzF/4eaQ95fHko=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		VQ00X5xdpX//mfcN0MBPw1BlP64=
+		W0dF0S8zYcJ+dNPia9UN61E7RNQ=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		zLPRaoybgAc7a8kwFgCRoKeXSJQ=
+		Dgy2LUsmhm4MFTR/t7wcjB4UfcY=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
-		cvoDC7vZtQPkcKfGhRydDX+/Ku4=
+		+pQk/1p1b7qjS6NSomkqrEstwfc=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		HcFRCVQ2A5KghizYlrYP5ADP1to=
+		9qXYd39kqPFzqYZXyRWiTA9ijmA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		YXTr/T5U4Rm6a/0N1TVCbpe5+Mw=
+		WaPppWETpX9cRXT6dkjh4BFwDMI=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		HcFRCVQ2A5KghizYlrYP5ADP1to=
+		9qXYd39kqPFzqYZXyRWiTA9ijmA=
 		</data>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		8qNN3FdiN3b6WIbkwQte9y72EUs=
+		ZA/Hxj19cIWUZ135x6hjgXanT8k=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -74,55 +74,55 @@
 		</data>
 		<key>SPCCPACategoryDetailsViewController.nib</key>
 		<data>
-		igNdZznV01orftEoR/7Sxk7cFBg=
+		S3i+NPH0P+QbcXNXf6epz2CGrS8=
 		</data>
 		<key>SPCCPAManagePreferenceViewController.nib</key>
 		<data>
-		pVCi81122dk9FDbXfEl2yQCC1Qg=
+		j8MT07t4Yw5wOc+s7JY4hiI9Go4=
 		</data>
 		<key>SPCCPANativePrivacyManagerViewController.nib</key>
 		<data>
-		spQKBzOFz3EfuhO9iJPeLmp3XoA=
+		f4LodQU0y8kyr+WLUF4dVz8BTUQ=
 		</data>
 		<key>SPCCPAPartnersViewController.nib</key>
 		<data>
-		4zrWd+SQCMQ4/F/uyiWVlqGHgKA=
+		Hn2Nw7GuJE0S/IdQsNIXomPIdaM=
 		</data>
 		<key>SPCCPAVendorDetailsViewController.nib</key>
 		<data>
-		onroFKhc5aZHVCBYVXTTY4rdTBI=
+		6wwuQd7qFVfyDiD7HK0kVmbGkfw=
 		</data>
 		<key>SPCustomViewController.nib</key>
 		<data>
-		+fsi9QRu8RBuWRR6KtQpWzb9jds=
+		me+Nt6FPYiI8qfKs8jzyR3uCUgA=
 		</data>
 		<key>SPGDPRCategoryDetailsViewController.nib</key>
 		<data>
-		9+/DDEd4Uwtl7sJRn5xGRdL5+v4=
+		hDPthc2JWLTdT0VrSZCxLTz3NOQ=
 		</data>
 		<key>SPGDPRManagePreferenceViewController.nib</key>
 		<data>
-		Mkf9IgxlFQcNA7r/tTfjTVXh4qw=
+		hXZHoFdNFKN+/QLJBUpiVFsukh4=
 		</data>
 		<key>SPGDPRNativePrivacyManagerViewController.nib</key>
 		<data>
-		yQ8KLmCjhrBUdrk3R4ShSZpZKtE=
+		3IK6zClUrnwMvcAFXgs8zkZh+3s=
 		</data>
 		<key>SPGDPRPartnersViewController.nib</key>
 		<data>
-		dceMwl2pnyzuks4lfyxzJHapCvs=
+		7oRmEujhSqzIbhgUjBjyoBwyu3g=
 		</data>
 		<key>SPGDPRVendorDetailsViewController.nib</key>
 		<data>
-		ptoY3wyNrS8nGb+3Z9/uGdlvWfU=
+		95Y/b9SJsQSteiMUF4Wpnt/LvMQ=
 		</data>
 		<key>SPPMHeader.nib</key>
 		<data>
-		Y/uQAf/guRlZi4NXOgyhEgmduZc=
+		MYrNGdMolbAIh5hOGJwqR5deUUU=
 		</data>
 		<key>SPPrivacyPolicyViewController.nib</key>
 		<data>
-		+fsi9QRu8RBuWRR6KtQpWzb9jds=
+		me+Nt6FPYiI8qfKs8jzyR3uCUgA=
 		</data>
 		<key>SP_Icon.png</key>
 		<data>
@@ -142,7 +142,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			IcPHJPoiGkUIpzHDpDw55gTB48vz2kd7oiOCs1AeUGg=
+			MuVcbK21A1hEgFK+Qs92Rc+Sl0knal+F18pTekbgQ5o=
 			</data>
 		</dict>
 		<key>Headers/ConsentViewController.h</key>
@@ -156,77 +156,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0hsVjlMjR5tjqj/KQmQIw+7WlDMbg2GwU4PRo8zqIbo=
+			IzBb/FyIhxaPT51BDBwa1TLfKzgphbKA5FzXcNUlCP0=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zGgIHidXZM35UFO6TfxPZ43pIA0Z4V8fXQI2uvSTN1U=
+			hSucDaw2AcM/t5gh+SehTaq493GS/v1Kf0LN3O/YPWU=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vrQU4QZ+f/URxgvHScAYylhCHqrWgDmCrWgSySbUqA8=
+			+j8VNuelD6binQLl4Tztx3YiCqnygjijphnNA5rGRQw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7/3mB+Ip9VThrrZRdDOOCcKrVMyg86z1fPHX/oiyeDw=
+			W09Qx3N6OKaqx35hD6t2P96XjNaTyUEioj6PwJ1ToiA=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vrQU4QZ+f/URxgvHScAYylhCHqrWgDmCrWgSySbUqA8=
+			+j8VNuelD6binQLl4Tztx3YiCqnygjijphnNA5rGRQw=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kV1ICf2UntVwoUDyf7afNPS13WSM1y9j1dvSBbwz/sw=
+			nuFFqkVQT1E3tiZAmHAZu8ZBc2VEqYy8fdkhaRNhP4c=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zGgIHidXZM35UFO6TfxPZ43pIA0Z4V8fXQI2uvSTN1U=
+			hSucDaw2AcM/t5gh+SehTaq493GS/v1Kf0LN3O/YPWU=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			q+1l5mz+vjUM/ENYsspKgPuH5NEd8/yzDAVxyXgSUFw=
+			RtUpnjU8Gcbv863FENzMcTAUv44tJyTuxY31qvhCIG8=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MU0Bd5di4hG6wDNpXSjhc9kDq0iCcT8lnwWPHbVfXeQ=
+			K1PiTkI0KZTatyfg7pzLfnaVmcWOO9/bJJDen7LX7s8=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			q+1l5mz+vjUM/ENYsspKgPuH5NEd8/yzDAVxyXgSUFw=
+			RtUpnjU8Gcbv863FENzMcTAUv44tJyTuxY31qvhCIG8=
 			</data>
 		</dict>
 		<key>Modules/ConsentViewController.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LWLuof+X9z4nYZVSGm3kgJODeWPLPedORtTn1+Hq0Cw=
+			/0Ss3QUacxeT7HCO60GKUOR3ofODLBxQTeEC7IUrb3k=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -247,91 +247,91 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AYE1t4V36z3heHkouGIwBDQnA90ksleY+XSXEigCnPw=
+			E5BLLeIpJe5UcJEArA86Za2/cNb04m+p8fNqirBiadA=
 			</data>
 		</dict>
 		<key>SPCCPAManagePreferenceViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6bK1Qb2u+zhEiuF6UMThF3oYyRZ1xCfvV6z2uONb7PY=
+			UDDgN5R/94VjeUzIlNtGVnktfnVpyd8+JThqpmLCSBI=
 			</data>
 		</dict>
 		<key>SPCCPANativePrivacyManagerViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UpZfE0QvDm+FflEBGGBEhFbdjWUpkWSuNYeJV9cDzTg=
+			VK6a0TmyuKnAz3k/MzA7LDsEqOlxju/cpeWIS8Je5q8=
 			</data>
 		</dict>
 		<key>SPCCPAPartnersViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pR17G91vLXXOHEDLWDjuZkB6Pqz5Jtr29+dGQw7Lih0=
+			NtHgTxdNM4/qs89b/hijnf8LAwGaGmDq5RZ16nv5aoc=
 			</data>
 		</dict>
 		<key>SPCCPAVendorDetailsViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MCqggxIECvcT+YGXwr41B8NR0LC9hubbdgAYL8tErqY=
+			8k94e4+vRUKVSzZAl/wF2HzXiENqKzpRqpRwmd1HG5k=
 			</data>
 		</dict>
 		<key>SPCustomViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QvF9k14cr1VYbIF8hts2WoJGcDfk65lvzY4uFj3IAc4=
+			NghOmKz8TfVr3QYYQ55nNdjI6HE1WbK6VZGPXdiwlvI=
 			</data>
 		</dict>
 		<key>SPGDPRCategoryDetailsViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bicG3ZXMxXGG3ihBXjiNRPyFvkr374+Wt8PRgEcYsXk=
+			pBRih3huAd+Qaf6X9a8g8J5x9avULTFeRUQIHjVUNFM=
 			</data>
 		</dict>
 		<key>SPGDPRManagePreferenceViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AQdcF+vhZFEDdq8aNZcF5l/a03XXp9Dff5KW7TnqkFY=
+			4E5QqUVXefYkIgJVT6IRu6Ox3iYbXKiQmBl64lcjcBc=
 			</data>
 		</dict>
 		<key>SPGDPRNativePrivacyManagerViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mwXB0kCIOy2CyCWsTwfGr1T9YN7KDNYlQouXAQ1LHs8=
+			cPn0fFpmKz6wPN2TMbxZZU5elJfhsUWIePQ+HLyY9ZI=
 			</data>
 		</dict>
 		<key>SPGDPRPartnersViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HQ+m4IUafnAKAXfqcXJavg0O72KgO1JDf3mzFUpv8Dw=
+			ab/mXDlC6d6ua3p3e9bUA/PiOLoVfz6BOJoejZbEUDE=
 			</data>
 		</dict>
 		<key>SPGDPRVendorDetailsViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gmGGg/svYU72FT5hBsoLAShqwZiIa+rTqOKZ8snBVnQ=
+			5G99D1Ryl76FdjncgbwtLgtlG4KWkYJE0ynZkBG9BL0=
 			</data>
 		</dict>
 		<key>SPPMHeader.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bLiAX7AK9R9azsZRqlZQ0bpWVtD8gDgY7TKKwvIHmfc=
+			QdjSdqEgGQrYaKj8odjMD6U5oAX6ECjkwAm9DT6PmHw=
 			</data>
 		</dict>
 		<key>SPPrivacyPolicyViewController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QvF9k14cr1VYbIF8hts2WoJGcDfk65lvzY4uFj3IAc4=
+			NghOmKz8TfVr3QYYQ55nNdjI6HE1WbK6VZGPXdiwlvI=
 			</data>
 		</dict>
 		<key>SP_Icon.png</key>
