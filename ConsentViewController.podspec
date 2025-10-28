@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ConsentViewController'
-  s.version = '7.12.7-beta.6'
+  s.version = '7.12.7-rc.1'
   s.summary = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.static_framework = true
   s.homepage = 'https://www.sourcepoint.com'
