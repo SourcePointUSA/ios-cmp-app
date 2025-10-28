@@ -323,7 +323,7 @@
 		82CD6F7D2B59CB0700CAD663 /* SPAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F2B2ABC504000B62E23 /* SPAction.swift */; };
 		82CD6F7E2B59CB0700CAD663 /* SPMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5C2ABC504000B62E23 /* SPMessageViewController.swift */; };
 		82CD6F7F2B59CB0700CAD663 /* SPJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5D2ABC504000B62E23 /* SPJson.swift */; };
-		82CD6F852B59CC3600CAD663 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 82CD6F842B59CC3600CAD663 /* Down */; };
+		82CDDBEF2EAF9840005B0ECF /* TVUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CDDBEE2EAF9840005B0ECF /* TVUIKit.framework */; };
 		82CFB3EF2A431D89002B0EF2 /* SPCCPAConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */; };
 		82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */; };
 		82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */; };
@@ -775,6 +775,7 @@
 		82CD6E9A2B59CA2C00CAD663 /* NSObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectExtensions.swift; sourceTree = "<group>"; };
 		82CD6E9C2B59CA2C00CAD663 /* SPLocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPLocalStorage.swift; sourceTree = "<group>"; };
 		82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserDefaults.swift; sourceTree = "<group>"; };
+		82CDDBEE2EAF9840005B0ECF /* TVUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVUIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS18.0.sdk/System/Library/Frameworks/TVUIKit.framework; sourceTree = DEVELOPER_DIR; };
 		82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCCPAConsentSpec.swift; sourceTree = "<group>"; };
 		82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLocalDataViewController.swift; sourceTree = "<group>"; };
 		82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -849,7 +850,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82CD6F852B59CC3600CAD663 /* Down in Frameworks */,
+				82CDDBEF2EAF9840005B0ECF /* TVUIKit.framework in Frameworks */,
 				820B08B22B6021A6004E77E8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2102,6 +2103,7 @@
 		EEE3CDAB8AFE80647B1E565B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				82CDDBEE2EAF9840005B0ECF /* TVUIKit.framework */,
 				8203A3BE2C904C3E00BACFE7 /* SPMobileCore.xcframework */,
 				8216E2632BB32B74006FEF11 /* ConsentViewController.framework */,
 				820B08B12B6021A6004E77E8 /* Foundation.framework */,
@@ -2185,7 +2187,6 @@
 			);
 			name = "SPMConsentViewController-tvOS";
 			packageProductDependencies = (
-				82CD6F842B59CC3600CAD663 /* Down */,
 			);
 			productName = ConsentViewController;
 			productReference = 0B312EE52ABC4E4000B62E23 /* ConsentViewController.framework */;
@@ -2654,7 +2655,6 @@
 			);
 			mainGroup = 607FACC71AFB9204008FA782;
 			packageReferences = (
-				82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */,
 				827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */,
 			);
 			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
@@ -5895,14 +5895,6 @@
 				kind = branch;
 			};
 		};
-		82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnxnguyen/Down";
-			requirement = {
-				kind = exactVersion;
-				version = 0.11.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -5910,11 +5902,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 827CB8062BD6B6A500792550 /* XCRemoteSwiftPackageReference "ios-cmp-app" */;
 			productName = ConsentViewController;
-		};
-		82CD6F842B59CC3600CAD663 /* Down */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 82CD6F832B59CC3600CAD663 /* XCRemoteSwiftPackageReference "Down" */;
-			productName = Down;
 		};
 /* End XCSwiftPackageProductDependency section */
 
