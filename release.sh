@@ -3,6 +3,8 @@
 podspecFileName="ConsentViewController.podspec"
 spConsentManagerFileName="ConsentViewController/Classes/SPConsentManager.swift"
 readmeFileName="README.md"
+xcframeworkZipPath="./XCFramework/SPM/ConsentViewControllerSPM.xcframework.zip"
+packageSwiftFile="Package.swift"
 
 ############ BEGIN CLI
 
@@ -46,8 +48,6 @@ getVersionArg() {
     fi
 }
 
-############ END CLI
-
 assertStatus() {
     local status=$?
     local command="$1"
@@ -76,11 +76,33 @@ updateReadme() {
     sed -i '' "s/\(.upToNextMinor(from: \"\)\(.*\)\(\")\)/\1${version}\3/" "$readmeFileName"
 }
 
+updatePackageSwift() {
+    echo "Updating Package.swift"
+    local version=$1
+
+    if [ ! -f "$xcframeworkZipPath" ]; then
+        echo "Error: XCFramework zip not found at $xcframeworkZipPath"
+        exit 1
+    fi
+
+    echo "Calculating checksum for $xcframeworkZipPath"
+    local checksum=$(swift package compute-checksum "$xcframeworkZipPath")
+    echo "Checksum: $checksum"
+
+    # Update the version in the URL
+    sed -i '' "s|\(https://github.com/SourcePointUSA/ios-cmp-app/releases/download/\)[^/]*\(/ConsentViewControllerSPM.xcframework.zip\)|\1${version}\2|" "$packageSwiftFile"
+
+    # Update the checksum
+    sed -i '' "s/\(checksum: \"\)[^\"]*\(\"\)/\1${checksum}\2/" "$packageSwiftFile"
+
+    echo "Package.swift updated successfully"
+}
+
 createTag() {
     echo "Creating tag"
     local version=$1
     git tag -a "$version" -m "'$version'"
-    gitPush $dryRun "--tags"
+    git push --tags
 }
 
 podInstall() {
@@ -88,27 +110,6 @@ podInstall() {
     pod install
     assertStatus "pod install"
     cd ..
-}
-
-gitPush() {
-    local dryRun=$1
-    local gitArgs=$2
-    if [ $dryRun -eq 0 ]; then
-        echo "git push $gitArgs"
-    else
-        git push $gitArgs
-    fi
-    assertStatus "git push $gitArgs"
-}
-
-podTrunk() {
-    local dryRun=$1
-    if [ $dryRun -eq 0 ]; then
-        echo "pod trunk push ConsentViewController.podspec --verbose"
-    else
-        pod trunk push ConsentViewController.podspec --verbose
-        assertStatus "pod trunk push ConsentViewController.podspec --verbose"
-    fi
 }
 
 deleteBranch() {
@@ -120,24 +121,21 @@ deleteBranch() {
 }
 
 generateFrameworks() {
-    local skipFrameworks=$1
     local version=$2
-    if [ $skipFrameworks -eq 1 ]; then
-        bash ./buildXCFrameworks.sh
-        assertStatus "buildXCFrameworks.sh"
 
-        git add .
-        git commit -m "'update XCFrameworks for $version'"
-    else
-        echo "skipping generating XCFrameworks"
-    fi
+    bash ./buildXCFrameworks.sh
+    assertStatus "buildXCFrameworks.sh"
+
+    updatePackageSwift $version
+
+    git add .
+    git commit -m "'update Package.swift for $version'"
 }
 
 release () {
     local version=$1
-    local dryRun=$2
+    local skipFrameworks=$2
     local currentBranch=$(git rev-parse --abbrev-ref HEAD)
-    local skipFrameworks=$3
 
     echo "Releasing SDK version $version"
     updatePodspec $version
@@ -149,17 +147,9 @@ release () {
     git add .
     git commit -am "'run pod install with $version'"
     generateFrameworks $skipFrameworks $version
-    gitPush $dryRun "-u origin $currentBranch"
-    git checkout develop
-    git merge $currentBranch
-    gitPush $dryRun
-    git checkout master
-    git merge develop
+    git push -u origin $currentBranch
     createTag $version
-    gitPush $dryRun
-    podTrunk $dryRun
-    git checkout develop
-    deleteBranch $currentBranch
+    pod trunk push ConsentViewController.podspec --verbose
 }
 
 # Function to check if a string matches the SemVer pattern
@@ -183,25 +173,7 @@ printHelp() {
     printUsage
 }
 
-printGHReleaseLink() {
-    local version=$1
-    printf "In order to create a release for version ${version} go to:\n"
-    printf "\thttps://github.com/SourcePointUSA/ios-cmp-app/releases/new?tag=${version}\n"
-}
-
 helpArg="-h"
-dryRunArg="--dry"
-skipFrameworksArg="--skipFrameworks"
-
-dryRun=1 # false
-if containsElement $dryRunArg $@; then
-    dryRun=0 # true
-fi
-
-skipFrameworks=1 # false
-if containsElement $skipFrameworksArg $@; then
-    skipFrameworks=0 # true
-fi
 
 if containsElement $helpArg $@; then
     printHelp
@@ -217,8 +189,7 @@ if [ -z $versionToRelease ]; then
 fi
 
 if isSemVer $versionToRelease; then
-    release $versionToRelease $dryRun $skipFrameworks
-    printGHReleaseLink $versionToRelease
+    release $versionToRelease
     exit 0
 else
     printf "$versionToRelease is not a valid SemVer.\n"
