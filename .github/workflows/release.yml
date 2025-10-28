@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (SemVer format: x.y.z)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-14
+
+    steps:
+      - run: sudo xcode-select -s /Applications/Xcode_15.4.app # to generate SPM's XCFrameworks using Swift 5.10
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "Andre Herculano"
+          git config user.email "228650+andresilveirah@users.noreply.github.com"
+
+      - name: Run release script
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          chmod +x ./release.sh
+          ./release.sh -v=${{ inputs.version }}
