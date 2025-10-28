@@ -132,7 +132,6 @@ createGitHubRelease() {
 See [CHANGELOG.md](https://github.com/SourcePointUSA/ios-cmp-app/blob/master/CHANGELOG.md) for details."
 
     gh release create "$version" \
-        --clobber \
         --verify-tag \
         "$spmZip" \
         "$standaloneZip" \
