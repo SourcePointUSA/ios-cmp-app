@@ -157,15 +157,6 @@ deleteBranch() {
     git push origin :$branchName
 }
 
-generateFrameworks() {
-    local version=$2
-
-    bash ./buildXCFrameworks.sh
-    assertStatus "buildXCFrameworks.sh"
-
-    git add .
-    git commit -m "'update Package.swift for $version'"
-}
 
 release () {
     local version=$1
@@ -176,13 +167,13 @@ release () {
     updatePodspec $version
     updateVersionOnSPConsentManager $version
     updateReadme $version
-    generateFrameworks $skipFrameworks $version
+    bash ./buildXCFrameworks.sh
     updatePackageSwift $version
     git add .
     git commit -m "'release $version'"
     git push -u origin $currentBranch
-    createGitHubRelease $version
     pod trunk push ConsentViewController.podspec --verbose
+    createGitHubRelease $version
 }
 
 # Function to check if a string matches the SemVer pattern

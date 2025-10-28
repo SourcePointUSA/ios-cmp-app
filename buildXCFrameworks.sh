@@ -60,8 +60,6 @@ zip -r ./build/ConsentViewController.xcframework.zip ./build/ConsentViewControll
 echo "✅"
 echo "XCFrameworks created on: ./build/ConsentViewController.xcframework.zip"
 
-ls -la build/
-
 # ########### Creates the binaries which are distributed via SPM.
 echo "Generating XCFrameworks for SPM"
 archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
@@ -88,5 +86,3 @@ printf "Zipping XCFramework"
 zip -r ./build/SPMConsentViewController.xcframework.zip ./build/SPMConsentViewController.xcframework &> ./build/build.log 2>&1
 echo "✅"
 echo "XCFrameworks created on: ./build/SPMConsentViewController.xcframework.zip"
-
-ls -la build/
