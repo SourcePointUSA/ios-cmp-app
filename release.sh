@@ -3,7 +3,7 @@
 podspecFileName="ConsentViewController.podspec"
 spConsentManagerFileName="ConsentViewController/Classes/SPConsentManager.swift"
 readmeFileName="README.md"
-xcframeworkZipPath="./XCFramework/SPM/ConsentViewControllerSPM.xcframework.zip"
+xcframeworkZipPath="./build/SPMConsentViewController.xcframework.zip"
 packageSwiftFile="Package.swift"
 
 ############ BEGIN CLI
@@ -90,7 +90,7 @@ updatePackageSwift() {
     echo "Checksum: $checksum"
 
     # Update the version in the URL
-    sed -i '' "s|\(https://github.com/SourcePointUSA/ios-cmp-app/releases/download/\)[^/]*\(/ConsentViewControllerSPM.xcframework.zip\)|\1${version}\2|" "$packageSwiftFile"
+    sed -i '' "s|\(https://github.com/SourcePointUSA/ios-cmp-app/releases/download/\)[^/]*\(/ConsentViewController.xcframework.zip\)|\1${version}\2|" "$packageSwiftFile"
 
     # Update the checksum
     sed -i '' "s/\(checksum: \"\)[^\"]*\(\"\)/\1${checksum}\2/" "$packageSwiftFile"

@@ -89,6 +89,6 @@ xcodebuild -create-xcframework \
 echo "✅"
 printf "Zipping XCFramework"
 
-zip -r ./build/SPMConsentViewControllerSPM.xcframework.zip ./build/SPMConsentViewController.xcframework &> ./build/build.log 2>&1
+zip -r ./build/SPMConsentViewController.xcframework.zip ./build/SPMConsentViewController.xcframework &> ./build/build.log 2>&1
 echo "✅"
-echo "XCFrameworks created on: ./build/SPMConsentViewControllerSPM.xcframework.zip"
+echo "XCFrameworks created on: ./build/SPMConsentViewController.xcframework.zip"

@@ -33,6 +33,19 @@ jobs:
           git config user.name "Andre Herculano"
           git config user.email "228650+andresilveirah@users.noreply.github.com"
 
+      - name: Detect if pre-release
+        id: prerelease_check
+        run: |
+          VERSION="${{ inputs.version }}"
+          # Check if version contains beta, alpha, rc, or if beta_release input is true
+          if [[ "$VERSION" =~ (beta|alpha|rc) ]] || [[ "${{ inputs.beta_release }}" == "true" ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+            echo "Version $VERSION detected as pre-release"
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+            echo "Version $VERSION detected as stable release"
+          fi
+
       - name: Run release script
         id: release
         env:
@@ -58,16 +71,16 @@ jobs:
 
           See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md) for details."
 
-          if [[ "${{ inputs.beta_release }}" == "true" ]]; then
+          if [[ "${{ steps.prerelease_check.outputs.is_prerelease }}" == "true" ]]; then
             gh release create "${{ inputs.version }}" \
-              "./build/SPMConsentViewControllerSPM.xcframework.zip" \
+              "./build/SPMConsentViewController.xcframework.zip" \
               "./build/ConsentViewController.xcframework.zip" \
               --title "${{ inputs.version }}" \
               --notes "$RELEASE_NOTES" \
               --prerelease
           else
             gh release create "${{ inputs.version }}" \
-              "./build/SPMConsentViewControllerSPM.xcframework.zip" \
+              "./build/SPMConsentViewController.xcframework.zip" \
               "./build/ConsentViewController.xcframework.zip" \
               --title "${{ inputs.version }}" \
               --notes "$RELEASE_NOTES"
