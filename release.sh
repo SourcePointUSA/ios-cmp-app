@@ -102,7 +102,52 @@ createTag() {
     echo "Creating tag"
     local version=$1
     git tag -a "$version" -m "'$version'"
-    git push --tags
+    git push origin --tags
+    assertStatus "git push tags"
+}
+
+createGitHubRelease() {
+    echo "Creating GitHub Release"
+    local version=$1
+    local spmZip="./build/SPMConsentViewController.xcframework.zip"
+    local standaloneZip="./build/ConsentViewController.xcframework.zip"
+
+    # Check if zip files exist
+    if [ ! -f "$spmZip" ]; then
+        echo "Error: SPM XCFramework zip not found at $spmZip"
+        ls -la .
+        ls -la build/
+        exit 1
+    fi
+
+    if [ ! -f "$standaloneZip" ]; then
+        echo "Error: Standalone XCFramework zip not found at $standaloneZip"
+        ls -la .
+        ls -la build/
+        exit 1
+    fi
+
+    # Detect if pre-release
+    local prerelease_flag=""
+    if [[ "$version" =~ (beta|alpha|rc) ]]; then
+        prerelease_flag="--prerelease"
+        echo "Detected pre-release version"
+    fi
+
+    # Create release with gh CLI
+    local release_notes="Release version ${version}
+
+See [CHANGELOG.md](https://github.com/SourcePointUSA/ios-cmp-app/blob/master/CHANGELOG.md) for details."
+
+    gh release create "$version" \
+        "$spmZip" \
+        "$standaloneZip" \
+        --title "$version" \
+        --notes "$release_notes" \
+        $prerelease_flag
+
+    assertStatus "gh release create"
+    echo "GitHub Release created successfully"
 }
 
 podInstall() {
@@ -126,8 +171,6 @@ generateFrameworks() {
     bash ./buildXCFrameworks.sh
     assertStatus "buildXCFrameworks.sh"
 
-    updatePackageSwift $version
-
     git add .
     git commit -m "'update Package.swift for $version'"
 }
@@ -147,8 +190,10 @@ release () {
     git add .
     git commit -am "'run pod install with $version'"
     generateFrameworks $skipFrameworks $version
+    updatePackageSwift $version
     git push -u origin $currentBranch
     createTag $version
+    createGitHubRelease $version
     pod trunk push ConsentViewController.podspec --verbose
 }
 
