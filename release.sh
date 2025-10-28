@@ -98,14 +98,6 @@ updatePackageSwift() {
     echo "Package.swift updated successfully"
 }
 
-createTag() {
-    echo "Creating tag"
-    local version=$1
-    git tag -a "$version" -m "'$version'"
-    git push origin --tags
-    assertStatus "git push tags"
-}
-
 createGitHubRelease() {
     echo "Creating GitHub Release"
     local version=$1
@@ -192,7 +184,6 @@ release () {
     generateFrameworks $skipFrameworks $version
     updatePackageSwift $version
     git push -u origin $currentBranch
-    createTag $version
     createGitHubRelease $version
     pod trunk push ConsentViewController.podspec --verbose
 }
