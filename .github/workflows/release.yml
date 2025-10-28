@@ -34,11 +34,21 @@ jobs:
           git config user.email "228650+andresilveirah@users.noreply.github.com"
 
       - name: Run release script
+        id: release
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
         run: |
           chmod +x ./release.sh
           ./release.sh -v=${{ inputs.version }}
+
+      - name: Upload build log on failure
+        if: failure() && steps.release.conclusion == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log-${{ inputs.version }}
+          path: build/build.log
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Create GitHub Release
         env:
