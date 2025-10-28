@@ -7,11 +7,6 @@ on:
         description: 'Version to release (SemVer format: x.y.z)'
         required: true
         type: string
-      beta_release:
-        description: 'Beta Release?'
-        required: false
-        type: boolean
-        default: false
 
 permissions:
   contents: write
