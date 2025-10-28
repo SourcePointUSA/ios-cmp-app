@@ -176,13 +176,10 @@ release () {
     updatePodspec $version
     updateVersionOnSPConsentManager $version
     updateReadme $version
-    git add .
-    git commit -m "'update version to $version'"
-    podInstall
-    git add .
-    git commit -am "'run pod install with $version'"
     generateFrameworks $skipFrameworks $version
     updatePackageSwift $version
+    git add .
+    git commit -m "'release $version'"
     git push -u origin $currentBranch
     createGitHubRelease $version
     pod trunk push ConsentViewController.podspec --verbose
