@@ -17,8 +17,8 @@ let package = Package(
         .binaryTarget(
             name: "ConsentViewController",
             // path: "./build/SPMConsentViewController.xcframework" <-- use for local development
-            url: "https://github.com/SourcePointUSA/ios-cmp-app/releases/download/7.12.7-rc.1/SPMConsentViewController.xcframework.zip",
-            checksum: "9fa693b366e78844a3362e2c1db17253b177a7773b785cdc878e4f2f32acb49d"
+            url: "https://github.com/SourcePointUSA/ios-cmp-app/releases/download/7.12.7-rc.2/SPMConsentViewController.xcframework.zip",
+            checksum: "3cc0a0192dd177d79c2efdee41853ae1d2132025c8c057848e4c334815e8a859"
         )
     ]
 )
