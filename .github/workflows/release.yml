@@ -7,6 +7,11 @@ on:
         description: 'Version to release (SemVer format: x.y.z)'
         required: true
         type: string
+      beta_release:
+        description: 'Beta Release?'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -34,3 +39,26 @@ jobs:
         run: |
           chmod +x ./release.sh
           ./release.sh -v=${{ inputs.version }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RELEASE_NOTES="Release version ${{ inputs.version }}
+
+          See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md) for details."
+
+          if [[ "${{ inputs.beta_release }}" == "true" ]]; then
+            gh release create "${{ inputs.version }}" \
+              "./build/SPMConsentViewControllerSPM.xcframework.zip" \
+              "./build/ConsentViewController.xcframework.zip" \
+              --title "${{ inputs.version }}" \
+              --notes "$RELEASE_NOTES" \
+              --prerelease
+          else
+            gh release create "${{ inputs.version }}" \
+              "./build/SPMConsentViewControllerSPM.xcframework.zip" \
+              "./build/ConsentViewController.xcframework.zip" \
+              --title "${{ inputs.version }}" \
+              --notes "$RELEASE_NOTES"
+          fi
