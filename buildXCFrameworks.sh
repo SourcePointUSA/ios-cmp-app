@@ -92,3 +92,5 @@ printf "Zipping XCFramework"
 zip -r ./build/SPMConsentViewController.xcframework.zip ./build/SPMConsentViewController.xcframework &> ./build/build.log 2>&1
 echo "✅"
 echo "XCFrameworks created on: ./build/SPMConsentViewController.xcframework.zip"
+
+ls -la build/
