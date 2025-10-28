@@ -49,7 +49,7 @@ xcodebuild -create-xcframework \
     -framework './build/ConsentViewController-iOS.framework-iphonesimulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
     -framework './build/ConsentViewController-iOS.framework-iOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
     -framework './build/ConsentViewController-tvOS.framework-tvossimulator.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
-    -framework './build/ConsentViewController-tvOS.framework-tvOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
+    -framework './build/ConsentViewController-tvOS.framework.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
     -output './build/ConsentViewController.xcframework' &> ./build/build.log 2>&1
 
 echo "✅"
