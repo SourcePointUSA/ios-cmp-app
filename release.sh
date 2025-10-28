@@ -53,7 +53,7 @@ assertStatus() {
     local command="$1"
     if [ "$status" -ne 0 ]; then
         echo "command $command failed with status $status"
-        exit status
+        exit $status
     fi
 }
 
@@ -124,6 +124,8 @@ generateFrameworks() {
     local version=$2
     if [ $skipFrameworks -eq 1 ]; then
         bash ./buildXCFrameworks.sh
+        assertStatus "buildXCFrameworks.sh"
+
         git add .
         git commit -m "'update XCFrameworks for $version'"
     else
@@ -173,7 +175,7 @@ printUsage() {
 
 printHelp() {
     printf "Script used to release iOS/tvOS SDK.\n"
-    printf "1. Make sure to be on a branhc called pre-VERSION where VERSION follows SemVer spec\n"
+    printf "1. Make sure to be on a branch called pre-VERSION where VERSION follows SemVer spec\n"
     printf "2. Update CHANGELOG.md and commit.\n"
     printf "3. Run this script passing -v=VERSION as argument"
     printf "Options:\n"

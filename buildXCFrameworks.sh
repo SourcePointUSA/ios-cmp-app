@@ -5,7 +5,7 @@ assert_success() {
     local process_name="$1"
     if [ "$status" -ne 0 ]; then
         echo "$process_name failed. Check ./build/build.log for more info."
-        exit status
+        exit $status
     fi
 }
 
@@ -23,12 +23,14 @@ archive() {
         -archivePath "$archivePath" \
         -parallelizeTargets \
         -jobs 8 \
+        SWIFT_VERSION=5 \
         OTHER_SWIFT_FLAGS="-no-verify-emitted-module-interface" \
         SKIP_INSTALL=NO \
         BUILD_LIBRARY_FOR_DISTRIBUTION=YES > ./build/build.log 2>&1
     assert_success "Archiving $destination"
     echo "✅"
 }
+
 
 ########### Creates the binaries which are distributed standalone
 echo "Generating Standalone XCFrameworks"
@@ -61,7 +63,6 @@ zip -r ./XCFramework/ConsentViewController.xcframework.zip ./XCFramework/Consent
 echo "✅"
 echo "XCFrameworks created on: ./XCFramework/ConsentViewController.xcframework.zip"
 
-
 # ########### Creates the binaries which are distributed via SPM.
 echo "Generating XCFrameworks for SPM"
 archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
@@ -76,7 +77,6 @@ echo "Archiving succeeded."
 printf "Creating XCFrameworks"
 
 rm -r ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
-rm -r ./XCFramework/SPM/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
 
 xcodebuild -create-xcframework \
     -framework './build/SPM/ConsentViewController-iOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
@@ -86,9 +86,3 @@ xcodebuild -create-xcframework \
     -output './XCFramework/SPM/ConsentViewController.xcframework' &> ./build/build.log 2>&1
 
 echo "✅"
-printf "Zipping XCFramework"
-
-zip -r ./XCFramework/SPM/ConsentViewController.xcframework.zip ./XCFramework/SPM/ConsentViewController.xcframework &> ./build/build.log 2>&1
-
-echo "✅"
-echo "SPM XCFrameworks created on: ./XCFramework/SPM/ConsentViewController.xcframework.zip"
