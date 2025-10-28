@@ -42,9 +42,6 @@ archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS Si
 
 archive "_Pods.xcodeproj" "ConsentViewController-tvOS" "generic/platform=tvOS" "./build/ConsentViewController-tvOS.framework.xcarchive"
 
-rm -r ./build/ConsentViewController.xcframework &> ./build/build.log 2>&1
-rm -r ./build/ConsentViewController.xcframework.zip &> ./build/build.log 2>&1
-
 echo "Archiving succeeded."
 printf "Creating XCFrameworks"
 
@@ -63,6 +60,8 @@ zip -r ./build/ConsentViewController.xcframework.zip ./build/ConsentViewControll
 echo "✅"
 echo "XCFrameworks created on: ./build/ConsentViewController.xcframework.zip"
 
+ls -la build/
+
 # ########### Creates the binaries which are distributed via SPM.
 echo "Generating XCFrameworks for SPM"
 archive "ConsentViewController.xcodeproj" "SPMConsentViewController-iOS" "generic/platform=iOS" "./build/SPM/ConsentViewController-iOS"
@@ -75,9 +74,6 @@ archive "ConsentViewController.xcodeproj" "SPMConsentViewController-tvOS" "gener
 
 echo "Archiving succeeded."
 printf "Creating XCFrameworks"
-
-rm -r ./build/SPMConsentViewController.xcframework.zip &> ./build/build.log 2>&1
-rm -r ./build/SPMConsentViewController.xcframework &> ./build/build.log 2>&1
 
 xcodebuild -create-xcframework \
     -framework './build/SPM/ConsentViewController-iOS.xcarchive/Products/Library/Frameworks/ConsentViewController.framework' \
