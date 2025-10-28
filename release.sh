@@ -132,6 +132,8 @@ createGitHubRelease() {
 See [CHANGELOG.md](https://github.com/SourcePointUSA/ios-cmp-app/blob/master/CHANGELOG.md) for details."
 
     gh release create "$version" \
+        --clobber \
+        --verify-tag \
         "$spmZip" \
         "$standaloneZip" \
         --title "$version" \
@@ -171,7 +173,8 @@ release () {
     updatePackageSwift $version
     git add .
     git commit -m "'release $version'"
-    git push -u origin $currentBranch
+    git tag -a "$version" -m "$version"
+    git push -u origin $currentBranch --tags
     pod trunk push ConsentViewController.podspec --verbose
     createGitHubRelease $version
 }
