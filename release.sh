@@ -5,6 +5,7 @@ spConsentManagerFileName="ConsentViewController/Classes/SPConsentManager.swift"
 readmeFileName="README.md"
 xcframeworkZipPath="./build/SPMConsentViewController.xcframework.zip"
 packageSwiftFile="Package.swift"
+releaseNotesFile="release-notes.md"
 
 ############ BEGIN CLI
 
@@ -126,17 +127,19 @@ createGitHubRelease() {
         echo "Detected pre-release version"
     fi
 
-    # Create release with gh CLI
-    local release_notes="Release version ${version}
+    # Ensure release notes file exists
+    if [ ! -f "$releaseNotesFile" ]; then
+        echo "Error: Release notes file not found at $releaseNotesFile"
+        exit 1
+    fi
 
-See [CHANGELOG.md](https://github.com/SourcePointUSA/ios-cmp-app/blob/master/CHANGELOG.md) for details."
-
+    # Create release with gh CLI using notes file
     gh release create "$version" \
         --verify-tag \
         "$spmZip" \
         "$standaloneZip" \
         --title "$version" \
-        --notes "$release_notes" \
+        --notes-file "$releaseNotesFile" \
         $prerelease_flag
 
     assertStatus "gh release create"
@@ -168,6 +171,7 @@ release () {
     updatePodspec $version
     updateVersionOnSPConsentManager $version
     updateReadme $version
+    updateChangelog $version
     bash ./buildXCFrameworks.sh
     updatePackageSwift $version
     git add .
@@ -197,6 +201,39 @@ printHelp() {
     printf "Options:\n"
     printf "\t -h prints this message\n"
     printUsage
+}
+
+# Prepend a new section to CHANGELOG.md with the current version and release notes
+updateChangelog() {
+    echo "Updating CHANGELOG.md"
+    local version=$1
+    local changelogFile="CHANGELOG.md"
+
+    if [ ! -f "$releaseNotesFile" ]; then
+        echo "Error: Release notes file not found at $releaseNotesFile"
+        exit 1
+    fi
+
+    if [ ! -f "$changelogFile" ]; then
+        echo "Error: CHANGELOG file not found at $changelogFile"
+        exit 1
+    fi
+
+    local today
+    today=$(date +"%b, %d, %Y")
+
+    local tmpFile
+    tmpFile=$(mktemp)
+
+    {
+        echo "# $version ($today)"
+        cat "$releaseNotesFile"
+        echo ""
+        cat "$changelogFile"
+    } > "$tmpFile"
+
+    mv "$tmpFile" "$changelogFile"
+    echo "CHANGELOG.md updated successfully"
 }
 
 helpArg="-h"
