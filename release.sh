@@ -179,6 +179,7 @@ release () {
     git tag -a "$version" -m "$version"
     git push -u origin $currentBranch --tags
     pod trunk push ConsentViewController.podspec --verbose
+    assertStatus "pod trunk push"
     createGitHubRelease $version
 }
 
