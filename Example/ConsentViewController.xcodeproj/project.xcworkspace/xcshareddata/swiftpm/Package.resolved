@@ -1,15 +1,6 @@
 {
-  "originHash" : "6b6f482ad9f7ef01fcc98d61474c88e8b9b189eaa7aad5224ed076d04e36973d",
+  "originHash" : "931e97f3eee79a1f707b77514bc2a0e672fa3e8f95e7e54c2c117b448f22feb6",
   "pins" : [
-    {
-      "identity" : "down",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/johnxnguyen/Down.git",
-      "state" : {
-        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
-        "version" : "0.11.0"
-      }
-    },
     {
       "identity" : "ios-cmp-app",
       "kind" : "remoteSourceControl",

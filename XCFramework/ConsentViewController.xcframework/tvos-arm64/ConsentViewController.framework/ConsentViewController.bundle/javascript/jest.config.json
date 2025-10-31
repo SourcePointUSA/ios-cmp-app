@@ -1,7 +1,0 @@
-{
-    "globals": {
-        "webkit": {
-            "messageHandlers": {}
-        }
-    }
-}

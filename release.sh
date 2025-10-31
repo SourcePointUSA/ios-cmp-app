@@ -3,6 +3,9 @@
 podspecFileName="ConsentViewController.podspec"
 spConsentManagerFileName="ConsentViewController/Classes/SPConsentManager.swift"
 readmeFileName="README.md"
+xcframeworkZipPath="./build/SPMConsentViewController.xcframework.zip"
+packageSwiftFile="Package.swift"
+releaseNotesFile="release-notes.md"
 
 ############ BEGIN CLI
 
@@ -46,14 +49,12 @@ getVersionArg() {
     fi
 }
 
-############ END CLI
-
 assertStatus() {
     local status=$?
     local command="$1"
     if [ "$status" -ne 0 ]; then
         echo "command $command failed with status $status"
-        exit status
+        exit $status
     fi
 }
 
@@ -76,11 +77,73 @@ updateReadme() {
     sed -i '' "s/\(.upToNextMinor(from: \"\)\(.*\)\(\")\)/\1${version}\3/" "$readmeFileName"
 }
 
-createTag() {
-    echo "Creating tag"
+updatePackageSwift() {
+    echo "Updating Package.swift"
     local version=$1
-    git tag -a "$version" -m "'$version'"
-    gitPush $dryRun "--tags"
+
+    if [ ! -f "$xcframeworkZipPath" ]; then
+        echo "Error: XCFramework zip not found at $xcframeworkZipPath"
+        exit 1
+    fi
+
+    echo "Calculating checksum for $xcframeworkZipPath"
+    local checksum=$(swift package compute-checksum "$xcframeworkZipPath")
+    echo "Checksum: $checksum"
+
+    # Update the version in the URL
+    sed -i '' "s|\(https://github.com/SourcePointUSA/ios-cmp-app/releases/download/\)[^/]\{1,\}\(/SPMConsentViewController.xcframework.zip\)|\1${version}\2|" "$packageSwiftFile"
+
+    # Update the checksum
+    sed -i '' "s/\(checksum: \"\)[^\"]*\(\"\)/\1${checksum}\2/" "$packageSwiftFile"
+
+    echo "Package.swift updated successfully"
+}
+
+createGitHubRelease() {
+    echo "Creating GitHub Release"
+    local version=$1
+    local spmZip="./build/SPMConsentViewController.xcframework.zip"
+    local standaloneZip="./build/ConsentViewController.xcframework.zip"
+
+    # Check if zip files exist
+    if [ ! -f "$spmZip" ]; then
+        echo "Error: SPM XCFramework zip not found at $spmZip"
+        ls -la .
+        ls -la build/
+        exit 1
+    fi
+
+    if [ ! -f "$standaloneZip" ]; then
+        echo "Error: Standalone XCFramework zip not found at $standaloneZip"
+        ls -la .
+        ls -la build/
+        exit 1
+    fi
+
+    # Detect if pre-release
+    local prerelease_flag=""
+    if [[ "$version" =~ (beta|alpha|rc) ]]; then
+        prerelease_flag="--prerelease"
+        echo "Detected pre-release version"
+    fi
+
+    # Ensure release notes file exists
+    if [ ! -f "$releaseNotesFile" ]; then
+        echo "Error: Release notes file not found at $releaseNotesFile"
+        exit 1
+    fi
+
+    # Create release with gh CLI using notes file
+    gh release create "$version" \
+        --verify-tag \
+        "$spmZip" \
+        "$standaloneZip" \
+        --title "$version" \
+        --notes-file "$releaseNotesFile" \
+        $prerelease_flag
+
+    assertStatus "gh release create"
+    echo "GitHub Release created successfully"
 }
 
 podInstall() {
@@ -88,27 +151,6 @@ podInstall() {
     pod install
     assertStatus "pod install"
     cd ..
-}
-
-gitPush() {
-    local dryRun=$1
-    local gitArgs=$2
-    if [ $dryRun -eq 0 ]; then
-        echo "git push $gitArgs"
-    else
-        git push $gitArgs
-    fi
-    assertStatus "git push $gitArgs"
-}
-
-podTrunk() {
-    local dryRun=$1
-    if [ $dryRun -eq 0 ]; then
-        echo "pod trunk push ConsentViewController.podspec --verbose"
-    else
-        pod trunk push ConsentViewController.podspec --verbose
-        assertStatus "pod trunk push ConsentViewController.podspec --verbose"
-    fi
 }
 
 deleteBranch() {
@@ -119,45 +161,26 @@ deleteBranch() {
     git push origin :$branchName
 }
 
-generateFrameworks() {
-    local skipFrameworks=$1
-    local version=$2
-    if [ $skipFrameworks -eq 1 ]; then
-        bash ./buildXCFrameworks.sh
-        git add .
-        git commit -m "'update XCFrameworks for $version'"
-    else
-        echo "skipping generating XCFrameworks"
-    fi
-}
 
 release () {
     local version=$1
-    local dryRun=$2
+    local skipFrameworks=$2
     local currentBranch=$(git rev-parse --abbrev-ref HEAD)
-    local skipFrameworks=$3
 
     echo "Releasing SDK version $version"
     updatePodspec $version
     updateVersionOnSPConsentManager $version
     updateReadme $version
+    updateChangelog $version
+    bash ./buildXCFrameworks.sh
+    updatePackageSwift $version
     git add .
-    git commit -m "'update version to $version'"
-    podInstall
-    git add .
-    git commit -am "'run pod install with $version'"
-    generateFrameworks $skipFrameworks $version
-    gitPush $dryRun "-u origin $currentBranch"
-    git checkout develop
-    git merge $currentBranch
-    gitPush $dryRun
-    git checkout master
-    git merge develop
-    createTag $version
-    gitPush $dryRun
-    podTrunk $dryRun
-    git checkout develop
-    deleteBranch $currentBranch
+    git commit -m "'release $version'"
+    git tag -a "$version" -m "$version"
+    git push -u origin $currentBranch --tags
+    pod trunk push ConsentViewController.podspec --verbose
+    assertStatus "pod trunk push"
+    createGitHubRelease $version
 }
 
 # Function to check if a string matches the SemVer pattern
@@ -173,7 +196,7 @@ printUsage() {
 
 printHelp() {
     printf "Script used to release iOS/tvOS SDK.\n"
-    printf "1. Make sure to be on a branhc called pre-VERSION where VERSION follows SemVer spec\n"
+    printf "1. Make sure to be on a branch called pre-VERSION where VERSION follows SemVer spec\n"
     printf "2. Update CHANGELOG.md and commit.\n"
     printf "3. Run this script passing -v=VERSION as argument"
     printf "Options:\n"
@@ -181,25 +204,40 @@ printHelp() {
     printUsage
 }
 
-printGHReleaseLink() {
+# Prepend a new section to CHANGELOG.md with the current version and release notes
+updateChangelog() {
+    echo "Updating CHANGELOG.md"
     local version=$1
-    printf "In order to create a release for version ${version} go to:\n"
-    printf "\thttps://github.com/SourcePointUSA/ios-cmp-app/releases/new?tag=${version}\n"
+    local changelogFile="CHANGELOG.md"
+
+    if [ ! -f "$releaseNotesFile" ]; then
+        echo "Error: Release notes file not found at $releaseNotesFile"
+        exit 1
+    fi
+
+    if [ ! -f "$changelogFile" ]; then
+        echo "Error: CHANGELOG file not found at $changelogFile"
+        exit 1
+    fi
+
+    local today
+    today=$(date +"%b, %d, %Y")
+
+    local tmpFile
+    tmpFile=$(mktemp)
+
+    {
+        echo "# $version ($today)"
+        cat "$releaseNotesFile"
+        echo ""
+        cat "$changelogFile"
+    } > "$tmpFile"
+
+    mv "$tmpFile" "$changelogFile"
+    echo "CHANGELOG.md updated successfully"
 }
 
 helpArg="-h"
-dryRunArg="--dry"
-skipFrameworksArg="--skipFrameworks"
-
-dryRun=1 # false
-if containsElement $dryRunArg $@; then
-    dryRun=0 # true
-fi
-
-skipFrameworks=1 # false
-if containsElement $skipFrameworksArg $@; then
-    skipFrameworks=0 # true
-fi
 
 if containsElement $helpArg $@; then
     printHelp
@@ -215,8 +253,7 @@ if [ -z $versionToRelease ]; then
 fi
 
 if isSemVer $versionToRelease; then
-    release $versionToRelease $dryRun $skipFrameworks
-    printGHReleaseLink $versionToRelease
+    release $versionToRelease
     exit 0
 else
     printf "$versionToRelease is not a valid SemVer.\n"
