@@ -259,11 +259,6 @@ class FocusGuideDebugView: UIView {
     ) -> UISegmentedControl {
         if let sliderDetails = components.first(where: { $0.id == firstId }) as? SPNativeText {
             slider.setTitle(sliderDetails.settings.text, forSegmentAt: 0)
-            let style = sliderDetails.settings.style
-            if #available(tvOS 14.0, *) {
-                backgroundForV14(slider: slider, backgroundHex: style.backgroundColor, activeBackground: style.activeBackgroundColor)
-            }
-            loadSliderSegmentFont(style: style, slider: slider)
         }
         if let sliderDetails = components.first(where: { $0.id == secondId }) as? SPNativeText {
             slider.setTitle(sliderDetails.settings.text, forSegmentAt: 1)

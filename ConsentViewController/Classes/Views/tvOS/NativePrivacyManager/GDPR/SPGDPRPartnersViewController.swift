@@ -164,6 +164,7 @@ extension SPGDPRPartnersViewController: UITableViewDataSource, UITableViewDelega
         vendorDetailsVC.vendor = currentVendors[indexPath.row]
         vendorDetailsVC.vendorManagerDelegate = consentsSnapshot
         vendorDetailsVC.displayingLegIntVendors = displayingLegIntVendors
+        if let slider = viewData.byId("VendorsSlider") { vendorDetailsVC.viewData.children.append(slider) }
         present(vendorDetailsVC, animated: true)
     }
 }
