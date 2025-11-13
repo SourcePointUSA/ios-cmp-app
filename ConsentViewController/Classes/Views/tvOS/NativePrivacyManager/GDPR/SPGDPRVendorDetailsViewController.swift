@@ -75,6 +75,7 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         }
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
         loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
+        loadLabelText(forComponentId: "LegitimateInterestDiscloureText", label: LegIntQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
         ToScanLabel.textAlignment = .center
         descriptionTextView.flashScrollIndicators()
