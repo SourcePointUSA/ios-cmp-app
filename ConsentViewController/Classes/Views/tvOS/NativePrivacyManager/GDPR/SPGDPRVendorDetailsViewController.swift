@@ -68,12 +68,14 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
         setHeader()
         loadTextView(forComponentId: "VendorDescription", textView: descriptionTextView, text: vendor?.description, bounces: false)
         backgroundForV14(slider: categorySlider, backgroundHex: "#d8d9dd", activeBackground: "#777a7e")
+        loadSliderButton(forComponentId: "VendorsSlider", slider: categorySlider)
         loadSliderButtonFromNativeTexts(firstSegmentForComponentId: "PurposesHeaderText", secondSegmentForComponentId: "DataCategoriesHeaderText", slider: categorySlider)
         if vendor?.description==nil {
             descriptionTextView.isHidden=true
         }
         loadTextView(forComponentId: "VendorDescription", textView: vendorDetailsTextView)
         loadLabelText(forComponentId: "PrivacyPolicyText", label: PolicyQrCodeLabel)
+        loadLabelText(forComponentId: "LegitimateInterestDiscloureText", label: LegIntQrCodeLabel)
         loadLabelText(forComponentId: "QrInstructions", label: ToScanLabel)
         ToScanLabel.textAlignment = .center
         descriptionTextView.flashScrollIndicators()
