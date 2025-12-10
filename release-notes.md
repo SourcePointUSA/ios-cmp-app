@@ -1,2 +1,2 @@
-* [DIA-6096](https://sourcepoint.atlassian.net/browse/DIA-6096) Fix slider color and text color on `vendorDetails` view [#643](https://github.com/SourcePointUSA/ios-cmp-app/pull/643)
-* [DIA-6096](https://sourcepoint.atlassian.net/browse/DIA-6096) Add `LegitimateInterestDiscloureText` text to `LegIntQrCodeLabel` label [#644](https://github.com/SourcePointUSA/ios-cmp-app/pull/644)
+* [DIA-6224](https://sourcepoint.atlassian.net/browse/DIA-6224)
+TVOS - Fixed Legal Disclosure QR code and text appearing without the LI legal basis existing for this vendor[#645](https://github.com/SourcePointUSA/ios-cmp-app/pull/645)
