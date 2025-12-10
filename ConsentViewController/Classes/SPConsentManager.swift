@@ -254,7 +254,7 @@ import UIKit
 }
 
 @objc extension SPConsentManager: SPSDK {
-    public static let VERSION = "7.12.8"
+    public static let VERSION = "7.12.9"
 
     public var gdprApplies: Bool { spCoordinator.userData.gdpr?.applies ?? false }
 
