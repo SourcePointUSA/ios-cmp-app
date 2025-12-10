@@ -150,7 +150,9 @@ class SPGDPRVendorDetailsViewController: SPNativeScreenViewController {
 
     func loadQrCodes() {
         loadQRCode(url: vendor?.policyUrl, imageView: PolicyQrCodeImageView, label: PolicyQrCodeLabel)
-        loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
+        if displayingLegIntVendors {
+            loadQRCode(url: vendor?.legIntUrl, imageView: LegIntQrCodeImageView, label: LegIntQrCodeLabel)
+        }
         ToScanLabel.isHidden = PolicyQrCodeImageView.image == nil && LegIntQrCodeImageView.image == nil
     }
 
