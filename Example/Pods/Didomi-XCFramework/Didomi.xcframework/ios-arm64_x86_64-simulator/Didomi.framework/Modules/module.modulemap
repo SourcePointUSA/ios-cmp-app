@@ -1,0 +1,11 @@
+framework module Didomi {
+  umbrella header "Didomi.h"
+  export *
+
+  module * { export * }
+}
+
+module Didomi.Swift {
+  header "Didomi-Swift.h"
+  requires objc
+}

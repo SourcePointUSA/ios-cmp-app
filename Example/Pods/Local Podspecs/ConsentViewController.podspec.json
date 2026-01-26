@@ -1,6 +1,6 @@
 {
   "name": "ConsentViewController",
-  "version": "7.12.11",
+  "version": "7.12.7-rc.3",
   "summary": "SourcePoint's ConsentViewController to handle privacy consents.",
   "static_framework": true,
   "homepage": "https://www.sourcepoint.com",
@@ -13,13 +13,16 @@
   },
   "source": {
     "git": "https://github.com/SourcePointUSA/ios-cmp-app.git",
-    "tag": "7.12.11"
+    "tag": "7.12.7-rc.3"
   },
   "swift_versions": "5.1",
   "source_files": "ConsentViewController/Classes/**/*",
   "dependencies": {
+    "Didomi-XCFramework": [
+      "2.35.0"
+    ],
     "SPMobileCore": [
-      "0.1.17"
+      "0.1.13"
     ]
   },
   "platforms": {
@@ -51,8 +54,7 @@
   },
   "pod_target_xcconfig": {
     "BUILD_LIBRARY_FOR_DISTRIBUTION": "YES",
-    "DEFINES_MODULE": "YES",
-    "OTHER_SWIFT_FLAGS[config=Debug]": "$(inherited) -enable-testing"
+    "DEFINES_MODULE": "YES"
   },
   "swift_version": "5.1"
 }
