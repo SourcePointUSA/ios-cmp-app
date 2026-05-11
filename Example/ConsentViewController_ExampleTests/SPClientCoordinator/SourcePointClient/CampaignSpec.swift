@@ -14,7 +14,7 @@ import Quick
 // swiftlint:disable force_try function_body_length force_unwrapping
 
 class CampaignSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         it("ccpa campaign can be decoded into SPCCPAConsent") {
             let ccpaCampaign = """
             {

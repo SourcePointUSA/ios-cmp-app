@@ -10,7 +10,7 @@ import Foundation
 import Nimble
 @testable import ConsentViewController
 
-public typealias Predicate = Nimble.Predicate
+public typealias Predicate = Nimble.Matcher
 
 extension URL {
     public var queryParams: [String: String]? {
@@ -64,10 +64,10 @@ public func decodeTo<T: Decodable>(_ expected: T.Type) -> Predicate<String> {
     Predicate { actual in
         guard let actual = try actual.evaluate(),
               let data = actual.data(using: .utf8) else {
-                  return PredicateResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
+                  return MatcherResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
               }
         let (pass, message) = assertDecode(expected, data)
-        return PredicateResult(bool: pass, message: .fail(message))
+        return MatcherResult(bool: pass, message: .fail(message))
     }
 }
 
@@ -76,10 +76,10 @@ public func decodeToValue<T: Decodable & Equatable>(_ expected: T) -> Predicate<
     Predicate { actual in
         guard let actual = try actual.evaluate(),
               let data = actual.data(using: .utf8) else {
-            return PredicateResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
+            return MatcherResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
         }
         let (pass, message) = assertDecodeToValue(expected, data)
-        return PredicateResult(bool: pass, message: .fail(message))
+        return MatcherResult(bool: pass, message: .fail(message))
     }
 }
 
@@ -101,10 +101,10 @@ public func encodeToValue<T: Encodable>(_ expected: String) -> Predicate<T> {
     Predicate { actual in
         guard let actual = try actual.evaluate(),
               let data = expected.data(using: .utf8) else {
-            return PredicateResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
+            return MatcherResult(bool: false, message: .fail("could not convert string into Data").appendedBeNilHint())
         }
         let (pass, message) = assertEncodeToValue(actual, data)
-        return PredicateResult(bool: pass, message: .fail(message))
+        return MatcherResult(bool: pass, message: .fail(message))
     }
 }
 
@@ -114,9 +114,9 @@ public func containQueryParam(_ expected: String) -> Predicate<URL> {
         guard let actual = try actual.evaluate(),
               let params = actual.queryParams
         else {
-            return PredicateResult(bool: false, message: .fail("could not get query params from URL"))
+            return MatcherResult(bool: false, message: .fail("could not get query params from URL"))
         }
-        return PredicateResult(bool: params.keys.contains(expected), message: .fail("\(actual) does not contain \(expected) query param."))
+        return MatcherResult(bool: params.keys.contains(expected), message: .fail("\(actual) does not contain \(expected) query param."))
     }
 }
 
@@ -126,7 +126,7 @@ public func containQueryParam(_ name: String, withValue value: String) -> Predic
         guard let actual = try actual.evaluate(),
               let params = actual.queryParams
         else {
-            return PredicateResult(bool: false, message: .fail("could not get query params from URL(\((try? actual.evaluate()?.absoluteString) as Any))"))
+            return MatcherResult(bool: false, message: .fail("could not get query params from URL(\((try? actual.evaluate()?.absoluteString) as Any))"))
         }
         var pass = false
         var message = ""
@@ -139,7 +139,7 @@ public func containQueryParam(_ name: String, withValue value: String) -> Predic
         } else {
             message = "Could not find query param with name \(name) in \(actual.absoluteString)"
         }
-        return PredicateResult(bool: pass, message: .fail(message))
+        return MatcherResult(bool: pass, message: .fail(message))
     }
 }
 
@@ -149,7 +149,7 @@ public func containQueryParams(_ expectedParams: [String: String?]) -> Predicate
         guard let actual = try actual.evaluate(),
               let params = actual.queryParams
         else {
-            return PredicateResult(bool: false, message: .fail("could not get query params from URL(\((try? actual.evaluate()?.absoluteString) as Any))"))
+            return MatcherResult(bool: false, message: .fail("could not get query params from URL(\((try? actual.evaluate()?.absoluteString) as Any))"))
         }
         var pass = true
         var message = ""
@@ -159,7 +159,7 @@ public func containQueryParams(_ expectedParams: [String: String?]) -> Predicate
                 message += "Expected to contain param \(key) equal to \(String(describing: value)), but found \(params[key] ?? "")\n"
             }
         }
-        return PredicateResult(bool: pass, message: .fail(message))
+        return MatcherResult(bool: pass, message: .fail(message))
     }
 }
 
@@ -167,19 +167,19 @@ public func containQueryParams(_ expectedParams: [String: String?]) -> Predicate
 public func equal(year: Int? = nil, month: Int? = nil, day: Int? = nil) -> Predicate<SPDate> {
     Predicate { actual in
         guard let actual = try actual.evaluate() else {
-            return PredicateResult(bool: false, message: .fail("..."))
+            return MatcherResult(bool: false, message: .fail("..."))
         }
         let date = Calendar.current.dateComponents([.day, .year, .month], from: actual.date)
         if let year = year, year != date.year {
-            return PredicateResult(bool: false, message: .fail("expected year: \(year), but got: \(String(describing: date.year))"))
+            return MatcherResult(bool: false, message: .fail("expected year: \(year), but got: \(String(describing: date.year))"))
         }
         if let month = month, month != date.month {
-            return PredicateResult(bool: false, message: .fail("expected month: \(month), but got: \(String(describing: date.month))"))
+            return MatcherResult(bool: false, message: .fail("expected month: \(month), but got: \(String(describing: date.month))"))
         }
         if let day = day, day != date.day {
-            return PredicateResult(bool: false, message: .fail("expected day: \(day), but got: \(String(describing: date.day))"))
+            return MatcherResult(bool: false, message: .fail("expected day: \(day), but got: \(String(describing: date.day))"))
         }
 
-        return PredicateResult(bool: true, message: .fail(""))
+        return MatcherResult(bool: true, message: .fail(""))
     }
 }

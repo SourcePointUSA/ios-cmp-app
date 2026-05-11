@@ -86,46 +86,6 @@ PODS:
   - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - IQKeyboardCore (1.0.5)
-  - IQKeyboardManagerSwift (8.0.1):
-    - IQKeyboardManagerSwift/Appearance (= 8.0.1)
-    - IQKeyboardManagerSwift/Core (= 8.0.1)
-    - IQKeyboardManagerSwift/IQKeyboardReturnManager (= 8.0.1)
-    - IQKeyboardManagerSwift/IQKeyboardToolbarManager (= 8.0.1)
-    - IQKeyboardManagerSwift/IQTextView (= 8.0.1)
-    - IQKeyboardManagerSwift/Resign (= 8.0.1)
-  - IQKeyboardManagerSwift/Appearance (8.0.1):
-    - IQKeyboardManagerSwift/Core
-  - IQKeyboardManagerSwift/Core (8.0.1):
-    - IQKeyboardNotification
-    - IQTextInputViewNotification
-  - IQKeyboardManagerSwift/IQKeyboardReturnManager (8.0.1):
-    - IQKeyboardReturnManager
-  - IQKeyboardManagerSwift/IQKeyboardToolbarManager (8.0.1):
-    - IQKeyboardManagerSwift/Core
-    - IQKeyboardToolbarManager
-  - IQKeyboardManagerSwift/IQTextView (8.0.1):
-    - IQTextView
-  - IQKeyboardManagerSwift/Resign (8.0.1):
-    - IQKeyboardManagerSwift/Core
-  - IQKeyboardNotification (1.0.3)
-  - IQKeyboardReturnManager (1.0.4):
-    - IQKeyboardCore (= 1.0.5)
-  - IQKeyboardToolbar (1.1.1):
-    - IQKeyboardCore
-    - IQKeyboardToolbar/Core (= 1.1.1)
-  - IQKeyboardToolbar/Core (1.1.1):
-    - IQKeyboardCore
-    - IQKeyboardToolbar/Placeholderable
-  - IQKeyboardToolbar/Placeholderable (1.1.1):
-    - IQKeyboardCore
-  - IQKeyboardToolbarManager (1.1.3):
-    - IQKeyboardToolbar
-    - IQTextInputViewNotification
-  - IQTextInputViewNotification (1.0.8):
-    - IQKeyboardCore
-  - IQTextView (1.0.5):
-    - IQKeyboardToolbar/Placeholderable
   - JSONView (0.0.3)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
@@ -143,7 +103,6 @@ PODS:
 DEPENDENCIES:
   - ConsentViewController (from `../`)
   - FirebaseAnalytics
-  - IQKeyboardManagerSwift
   - JSONView
   - Nimble (= 13.7.0)
   - Quick (= 7.6.2)
@@ -163,14 +122,6 @@ SPEC REPOS:
     - FirebaseInstallations
     - GoogleAppMeasurement
     - GoogleUtilities
-    - IQKeyboardCore
-    - IQKeyboardManagerSwift
-    - IQKeyboardNotification
-    - IQKeyboardReturnManager
-    - IQKeyboardToolbar
-    - IQKeyboardToolbarManager
-    - IQTextInputViewNotification
-    - IQTextView
     - JSONView
     - nanopb
     - Nimble
@@ -185,7 +136,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 902ee261f3416c50a915dadf2f28ecaca00e9546
+  ConsentViewController: fac768766d0044b142f1affd2c94d741bc564394
   CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
   CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
   CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
@@ -197,14 +148,6 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 0ee9074f2c1e86561ace168ee1470dc67aabaf02
   GoogleAppMeasurement: 0dfca1a4b534d123de3945e28f77869d10d0d600
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  IQKeyboardCore: 28c8bf3bcd8ba5aa1570b318cbc4da94b861711e
-  IQKeyboardManagerSwift: 835fc9c6e4732398113406d84900ad2e8f141218
-  IQKeyboardNotification: d7382c4466c5a5adef92c7452ebf861b36050088
-  IQKeyboardReturnManager: 972be48528ce9e7508ab3ab15ac7efac803f17f5
-  IQKeyboardToolbar: d4bdccfb78324aec2f3920659c77bb89acd33312
-  IQKeyboardToolbarManager: 6c693c8478d6327a7ef2107528d29698b3514dbb
-  IQTextInputViewNotification: f5e954d8881fd9808b744e49e024cc0d4bcfe572
-  IQTextView: ae13b4922f22e6f027f62c557d9f4f236b19d5c7
   JSONView: ba9049102fae7ad70de40234d0b7c60986e61e4c
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   Nimble: 0d202a1be6a346929560c212341240339875b6f0
@@ -214,6 +157,6 @@ SPEC CHECKSUMS:
   SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
   Wormholy: ab1c8c2f02f58587a0941deb0088555ffbf039a1
 
-PODFILE CHECKSUM: 6af712623e87f48887fdfc1a2ee251a83706b428
+PODFILE CHECKSUM: 94b917154571d7057186d448c1cfdb80061ca3cd
 
 COCOAPODS: 1.16.2

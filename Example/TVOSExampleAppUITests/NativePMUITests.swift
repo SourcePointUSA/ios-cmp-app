@@ -24,10 +24,11 @@ extension XCUIElement {
 class NativePMUITests: QuickSpec {
     static var app: NativePMApp!
     static var timeout = 20
-    static var gdprCategoriesCount = 12
+    static var gdprCategoriesCount = 11
     static var ccpaCategoriesCount = 3
-    static var gdprCategoriePlusSpecialFeatures = 12
+    static var gdprCategoriePlusSpecialFeatures = 11
     static var gdprDefaultOnCategories = 3
+    static var gdprDefaultLegIntOnCategories = 1
     static var gdprVendors = 4
 
     override func setUp() {
@@ -207,7 +208,7 @@ class NativePMUITests: QuickSpec {
             app.backToHomeButton()
             app.homeButton.remotePress()
             app.ourPartnersButton.remotePress()
-            checkForAllVendors(on: app.gdprMessage, shouldBe: "On", totalVendors: 3)
+            checkForAllVendors(on: app.gdprMessage, shouldBe: "On", totalVendors: 4)
             remote.press(.down)
             remote.press(.down)
             app.saveAndExitInternalButton.remotePress()
@@ -228,7 +229,7 @@ class NativePMUITests: QuickSpec {
             checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: 0)
             remote.press(.right)
             remote.press(.right)
-            checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: gdprDefaultOnCategories)
+            checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: gdprDefaultLegIntOnCategories)
             app.backToHomeButton()
             app.homeButton.remotePress()
             app.ourPartnersButton.remotePress()
@@ -246,7 +247,7 @@ class NativePMUITests: QuickSpec {
             checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: 0)
             remote.press(.right)
             remote.press(.right)
-            checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: gdprDefaultOnCategories)
+            checkForAllCategories(on: app.gdprMessage, shouldBe: "On", totalCategories: gdprDefaultLegIntOnCategories)
             app.backToHomeButton()
             app.homeButton.remotePress()
             app.ourPartnersButton.remotePress()

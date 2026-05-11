@@ -15,17 +15,17 @@ class PrivacyManagerUITests: QuickSpec {
     var app: MetaApp!
     var propertyData = PropertyData()
 
-    override func spec() {
+    override class func spec() {
         beforeSuite {
             self.continueAfterFailure = false
             self.app = MetaApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.PollingDefaults.timeout = .seconds(20)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
+            Nimble.PollingDefaults.timeout = .seconds(1)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {

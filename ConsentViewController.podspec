@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
   }
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'DEFINES_MODULE' => 'YES'
+    'DEFINES_MODULE' => 'YES',
+    'OTHER_SWIFT_FLAGS[config=Debug]' => '$(inherited) -enable-testing'
   }
 end

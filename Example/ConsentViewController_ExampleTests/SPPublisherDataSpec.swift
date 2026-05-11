@@ -16,7 +16,7 @@ class SPPublisherDataSpec: QuickSpec {
         let custom = "value"
     }
 
-    override func spec() {
+    override class func spec() {
         it("supports any encodable data") {
             let pubData: SPPublisherData = [
                 "string": .init("stringValue"),

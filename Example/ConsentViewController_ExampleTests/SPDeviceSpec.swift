@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SPDeviceSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("osVersion") {
             it("should contain the major version in its return") {
                 let version = SPDevice.standard.osVersion
@@ -20,22 +20,6 @@ class SPDeviceSpec: QuickSpec {
                     expect(version).to(contain("26."))
                 } else if #available(iOS 18, *) {
                     expect(version).to(contain("18."))
-                } else if #available(iOS 17, *) {
-                    expect(version).to(contain("17."))
-                } else if #available(iOS 16, *) {
-                    expect(version).to(contain("16."))
-                } else if #available(iOS 15, *) {
-                    expect(version).to(contain("15."))
-                } else if #available(iOS 14, *) {
-                    expect(version).to(contain("14."))
-                } else if  #available(iOS 13, *) {
-                    expect(version).to(contain("13."))
-                } else if  #available(iOS 12, *) {
-                    expect(version).to(contain("12."))
-                } else if  #available(iOS 11, *) {
-                    expect(version).to(contain("11."))
-                } else if  #available(iOS 10, *) {
-                    expect(version).to(contain("10."))
                 } else {
                     expect(version) == "apple-unknown"
                 }

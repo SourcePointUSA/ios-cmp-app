@@ -11,7 +11,7 @@ import Nimble
 import Quick
 
 class GDPRMessageSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("Test GDPRMessage") {
             var attributeStyle: SPNativeMessage.AttributeStyle!
             var messageAttribute: SPNativeMessage.Attribute!
