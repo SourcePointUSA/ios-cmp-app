@@ -1,6 +1,15 @@
 PODS:
-  - ConsentViewController (7.12.7-beta.4):
+  - ConsentViewController (7.12.7-rc.3):
     - SPMobileCore (= 0.1.13)
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
+  - CwlMachBadInstructionHandler (2.2.2)
+  - CwlPosixPreconditionTesting (2.2.2)
+  - CwlPreconditionTesting (2.2.2):
+    - CwlCatchException (~> 2.2.1)
+    - CwlMachBadInstructionHandler (~> 2.2.2)
+    - CwlPosixPreconditionTesting (~> 2.2.2)
   - FirebaseAnalytics (11.13.0):
     - FirebaseAnalytics/AdIdSupport (= 11.13.0)
     - FirebaseCore (~> 11.13.0)
@@ -123,9 +132,10 @@ PODS:
     - nanopb/encode (= 3.30910.0)
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
-  - Nimble (10.0.0)
+  - Nimble (13.7.0):
+    - CwlPreconditionTesting (~> 2.2.0)
   - PromisesObjC (2.4.0)
-  - Quick (5.0.1)
+  - Quick (7.6.2)
   - SPMobileCore (0.1.13)
   - SwiftLint (0.59.1)
   - Wormholy (1.7.0)
@@ -135,13 +145,18 @@ DEPENDENCIES:
   - FirebaseAnalytics
   - IQKeyboardManagerSwift
   - JSONView
-  - Nimble (= 10.0.0)
-  - Quick
+  - Nimble (= 13.7.0)
+  - Quick (= 7.6.2)
   - SwiftLint
   - Wormholy
 
 SPEC REPOS:
   trunk:
+    - CwlCatchException
+    - CwlCatchExceptionSupport
+    - CwlMachBadInstructionHandler
+    - CwlPosixPreconditionTesting
+    - CwlPreconditionTesting
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreInternal
@@ -170,7 +185,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: f5a72b3c2ff72858314cc4df3a1200c33556656c
+  ConsentViewController: 902ee261f3416c50a915dadf2f28ecaca00e9546
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
+  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
+  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
+  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
   FirebaseAnalytics: 630349facf4a114a0977e5d7570e104261973287
   FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
   FirebaseCoreInternal: 29d7b3af4aaf0b8f3ed20b568c13df399b06f68c
@@ -187,13 +207,13 @@ SPEC CHECKSUMS:
   IQTextView: ae13b4922f22e6f027f62c557d9f4f236b19d5c7
   JSONView: ba9049102fae7ad70de40234d0b7c60986e61e4c
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  Nimble: 0d202a1be6a346929560c212341240339875b6f0
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  Quick: b8bec97cd4b9f21da0472d45580f763b801fc353
   SPMobileCore: 2a77dd31b40f1457ef9df14a0e72163fa00d87c0
   SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
   Wormholy: ab1c8c2f02f58587a0941deb0088555ffbf039a1
 
-PODFILE CHECKSUM: 0526c634af9b52682b5f269cb432f44d2cb1ab1a
+PODFILE CHECKSUM: 6af712623e87f48887fdfc1a2ee251a83706b428
 
 COCOAPODS: 1.16.2
