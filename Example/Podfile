@@ -31,8 +31,8 @@ abstract_target 'Examples' do
 end
 
 abstract_target 'Tests' do
-  pod 'Quick'
-  pod 'Nimble', '10.0.0'
+  pod 'Quick', '7.6.2'
+  pod 'Nimble', '13.7.0'
 
   target 'ConsentViewController_ExampleTests'
   target 'SPGDPRExampleAppUITests'
@@ -44,8 +44,8 @@ abstract_target 'Tests' do
   target 'TVOSExampleAppUITests' do
     platform :tvos, '12.0'
     pod 'ConsentViewController', :path => '../'
-    pod 'Quick'
-    pod 'Nimble', '10.0.0'
+    pod 'Quick', '7.6.2'
+    pod 'Nimble', '13.7.0'
   end
 
   abstract_target 'FirebaseTests' do
