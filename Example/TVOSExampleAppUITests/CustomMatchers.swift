@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import XCTest
 
-public typealias Predicate = Nimble.Predicate
+public typealias Predicate = Nimble.Matcher
 
 extension TimeInterval {
     init(dispatchTimeInterval: DispatchTimeInterval) {
@@ -39,7 +39,7 @@ extension TimeInterval {
 public func containText(_ text: String) -> Predicate<XCUIElement> {
     Predicate.simple("contain text") { actualExpression in
         guard let actual = try? actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.label.contains(text))
+        return MatcherStatus(bool: actual.label.contains(text))
     }
 }
 
@@ -48,8 +48,7 @@ public func containText(_ text: String) -> Predicate<XCUIElement> {
 public func showUp() -> Predicate<XCUIElement> {
     Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)
-        ))
+        return MatcherStatus(bool: actual.waitForExistence(timeout: Nimble.PollingDefaults.timeout.timeInterval))
     }
 }
 
@@ -58,7 +57,7 @@ public func showUp() -> Predicate<XCUIElement> {
 public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
     Predicate.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: timeout))
+        return MatcherStatus(bool: actual.waitForExistence(timeout: timeout))
     }
 }
 
@@ -68,8 +67,7 @@ public func disappear() -> Predicate<XCUIElement> {
     Predicate.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
-        QuickSpec.current.waitForExpectations(timeout: TimeInterval(dispatchTimeInterval: Nimble.AsyncDefaults.timeout)
-        )
-        return PredicateStatus(bool: !actual.exists)
+        QuickSpec.current.waitForExpectations(timeout: Nimble.PollingDefaults.timeout.timeInterval)
+        return MatcherStatus(bool: !actual.exists)
     }
 }

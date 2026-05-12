@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SPGDPRConsentsSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("static empty()") {
             it("contain empty defaults for all its fields") {
                 let consents = SPGDPRConsent.empty()

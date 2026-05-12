@@ -1,5 +1,5 @@
 use_frameworks! :linkage => :static
-platform :ios, '13.0'
+platform :ios, '18.0'
 install! 'cocoapods', :share_schemes_for_development_pods => true
 
 pod 'ConsentViewController', :path => '../'
@@ -21,31 +21,26 @@ abstract_target 'Examples' do
   end
 
   target 'TVOSExampleApp' do
-    platform :tvos, '12.0'
+    platform :tvos, '18.0'
     pod 'ConsentViewController', :path => '../'
-  end
-
-  target 'SourcePointMetaApp' do
-    pod 'IQKeyboardManagerSwift'
   end
 end
 
 abstract_target 'Tests' do
-  pod 'Quick'
-  pod 'Nimble', '10.0.0'
+  pod 'Quick', '7.6.2'
+  pod 'Nimble', '13.7.0'
 
   target 'ConsentViewController_ExampleTests'
   target 'SPGDPRExampleAppUITests'
   target 'NativeMessageExampleUITests'
   target 'AuthExampleUITests'
-  target 'SourcePointMetaAppUITests'
   target 'ObjC-ExampleAppUITests'
 
   target 'TVOSExampleAppUITests' do
-    platform :tvos, '12.0'
+    platform :tvos, '18.0'
     pod 'ConsentViewController', :path => '../'
-    pod 'Quick'
-    pod 'Nimble', '10.0.0'
+    pod 'Quick', '7.6.2'
+    pod 'Nimble', '13.7.0'
   end
 
   abstract_target 'FirebaseTests' do
