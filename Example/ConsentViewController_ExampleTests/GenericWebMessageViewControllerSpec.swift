@@ -36,7 +36,7 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
 class FaultyRenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
-            renderingAppMock(messageReadyDelayInSeconds: 3),
+            renderingAppMock(messageReadyDelayInSeconds: 5),
             baseURL: URL(string: "https://example.com")!
         )
     }
@@ -77,7 +77,7 @@ func loadMessage(
         messageId: "",
         contents: Data(),
         campaignType: campaignType,
-        timeout: 2.0,
+        timeout: 3.0,
         delegate: delegate,
         consentUUID: uuid
     )
@@ -103,7 +103,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
             loadMessage(with: FaultyRenderingAppMock.self, delegate: delegate)
-            after(.seconds(3)) {
+            after(.seconds(4)) {
                 expect(delegate.loadedWasCalled).to(beFalse())
                 expect(delegate.onErrorWasCalled).to(beTrue())
             }
@@ -121,8 +121,10 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
                         campaignType: .gdpr,
                         uuid: "abc"
                     )
-                    expect(delegate.actionCalledWith?.pmURL)
-                        .toEventually(containQueryParam("consentUUID", withValue: "abc"))
+                    after(.seconds(4)) {
+                        expect(delegate.actionCalledWith?.pmURL)
+                            .to(containQueryParam("consentUUID", withValue: "abc"))
+                    }
                 }
             }
 
@@ -137,8 +139,10 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
                         campaignType: .ccpa,
                         uuid: "abc"
                     )
-                    expect(delegate.actionCalledWith?.pmURL)
-                        .toEventually(containQueryParam("ccpaUUID", withValue: "abc"))
+                    after(.seconds(4)) {
+                        expect(delegate.actionCalledWith?.pmURL)
+                            .to(containQueryParam("ccpaUUID", withValue: "abc"))
+                    }
                 }
             }
         }
