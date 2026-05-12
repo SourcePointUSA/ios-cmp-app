@@ -21,7 +21,7 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
             <script>
                 window.addEventListener("load", () => {
                     setTimeout(() => {
-                        window.postMessage({ // calls message ready after 5 seconds
+                        window.postMessage({ // calls message ready after X seconds
                             name: "sp.showMessage"
                         }, "*")
                     }, \(messageReadyDelayInSeconds * 1000));
@@ -70,14 +70,15 @@ func loadMessage(
     with RenderingAppClass: WKWebView.Type,
     delegate: SPMessageUIDelegate,
     campaignType: SPCampaignType = .unknown,
-    uuid: String? = nil
+    uuid: String? = nil,
+    timeout: TimeInterval = 30.0
 ) {
     let controller = GenericWebMessageViewController(
         url: URL(string: "https://example.com")!,
         messageId: "",
         contents: Data(),
         campaignType: campaignType,
-        timeout: 3.0,
+        timeout: timeout,
         delegate: delegate,
         consentUUID: uuid
     )
@@ -95,18 +96,14 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
 
         it("calls loaded when the rendering app dispatches a sp.showMessage event") {
             loadMessage(with: RenderingAppMock.self, delegate: delegate)
-            after(.seconds(3)) {
-                expect(delegate.loadedWasCalled).to(beTrue())
-                expect(delegate.onErrorWasCalled).to(beFalse())
-            }
+            expect(delegate.loadedWasCalled).toEventually(beTrue(), timeout: .seconds(15))
+            expect(delegate.onErrorWasCalled).to(beFalse())
         }
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {
-            loadMessage(with: FaultyRenderingAppMock.self, delegate: delegate)
-            after(.seconds(4)) {
-                expect(delegate.loadedWasCalled).to(beFalse())
-                expect(delegate.onErrorWasCalled).to(beTrue())
-            }
+            loadMessage(with: FaultyRenderingAppMock.self, delegate: delegate, timeout: 2.0)
+            expect(delegate.onErrorWasCalled).toEventually(beTrue(), timeout: .seconds(10))
+            expect(delegate.loadedWasCalled).to(beFalse())
         }
 
         describe("when a show options action is dispatched") {
@@ -121,10 +118,8 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
                         campaignType: .gdpr,
                         uuid: "abc"
                     )
-                    after(.seconds(4)) {
-                        expect(delegate.actionCalledWith?.pmURL)
-                            .to(containQueryParam("consentUUID", withValue: "abc"))
-                    }
+                    expect(delegate.actionCalledWith?.pmURL)
+                        .toEventually(containQueryParam("consentUUID", withValue: "abc"), timeout: .seconds(15))
                 }
             }
 
@@ -139,10 +134,8 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
                         campaignType: .ccpa,
                         uuid: "abc"
                     )
-                    after(.seconds(4)) {
-                        expect(delegate.actionCalledWith?.pmURL)
-                            .to(containQueryParam("ccpaUUID", withValue: "abc"))
-                    }
+                    expect(delegate.actionCalledWith?.pmURL)
+                        .toEventually(containQueryParam("ccpaUUID", withValue: "abc"), timeout: .seconds(15))
                 }
             }
         }
