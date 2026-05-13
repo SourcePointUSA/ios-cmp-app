@@ -1,6 +1,6 @@
 PODS:
   - ConsentViewController (7.12.7-rc.3):
-    - SPMobileCore (= 0.1.13)
+    - SPMobileCore (= 0.1.16)
   - CwlCatchException (2.2.1):
     - CwlCatchExceptionSupport (~> 2.2.1)
   - CwlCatchExceptionSupport (2.2.1)
@@ -96,7 +96,7 @@ PODS:
     - CwlPreconditionTesting (~> 2.2.0)
   - PromisesObjC (2.4.0)
   - Quick (7.6.2)
-  - SPMobileCore (0.1.13)
+  - SPMobileCore (0.1.16)
   - SwiftLint (0.59.1)
   - Wormholy (1.7.0)
 
@@ -136,7 +136,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: fac768766d0044b142f1affd2c94d741bc564394
+  ConsentViewController: ff9d970f9d7f3a6a2e650d500d3635e58b084352
   CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
   CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
   CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
@@ -153,7 +153,7 @@ SPEC CHECKSUMS:
   Nimble: 0d202a1be6a346929560c212341240339875b6f0
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   Quick: b8bec97cd4b9f21da0472d45580f763b801fc353
-  SPMobileCore: 2a77dd31b40f1457ef9df14a0e72163fa00d87c0
+  SPMobileCore: 4cb29cc8357c679cd95bc239d5aafea0bb8cd73e
   SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
   Wormholy: ab1c8c2f02f58587a0941deb0088555ffbf039a1
 

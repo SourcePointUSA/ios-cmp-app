@@ -19,7 +19,7 @@
   "source_files": "ConsentViewController/Classes/**/*",
   "dependencies": {
     "SPMobileCore": [
-      "0.1.13"
+      "0.1.16"
     ]
   },
   "platforms": {
