@@ -178,6 +178,7 @@ import WebKit
     }
 
     var isFirstLayerMessage = true
+    private var hasCalledLoaded = false
 
     lazy var timeoutWorkItem: DispatchWorkItem = {
         DispatchWorkItem { [weak self] in
@@ -288,14 +289,16 @@ import WebKit
 
     func onMessageReady() {
         timeoutWorkItem.cancel()
+        guard !hasCalledLoaded else { return }
+        hasCalledLoaded = true
         webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
         messageUIDelegate?.loaded(self)
     }
 
     func onPmReady() {
         timeoutWorkItem.cancel()
-        if isFirstLayerMessage {
-            messageUIDelegate?.loaded(self)
-        }
+        guard isFirstLayerMessage, !hasCalledLoaded else { return }
+        hasCalledLoaded = true
+        messageUIDelegate?.loaded(self)
     }
 }

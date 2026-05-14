@@ -33,6 +33,28 @@ func renderingAppMock(messageReadyDelayInSeconds: Int) -> String {
     """
 }
 
+// Simulates a rendering app that fires sp.showMessage twice in sequence for the same message,
+// reproducing the crash: "Application tried to present a view controller already being presented."
+class DuplicatingRenderingAppMock: WKWebView {
+    override func load(_ request: URLRequest) -> WKNavigation? {
+        loadHTMLString("""
+            <html>
+            <header>
+            <script>
+                window.addEventListener("load", () => {
+                    setTimeout(() => {
+                        window.postMessage({ name: "sp.showMessage" }, "*");
+                        window.postMessage({ name: "sp.showMessage" }, "*");
+                    }, 500);
+                })
+            </script>
+            </header>
+            <body></body>
+            </html>
+        """, baseURL: URL(string: "https://example.com")!)
+    }
+}
+
 class FaultyRenderingAppMock: WKWebView {
     override func load(_ request: URLRequest) -> WKNavigation? {
         loadHTMLString(
@@ -98,6 +120,13 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
             loadMessage(with: RenderingAppMock.self, delegate: delegate)
             expect(delegate.loadedWasCalled).toEventually(beTrue(), timeout: .seconds(15))
             expect(delegate.onErrorWasCalled).to(beFalse())
+        }
+
+        it("calls loaded exactly once even if the rendering app fires sp.showMessage twice") {
+            loadMessage(with: DuplicatingRenderingAppMock.self, delegate: delegate)
+            // Wait until at least one loaded call arrives, then verify no duplicate was delivered.
+            expect(delegate.loadedCallCount).toEventually(beGreaterThanOrEqualTo(1), timeout: .seconds(15))
+            expect(delegate.loadedCallCount).to(equal(1))
         }
 
         it("calls onError if .loaded() is not called on the delegate before the timeout") {

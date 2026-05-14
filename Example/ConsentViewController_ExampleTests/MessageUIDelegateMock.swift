@@ -11,12 +11,14 @@ import Foundation
 
 class MessageUIDelegateSpy: SPMessageUIDelegate {
     var loadedWasCalled = false
+    var loadedCallCount = 0
     var onErrorWasCalled = false
     var actionCalledWith: SPAction?
     var onLoaded: ((UIViewController?) -> Void)?
 
     func loaded(_ controller: UIViewController) {
         loadedWasCalled = true
+        loadedCallCount += 1
         onLoaded?(controller)
     }
 
