@@ -289,7 +289,9 @@ import WebKit
     func onMessageReady() {
         timeoutWorkItem.cancel()
         webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
-        messageUIDelegate?.loaded(self)
+        if !isBeingPresented, view.window == nil { // make sure current ViewController is not being presented
+            messageUIDelegate?.loaded(self)
+        }
     }
 
     func onPmReady() {

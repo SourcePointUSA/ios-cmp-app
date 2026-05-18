@@ -66,6 +66,26 @@ class RenderingAppMock: WKWebView {
     }
 }
 
+class DuplicatedShowMessageRenderingAppMock: WKWebView {
+    override func load(_ request: URLRequest) -> WKNavigation? {
+        loadHTMLString("""
+            <html>
+            <header>
+            <script>
+                window.addEventListener("load", () => {
+                    setTimeout(() => {
+                        window.postMessage({ name: "sp.showMessage" }, "*");
+                        window.postMessage({ name: "sp.showMessage" }, "*");
+                    }, 500);
+                })
+            </script>
+            </header>
+            <body></body>
+            </html>
+        """, baseURL: URL(string: "https://example.com")!)
+    }
+}
+
 func loadMessage(
     with RenderingAppClass: WKWebView.Type,
     delegate: SPMessageUIDelegate,
@@ -137,6 +157,13 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
                     expect(delegate.actionCalledWith?.pmURL)
                         .toEventually(containQueryParam("ccpaUUID", withValue: "abc"), timeout: .seconds(15))
                 }
+            }
+        }
+
+        describe("when rendering app dispatches sp.showMessage multiple times") {
+            it("calls onMessageReady only once") {
+                loadMessage(with: DuplicatedShowMessageRenderingAppMock.self, delegate: delegate)
+                expect(delegate.loadedCallCount).toEventually(equal(1), timeout: .seconds(10))
             }
         }
     }
