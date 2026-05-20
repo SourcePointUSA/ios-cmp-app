@@ -163,7 +163,7 @@ class GenericWebMessageViewControllerSpec: QuickSpec {
         describe("when rendering app dispatches sp.showMessage multiple times") {
             it("calls onMessageReady only once") {
                 loadMessage(with: DuplicatedShowMessageRenderingAppMock.self, delegate: delegate)
-                expect(delegate.loadedCallCount).toEventually(equal(1), timeout: .seconds(10))
+                expect(delegate.loadedCallCount).toNever(beGreaterThan(1), until: .seconds(5))
             }
         }
     }

@@ -9,11 +9,6 @@
 import Foundation
 @testable import ConsentViewController
 
-class MockedGenericWebMessageViewController: GenericWebMessageViewController {
-    var mockIsBeingPresented = false
-    override var isBeingPresented: Bool { mockIsBeingPresented }
-}
-
 class MessageUIDelegateSpy: SPMessageUIDelegate {
     var loadedCallCount: Int = 0
     var loadedWasCalled = false
@@ -22,7 +17,6 @@ class MessageUIDelegateSpy: SPMessageUIDelegate {
     var onLoaded: ((UIViewController?) -> Void)?
 
     func loaded(_ controller: UIViewController) {
-        (controller as? MockedGenericWebMessageViewController)?.mockIsBeingPresented = true
         loadedWasCalled = true
         loadedCallCount += 1
         onLoaded?(controller)
