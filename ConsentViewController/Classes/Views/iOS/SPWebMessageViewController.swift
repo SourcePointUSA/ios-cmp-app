@@ -178,6 +178,7 @@ import WebKit
     }
 
     var isFirstLayerMessage = true
+    private var wasLoadedCalled = false
 
     lazy var timeoutWorkItem: DispatchWorkItem = {
         DispatchWorkItem { [weak self] in
@@ -193,6 +194,7 @@ import WebKit
             contentController.removeScriptMessageHandler(forName: Self.MESSAGE_HANDLER_NAME)
             contentController.removeAllUserScripts()
         }
+        wasLoadedCalled = false
         super.viewWillDisappear(animated)
     }
 
@@ -289,14 +291,16 @@ import WebKit
     func onMessageReady() {
         timeoutWorkItem.cancel()
         webview?.evaluateJavaScript("window.spLegislation=\"\(self.campaignType.rawValue)\"")
-        if !isBeingPresented, view.window == nil { // make sure current ViewController is not being presented
+        if wasLoadedCalled == false {
+            wasLoadedCalled = true
             messageUIDelegate?.loaded(self)
         }
     }
 
     func onPmReady() {
         timeoutWorkItem.cancel()
-        if isFirstLayerMessage {
+        if isFirstLayerMessage, wasLoadedCalled == false {
+            wasLoadedCalled = true
             messageUIDelegate?.loaded(self)
         }
     }
