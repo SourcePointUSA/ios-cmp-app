@@ -53,11 +53,21 @@ typealias DidomiUserStatus = CurrentUserStatus
         Didomi.shared.initialize(DidomiInitializeParameters(
             accountId: accountId,
             propertyId: propertyId,
-            propertyName: propertyName.rawValue)
-        )
+            propertyName: propertyName.rawValue
+        ))
         didomiEventListener.onAction = { [weak self] action in
             if let strongSelf = self, let didomiUIController = strongSelf.didomiUIController {
                 strongSelf.appDelegate?.onAction(action, from: didomiUIController)
+            }
+        }
+        didomiEventListener.onConsentUIReady = { [weak self] viewController in
+            if let strongSelf = self {
+                strongSelf.appDelegate?.onSPUIReady(viewController)
+            }
+        }
+        didomiEventListener.onConsentUIFinished = { [weak self] viewController in
+            if let strongSelf = self {
+                strongSelf.appDelegate?.onSPUIFinished(viewController)
             }
         }
         Didomi.shared.addEventListener(listener: didomiEventListener.didomiEventListener)
@@ -165,12 +175,15 @@ extension DidomiInitializeParameters {
         // TODO: The new implementation of the SDK will require apiKey and noticeID
         self.init(
             apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-            noticeID: "BVP3EcHb"
+            noticeID: "BVP3EcHb",
+            handleConsentUIAutomatically: false
         )
     }
 }
 
 class SPDidomiEventListener {
+    var onConsentUIReady: (_ vc: UIViewController) -> Void = { _ in }
+    var onConsentUIFinished: (_ vc: UIViewController) -> Void = { _ in }
     var onAction: (_ action: SPAction) -> Void = { _ in }
     var onError: (_ error: SPError) -> Void = { _ in }
 
@@ -190,11 +203,23 @@ class SPDidomiEventListener {
     }
 
     init() {
+        // TODO: remove listeners that are not used in the SP code
         didomiEventListener.onReady = defaultEventListenerLambda
         didomiEventListener.onShowNotice = defaultEventListenerLambda
         didomiEventListener.onHideNotice = defaultEventListenerLambda
         didomiEventListener.onShowPreferences = defaultEventListenerLambda
         didomiEventListener.onHidePreferences = defaultEventListenerLambda
+        didomiEventListener.onConsentUIReady = { [weak self] event in
+            if let vc = event?.viewController {
+                self?.onConsentUIReady(vc)
+            }
+        }
+        didomiEventListener.onConsentUIFinished = { [weak self] event in
+            if let vc = event?.viewController {
+                self?.onConsentUIFinished(vc)
+            }
+        }
+
         didomiEventListener.onNoticeClickAgree = defaultEventListenerLambda
         didomiEventListener.onPreferencesClickAgreeToAll = defaultEventListenerLambda
         didomiEventListener.onPreferencesClickAgreeToAllVendors = defaultEventListenerLambda
