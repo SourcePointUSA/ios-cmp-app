@@ -40,6 +40,10 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     weak var appDelegate: SPDelegate?
 
+    private var isConsentUIReady = false
+    private var isDidomiReady = false
+    private var pendingLoadMessage = false
+
     required public init(
         accountId: Int,
         propertyId: Int,
@@ -55,19 +59,36 @@ typealias DidomiUserStatus = CurrentUserStatus
             propertyId: propertyId,
             propertyName: propertyName.rawValue
         ))
+        Didomi.shared.onReady { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.isDidomiReady = true
+
+            // If loadMessage was called before ready, process it now
+            if strongSelf.pendingLoadMessage {
+                strongSelf.pendingLoadMessage = false
+                strongSelf.checkAndProceedWithConsent()
+            }
+        }
         didomiEventListener.onAction = { [weak self] action in
             if let strongSelf = self, let didomiUIController = strongSelf.didomiUIController {
                 strongSelf.appDelegate?.onAction(action, from: didomiUIController)
             }
         }
+        didomiEventListener.onConsentChanged = { [weak self] in
+            if let strongSelf = self, strongSelf.isConsentUIReady {
+                strongSelf.appDelegate?.onConsentReady?(userData: strongSelf.userData)
+            }
+        }
         didomiEventListener.onConsentUIReady = { [weak self] viewController in
             if let strongSelf = self {
+                strongSelf.isConsentUIReady = true
                 strongSelf.appDelegate?.onSPUIReady(viewController)
             }
         }
         didomiEventListener.onConsentUIFinished = { [weak self] viewController in
             if let strongSelf = self {
                 strongSelf.appDelegate?.onSPUIFinished(viewController)
+                strongSelf.appDelegate?.onSPFinished?(userData: strongSelf.userData)
             }
         }
         Didomi.shared.addEventListener(listener: didomiEventListener.didomiEventListener)
@@ -83,6 +104,24 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         OSLogger.standard.begin("MessageFlow")
+
+        // Wait for Didomi to be ready before checking shouldUserStatusBeCollected
+        if isDidomiReady {
+            checkAndProceedWithConsent()
+        } else {
+            pendingLoadMessage = true
+        }
+    }
+
+    private func checkAndProceedWithConsent() {
+        // Check if user status should be collected (only call after ready event)
+        if !Didomi.shared.shouldUserStatusBeCollected() {
+            // If user status collection is not needed, call callbacks immediately
+            appDelegate?.onConsentReady?(userData: userData)
+            appDelegate?.onSPFinished?(userData: userData)
+            return
+        }
+
         // TODO: We'll need to think of a way to get the controller back from DDM SDK
         if let didomiUIController {
             Didomi.shared.setupUI(containerController: didomiUIController)
@@ -186,6 +225,7 @@ class SPDidomiEventListener {
     var onConsentUIFinished: (_ vc: UIViewController) -> Void = { _ in }
     var onAction: (_ action: SPAction) -> Void = { _ in }
     var onError: (_ error: SPError) -> Void = { _ in }
+    var onConsentChanged: () -> Void = { }
 
     public var didomiEventListener = DidomiEventListener()
 
@@ -204,7 +244,6 @@ class SPDidomiEventListener {
 
     init() {
         // TODO: remove listeners that are not used in the SP code
-        didomiEventListener.onReady = defaultEventListenerLambda
         didomiEventListener.onShowNotice = defaultEventListenerLambda
         didomiEventListener.onHideNotice = defaultEventListenerLambda
         didomiEventListener.onShowPreferences = defaultEventListenerLambda
@@ -234,6 +273,9 @@ class SPDidomiEventListener {
         didomiEventListener.onNoticeClickViewVendors = defaultEventListenerLambda
         didomiEventListener.onError = { [weak self] errorEvent in
             self?.onError(SPError(error: SPDidomiError(errorEvent)))
+        }
+        didomiEventListener.onConsentChanged = { [weak self] _ in
+            self?.onConsentChanged()
         }
     }
 }
