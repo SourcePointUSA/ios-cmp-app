@@ -124,6 +124,7 @@ class ViewController: UIViewController {
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
+        print("onSPUIReady")
         present(controller, animated: true)
     }
 
@@ -134,6 +135,7 @@ extension ViewController: SPDelegate {
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
+        print("onSPUIFinished")
         updateUI()
         dismiss(animated: true)
     }
