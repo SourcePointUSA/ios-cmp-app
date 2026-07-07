@@ -136,6 +136,7 @@ extension DataProcessingNamespaces : Swift.Equatable {
 extension DataProcessingNamespaces : Swift.Sendable {
 }
 @objc(DDMEventType) public enum EventType : Swift.Int {
+  @available(*, deprecated, message: "Please use consentChangedWithObject instead")
   case consentChanged
   case hideNotice
   case ready
@@ -188,6 +189,9 @@ extension DataProcessingNamespaces : Swift.Sendable {
   case dcsSignatureReady
   case dcsSignatureError
   case integrationError
+  case consentChangedWithObject
+  case onConsentUIReady
+  case onConsentUIFinished
   #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
   #endif
@@ -195,6 +199,10 @@ extension DataProcessingNamespaces : Swift.Sendable {
   public var rawValue: Swift.Int {
     get
   }
+}
+@_hasMissingDesignatedInitializers @objc(DDMUIEvent) @objcMembers public class DidomiUIEvent : ObjectiveC.NSObject {
+  @objc final public let viewController: UIKit.UIViewController
+  @objc deinit
 }
 @objc public protocol ViewProviderDelegate {
   @objc func getNoticeViewController(position: Swift.String, noticeSkipped: Swift.Bool) -> UIKit.UIViewController
@@ -288,6 +296,12 @@ extension DidomiErrorEventType : Swift.Sendable {
   #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false)
   #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false, handleConsentUIAutomatically: Swift.Bool)
+  #endif
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false, sdkPath: Swift.String? = nil, apiPath: Swift.String? = nil)
+  #endif
   @objc deinit
 }
 @objc(DDMErrorEvent) public class DidomiErrorEvent : ObjectiveC.NSObject, Swift.Error {
@@ -326,6 +340,7 @@ extension DidomiErrorEvent : @unchecked Swift.Sendable {
   @objc override dynamic public init()
   @objc public func initialize(_ parameters: DidomiInitializeParameters)
   @objc public func setUserAgent(name: Swift.String, version: Swift.String)
+  @available(*, deprecated, message: "Use setCurrentUserStatus or CurrentUserStatusTransaction instead.")
   @objc public func setUserConsentStatus(enabledPurposeIds: Swift.Set<Swift.String>, disabledPurposeIds: Swift.Set<Swift.String>, enabledVendorIds: Swift.Set<Swift.String>, disabledVendorIds: Swift.Set<Swift.String>) -> Swift.Bool
   @discardableResult
   @objc public func setUserStatus(purposesConsentStatus: Swift.Bool, purposesLIStatus: Swift.Bool, vendorsConsentStatus: Swift.Bool, vendorsLIStatus: Swift.Bool) -> Swift.Bool
@@ -345,6 +360,7 @@ extension DidomiErrorEvent : @unchecked Swift.Sendable {
   @objc public func addEventListener(listener: EventListener)
   @objc public func removeEventListener(listener: EventListener)
   @objc public func isReady() -> Swift.Bool
+  @objc public func isError() -> Swift.Bool
   @objc public func getRequiredPurposes() -> [Purpose]
   @objc public func getRequiredVendors() -> [Vendor]
   #if compiler(>=5.3) && $NonescapableTypes
@@ -451,6 +467,10 @@ extension Didomi.Views : @unchecked Swift.Sendable {
   @objc final public let userAuth: (any UserAuth)?
   @objc deinit
 }
+@_hasMissingDesignatedInitializers @objc(DDMConsentChangedEvent) @objcMembers public class ConsentChangedEvent : ObjectiveC.NSObject {
+  @objc final public let userAuth: (any UserAuth)?
+  @objc deinit
+}
 @_hasMissingDesignatedInitializers @objc(DDMUserStatus) @objcMembers public class UserStatus : ObjectiveC.NSObject, Swift.Codable {
   @objc final public let purposes: UserStatus.Purposes
   @objc final public let vendors: UserStatus.Vendors
@@ -510,7 +530,11 @@ extension UserStatus {
   }
 }
 @_inheritsConvenienceInitializers @objc(DDMEventListener) public class EventListener : ObjectiveC.NSObject {
+  @objc public var onConsentUIReady: (DidomiUIEvent?) -> Swift.Void
+  @objc public var onConsentUIFinished: (DidomiUIEvent?) -> Swift.Void
+  @available(*, deprecated, message: "Please use onConsentChangedWithObject instead")
   @objc public var onConsentChanged: (_ event: EventType) -> Swift.Void
+  @objc public var onConsentChangedWithObject: (_ event: ConsentChangedEvent) -> Swift.Void
   @objc public var onReady: (_ event: EventType) -> Swift.Void
   @objc public var onError: (_ error: DidomiErrorEvent) -> Swift.Void
   @objc public var onHideNotice: (_ event: EventType) -> Swift.Void

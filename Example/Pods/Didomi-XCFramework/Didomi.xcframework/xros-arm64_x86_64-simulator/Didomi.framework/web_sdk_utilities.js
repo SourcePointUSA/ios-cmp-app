@@ -76,6 +76,7 @@ function openNotice(userStatus, options) {
   handleWebSDKEvents();
   window.didomiOnReady = window.didomiOnReady || [];
   window.didomiOnReady.push(function (Didomi) {
+    Didomi.reset(userStatus.user_id);
     Didomi.setUserStatus(userStatus);
     if (hasDeepLink) {
       initializationInProgress = false;

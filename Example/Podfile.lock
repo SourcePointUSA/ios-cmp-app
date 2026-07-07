@@ -1,8 +1,8 @@
 PODS:
   - ConsentViewController (7.12.7-rc.3):
-    - Didomi-XCFramework (= 2.35.0)
+    - Didomi-XCFramework (= 2.45.0)
     - SPMobileCore (= 0.1.13)
-  - Didomi-XCFramework (2.35.0)
+  - Didomi-XCFramework (2.45.0)
   - FirebaseAnalytics (11.13.0):
     - FirebaseAnalytics/AdIdSupport (= 11.13.0)
     - FirebaseCore (~> 11.13.0)
@@ -173,8 +173,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: bbbd104cc9562f1085677baface42d4acc3f856c
-  Didomi-XCFramework: 7b0931fe2cbf683d94ddd76401d42e278e5ce20c
+  ConsentViewController: d87f3f8fce0414724d7e63f2bded0a6b85b99950
+  Didomi-XCFramework: ff328023bf9a544b19cf124eb9eaa05e9fbe810d
   FirebaseAnalytics: 630349facf4a114a0977e5d7570e104261973287
   FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
   FirebaseCoreInternal: 29d7b3af4aaf0b8f3ed20b568c13df399b06f68c

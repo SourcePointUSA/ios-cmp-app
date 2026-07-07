@@ -305,6 +305,16 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
+@protocol UserAuth;
+/// Class used to contain information about the occurrence of the Consent Changed event.
+SWIFT_CLASS_NAMED("ConsentChangedEvent")
+@interface DDMConsentChangedEvent : NSObject
+/// Organization user whose consent changed (nil if no user is set).
+@property (nonatomic, readonly, strong) id <UserAuth> _Nullable userAuth;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 /// Consent status to a vendor or purpose.
 typedef SWIFT_ENUM(NSInteger, ConsentStatus, open) {
   ConsentStatusEnable = 0,
@@ -482,7 +492,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Didomi * _No
 ///
 /// returns:
 /// <em>true</em> if consent status has been updated, <em>false</em> otherwise.
-- (BOOL)setUserConsentStatusWithEnabledPurposeIds:(NSSet<NSString *> * _Nonnull)enabledPurposeIds disabledPurposeIds:(NSSet<NSString *> * _Nonnull)disabledPurposeIds enabledVendorIds:(NSSet<NSString *> * _Nonnull)enabledVendorIds disabledVendorIds:(NSSet<NSString *> * _Nonnull)disabledVendorIds SWIFT_WARN_UNUSED_RESULT;
+- (BOOL)setUserConsentStatusWithEnabledPurposeIds:(NSSet<NSString *> * _Nonnull)enabledPurposeIds disabledPurposeIds:(NSSet<NSString *> * _Nonnull)disabledPurposeIds enabledVendorIds:(NSSet<NSString *> * _Nonnull)enabledVendorIds disabledVendorIds:(NSSet<NSString *> * _Nonnull)disabledVendorIds SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Use setCurrentUserStatus or CurrentUserStatusTransaction instead.");
 /// Set the user status for purposes and vendors for consent and legitimate interest.
 /// \param purposesConsentStatus boolean used to determine if consent will be enabled or disabled for all purposes.
 ///
@@ -563,6 +573,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) Didomi * _No
 - (void)removeEventListenerWithListener:(DDMEventListener * _Nonnull)listener;
 /// Is the Didomi SDK ready?
 - (BOOL)isReady SWIFT_WARN_UNUSED_RESULT;
+/// Did any errors occur in the Didomi SDK?
+- (BOOL)isError SWIFT_WARN_UNUSED_RESULT;
 /// Method used to get an array of required purposes.
 ///
 /// returns:
@@ -670,7 +682,6 @@ SWIFT_PROTOCOL("_TtP6Didomi20ViewProviderDelegate_")
 @class UserAuthParams;
 @class LoadUserStatusResult;
 @class DDMUserStatus;
-@protocol UserAuth;
 @interface Didomi (SWIFT_EXTENSION(Didomi))
 /// Provide the objects required to display UI elements
 - (void)setupUIWithContainerController:(UIViewController * _Nonnull)containerController;
@@ -971,21 +982,19 @@ typedef SWIFT_ENUM_NAMED(NSInteger, DDMErrorEventType, "DidomiErrorEventType", o
 /// Initialization parameters for Didomi SDK
 SWIFT_CLASS("_TtC6Didomi26DidomiInitializeParameters")
 @interface DidomiInitializeParameters : NSObject
+/// Designated initializer for backward compatibility with ObjC clients.
+/// This initializer uses the default value <code>true</code> for <code>handleConsentUIAutomatically</code>.
 - (nonnull instancetype)initWithApiKey:(NSString * _Nonnull)apiKey localConfigurationPath:(NSString * _Nullable)localConfigurationPath remoteConfigurationURL:(NSString * _Nullable)remoteConfigurationURL providerID:(NSString * _Nullable)providerID disableDidomiRemoteConfig:(BOOL)disableDidomiRemoteConfig languageCode:(NSString * _Nullable)languageCode noticeID:(NSString * _Nullable)noticeID countryCode:(NSString * _Nullable)countryCode regionCode:(NSString * _Nullable)regionCode isUnderage:(BOOL)isUnderage OBJC_DESIGNATED_INITIALIZER;
+/// ObjC-compatible initializer for setting <code>handleConsentUIAutomatically</code>. Uses <code>sdkPath: nil</code>, <code>apiPath: nil</code>.
+- (nonnull instancetype)initWithApiKey:(NSString * _Nonnull)apiKey localConfigurationPath:(NSString * _Nullable)localConfigurationPath remoteConfigurationURL:(NSString * _Nullable)remoteConfigurationURL providerID:(NSString * _Nullable)providerID disableDidomiRemoteConfig:(BOOL)disableDidomiRemoteConfig languageCode:(NSString * _Nullable)languageCode noticeID:(NSString * _Nullable)noticeID countryCode:(NSString * _Nullable)countryCode regionCode:(NSString * _Nullable)regionCode isUnderage:(BOOL)isUnderage handleConsentUIAutomatically:(BOOL)handleConsentUIAutomatically OBJC_DESIGNATED_INITIALIZER;
+/// Initializer for providing <code>sdkPath</code> and <code>apiPath</code>. Uses <code>handleConsentUIAutomatically: true</code>.
+- (nonnull instancetype)initWithApiKey:(NSString * _Nonnull)apiKey localConfigurationPath:(NSString * _Nullable)localConfigurationPath remoteConfigurationURL:(NSString * _Nullable)remoteConfigurationURL providerID:(NSString * _Nullable)providerID disableDidomiRemoteConfig:(BOOL)disableDidomiRemoteConfig languageCode:(NSString * _Nullable)languageCode noticeID:(NSString * _Nullable)noticeID countryCode:(NSString * _Nullable)countryCode regionCode:(NSString * _Nullable)regionCode isUnderage:(BOOL)isUnderage sdkPath:(NSString * _Nullable)sdkPath apiPath:(NSString * _Nullable)apiPath OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
 @class NSNumber;
 /// User parameters for the Didomi SDK.
-/// \param userAuth The user’s main authentication.
-///
-/// \param dcsUserAuth The user authentication specific to the Didomi Consent String (DCS).
-///
-/// \param containerController The <code>UIViewController</code> used to display the notice if the consent has expired or the user is new.
-///
-/// \param isUnderage Indicates whether the user is underage (<code>nil</code> will keep the previous setting).
-///
 SWIFT_CLASS("_TtC6Didomi20DidomiUserParameters")
 @interface DidomiUserParameters : NSObject
 /// Initializer for Objective-C compatibility
@@ -996,19 +1005,7 @@ SWIFT_CLASS("_TtC6Didomi20DidomiUserParameters")
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
 
-/// User parameters for Didomi SDK
-/// \param userAuth The main user authentication.
-///
-/// \param dcsUserAuth The user authentication for Didomi Consent String.
-///
-/// \param synchronizedUser The synchronized user list.
-///
-/// \param activity The <code>UIViewController</code> if the notice should be displayed when the consent expired or the user is new.
-///
-/// \param isUnderage If the user is underage (<code>nil</code> will keep the previous setting).
-///
-/// \param overrideMainStorage If the main storage should be overridden (when multi-storage feature is enabled).
-///
+/// User parameters for Didomi SDK with multi-user support.
 SWIFT_CLASS("_TtC6Didomi25DidomiMultiUserParameters")
 @interface DidomiMultiUserParameters : DidomiUserParameters
 /// Initializer for Objective-C compatibility
@@ -1021,6 +1018,13 @@ SWIFT_CLASS("_TtC6Didomi25DidomiMultiUserParameters")
 - (nonnull instancetype)initWithUserAuth:(id <UserAuth> _Nonnull)userAuth dcsUserAuth:(UserAuthParams * _Nullable)dcsUserAuth synchronizedUsers:(NSArray<UserAuthParams *> * _Nullable)synchronizedUsers containerController:(UIViewController * _Nullable)containerController;
 @end
 
+SWIFT_CLASS_NAMED("DidomiUIEvent")
+@interface DDMUIEvent : NSObject
+@property (nonatomic, readonly, strong) UIViewController * _Nonnull viewController;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 enum DDMEventType : NSInteger;
 @class DDMSyncUserChangedEvent;
 @class DDMSyncReadyEvent;
@@ -1028,9 +1032,13 @@ enum DDMEventType : NSInteger;
 /// Class used as a listener for internal events occurred in the SDK.
 SWIFT_CLASS_NAMED("EventListener")
 @interface DDMEventListener : NSObject
+@property (nonatomic, copy) void (^ _Nonnull onConsentUIReady)(DDMUIEvent * _Nullable);
+@property (nonatomic, copy) void (^ _Nonnull onConsentUIFinished)(DDMUIEvent * _Nullable);
 /// Closures used to execute code when the different events are triggered.
 /// Internal
-@property (nonatomic, copy) void (^ _Nonnull onConsentChanged)(enum DDMEventType);
+@property (nonatomic, copy) void (^ _Nonnull onConsentChanged)(enum DDMEventType) SWIFT_DEPRECATED_MSG("Please use onConsentChangedWithObject instead");
+/// Triggered when consent changes. Exposes the user whose consent changed via ConsentChangedEvent.
+@property (nonatomic, copy) void (^ _Nonnull onConsentChangedWithObject)(DDMConsentChangedEvent * _Nonnull);
 @property (nonatomic, copy) void (^ _Nonnull onReady)(enum DDMEventType);
 @property (nonatomic, copy) void (^ _Nonnull onError)(DDMErrorEvent * _Nonnull);
 /// Notice
@@ -1140,6 +1148,11 @@ typedef SWIFT_ENUM_NAMED(NSInteger, DDMEventType, "EventType", open) {
   DDMEventTypeDcsSignatureError = 42,
 /// Integrations
   DDMEventTypeIntegrationError = 43,
+/// Internal - Consent changed (exposes the user via ConsentChangedEvent)
+  DDMEventTypeConsentChangedWithObject = 44,
+/// UI Events
+  DDMEventTypeOnConsentUIReady = 45,
+  DDMEventTypeOnConsentUIFinished = 46,
 };
 
 /// Class used to contain information about the external dependencies integration error event.

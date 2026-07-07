@@ -280,7 +280,11 @@
                 "view_partners_for_purpose_consent": "view partners for %{targetName} based on consent",
                 "view_partners_for_purpose_li": "view partners for %{targetName} based on legitimate interest",
                 "accessibility_screen_reader_long_chain_token": "token composed of a long chain of characters",
-                "accessibility_screen_reader_long_chain_user_id": "User ID composed of a long chain of characters"
+                "accessibility_screen_reader_long_chain_user_id": "User ID composed of a long chain of characters",
+                "opt_out": "Opt-out",
+                "true": "True",
+                "false": "False",
+                "sdk_storage": "SDK"
             },
             "fr": {
                 "you_allow": "Vous autorisez",
@@ -478,7 +482,11 @@
                 "tab_menu_description": "Menu principal à gauche, contenu à droite.",
                 "use_the_key_to_configure": "Utilisez %{key} pour %{action}",
                 "select_key": "touche de sélection",
-                "right_arrow": "flèche droite"
+                "right_arrow": "flèche droite",
+                "opt_out": "Opt-out",
+                "true": "Vrai",
+                "false": "Faux",
+                "sdk_storage": "SDK"
             },
             "de": {
                 "you_allow": "Sie erlauben",
@@ -676,7 +684,11 @@
                 "tab_menu_description": "Hauptmenü links, Inhalt rechts.",
                 "use_the_key_to_configure": "Verwenden Sie %{key}, um %{action} zu erreichen.",
                 "select_key": "Auswahltaste",
-                "right_arrow": "Pfeil nach rechts"
+                "right_arrow": "Pfeil nach rechts",
+                "opt_out": "Opt-out",
+                "true": "Wahr",
+                "false": "Falsch",
+                "sdk_storage": "SDK"
             },
             "it": {
                 "you_allow": "Acconsenti",
@@ -874,7 +886,11 @@
                 "tab_menu_description": "Menu principale a sinistra, contenuti a destra.",
                 "use_the_key_to_configure": "Utilizzare %{key} per %{action}",
                 "select_key": "tasto di selezione",
-                "right_arrow": "freccia destra"
+                "right_arrow": "freccia destra",
+                "opt_out": "Opt-out",
+                "true": "Vero",
+                "false": "Falso",
+                "sdk_storage": "SDK"
             },
             "nl": {
                 "you_allow": "U stemt in met",
@@ -1072,7 +1088,11 @@
                 "tab_menu_description": "Hoofdmenu links, inhoud rechts.",
                 "use_the_key_to_configure": "Gebruik de %{key} voor %{action}",
                 "select_key": "selecteer sleutel",
-                "right_arrow": "pijl naar rechts"
+                "right_arrow": "pijl naar rechts",
+                "opt_out": "Opt-out",
+                "true": "Waar",
+                "false": "Onwaar",
+                "sdk_storage": "SDK"
             },
             "ca": {
                 "you_allow": "Tu permets",
@@ -1270,7 +1290,11 @@
                 "tab_menu_description": "Menú principal a l'esquerra, contingut a la dreta.",
                 "use_the_key_to_configure": "Utilitza la tecla %{key} per a %{action}",
                 "select_key": "tecla de selecció",
-                "right_arrow": "fletxa dreta"
+                "right_arrow": "fletxa dreta",
+                "opt_out": "Exclusió voluntària",
+                "true": "Cert",
+                "false": "Fals",
+                "sdk_storage": "SDK"
             },
             "es": {
                 "you_allow": "Usted permite",
@@ -1468,7 +1492,11 @@
                 "tab_menu_description": "Menú principal a la izquierda, contenido a la derecha.",
                 "use_the_key_to_configure": "Utilice %{key} para %{action}",
                 "select_key": "clave de selección",
-                "right_arrow": "flecha derecha"
+                "right_arrow": "flecha derecha",
+                "opt_out": "Exclusión voluntaria",
+                "true": "Verdadero",
+                "false": "Falso",
+                "sdk_storage": "SDK"
             },
             "ro": {
                 "you_allow": "Permiteți",
@@ -1666,7 +1694,11 @@
                 "tab_menu_description": "Meniul principal în stânga, conținutul în dreapta.",
                 "use_the_key_to_configure": "Folosește tasta %{key} pentru a %{action}",
                 "select_key": "tasta de selectare",
-                "right_arrow": "săgeată dreapta"
+                "right_arrow": "săgeată dreapta",
+                "opt_out": "Opt-out",
+                "true": "Adevărat",
+                "false": "Fals",
+                "sdk_storage": "SDK"
             },
             "hr": {
                 "you_allow": "Dopuštate",
@@ -1864,7 +1896,11 @@
                 "tab_menu_description": "Glavni izbornik s lijeve strane, sadržaj s desne.",
                 "use_the_key_to_configure": "Koristite %{key} za %{action}",
                 "select_key": "odaberite tipku",
-                "right_arrow": "strelica desno"
+                "right_arrow": "strelica desno",
+                "opt_out": "Opt-out",
+                "true": "Točno",
+                "false": "Netočno",
+                "sdk_storage": "SDK"
             },
             "cs": {
                 "you_allow": "Povolujete",
@@ -2062,7 +2098,11 @@
                 "tab_menu_description": "Hlavní menu vlevo, obsah vpravo.",
                 "use_the_key_to_configure": "Použijte %{key} k %{action}",
                 "select_key": "vybrat klávesu",
-                "right_arrow": "šipka vpravo"
+                "right_arrow": "šipka vpravo",
+                "opt_out": "Odhlášení",
+                "true": "Pravda",
+                "false": "Nepravda",
+                "sdk_storage": "SDK"
             },
             "tr": {
                 "you_allow": "İzin verin",
@@ -2260,7 +2300,11 @@
                 "tab_menu_description": "Solda ana menü, sağda içerik.",
                 "use_the_key_to_configure": "%{action} için %{key} kullanın",
                 "select_key": "seçme anahtarı",
-                "right_arrow": "sağ ok"
+                "right_arrow": "sağ ok",
+                "opt_out": "Opt-out",
+                "true": "Doğru",
+                "false": "Yanlış",
+                "sdk_storage": "SDK"
             },
             "pl": {
                 "you_allow": "Pozwalasz",
@@ -2458,7 +2502,11 @@
                 "tab_menu_description": "Menu główne po lewej stronie, treść po prawej.",
                 "use_the_key_to_configure": "Użyj %{key}, aby %{action}",
                 "select_key": "wybierz klawisz",
-                "right_arrow": "strzałka w prawo"
+                "right_arrow": "strzałka w prawo",
+                "opt_out": "Opt-out",
+                "true": "Prawda",
+                "false": "Fałsz",
+                "sdk_storage": "SDK"
             },
             "fi": {
                 "you_allow": "Sallit",
@@ -2656,7 +2704,11 @@
                 "tab_menu_description": "Päävalikko vasemmalla, sisältö oikealla.",
                 "use_the_key_to_configure": "Käytä %{key}-komentoa toimintoon %{action}",
                 "select_key": "valintanäppäin",
-                "right_arrow": "oikea nuoli"
+                "right_arrow": "oikea nuoli",
+                "opt_out": "Opt-out",
+                "true": "Tosi",
+                "false": "Epätosi",
+                "sdk_storage": "SDK"
             },
             "el": {
                 "you_allow": "Δίνετε την άδεια",
@@ -2854,7 +2906,11 @@
                 "tab_menu_description": "Κύριο μενού στα αριστερά, περιεχόμενο στα δεξιά.",
                 "use_the_key_to_configure": "Χρησιμοποιήστε το %{key} για %{action}",
                 "select_key": "πλήκτρο επιλογής",
-                "right_arrow": "δεξί βέλος"
+                "right_arrow": "δεξί βέλος",
+                "opt_out": "Εξαίρεση",
+                "true": "Αληθής",
+                "false": "Ψευδής",
+                "sdk_storage": "SDK"
             },
             "hu": {
                 "you_allow": "Engedélyezi",
@@ -3052,7 +3108,11 @@
                 "tab_menu_description": "Bal oldalon a főmenü, jobb oldalon a tartalom.",
                 "use_the_key_to_configure": "Használja a %{key} billentyűkombinációt a következőhöz: %{action}",
                 "select_key": "kiválasztó billentyű",
-                "right_arrow": "jobbra mutató nyíl"
+                "right_arrow": "jobbra mutató nyíl",
+                "opt_out": "Opt-out",
+                "true": "Igaz",
+                "false": "Hamis",
+                "sdk_storage": "SDK"
             },
             "da": {
                 "you_allow": "Du tillader",
@@ -3250,7 +3310,11 @@
                 "tab_menu_description": "Hovedmenu til venstre, indhold til højre.",
                 "use_the_key_to_configure": "Brug %{tasten} til at %{action}",
                 "select_key": "vælg-tast",
-                "right_arrow": "højre pil"
+                "right_arrow": "højre pil",
+                "opt_out": "Opt-out",
+                "true": "Sand",
+                "false": "Falsk",
+                "sdk_storage": "SDK"
             },
             "sk": {
                 "you_allow": "Povoľujete",
@@ -3448,7 +3512,11 @@
                 "tab_menu_description": "Hlavné menu vľavo, obsah vpravo.",
                 "use_the_key_to_configure": "Použite %{key} na %{action}",
                 "select_key": "vybrať kláves",
-                "right_arrow": "šípka doprava"
+                "right_arrow": "šípka doprava",
+                "opt_out": "Opt-out",
+                "true": "Pravda",
+                "false": "Nepravda",
+                "sdk_storage": "SDK"
             },
             "bg": {
                 "agree_close_ea00d5ff": "Приемане и затваряне",
@@ -3646,7 +3714,11 @@
                 "tab_menu_description": "Главно меню отляво, съдържание отдясно.",
                 "use_the_key_to_configure": "Използвайте %{key}, за да %{action}",
                 "select_key": "изберете клавиш",
-                "right_arrow": "стрелка надясно"
+                "right_arrow": "стрелка надясно",
+                "opt_out": "Отказ",
+                "true": "Вярно",
+                "false": "Невярно",
+                "sdk_storage": "SDK"
             },
             "et": {
                 "agree_close_ea00d5ff": "Nõustu ja sulge",
@@ -3844,7 +3916,11 @@
                 "tab_menu_description": "Vasakul peamenüü, paremal sisu.",
                 "use_the_key_to_configure": "Kasuta %{key} toiminguks %{action}",
                 "select_key": "valimisklahv",
-                "right_arrow": "paremnool"
+                "right_arrow": "paremnool",
+                "opt_out": "Opt-out",
+                "true": "Tõsi",
+                "false": "Vale",
+                "sdk_storage": "SDK"
             },
             "sl": {
                 "agree_close_ea00d5ff": "Strinjam se, zapri",
@@ -4042,7 +4118,11 @@
                 "tab_menu_description": "Glavni meni na levi, vsebina na desni.",
                 "use_the_key_to_configure": "Uporabite %{key} za %{action}",
                 "select_key": "izberi tipko",
-                "right_arrow": "puščica desno"
+                "right_arrow": "puščica desno",
+                "opt_out": "Opt-out",
+                "true": "Res",
+                "false": "Napačno",
+                "sdk_storage": "SDK"
             },
             "lv": {
                 "agree_close_ea00d5ff": "Piekrist un aizvērt",
@@ -4240,7 +4320,11 @@
                 "tab_menu_description": "Galvenā izvēlne kreisajā pusē, saturs labajā pusē.",
                 "use_the_key_to_configure": "Izmantojiet %{key}, lai veiktu %{action}",
                 "select_key": "atlases taustiņš",
-                "right_arrow": "labā bultiņa"
+                "right_arrow": "labā bultiņa",
+                "opt_out": "Opt-out",
+                "true": "Patiess",
+                "false": "Nepatiess",
+                "sdk_storage": "SDK"
             },
             "lt": {
                 "agree_close_ea00d5ff": "Sutikti ir uždaryti",
@@ -4438,7 +4522,11 @@
                 "tab_menu_description": "Pagrindinis meniu kairėje, turinys dešinėje.",
                 "use_the_key_to_configure": "Naudokite %{key}, kad atliktumėte %{action}",
                 "select_key": "pasirinkimo klavišas",
-                "right_arrow": "rodyklė dešinėn"
+                "right_arrow": "rodyklė dešinėn",
+                "opt_out": "Opt-out",
+                "true": "Tiesa",
+                "false": "Neteisingas",
+                "sdk_storage": "SDK"
             },
             "sv": {
                 "agree_close_ea00d5ff": "Godkänn och stäng",
@@ -4636,7 +4724,11 @@
                 "tab_menu_description": "Huvudmeny till vänster, innehåll till höger.",
                 "use_the_key_to_configure": "Använd %{key} för att %{action}",
                 "select_key": "väljtangent",
-                "right_arrow": "högerpil"
+                "right_arrow": "högerpil",
+                "opt_out": "Opt-out",
+                "true": "Sant",
+                "false": "Falskt",
+                "sdk_storage": "SDK"
             },
             "ru": {
                 "you_allow": "Вы разрешили",
@@ -4834,7 +4926,11 @@
                 "tab_menu_description": "Главное меню слева, содержимое справа.",
                 "use_the_key_to_configure": "Используйте %{key} для %{action}",
                 "select_key": "выберите ключ",
-                "right_arrow": "стрелка вправо"
+                "right_arrow": "стрелка вправо",
+                "opt_out": "Отказ",
+                "true": "Верно",
+                "false": "Неверно",
+                "sdk_storage": "SDK"
             },
             "uk": {
                 "you_allow": "Ви дозволяєте",
@@ -5032,7 +5128,11 @@
                 "tab_menu_description": "Головне меню ліворуч, контент праворуч.",
                 "use_the_key_to_configure": "Використайте %{key} для %{action}",
                 "select_key": "вибрати клавішу",
-                "right_arrow": "стрілка вправо"
+                "right_arrow": "стрілка вправо",
+                "opt_out": "Відмова",
+                "true": "Вірно",
+                "false": "Невірно",
+                "sdk_storage": "SDK"
             },
             "vi": {
                 "you_allow": "Bạn cho phép",
@@ -5230,7 +5330,11 @@
                 "tab_menu_description": "Menu chính ở bên trái, nội dung ở bên phải.",
                 "use_the_key_to_configure": "Sử dụng %{key} để %{action}",
                 "select_key": "chọn phím",
-                "right_arrow": "mũi tên phải"
+                "right_arrow": "mũi tên phải",
+                "opt_out": "Opt-out",
+                "true": "Đúng",
+                "false": "Sai",
+                "sdk_storage": "SDK"
             },
             "ms": {
                 "you_allow": "Anda benarkan",
@@ -5428,7 +5532,11 @@
                 "tab_menu_description": "Menu utama di sebelah kiri, kandungan di sebelah kanan.",
                 "use_the_key_to_configure": "Gunakan %{key} untuk %{action}",
                 "select_key": "pilih kunci",
-                "right_arrow": "anak panah kanan"
+                "right_arrow": "anak panah kanan",
+                "opt_out": "Opt-out",
+                "true": "Benar",
+                "false": "Salah",
+                "sdk_storage": "SDK"
             },
             "ar": {
                 "you_allow": "تسمح",
@@ -5626,7 +5734,11 @@
                 "tab_menu_description": "القائمة الرئيسية على اليسار، المحتوى على اليمين.",
                 "use_the_key_to_configure": "استخدم %{key} لـ %{action}",
                 "select_key": "مفتاح الاختيار",
-                "right_arrow": "السهم الأيمن"
+                "right_arrow": "السهم الأيمن",
+                "opt_out": "إلغاء الاشتراك",
+                "true": "صحيح",
+                "false": "خطأ",
+                "sdk_storage": "SDK"
             },
             "zh-CN": {
                 "you_allow": "您允许",
@@ -5824,7 +5936,11 @@
                 "tab_menu_description": "左侧为主菜单，右侧为内容。",
                 "use_the_key_to_configure": "使用 %{key} 执行 %{action}",
                 "select_key": "选择键",
-                "right_arrow": "右箭头"
+                "right_arrow": "右箭头",
+                "opt_out": "退出选项",
+                "true": "真",
+                "false": "假",
+                "sdk_storage": "SDK"
             },
             "zh-TW": {
                 "you_allow": "你允許",
@@ -6022,7 +6138,11 @@
                 "tab_menu_description": "左側為主選單，右側為內容。",
                 "use_the_key_to_configure": "使用 %{key} 執行 %{action}",
                 "select_key": "選擇鍵",
-                "right_arrow": "右箭頭"
+                "right_arrow": "右箭頭",
+                "opt_out": "退出選項",
+                "true": "真",
+                "false": "假",
+                "sdk_storage": "SDK"
             },
             "sr": {
                 "you_allow": "Ти дозвољаваш",
@@ -6220,7 +6340,11 @@
                 "tab_menu_description": "Главни мени лево, садржај десно.",
                 "use_the_key_to_configure": "Користите %{key} да бисте %{action}",
                 "select_key": "тастер за избор",
-                "right_arrow": "стрелица удесно"
+                "right_arrow": "стрелица удесно",
+                "opt_out": "Одбијање",
+                "true": "Тачно",
+                "false": "Нетачно",
+                "sdk_storage": "SDK"
             },
             "sr-Latn": {
                 "you_allow": "Dozvoljavate",
@@ -6418,7 +6542,11 @@
                 "tab_menu_description": "Glavni meni levo, sadržaj desno.",
                 "use_the_key_to_configure": "Upotrebite %{key} da biste %{action}",
                 "select_key": "izaberi ključ",
-                "right_arrow": "strelica nadesno"
+                "right_arrow": "strelica nadesno",
+                "opt_out": "Opt-out",
+                "true": "Tačno",
+                "false": "Netačno",
+                "sdk_storage": "SDK"
             },
             "ja": {
                 "you_allow": "あなたは許可します",
@@ -6616,7 +6744,11 @@
                 "tab_menu_description": "左側にメインメニュー、右側にコンテンツがあります。",
                 "use_the_key_to_configure": "%{key} を使用して %{action} を実行します",
                 "select_key": "選択キー",
-                "right_arrow": "右矢印"
+                "right_arrow": "右矢印",
+                "opt_out": "オプトアウト",
+                "true": "真",
+                "false": "偽",
+                "sdk_storage": "SDK"
             },
             "ko": {
                 "you_allow": "허용",
@@ -6814,7 +6946,11 @@
                 "tab_menu_description": "왼쪽은 메인 메뉴, 오른쪽은 콘텐츠입니다.",
                 "use_the_key_to_configure": "%{key}를 사용하여 %{action}을 실행하세요.",
                 "select_key": "선택 키",
-                "right_arrow": "오른쪽 화살표"
+                "right_arrow": "오른쪽 화살표",
+                "opt_out": "옵트아웃",
+                "true": "참",
+                "false": "거짓",
+                "sdk_storage": "SDK"
             },
             "th": {
                 "you_allow": "คุณอนุญาต",
@@ -7012,7 +7148,11 @@
                 "tab_menu_description": "เมนูหลักอยู่ทางซ้าย เนื้อหาอยู่ทางขวา",
                 "use_the_key_to_configure": "ใช้ %{key} เพื่อ %{action}",
                 "select_key": "เลือกคีย์",
-                "right_arrow": "ลูกศรขวา"
+                "right_arrow": "ลูกศรขวา",
+                "opt_out": "ออปต์เอาท์",
+                "true": "จริง",
+                "false": "เท็จ",
+                "sdk_storage": "SDK"
             },
             "no": {
                 "agree_close_ea00d5ff": "Godta og lukk",
@@ -7210,7 +7350,11 @@
                 "tab_menu_description": "Hovedmeny til venstre, innhold til høyre.",
                 "use_the_key_to_configure": "Bruk %{tasten} til %{action}",
                 "select_key": "velg-tasten",
-                "right_arrow": "høyre pil"
+                "right_arrow": "høyre pil",
+                "opt_out": "Opt-out",
+                "true": "Sant",
+                "false": "Falsk",
+                "sdk_storage": "SDK"
             },
             "pt-BR": {
                 "you_allow": "Você permite",
@@ -7408,7 +7552,11 @@
                 "tab_menu_description": "Menu principal à esquerda, conteúdo à direita.",
                 "use_the_key_to_configure": "Use %{key} para %{action}",
                 "select_key": "selecionar tecla",
-                "right_arrow": "seta para a direita"
+                "right_arrow": "seta para a direita",
+                "opt_out": "Opt-out",
+                "true": "Verdadeiro",
+                "false": "Falso",
+                "sdk_storage": "SDK"
             },
             "fil": {
                 "you_allow": "Pinapayagan mo",
@@ -7606,7 +7754,11 @@
                 "tab_menu_description": "Pangunahing menu sa kaliwa, nilalaman sa kanan.",
                 "use_the_key_to_configure": "Gamitin ang %{key} sa %{action}",
                 "select_key": "piliin ang susi",
-                "right_arrow": "kanang arrow"
+                "right_arrow": "kanang arrow",
+                "opt_out": "Opt-out",
+                "true": "Totoo",
+                "false": "Mali",
+                "sdk_storage": "SDK"
             },
             "sw": {
                 "you_allow": "Unaruhusu",
@@ -7804,7 +7956,11 @@
                 "tab_menu_description": "Menyu kuu upande wa kushoto, yaliyomo upande wa kulia.",
                 "use_the_key_to_configure": "Tumia %{key} kwa %{action}",
                 "select_key": "chagua ufunguo",
-                "right_arrow": "mshale wa kulia"
+                "right_arrow": "mshale wa kulia",
+                "opt_out": "Opt-out",
+                "true": "Kweli",
+                "false": "Uongo",
+                "sdk_storage": "SDK"
             },
             "id": {
                 "you_allow": "Anda mengizinkan",
@@ -8002,7 +8158,11 @@
                 "tab_menu_description": "Menu utama di sebelah kiri, konten di sebelah kanan.",
                 "use_the_key_to_configure": "Gunakan %{key} untuk %{action}",
                 "select_key": "pilih tombol",
-                "right_arrow": "panah kanan"
+                "right_arrow": "panah kanan",
+                "opt_out": "Opt-out",
+                "true": "Benar",
+                "false": "Salah",
+                "sdk_storage": "SDK"
             },
             "pt-PT": {
                 "you_allow": "Permite",
@@ -8200,7 +8360,11 @@
                 "tab_menu_description": "Menu principal à esquerda, conteúdo à direita.",
                 "use_the_key_to_configure": "Use %{key} para %{action}",
                 "select_key": "selecionar tecla",
-                "right_arrow": "seta para a direita"
+                "right_arrow": "seta para a direita",
+                "opt_out": "Opt-out",
+                "true": "Verdadeiro",
+                "false": "Falso",
+                "sdk_storage": "SDK"
             },
             "he": {
                 "you_allow": "אתה מאפשר",
@@ -8398,7 +8562,11 @@
                 "tab_menu_description": "תפריט ראשי משמאל, תוכן מימין.",
                 "use_the_key_to_configure": "השתמש ב-%{key} כדי לבצע %{action}",
                 "select_key": "מקש בחירה",
-                "right_arrow": "חץ ימינה"
+                "right_arrow": "חץ ימינה",
+                "opt_out": "ביטול הסכמה",
+                "true": "נכון",
+                "false": "שגוי",
+                "sdk_storage": "SDK"
             },
             "az-AZ": {
                 "you_allow": "Siz icazə verilir",
@@ -8596,7 +8764,11 @@
                 "tab_menu_description": "Solda əsas menyu, sağda məzmun.",
                 "use_the_key_to_configure": "%{action} üçün %{açarını istifadə edin",
                 "select_key": "düyməsini seçin",
-                "right_arrow": "sağ ox"
+                "right_arrow": "sağ ox",
+                "opt_out": "Opt-out",
+                "true": "Doğru",
+                "false": "Yanlış",
+                "sdk_storage": "SDK"
             },
             "bn-IN": {
                 "you_allow": "আপনি অনুমতি দিচ্ছেন",
@@ -8794,7 +8966,11 @@
                 "tab_menu_description": "বাম দিকে প্রধান মেনু, ডানদিকে বিষয়বস্তু।",
                 "use_the_key_to_configure": "%{কর্ম} করতে %{কী} ব্যবহার করুন",
                 "select_key": "কী নির্বাচন করুন",
-                "right_arrow": "ডান তীর"
+                "right_arrow": "ডান তীর",
+                "opt_out": "অপ্ট-আউট",
+                "true": "সত্য",
+                "false": "মিথ্যা",
+                "sdk_storage": "SDK"
             },
             "mk-MK": {
                 "you_allow": "Дозволуваш",
@@ -8992,7 +9168,11 @@
                 "tab_menu_description": "Главното мени лево, содржината десно.",
                 "use_the_key_to_configure": "Користете го %{key} за %{action}",
                 "select_key": "копче за избор",
-                "right_arrow": "стрелка надесно"
+                "right_arrow": "стрелка надесно",
+                "opt_out": "Откажување",
+                "true": "Точно",
+                "false": "Неточно",
+                "sdk_storage": "SDK"
             },
             "hi-IN": {
                 "you_allow": "हाँ, अनुमति दें",
@@ -9190,7 +9370,11 @@
                 "tab_menu_description": "मुख्य मेनू बाईं ओर, सामग्री दाईं ओर।",
                 "use_the_key_to_configure": "%{action} के लिए %{key} का उपयोग करें",
                 "select_key": "कुंजी का चयन करें",
-                "right_arrow": "दाहिना तीर"
+                "right_arrow": "दाहिना तीर",
+                "opt_out": "ऑप्ट-आउट",
+                "true": "सच",
+                "false": "गलत",
+                "sdk_storage": "SDK"
             },
             "ar-JO": {
                 "view_all_partners": "استعراض الشركاء",
@@ -9388,7 +9572,11 @@
                 "tab_menu_description": "القائمة الرئيسية على اليسار، المحتوى على اليمين.",
                 "use_the_key_to_configure": "استخدم %{key} لـ %{action}",
                 "select_key": "مفتاح الاختيار",
-                "right_arrow": "السهم الأيمن"
+                "right_arrow": "السهم الأيمن",
+                "opt_out": "إلغاء الاشتراك",
+                "true": "صحيح",
+                "false": "خطأ",
+                "sdk_storage": "SDK"
             },
             "de-AT": {
                 "view_all_partners": "Partner anzeigen",
@@ -9586,7 +9774,11 @@
                 "tab_menu_description": "Hauptmenü links, Inhalt rechts.",
                 "use_the_key_to_configure": "Verwenden Sie %{key}, um %{action} zu erreichen.",
                 "select_key": "Auswahltaste",
-                "right_arrow": "Pfeil nach rechts"
+                "right_arrow": "Pfeil nach rechts",
+                "opt_out": "Opt-out",
+                "true": "Wahr",
+                "false": "Falsch",
+                "sdk_storage": "SDK"
             },
             "de-CH": {
                 "view_all_partners": "Partner anzeigen",
@@ -9784,7 +9976,11 @@
                 "tab_menu_description": "Hauptmenü links, Inhalt rechts.",
                 "use_the_key_to_configure": "Verwenden Sie %{key}, um %{action} zu erreichen.",
                 "select_key": "Auswahltaste",
-                "right_arrow": "Pfeil nach rechts"
+                "right_arrow": "Pfeil nach rechts",
+                "opt_out": "Opt-out",
+                "true": "Wahr",
+                "false": "Falsch",
+                "sdk_storage": "SDK"
             },
             "en-GB": {
                 "view_all_partners": "View our partners",
@@ -9982,7 +10178,11 @@
                 "tab_menu_description": "Main menu on the left, content on the right.",
                 "use_the_key_to_configure": "Use the %{key} to %{action}",
                 "select_key": "select key",
-                "right_arrow": "right arrow"
+                "right_arrow": "right arrow",
+                "opt_out": "Opt-out",
+                "true": "True",
+                "false": "False",
+                "sdk_storage": "SDK"
             },
             "en-NZ": {
                 "view_all_partners": "View our partners",
@@ -10180,7 +10380,11 @@
                 "tab_menu_description": "Main menu on the left, content on the right.",
                 "use_the_key_to_configure": "Use the %{key} to %{action}",
                 "select_key": "select key",
-                "right_arrow": "right arrow"
+                "right_arrow": "right arrow",
+                "opt_out": "Opt-out",
+                "true": "True",
+                "false": "False",
+                "sdk_storage": "SDK"
             },
             "fr-BE": {
                 "view_all_partners": "Voir nos partenaires",
@@ -10378,7 +10582,11 @@
                 "tab_menu_description": "Menu principal à gauche, contenu à droite.",
                 "use_the_key_to_configure": "Utilisez %{key} pour %{action}",
                 "select_key": "touche de sélection",
-                "right_arrow": "flèche droite"
+                "right_arrow": "flèche droite",
+                "opt_out": "Opt-out",
+                "true": "Vrai",
+                "false": "Faux",
+                "sdk_storage": "SDK"
             },
             "fr-CA": {
                 "view_all_partners": "Voir nos partenaires",
@@ -10576,7 +10784,11 @@
                 "tab_menu_description": "Menu principal à gauche, contenu à droite.",
                 "use_the_key_to_configure": "Utilisez %{key} pour %{action}",
                 "select_key": "touche de sélection",
-                "right_arrow": "flèche droite"
+                "right_arrow": "flèche droite",
+                "opt_out": "Opt-out",
+                "true": "Vrai",
+                "false": "Faux",
+                "sdk_storage": "SDK"
             },
             "nl-BE": {
                 "view_all_partners": "Partners bekijken",
@@ -10774,7 +10986,11 @@
                 "tab_menu_description": "Hoofdmenu links, inhoud rechts.",
                 "use_the_key_to_configure": "Gebruik de %{key} voor %{action}",
                 "select_key": "selecteer sleutel",
-                "right_arrow": "pijl naar rechts"
+                "right_arrow": "pijl naar rechts",
+                "opt_out": "Opt-out",
+                "true": "Waar",
+                "false": "Onwaar",
+                "sdk_storage": "SDK"
             },
             "bs": {
                 "view_all_partners": "Pogledajte naše partnere",
@@ -10972,7 +11188,11 @@
                 "tab_menu_description": "Glavni meni s lijeve strane, sadržaj s desne.",
                 "use_the_key_to_configure": "Koristite %{key} za %{action}",
                 "select_key": "odaberite tipku",
-                "right_arrow": "strelica desno"
+                "right_arrow": "strelica desno",
+                "opt_out": "Opt-out",
+                "true": "Tačno",
+                "false": "Netačno",
+                "sdk_storage": "SDK"
             },
             "eu": {
                 "view_all_partners": "Ikusi gure bazkideak",
@@ -11170,7 +11390,11 @@
                 "tab_menu_description": "Menu nagusia ezkerrean, edukia eskuinean.",
                 "use_the_key_to_configure": "Erabili %{key} %{action} egiteko",
                 "select_key": "hautatu tekla",
-                "right_arrow": "eskuineko gezia"
+                "right_arrow": "eskuineko gezia",
+                "opt_out": "Opt-out",
+                "true": "Egia",
+                "false": "Faltsua",
+                "sdk_storage": "SDK"
             },
             "gl": {
                 "view_all_partners": "Consulta os nosos socios",
@@ -11368,7 +11592,11 @@
                 "tab_menu_description": "Menú principal á esquerda, contido á dereita.",
                 "use_the_key_to_configure": "Usa a tecla %{key} para %{action}",
                 "select_key": "tecla de selección",
-                "right_arrow": "frecha dereita"
+                "right_arrow": "frecha dereita",
+                "opt_out": "Exclusión voluntaria",
+                "true": "Verdadeiro",
+                "false": "Falso",
+                "sdk_storage": "SDK"
             },
             "ka": {
                 "view_all_partners": "იხილეთ ჩვენი პარტნიორები",
@@ -11566,7 +11794,11 @@
                 "tab_menu_description": "მთავარი მენიუ მარცხნივ, შინაარსი მარჯვნივ.",
                 "use_the_key_to_configure": "გამოიყენეთ %{key} %{action}-ისთვის",
                 "select_key": "აირჩიეთ ღილაკი",
-                "right_arrow": "მარჯვენა ისარი"
+                "right_arrow": "მარჯვენა ისარი",
+                "opt_out": "გამორთვა",
+                "true": "მართალი",
+                "false": "მცდარი",
+                "sdk_storage": "SDK"
             },
             "mt": {
                 "view_all_partners": "Ara l-imsieħba tagħna",
@@ -11764,7 +11996,11 @@
                 "tab_menu_description": "Il-menù prinċipali fuq ix-xellug, il-kontenut fuq il-lemin.",
                 "use_the_key_to_configure": "Uża l-%{key} għal %{azzjoni}",
                 "select_key": "ċavetta tal-għażla",
-                "right_arrow": "vleġġa tal-lemin"
+                "right_arrow": "vleġġa tal-lemin",
+                "opt_out": "Opt-out",
+                "true": "Veru",
+                "false": "Falz",
+                "sdk_storage": "SDK"
             },
             "sq": {
                 "view_all_partners": "Shikoni partnerët tanë",
@@ -11962,7 +12198,11 @@
                 "tab_menu_description": "Menuja kryesore në të majtë, përmbajtja në të djathtë.",
                 "use_the_key_to_configure": "Përdor %{key} për %{action}",
                 "select_key": "çelësi i zgjedhjes",
-                "right_arrow": "shigjeta djathtas"
+                "right_arrow": "shigjeta djathtas",
+                "opt_out": "Opt-out",
+                "true": "E vërtetë",
+                "false": "E rreme",
+                "sdk_storage": "SDK"
             },
             "tl": {
                 "view_all_partners": "Tingnan ang aming mga kasosyo",
@@ -12160,7 +12400,11 @@
                 "tab_menu_description": "Pangunahing menu sa kaliwa, nilalaman sa kanan.",
                 "use_the_key_to_configure": "Gamitin ang %{key} sa %{action}",
                 "select_key": "piliin ang susi",
-                "right_arrow": "kanang arrow"
+                "right_arrow": "kanang arrow",
+                "opt_out": "Opt-out",
+                "true": "Totoo",
+                "false": "Mali",
+                "sdk_storage": "SDK"
             },
             "cy": {
                 "view_all_partners": "Gweld ein partneriaid",
@@ -12358,7 +12602,11 @@
                 "tab_menu_description": "Prif ddewislen ar y chwith, cynnwys ar y dde.",
                 "use_the_key_to_configure": "Defnyddiwch y %{allwedd} i %{action}",
                 "select_key": "allwedd dewis",
-                "right_arrow": "saeth dde"
+                "right_arrow": "saeth dde",
+                "opt_out": "Opt-out",
+                "true": "Gwir",
+                "false": "Ffug",
+                "sdk_storage": "SDK"
             },
             "be": {
                 "view_all_partners": "Глядзіце нашых партнёраў",
@@ -12556,7 +12804,11 @@
                 "tab_menu_description": "Галоўнае меню злева, кантэнт справа.",
                 "use_the_key_to_configure": "Выкарыстоўвайце %{key} для %{action}",
                 "select_key": "клавіша выбару",
-                "right_arrow": "стрэлка ўправа"
+                "right_arrow": "стрэлка ўправа",
+                "opt_out": "Адмова",
+                "true": "Праўда",
+                "false": "Ілжыва",
+                "sdk_storage": "SDK"
             },
             "en-CA": {
                 "view_all_partners": "View our partners",
@@ -12754,7 +13006,11 @@
                 "tab_menu_description": "Main menu on the left, content on the right.",
                 "use_the_key_to_configure": "Use the %{key} to %{action}",
                 "select_key": "select key",
-                "right_arrow": "right arrow"
+                "right_arrow": "right arrow",
+                "opt_out": "Opt-out",
+                "true": "True",
+                "false": "False",
+                "sdk_storage": "SDK"
             }
         }
     },
@@ -13066,5 +13322,125 @@
         "SM",
         "VA",
         "YT"
-    ]
+    ],
+    "metricsEvents": {
+        "samplingRate": 0.0001,
+        "metrics": [
+            {
+                "type": "performance",
+                "metric": "sdk-initialization-time",
+                "enabled": true
+            },
+            {
+                "type": "performance",
+                "metric": "is-network-connected",
+                "enabled": true
+            },
+            {
+                "type": "performance",
+                "metric": "consent-submission-time",
+                "enabled": true
+            },
+            {
+                "type": "performance",
+                "metric": "rendering-time-mobile",
+                "enabled": true
+            },
+            {
+                "type": "performance",
+                "metric": "rendering-time-webview",
+                "enabled": true
+            },
+            {
+                "type": "performance",
+                "metric": "rendering-time-ctv",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "rendered-layer",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "origin-layer",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "setUserStatus-globally",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "setUserStatus-byIds",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "setUserAgreeToAll",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "setUserDisagreeToAll",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "setCurrentUserStatus",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "openCurrentUserStatusTransaction",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "commitCurrentUserStatusTransaction",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-setUserConsentStatus",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-isConsentRequired",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-shouldConsentBeCollected",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-isUserConsentStatusPartial",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-isUserLegitimateInterestStatusPartial",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-getUserStatus",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-setUser-id",
+                "enabled": true
+            },
+            {
+                "type": "usage",
+                "metric": "deprecated-setUser-userAuthParams",
+                "enabled": true
+            }
+        ]
+    }
 }
