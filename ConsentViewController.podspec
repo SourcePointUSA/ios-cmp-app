@@ -9,7 +9,9 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/SourcePointUSA/ios-cmp-app.git', :tag => s.version.to_s }
   s.swift_version = '5.1'
   s.source_files = 'ConsentViewController/Classes/**/*'
-  s.dependency 'Didomi-XCFramework', '2.35.0'
+  s.dependency 'Didomi-XCFramework', '2.45.0'
+  ## uncomment to use local version of Didomi SDK
+  # s.vendored_frameworks = 'Didomi.xcframework' 
   s.dependency 'SPMobileCore', '0.1.13'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'

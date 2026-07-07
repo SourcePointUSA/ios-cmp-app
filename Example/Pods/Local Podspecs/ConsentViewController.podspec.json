@@ -19,7 +19,7 @@
   "source_files": "ConsentViewController/Classes/**/*",
   "dependencies": {
     "Didomi-XCFramework": [
-      "2.35.0"
+      "2.45.0"
     ],
     "SPMobileCore": [
       "0.1.13"
