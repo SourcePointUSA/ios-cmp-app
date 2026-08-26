@@ -1,0 +1,390 @@
+{
+  "ui": {
+    "version": "2.0.0"
+  },
+  "app": {
+    "logoUrl": "https://uilib.didomi.io/assets/Didomi-logotype-new.svg",
+    "gdprAppliesGlobally": true,
+    "vendors": {
+      "iab": {
+        "all": false,
+        "include": [1],
+        "stacks": {
+          "auto": true
+        },
+        "enabled": true,
+        "version": 2,
+        "minorVersion": 3,
+        "gvlSpecificationVersion": 3,
+        "defaultStrings": {
+          "created": "2026-08-25T00:00:00.000Z",
+          "vendorListVersion": 173,
+          "default": "CQpgI4AQpgI4AAHABBENCtFgAAAAAELAAAAAAAALzgAgLzAA.IF5wAQF5gAAA.YAAACFgAAAAA",
+          "positive": "CQpgI4AQpgI4AAHABBENCtFgALEAAELAAAAAF5wAQF5gXnABAXmAAAAA.IF5wAQF5gAAA.diAACFgAAAAA",
+          "negative": "CQpgI4AQpgI4AAHABBENCtFgAAAAAAAAAAAAAAAAAAAA.IF5wAQF5gAAA"
+        }
+      },
+      "didomi": ["google"],
+      "custom": [
+  {
+      "id": "sp-vendor",
+      "didomiId": "sp-vendor",
+      "name": "SP Vendor Name",
+      "namespaces": {"sp": "abcd"},
+      "purposeIds": ["cookies"],
+      "policyUrl": "https://example.com/privacy"
+  },
+        {
+          "id": "google",
+          "didomiId": "google",
+          "name": "Google Advertising Products",
+          "policyUrl": "https://business.safety.google/privacy/",
+          "purposeIds": [
+            "cookies",
+            "create_ads_profile",
+            "select_personalized_ads"
+          ],
+          "legIntPurposeIds": [
+            "improve_products",
+            "market_research",
+            "measure_ad_performance",
+            "select_basic_ads"
+          ],
+          "usesNonCookieAccess": false,
+          "type": "3rd_party",
+          "lang_urls": [
+            {
+              "langId": "en",
+              "privacy": "https://business.safety.google/privacy/",
+              "legIntClaim": "https://policies.google.com/privacy#europeanrequirements"
+            },
+            {
+              "langId": "es",
+              "privacy": "https://business.safety.google/intl/es/privacy/",
+              "legIntClaim": "https://policies.google.com/privacy?hl=es#europeanrequirements"
+            }
+          ],
+          "namespaces": {
+            "num": 2,
+            "iab2": 755,
+            "didomi": "google"
+          }
+        }
+      ],
+      "google": {
+        "fullATP": true
+      }
+    },
+    "apiKey": "eea5ad63-29d4-4552-9dac-2edebe1fe518",
+    "customPurposes": [
+      {
+        "id": "cookies",
+        "name": {
+          "en": "Store and/or access information on a device"
+        },
+        "description": {
+          "en": "Cookies, device or similar online identifiers (e.g. login-based identifiers, randomly assigned identifiers, network based identifiers) together with other information..."
+        },
+        "namespaces": {
+          "num": 34,
+          "iab2": 1,
+          "sp": "sp-purpose"
+        }
+      },
+      {
+        "id": "create_ads_profile",
+        "name": {
+          "en": "Create profiles for personalised advertising"
+        },
+        "description": {
+          "en": "Information about your activity on this service (such as forms you submit, content you look at) can be stored and combined with other information about you (for example..."
+        },
+        "namespaces": {
+          "num": 42,
+          "iab2": 3
+        }
+      },
+      {
+        "id": "select_personalized_ads",
+        "name": {
+          "en": "Use profiles to select personalised advertising"
+        },
+        "description": {
+          "en": "Advertising presented to you on this service can be based on your advertising profiles, which can reflect your activity on this service or other websites or apps (like the forms you..."
+        },
+        "namespaces": {
+          "num": 48,
+          "iab2": 4
+        }
+      },
+      {
+        "id": "improve_products",
+        "name": {
+          "en": "Develop and improve services"
+        },
+        "description": {
+          "en": "Information about your activity on this service, such as your interaction with ads or content, can be very helpful to improve products and services and to build new products and..."
+        },
+        "namespaces": {
+          "num": 44,
+          "iab2": 10
+        }
+      },
+      {
+        "id": "market_research",
+        "name": {
+          "en": "Understand audiences through statistics or combinations of data from different sources"
+        },
+        "description": {
+          "en": "Reports can be generated based on the combination of data sets (like user profiles, statistics, market research, analytics data) regarding your interactions and those of..."
+        },
+        "namespaces": {
+          "num": 45,
+          "iab2": 9
+        }
+      },
+      {
+        "id": "measure_ad_performance",
+        "name": {
+          "en": "Measure advertising performance"
+        },
+        "description": {
+          "en": "Information regarding which advertising is presented to you and how you interact with it can be used to determine how well an advert has worked for you or other users and whether..."
+        },
+        "namespaces": {
+          "num": 46,
+          "iab2": 7
+        }
+      },
+      {
+        "id": "select_basic_ads",
+        "name": {
+          "en": "Use limited data to select advertising"
+        },
+        "description": {
+          "en": "Advertising presented to you on this service can be based on limited data, such as the website or app you are using, your non-precise location, your device type or which..."
+        },
+        "namespaces": {
+          "num": 47,
+          "iab2": 2
+        }
+      },
+      {
+        "id": "measure_content_performance",
+        "name": {
+          "en": "Measure content performance"
+        },
+        "description": {
+          "en": "Information regarding which content is presented to you and how you interact with it can be used to determine whether the (non-advertising) content e.g. reached its intended..."
+        },
+        "namespaces": {
+          "num": 37,
+          "iab2": 8
+        }
+      }
+    ],
+    "deploymentId": "F9xQDNx8",
+    "consentDuration": 31622400,
+    "consentString": {
+      "version": 2,
+      "signatureEnabled": false
+    },
+    "sdkVersion": null
+  },
+  "user": {
+    "bots": {
+      "consentRequired": false
+    },
+    "country": "ES"
+  },
+  "theme": {
+    "font": "Arial, sans-serif"
+  },
+  "notice": {
+    "position": "popup",
+    "showDataProcessing": true,
+    "daysBeforeShowingAgain": 30,
+    "enableBulkActionOnPurposes": true,
+    "partnersLink": {
+      "enabled": true
+    },
+    "enable": true,
+    "type": "optin",
+    "denyOptions": {
+      "button": "primary"
+    },
+    "denyAsPrimary": true,
+    "denyAppliesToLI": true,
+    "content": {
+      "activeElements": [
+        "learnMore",
+        "deny",
+        "dismiss"
+      ],
+      "notice": {
+        "en": "<h1>(Hello this is local)</h1> With your agreement, we and <a href=\"javascript:Didomi.preferences.show('vendors')\">our partners</a> use device storage to store and access personal data like <stack id=\"1\">precise geolocation data, and identification through device scanning</stack>.<br />We process that data for purposes like <stack id=\"42\">personalised ads and content, ad and content measurement, audience insights and product development</stack>.<br />You can withdraw your consent or object to data processing based on legitimate interest at any time by going to \"Consent Preferences\" in the menu of this app."
+      }
+    },
+    "enableWebView": true
+  },
+  "languages": {
+    "default": "en",
+    "enabled": ["en"]
+  },
+  "preferences": {
+    "categories": [
+      {
+        "type": "purpose",
+        "purposeId": "cookies"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "measure_content_performance"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "create_ads_profile"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "improve_products"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "market_research"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "measure_ad_performance"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "select_basic_ads"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "select_personalized_ads"
+      }
+    ],
+    "enableAllButtons": true,
+    "vendorsLayer": {
+      "enabled": true
+    },
+    "denyAppliesToLI": true,
+    "content": {
+      "activeElements": [
+        "crossButton",
+        "title",
+        "viewAllPartners",
+        "disagreeToAll",
+        "agreeToAll",
+        "save"
+      ]
+    },
+    "storageDisclosure": {
+      "enable": true
+    },
+    "vendorsCount": {
+      "enabled": true
+    },
+    "vendorsDisclosure": {
+      "enabled": true
+    }
+  },
+  "id": "0deb2511-148f-4454-9b68-3e7c54e2bf56",
+  "version": "1.0.0",
+  "regulation": {
+    "group": {
+      "name": "optin"
+    },
+    "name": "gdpr",
+    "id": 1
+  },
+  "integrations": {
+    "vendors": {
+      "gcm": {
+        "enable": true,
+        "setDefaultStatus": true,
+        "dataLayerName": null,
+        "defaultStatus": {
+          "analytics": false,
+          "ad": false,
+          "functionality": false,
+          "personalization": false,
+          "security": true,
+          "ad_user_data": false,
+          "ad_personalization": false
+        },
+        "enableTCFAdvertiserConsentMode": true,
+        "thirdPartySdks": {
+          "firebase": {
+            "enabled": false
+          },
+          "airbridge": {
+            "enabled": false
+          },
+          "kochava": {
+            "enabled": false
+          },
+          "branch": {
+            "enabled": false
+          },
+          "appsflyer": {
+            "enabled": false
+          }
+        },
+        "consentTypes": {
+          "analytics": {
+            "type": "vendors",
+            "ids": [
+              "googleana-4TXnJigR"
+            ]
+          },
+          "ad": {
+            "type": "vendors",
+            "ids": [
+              "google"
+            ]
+          },
+          "ad_user_data": {
+            "type": "vendors",
+            "ids": [
+              "google"
+            ]
+          },
+          "ad_personalization": {
+            "type": "vendors",
+            "ids": [
+              "google"
+            ]
+          },
+          "personalization": {
+            "type": "vendors",
+            "ids": [
+              "google"
+            ]
+          },
+          "functionality": {
+            "type": "vendors",
+            "ids": [
+              "google"
+            ]
+          },
+          "security": {
+            "type": "constant",
+            "value": true
+          }
+        }
+      }
+    },
+    "gpp": {
+      "version": 1,
+      "sections": [
+        {
+          "id": 2,
+          "name": "tcfeuv2"
+        }
+      ]
+    }
+  }
+}
