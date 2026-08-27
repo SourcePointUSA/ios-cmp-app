@@ -20,7 +20,9 @@ import Didomi
 
     public var messageLanguage: SPMessageLanguage = .BrowserDefault
 
-    public var userData: SPUserData { Didomi.shared.getCurrentUserStatus().toSourcepoint() }
+    private let userDataAdapter = UserDataAdapter()
+
+    public var userData: SPUserData { userDataAdapter.adapt(from: Didomi.shared.getCurrentUserStatus()) }
 
     public var gdprApplies: Bool { userData.gdpr?.applies ?? false }
 
