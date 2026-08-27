@@ -37,6 +37,10 @@ public struct SPDate: Codable, Equatable {
         SPDate(date: .distantFuture)
     }
 
+    static func anYearFrom(_ fromDate: SPDate) -> SPDate {
+        SPDate(date: fromDate.date.addingTimeInterval(31536000)) // 31,536,000 seconds = 365 days
+    }
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(originalDateString)

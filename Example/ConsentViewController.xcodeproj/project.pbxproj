@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -189,6 +189,16 @@
 		82A99CC3255D956400A85024 /* 404.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CC2255D956400A85024 /* 404.html */; };
 		82A99CCE255D958000A85024 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 82A99CCD255D958000A85024 /* index.html */; };
 		82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */; };
+		82B8C95B30403A210053F64B /* ConsentStatusBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95330403A210053F64B /* ConsentStatusBuilderSpec.swift */; };
+		82B8C95C30403A210053F64B /* GDPRConsentAdapterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C94E30403A210053F64B /* GDPRConsentAdapterSpec.swift */; };
+		82B8C95D30403A210053F64B /* CCPAConsentAdapterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C94D30403A210053F64B /* CCPAConsentAdapterSpec.swift */; };
+		82B8C95E30403A210053F64B /* DidomiTestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95630403A210053F64B /* DidomiTestFixtures.swift */; };
+		82B8C95F30403A210053F64B /* UserDataAdapterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C94F30403A210053F64B /* UserDataAdapterSpec.swift */; };
+		82B8C96030403A210053F64B /* MockVendorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95830403A210053F64B /* MockVendorProvider.swift */; };
+		82B8C96130403A210053F64B /* AcceptedCategoriesBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95130403A210053F64B /* AcceptedCategoriesBuilderSpec.swift */; };
+		82B8C96230403A210053F64B /* VendorGrantsBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95430403A210053F64B /* VendorGrantsBuilderSpec.swift */; };
+		82B8C96330403A210053F64B /* MockPurposeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95730403A210053F64B /* MockPurposeProvider.swift */; };
+		82B8C96430403A210053F64B /* AcceptedVendorsBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B8C95230403A210053F64B /* AcceptedVendorsBuilderSpec.swift */; };
 		82BA6E642B72980F00E318B3 /* SPGCMDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */; };
 		82BA6E672B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
 		82BA6E682B72AC2300E318B3 /* SPGCMData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BA6E662B72AC2300E318B3 /* SPGCMData.swift */; };
@@ -694,6 +704,16 @@
 		82A99CC2255D956400A85024 /* 404.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = 404.html; sourceTree = "<group>"; };
 		82A99CCD255D958000A85024 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		82AC4A8125934FB600817B65 /* SPDeviceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDeviceSpec.swift; sourceTree = "<group>"; };
+		82B8C94D30403A210053F64B /* CCPAConsentAdapterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentAdapterSpec.swift; sourceTree = "<group>"; };
+		82B8C94E30403A210053F64B /* GDPRConsentAdapterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GDPRConsentAdapterSpec.swift; sourceTree = "<group>"; };
+		82B8C94F30403A210053F64B /* UserDataAdapterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAdapterSpec.swift; sourceTree = "<group>"; };
+		82B8C95130403A210053F64B /* AcceptedCategoriesBuilderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedCategoriesBuilderSpec.swift; sourceTree = "<group>"; };
+		82B8C95230403A210053F64B /* AcceptedVendorsBuilderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedVendorsBuilderSpec.swift; sourceTree = "<group>"; };
+		82B8C95330403A210053F64B /* ConsentStatusBuilderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentStatusBuilderSpec.swift; sourceTree = "<group>"; };
+		82B8C95430403A210053F64B /* VendorGrantsBuilderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendorGrantsBuilderSpec.swift; sourceTree = "<group>"; };
+		82B8C95630403A210053F64B /* DidomiTestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DidomiTestFixtures.swift; sourceTree = "<group>"; };
+		82B8C95730403A210053F64B /* MockPurposeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPurposeProvider.swift; sourceTree = "<group>"; };
+		82B8C95830403A210053F64B /* MockVendorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVendorProvider.swift; sourceTree = "<group>"; };
 		82BA6E632B72980F00E318B3 /* SPGCMDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPGCMDataSpec.swift; sourceTree = "<group>"; };
 		82BA6E662B72AC2300E318B3 /* SPGCMData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPGCMData.swift; sourceTree = "<group>"; };
 		82BB0E6928BF3433006FBB60 /* SPDateCreatedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPDateCreatedSpec.swift; sourceTree = "<group>"; };
@@ -835,6 +855,20 @@
 		EEE5584F78A04F8BB7CDEAF3 /* Pods-Examples-SourcepointFirebaseDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Examples-SourcepointFirebaseDemo.release.xcconfig"; path = "Target Support Files/Pods-Examples-SourcepointFirebaseDemo/Pods-Examples-SourcepointFirebaseDemo.release.xcconfig"; sourceTree = "<group>"; };
 		FD1A34A5790B08AA31DBE213 /* Pods-TVOSExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVOSExampleApp.release.xcconfig"; path = "Target Support Files/Pods-TVOSExampleApp/Pods-TVOSExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		82B8C932303DF07A0053F64B /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		0B312ED62ABC4E2400B62E23 /* Frameworks */ = {
@@ -1458,6 +1492,7 @@
 		607FACD21AFB9204008FA782 /* Example for ConsentViewController */ = {
 			isa = PBXGroup;
 			children = (
+				82B8C932303DF07A0053F64B /* Resources */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				8225BAAF298BF0E300C2E5FA /* Config.swift */,
@@ -1790,6 +1825,47 @@
 			path = webserver;
 			sourceTree = "<group>";
 		};
+		82B8C95030403A210053F64B /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				82B8C94D30403A210053F64B /* CCPAConsentAdapterSpec.swift */,
+				82B8C94E30403A210053F64B /* GDPRConsentAdapterSpec.swift */,
+				82B8C94F30403A210053F64B /* UserDataAdapterSpec.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		82B8C95530403A210053F64B /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				82B8C95130403A210053F64B /* AcceptedCategoriesBuilderSpec.swift */,
+				82B8C95230403A210053F64B /* AcceptedVendorsBuilderSpec.swift */,
+				82B8C95330403A210053F64B /* ConsentStatusBuilderSpec.swift */,
+				82B8C95430403A210053F64B /* VendorGrantsBuilderSpec.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
+		82B8C95930403A210053F64B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				82B8C95630403A210053F64B /* DidomiTestFixtures.swift */,
+				82B8C95730403A210053F64B /* MockPurposeProvider.swift */,
+				82B8C95830403A210053F64B /* MockVendorProvider.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		82B8C95A30403A210053F64B /* DidomiIntegration */ = {
+			isa = PBXGroup;
+			children = (
+				82B8C95030403A210053F64B /* Adapters */,
+				82B8C95530403A210053F64B /* Builders */,
+				82B8C95930403A210053F64B /* Helpers */,
+			);
+			path = DidomiIntegration;
+			sourceTree = "<group>";
+		};
 		82BA6E652B72AC2300E318B3 /* GoogleConsentMode */ = {
 			isa = PBXGroup;
 			children = (
@@ -2071,6 +2147,7 @@
 		82FC4D3B23983231002F08E5 /* ConsentViewController_ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				82B8C95A30403A210053F64B /* DidomiIntegration */,
 				82BC137E2BB2E92B00AD346A /* Objc */,
 				EDD01F422A2A07B700590772 /* SPConsentManagerSpec.swift */,
 				822FD7DF2A0BF41D004CD221 /* GenericWebMessageViewControllerSpec.swift */,
@@ -2225,6 +2302,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				82B8C932303DF07A0053F64B /* Resources */,
 			);
 			name = ConsentViewController_Example;
 			productName = ConsentViewController;
@@ -4257,6 +4337,16 @@
 				6DC1CD412427E7330028F03F /* SPNativeMessageViewControllerSpec.swift in Sources */,
 				82AC4A8225934FB600817B65 /* SPDeviceSpec.swift in Sources */,
 				8229C6162991390300F755AA /* SPClientCoordinatorSpec.swift in Sources */,
+				82B8C95B30403A210053F64B /* ConsentStatusBuilderSpec.swift in Sources */,
+				82B8C95C30403A210053F64B /* GDPRConsentAdapterSpec.swift in Sources */,
+				82B8C95D30403A210053F64B /* CCPAConsentAdapterSpec.swift in Sources */,
+				82B8C95E30403A210053F64B /* DidomiTestFixtures.swift in Sources */,
+				82B8C95F30403A210053F64B /* UserDataAdapterSpec.swift in Sources */,
+				82B8C96030403A210053F64B /* MockVendorProvider.swift in Sources */,
+				82B8C96130403A210053F64B /* AcceptedCategoriesBuilderSpec.swift in Sources */,
+				82B8C96230403A210053F64B /* VendorGrantsBuilderSpec.swift in Sources */,
+				82B8C96330403A210053F64B /* MockPurposeProvider.swift in Sources */,
+				82B8C96430403A210053F64B /* AcceptedVendorsBuilderSpec.swift in Sources */,
 				826D31AD2498DE340026A6B9 /* MockConsentDelegate.swift in Sources */,
 				8248A499247E5FCC00A7D9AD /* SPGDPRConsentsSpec.swift in Sources */,
 				82BB0E6A28BF3433006FBB60 /* SPDateCreatedSpec.swift in Sources */,
