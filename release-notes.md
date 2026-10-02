@@ -1,2 +1,1 @@
-* [DIA-6224](https://sourcepoint.atlassian.net/browse/DIA-6224)
-TVOS - Fixed Legal Disclosure QR code and text appearing without the LI legal basis existing for this vendor[#645](https://github.com/SourcePointUSA/ios-cmp-app/pull/645)
+* [DIA-6442](https://sourcepoint.atlassian.net/browse/DIA-6442) Fixed an issue that prevented the SDK from correctly reporting a user's message status
