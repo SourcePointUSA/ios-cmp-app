@@ -14,7 +14,7 @@ import Quick
 
 // swiftlint:disable force_try
 class SPPropertyNameSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         it("http:// in property are not affected") {
             let property = "http://any"
             let spProperty = try! SPPropertyName(property)

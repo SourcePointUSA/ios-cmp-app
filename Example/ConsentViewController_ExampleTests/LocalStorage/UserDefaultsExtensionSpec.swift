@@ -21,7 +21,7 @@ class CodableMock: Codable, Equatable {
 }
 
 class UserDefaultsExtension: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("UserDefaults") {
             it("can store and retrieve Codable objects") {
                 let original = CodableMock(42)

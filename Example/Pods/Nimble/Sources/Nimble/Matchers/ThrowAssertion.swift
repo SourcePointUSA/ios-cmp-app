@@ -1,9 +1,9 @@
-#if canImport(CwlPreconditionTesting) && (os(macOS) || os(iOS))
+// swiftlint:disable all
+#if canImport(CwlPreconditionTesting) && (os(macOS) || os(iOS) || os(visionOS))
 import CwlPreconditionTesting
 #elseif canImport(CwlPosixPreconditionTesting)
 import CwlPosixPreconditionTesting
 #elseif canImport(Glibc)
-// swiftlint:disable all
 import Glibc
 
 // This function is called from the signal handler to shut down the thread and return 1 (indicating a SIGILL was received).
@@ -79,14 +79,12 @@ public func catchBadInstruction(block: @escaping () -> Void) -> BadInstructionEx
 
     return caught ? BadInstructionException() : nil
 }
-// swiftlint:enable all
 #endif
 
-public func throwAssertion<Out>() -> Predicate<Out> {
-    return Predicate { actualExpression in
-    #if os(watchOS)
-        fatalError("Nimble currently doesn't support watchOS.")
-    #elseif (arch(x86_64) || arch(arm64)) && (canImport(Darwin) || canImport(Glibc))
+public func throwAssertion<Out>() -> Matcher<Out> {
+    return Matcher { actualExpression in
+    #if (arch(x86_64) || arch(arm64))
+        #if (canImport(CwlPreconditionTesting) || canImport(CwlPosixPreconditionTesting) || canImport(Glibc))
         let message = ExpectationMessage.expectedTo("throw an assertion")
         var actualError: Error?
         let caughtException: BadInstructionException? = catchBadInstruction {
@@ -105,6 +103,21 @@ public func throwAssertion<Out>() -> Predicate<Out> {
                     print()
                     NimbleEnvironment.activeInstance.suppressTVOSAssertionWarning = true
                 }
+            #elseif os(watchOS)
+            if !NimbleEnvironment.activeInstance.suppressWatchOSAssertionWarning {
+                print()
+                print("[Nimble Warning]: If you're getting stuck on a debugger breakpoint for a " +
+                    "fatal error while using throwAssertion(), please disable 'Debug Executable' " +
+                    "in your scheme. Go to 'Edit Scheme > Test > Info' and uncheck " +
+                    "'Debug Executable'. If you've already done that, suppress this warning " +
+                    "by setting `NimbleEnvironment.activeInstance.suppressWatchOSAssertionWarning = true`. " +
+                    "This is required because the standard methods of catching assertions " +
+                    "(mach APIs) are unavailable for watchOS. Instead, the same mechanism the " +
+                    "debugger uses is the fallback method for watchOS."
+                )
+                print()
+                NimbleEnvironment.activeInstance.suppressWatchOSAssertionWarning = true
+            }
             #endif
             do {
                 _ = try actualExpression.evaluate()
@@ -114,13 +127,21 @@ public func throwAssertion<Out>() -> Predicate<Out> {
         }
 
         if let actualError = actualError {
-            return PredicateResult(
+            return MatcherResult(
                 bool: false,
                 message: message.appended(message: "; threw error instead <\(actualError)>")
             )
         } else {
-            return PredicateResult(bool: caughtException != nil, message: message)
+            return MatcherResult(bool: caughtException != nil, message: message)
         }
+        #else
+        let message = """
+            The throwAssertion Nimble matcher does not support your platform.
+            Note: throwAssertion no longer works on tvOS or watchOS platforms when you use Nimble with Cocoapods.
+                  You will have to use Nimble with Swift Package Manager or Carthage.
+            """
+        fatalError(message)
+        #endif
     #else
         let message = """
             The throwAssertion Nimble matcher can only run on x86_64 and arm64 platforms.
@@ -131,3 +152,4 @@ public func throwAssertion<Out>() -> Predicate<Out> {
     #endif
     }
 }
+// swiftlint:enable all

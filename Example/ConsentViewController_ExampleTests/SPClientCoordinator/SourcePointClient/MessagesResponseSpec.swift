@@ -13,7 +13,7 @@ import Quick
 
 // swiftlint:disable function_body_length
 class MessagesResponseSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         let gdprCampaign = """
         {
             "type": "GDPR",

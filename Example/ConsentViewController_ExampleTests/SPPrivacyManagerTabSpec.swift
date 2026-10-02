@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SPPrivacyManagerTabSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("SPPrivacyManagerTab") {
             context("Default") {
                 it("has the empty raw value") {

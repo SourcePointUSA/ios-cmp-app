@@ -13,7 +13,7 @@ import Quick
 
 
 class SPGCMDataSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         it("is codable") {
             let rawGcm = Result { """
                 {
@@ -32,7 +32,7 @@ class SPGCMDataSpec: QuickSpec {
 }
 
 class SPGCMDataStatusSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         it("is codable") {
             let rawStatus = Result { "\"granted\"".data(using: .utf8) }
             do {

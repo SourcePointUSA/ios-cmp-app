@@ -11,7 +11,7 @@ import Nimble
 import Quick
 
 class ConnectivityManagerSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         let connectivityManager = ConnectivityManager()
         describe("Test ConnectivityManager") {
             it("Test isConnectedToNetwork method") {

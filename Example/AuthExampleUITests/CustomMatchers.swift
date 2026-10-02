@@ -11,66 +11,39 @@ import Nimble
 import Quick
 import XCTest
 
-public typealias Predicate = Nimble.Predicate
-
-extension DispatchTimeInterval {
-    func toDouble() -> Double {
-        var result: Double = 0
-        switch self {
-            case .seconds(let value):
-                result = Double(value)
-
-            case .milliseconds(let value):
-                result = Double(value) * 0.001
-
-            case .microseconds(let value):
-                result = Double(value) * 0.000_001
-
-            case .nanoseconds(let value):
-                result = Double(value) * 0.000_000_001
-
-            case .never:
-                result = Double.infinity
-            @unknown default:
-                result = Double.infinity
-        }
-        return result
-    }
-}
-
 /// A matcher that checks if a `XCUIElement` contains the given text
-public func containText(_ text: String) -> Predicate<XCUIElement> {
-    Predicate.simple("contain text") { actualExpression in
+public func containText(_ text: String) -> Matcher<XCUIElement> {
+    Matcher.simple("contain text") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.label.contains(text))
+        return MatcherStatus(bool: actual.label.contains(text))
     }
 }
 
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time. 20 seconds by default
-public func showUp() -> Predicate<XCUIElement> {
-    Predicate.simple("show up") { actualExpression in
+public func showUp() -> Matcher<XCUIElement> {
+    Matcher.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: Nimble.AsyncDefaults.timeout.toDouble()))
+        return MatcherStatus(bool: actual.waitForExistence(timeout: Nimble.PollingDefaults.timeout.timeInterval))
     }
 }
 
 /// A Nimble matcher that succeeds when an XCUIElement shows up after
 /// a certain amount of time.
-public func showUp(in timeout: TimeInterval) -> Predicate<XCUIElement> {
-    Predicate.simple("show up") { actualExpression in
+public func showUp(in timeout: TimeInterval) -> Matcher<XCUIElement> {
+    Matcher.simple("show up") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return PredicateStatus(bool: actual.waitForExistence(timeout: timeout))
+        return MatcherStatus(bool: actual.waitForExistence(timeout: timeout))
     }
 }
 
 /// A Nimble matcher that succeeds when an XCUIElement no longer exists. Due to its async nature, it should
 /// be used together with `.toEventually`.
-public func disappear() -> Predicate<XCUIElement> {
-    Predicate.simple("disappear") { actualExpression in
+public func disappear() -> Matcher<XCUIElement> {
+    Matcher.simple("disappear") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
         QuickSpec.current.expectation(for: NSPredicate(format: "exists == FALSE"), evaluatedWith: actual, handler: nil)
-        QuickSpec.current.waitForExpectations(timeout: Double(Nimble.AsyncDefaults.timeout.toDouble()))
-        return PredicateStatus(bool: !actual.exists)
+        QuickSpec.current.waitForExpectations(timeout: Nimble.PollingDefaults.timeout.timeInterval)
+        return MatcherStatus(bool: !actual.exists)
     }
 }

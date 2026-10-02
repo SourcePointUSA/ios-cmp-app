@@ -54,12 +54,19 @@ extension NMBExceptionCapture {
 /// Allows you to temporarily replace the current Nimble assertion handler with
 /// the one provided for the scope of the closure.
 ///
+/// @warning
+/// This form of `withAssertionHandler` does not work in any kind of
+/// async context. Use the async form of `withAssertionHandler`
+/// if you are running tests in an async context.
+///
 /// Once the closure finishes, then the original Nimble assertion handler is restored.
 ///
 /// @see AssertionHandler
 public func withAssertionHandler(_ tempAssertionHandler: AssertionHandler,
-                                 file: FileString = #file,
+                                 fileID: String = #fileID,
+                                 file: FileString = #filePath,
                                  line: UInt = #line,
+                                 column: UInt = #column,
                                  closure: () throws -> Void) {
     let environment = NimbleEnvironment.activeInstance
     let oldRecorder = environment.assertionHandler
@@ -72,10 +79,16 @@ public func withAssertionHandler(_ tempAssertionHandler: AssertionHandler,
         try capturer.tryBlockThrows {
             try closure()
         }
+    } catch is RequireError {
+        // specifically ignore RequireError, will be caught by the assertion handler.
     } catch {
         let failureMessage = FailureMessage()
         failureMessage.stringValue = "unexpected error thrown: <\(error)>"
-        let location = SourceLocation(file: file, line: line)
+        let location = SourceLocation(
+            fileID: fileID,
+            filePath: file,
+            line: line, column: column
+        )
         tempAssertionHandler.assert(false, message: failureMessage, location: location)
     }
 }
@@ -85,6 +98,11 @@ public func withAssertionHandler(_ tempAssertionHandler: AssertionHandler,
 ///
 /// This can be useful if you want to gather information about expectations
 /// that occur within a closure.
+///
+/// @warning
+/// This form of `gatherExpectations` does not work in any kind of
+/// async context. Use the async form of `gatherExpectations`
+/// if you are running tests in an async context.
 ///
 /// @param silently expectations are no longer send to the default Nimble 
 ///                 assertion handler when this is true. Defaults to false.
@@ -111,6 +129,11 @@ public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [
 ///
 /// This can be useful if you want to gather information about failed
 /// expectations that occur within a closure.
+///
+/// @warning
+/// This form of `gatherFailingExpectations` does not work in any kind of
+/// async context. Use the async form of `gatherFailingExpectations`
+/// if you are running tests in an async context.
 ///
 /// @param silently expectations are no longer send to the default Nimble
 ///                 assertion handler when this is true. Defaults to false.

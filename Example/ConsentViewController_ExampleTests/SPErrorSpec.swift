@@ -21,7 +21,7 @@ func aResponseWith(status: Int) -> HTTPURLResponse {
 // swiftlint:disable function_body_length
 
 class SPErrorSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("SPErrorSpec") {
             describe("NoInternetConnection") {
                 it("has spCode: no_internet_connection") {

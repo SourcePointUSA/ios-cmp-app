@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ConsentViewController'
-  s.version = '7.12.9'
+  s.version = '7.12.10'
   s.summary = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.static_framework = true
   s.homepage = 'https://www.sourcepoint.com'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/SourcePointUSA/ios-cmp-app.git', :tag => s.version.to_s }
   s.swift_version = '5.1'
   s.source_files = 'ConsentViewController/Classes/**/*'
-  s.dependency 'SPMobileCore', '0.1.13'
+  s.dependency 'SPMobileCore', '0.1.16'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'
   s.tvos.deployment_target = '12.0'
@@ -33,6 +33,7 @@ Pod::Spec.new do |s|
   }
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'DEFINES_MODULE' => 'YES'
+    'DEFINES_MODULE' => 'YES',
+    'OTHER_SWIFT_FLAGS[config=Debug]' => '$(inherited) -enable-testing'
   }
 end

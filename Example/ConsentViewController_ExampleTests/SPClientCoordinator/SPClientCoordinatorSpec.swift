@@ -14,7 +14,7 @@ import Quick
 // swiftlint:disable force_unwrapping force_try function_body_length file_length type_body_length cyclomatic_complexity
 
 class SPClientCoordinatorSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         SPConsentManager.clearAllData()
 
         let accountId = 22, propertyId = 16893
@@ -40,13 +40,13 @@ class SPClientCoordinatorSpec: QuickSpec {
         }
 
         beforeSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(5)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            Nimble.PollingDefaults.timeout = .seconds(5)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
+            Nimble.PollingDefaults.timeout = .seconds(1)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(10)
         }
 
         describe("a property with USNat campaign") {

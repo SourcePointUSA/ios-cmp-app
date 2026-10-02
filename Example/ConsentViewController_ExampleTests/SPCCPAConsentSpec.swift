@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class SPCCPAConsentsSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("static empty()") {
             it("contain empty defaults for all its fields") {
                 let consents = SPCCPAConsent.empty()

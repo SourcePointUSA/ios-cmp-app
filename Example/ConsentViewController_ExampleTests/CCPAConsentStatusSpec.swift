@@ -14,7 +14,7 @@ import Quick
 // swiftlint:disable colon force_unwrapping
 
 class CCPAConsentStatusSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         let statusMapping: [String: CCPAConsentStatus] = [
             "consentedAll"  : .ConsentedAll,
             "rejectedAll"   : .RejectedAll,

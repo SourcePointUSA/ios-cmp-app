@@ -10,6 +10,7 @@ import Foundation
 @testable import ConsentViewController
 
 class MessageUIDelegateSpy: SPMessageUIDelegate {
+    var loadedCallCount: Int = 0
     var loadedWasCalled = false
     var onErrorWasCalled = false
     var actionCalledWith: SPAction?
@@ -17,6 +18,7 @@ class MessageUIDelegateSpy: SPMessageUIDelegate {
 
     func loaded(_ controller: UIViewController) {
         loadedWasCalled = true
+        loadedCallCount += 1
         onLoaded?(controller)
     }
 

@@ -13,7 +13,7 @@ import Nimble
 import Quick
 
 class SPMessageLanguageSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("SPMessageLanguage") {
             context("BrowserDefault") {
                 it("has the raw value language code empty") {
