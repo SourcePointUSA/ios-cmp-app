@@ -1,6 +1,9 @@
 # 7.12.11 (Oct, 02, 2026)
 * [DIA-6442](https://sourcepoint.atlassian.net/browse/DIA-6442) Fixed an issue that prevented the SDK from correctly reporting a user's message status
 
+# 7.12.11 (Oct, 02, 2026)
+* [DIA-6442](https://sourcepoint.atlassian.net/browse/DIA-6442) Fixed an issue that prevented the SDK from correctly reporting a user's message status
+
 # 7.12.10 (June, 12, 2026)
 * Fixed an issue that could cause the SDK to call `messageUIDelegate.loaded()` multiple times when the message rendering app dispatches the `sp.showMessage` event repeatedly. [#651](https://github.com/SourcePointUSA/ios-cmp-app/pull/651) [#650](https://github.com/SourcePointUSA/ios-cmp-app/pull/650)
 * Updated `SPMobileCore` to version 0.1.16, improving thread safety for local storage (`UserDefaults`) access. [#648](https://github.com/SourcePointUSA/ios-cmp-app/pull/648)
