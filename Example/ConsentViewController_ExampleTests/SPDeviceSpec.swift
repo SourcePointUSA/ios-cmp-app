@@ -18,6 +18,8 @@ class SPDeviceSpec: QuickSpec {
                 let version = SPDevice.standard.osVersion
                 if #available(iOS 27, *) {
                     expect(version).to(contain("27."))
+                else if #available(iOS 26, *) {
+                        expect(version).to(contain("26."))
                 } else if #available(iOS 18, *) {
                     expect(version).to(contain("18."))
                 } else {
