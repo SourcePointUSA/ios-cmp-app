@@ -1,5 +1,5 @@
 PODS:
-  - ConsentViewController (7.12.10):
+  - ConsentViewController (7.12.11):
     - SPMobileCore (= 0.1.17)
   - CwlCatchException (2.2.1):
     - CwlCatchExceptionSupport (~> 2.2.1)
@@ -136,7 +136,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ConsentViewController: 737c0415b17c2d0b151e245f37fe835d35f5a105
+  ConsentViewController: 8c2cd6808ba10f4fe9be5949dd36e3ada40a911a
   CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
   CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
   CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
@@ -159,4 +159,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 94b917154571d7057186d448c1cfdb80061ca3cd
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0
