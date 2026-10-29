@@ -6,15 +6,15 @@
 	<dict>
 		<key>ios-arm64/Didomi.framework/Assets.car</key>
 		<data>
-		q2KQY8MB/3juCbODtbB6wXkjNyU=
+		d50amnAnc94kvfjbogs5ZO17MQc=
 		</data>
 		<key>ios-arm64/Didomi.framework/Didomi</key>
 		<data>
-		X9NG3xbKp2uAFn7h3W3a6xzLukw=
+		LTXKA9H4rDeDyrR+V0KPb12SObA=
 		</data>
 		<key>ios-arm64/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<data>
-		ufTErpTS9R+n10GYKB5YP/QfmD4=
+		RYzqswtoXdiO9IQ1CzL2v3c9Fj0=
 		</data>
 		<key>ios-arm64/Didomi.framework/Headers/Didomi.h</key>
 		<data>
@@ -22,35 +22,35 @@
 		</data>
 		<key>ios-arm64/Didomi.framework/Info.plist</key>
 		<data>
-		XR0qdkkYgFxqRga4pjLseYWJWek=
+		YH1KjF9HJBPsAF9BnL27Zvksexc=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		pgQxJEGwzFt3M9enFZHHDcW6r/k=
+		iOMqTK7vQhdo0YOLl+HEkJjrGCI=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		JcA8N/N+uuxYNeup9oHdC/0AjHg=
+		0+qA5d139cYN4AKfmh7FWEs454g=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.private.swiftinterface-e</key>
 		<data>
-		59wrdm9nQlrPtn2AlaHIxtu0tB8=
+		5jlOQx7U3GVOsyibpDu1niuL7HM=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		Py0jUZnTzia0F94h2RTw/SDw+zo=
+		zuwdqxbyx/rpmAMW1v7l1O50LW0=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		JcA8N/N+uuxYNeup9oHdC/0AjHg=
+		0+qA5d139cYN4AKfmh7FWEs454g=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftinterface-e</key>
 		<data>
-		59wrdm9nQlrPtn2AlaHIxtu0tB8=
+		5jlOQx7U3GVOsyibpDu1niuL7HM=
 		</data>
 		<key>ios-arm64/Didomi.framework/Modules/module.modulemap</key>
 		<data>
-		8PZr7/5ml7Vgz+0Kx3MJk43Kff8=
+		HxaegJlra36usSKlTsyDieHSSb8=
 		</data>
 		<key>ios-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -58,203 +58,207 @@
 		</data>
 		<key>ios-arm64/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sr-Latn.json</key>
 		<data>
-		+0/ALbZZUmiJ2GQfUwdObSwD870=
+		PkyoZ4NhDLFScJfsh0pg5pARKYU=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>ios-arm64/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>ios-arm64/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>ios-arm64/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>ios-arm64/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>ios-arm64/Didomi.framework/web_sdk.html</key>
 		<data>
@@ -262,31 +266,31 @@
 		</data>
 		<key>ios-arm64/Didomi.framework/web_sdk_utilities.js</key>
 		<data>
-		xPC51rfkbAnOdBzqxjDc1ZJmBsc=
+		Ie5mxVrnC9dIMusUodvfzSiNCaw=
 		</data>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<data>
-		fzFtRaKM8+U3iqsB0Hh+BeEQbQo=
+		d6e1kVxA0gZeadniJxhnrzlk3Ng=
 		</data>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<data>
-		uLhwAmqUYwrdtS/eLWljHxakwHM=
+		EnI7cfalbR3/5p24hbu0ikarH7I=
 		</data>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<data>
-		iNXV5yKtBTDgQG4zJg5UU2oDpjA=
+		rJCSxCaVIR5kmVVioAn1wcPt/B0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<data>
-		q2KQY8MB/3juCbODtbB6wXkjNyU=
+		d50amnAnc94kvfjbogs5ZO17MQc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<data>
-		2F7PXn5pIJTnbZtR3FAEY/Ug/tA=
+		PQDMxdkwJpE0XtoqiZakw8wqd14=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<data>
-		0xiNL8Lz4vQfw/Bk4gA0VhL7aKU=
+		ZJN+pYWFKumCgAx+ieQ7i7TG3oc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi.h</key>
 		<data>
@@ -294,59 +298,59 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Info.plist</key>
 		<data>
-		Up/DVL7k1YwMsLSjdJeNPP1PwH8=
+		W8PySEOUoIcigvnOuziZyC4mfDg=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		4Z3jnLH21fzA5Fs8guR+XKbo5ac=
+		cMm73JU406jnWWqbOEBZ/3tnij0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		dPCcXRjpZhh+FmpLgAVc1vfrxKo=
+		FQIrSLK1R7BksRcfX9ZgB0hJFE0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface-e</key>
 		<data>
-		b42l2zZK2UpHcC9xjjDp3VXiv4U=
+		yPfT7aQeW+INR0kbhRBINGnX8QE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		02LL1TI2QAopkJVIZbUrPMvUXNM=
+		MVx+iB9Quj5HMbzCxh7lSK3pKBE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		dPCcXRjpZhh+FmpLgAVc1vfrxKo=
+		FQIrSLK1R7BksRcfX9ZgB0hJFE0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftinterface-e</key>
 		<data>
-		b42l2zZK2UpHcC9xjjDp3VXiv4U=
+		yPfT7aQeW+INR0kbhRBINGnX8QE=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		4Z3jnLH21fzA5Fs8guR+XKbo5ac=
+		cMm73JU406jnWWqbOEBZ/3tnij0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		WAD4aBl9xDDXT27pxq89/ElHpj8=
+		1BlI/R10ZsUYUShGnBagwJPvGcA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface-e</key>
 		<data>
-		eobwVLrIjJ2Y+o2Lj9CXy9d2pDc=
+		vYlUvmsRN8rmOBuOTNhxXyYxugw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		6ZF+duGr5XU12LoWn66tjOAlr2A=
+		YeLVHsEoVlWkaZ62U043MokK4IM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		WAD4aBl9xDDXT27pxq89/ElHpj8=
+		1BlI/R10ZsUYUShGnBagwJPvGcA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftinterface-e</key>
 		<data>
-		eobwVLrIjJ2Y+o2Lj9CXy9d2pDc=
+		vYlUvmsRN8rmOBuOTNhxXyYxugw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/module.modulemap</key>
 		<data>
-		8PZr7/5ml7Vgz+0Kx3MJk43Kff8=
+		HxaegJlra36usSKlTsyDieHSSb8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -354,207 +358,211 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/_CodeSignature/CodeResources</key>
 		<data>
-		/mAjAdf8b3dhf85AlS93KOqhnHE=
+		U4sw49GyOYyLDYePYAcgMX3f9Pg=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr-Latn.json</key>
 		<data>
-		+0/ALbZZUmiJ2GQfUwdObSwD870=
+		PkyoZ4NhDLFScJfsh0pg5pARKYU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>ios-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/web_sdk.html</key>
 		<data>
@@ -562,19 +570,19 @@
 		</data>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/web_sdk_utilities.js</key>
 		<data>
-		xPC51rfkbAnOdBzqxjDc1ZJmBsc=
+		Ie5mxVrnC9dIMusUodvfzSiNCaw=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Assets.car</key>
 		<data>
-		kZfmwVDvnNBmd8iam7hEu/87LLE=
+		BXQ2aNiDn9R1HN09XX8rVJbC+Q0=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Didomi</key>
 		<data>
-		w+P6yXsPVjcHcQI25QJi/F5WSn8=
+		KkWrLoUIlylI0kyDr3+fJhUjUSc=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<data>
-		oAMxSP+iwLer5mkVPHybyfqv3t4=
+		EUjXSy07UgWEvAPft+GkdADpi50=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Headers/DidomiTV.h</key>
 		<data>
@@ -582,35 +590,35 @@
 		</data>
 		<key>tvos-arm64/Didomi.framework/Info.plist</key>
 		<data>
-		+o5P9CyPpFePfadFo19C/xvUrVA=
+		2OIwJUyEhVRnlWT5pIA8+TTcLEA=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.abi.json</key>
 		<data>
-		gaOKLeAZSqe8mC3KegDxb/PG5i0=
+		/Gw1zp7GECBE0b0x7qrIpfWJTd8=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.private.swiftinterface</key>
 		<data>
-		1cUO6FW1A7r407UttsS6zMtGC04=
+		LRn8s5Xia/ZB7eYRon8pA8Kx29U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.private.swiftinterface-e</key>
 		<data>
-		0RhtUj4fC9K5b76NROdpTWjLRwI=
+		wFEMrnDujQq98Pj2BZWGXtzhK1U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftdoc</key>
 		<data>
-		G7V3XpUiovdPoYf0IC1+NjsST4o=
+		YZ3P9lQ5MtEYhlhFSENapURuuoI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftinterface</key>
 		<data>
-		1cUO6FW1A7r407UttsS6zMtGC04=
+		LRn8s5Xia/ZB7eYRon8pA8Kx29U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftinterface-e</key>
 		<data>
-		0RhtUj4fC9K5b76NROdpTWjLRwI=
+		wFEMrnDujQq98Pj2BZWGXtzhK1U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/Modules/module.modulemap</key>
 		<data>
-		QqJaqRpIZyliHZGjoJVfLG1bNH0=
+		Uwa2ygOY1NuOf0OseMM29VvAQ24=
 		</data>
 		<key>tvos-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -618,223 +626,227 @@
 		</data>
 		<key>tvos-arm64/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>tvos-arm64/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>tvos-arm64/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>tvos-arm64/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>tvos-arm64/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<data>
-		jQKoGg19serjIlGMer2670EMrBA=
+		7b/rD43IXi/6WOyL6/X8PufcSs4=
 		</data>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<data>
-		iQqwdbehiFFZ0hDBLoQ6CdYmqs4=
+		3IA7lBdYTxx7x59oT9PGILKZN2s=
 		</data>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<data>
-		ahGayLdw8nx7mu/rEZfXrz+C4oI=
+		F6F1jWvRY8MpMP9Q68chSJspLUI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<data>
-		kZfmwVDvnNBmd8iam7hEu/87LLE=
+		BXQ2aNiDn9R1HN09XX8rVJbC+Q0=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<data>
-		mUymKbiuPpux9UoSFbKJAj9QnVs=
+		UjIQhy6LOvDW+Iz+zSQxLKczSvs=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<data>
-		7XP0IFwxJU/PNPAV9DspX5S9Jh4=
+		iM/N4xWgeVHk8E1WZdR24LYcUtg=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Headers/DidomiTV.h</key>
 		<data>
@@ -842,59 +854,59 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Info.plist</key>
 		<data>
-		MnmaWDP4EM6mUaERPBBTt3gFR9w=
+		t5Ha0Iod01WrCZBcoFaeqT6OI6I=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<data>
-		/7L3iBQQ0jLKf350bzQM+NAfw24=
+		nWR6eJHLwGeGwygQFuPxvXzIAYQ=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		tsHeOFVazkzSfjTDIRo4j6+ihTo=
+		vR/Djc4U6slxbZQqbH1RpwJPZlM=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface-e</key>
 		<data>
-		prDegtdwE4ya27c/c7x5i6wHV18=
+		9/8DDwGP7ZK2S3Nxcp0Pq8LW64M=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		+9KjybCUUwZd4nJ3VX0wPg81F6s=
+		4XoUluFj6cII5fG+HFf8qnnRre4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		tsHeOFVazkzSfjTDIRo4j6+ihTo=
+		vR/Djc4U6slxbZQqbH1RpwJPZlM=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftinterface-e</key>
 		<data>
-		prDegtdwE4ya27c/c7x5i6wHV18=
+		9/8DDwGP7ZK2S3Nxcp0Pq8LW64M=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
-		/7L3iBQQ0jLKf350bzQM+NAfw24=
+		nWR6eJHLwGeGwygQFuPxvXzIAYQ=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		T2nPm7mV7tQqlvfKNpxNUMD5mCs=
+		zcXBxFzM4ln9uNGR/WsUTkBBbFw=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface-e</key>
 		<data>
-		EtwQtFvHzLCoF94yNAdxkcGw1LA=
+		j/A3203IAQ2M7EYpIDOyVdlSI6Y=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		NvOSrtUpIOZ/ObP5VLC/nGuELeo=
+		X38kUBLXyiwim6sUZl7Sh57Qf7c=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		T2nPm7mV7tQqlvfKNpxNUMD5mCs=
+		zcXBxFzM4ln9uNGR/WsUTkBBbFw=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface-e</key>
 		<data>
-		EtwQtFvHzLCoF94yNAdxkcGw1LA=
+		j/A3203IAQ2M7EYpIDOyVdlSI6Y=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/module.modulemap</key>
 		<data>
-		QqJaqRpIZyliHZGjoJVfLG1bNH0=
+		Uwa2ygOY1NuOf0OseMM29VvAQ24=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -902,211 +914,215 @@
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/_CodeSignature/CodeResources</key>
 		<data>
-		XtR9aQt8+EV0vHEmQbIYoXCJBzw=
+		p91zusKKYvwNv/GtZkkY7Eghmsw=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>tvos-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>xros-arm64/Didomi.framework/Assets.car</key>
 		<data>
-		OqdcRYAbSoaQkL+3oiWJDLz4z1M=
+		CC9Yko2G3Bd1P3ektzb18ivHdGc=
 		</data>
 		<key>xros-arm64/Didomi.framework/Didomi</key>
 		<data>
-		eyfVWekroGvQhLaayj+a8U6O4pM=
+		1oiectlTjEWO8iFmFIHth41pGqs=
 		</data>
 		<key>xros-arm64/Didomi.framework/Headers/DidomiVisionOS.h</key>
 		<data>
@@ -1114,31 +1130,31 @@
 		</data>
 		<key>xros-arm64/Didomi.framework/Info.plist</key>
 		<data>
-		wIRv2dNuh+QERRCAKdCo/tT+PBo=
+		ZVeb2n+QYFs2NiCoPQKA3j57ChQ=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.abi.json</key>
 		<data>
-		TeFCFbr9IAHk4XkN215eCCnI4g4=
+		gdCvG3nEWxmU69lo6oH4Lg6CROw=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.private.swiftinterface</key>
 		<data>
-		xmlPTxxLNAE2ft9/sICNxDeRW8g=
+		VxeNcf7ABPZXpJyk7ViWskSo43o=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.private.swiftinterface-e</key>
 		<data>
-		iWol2ZFIVhMgDNOi7Nh+MESrJqE=
+		H/7y+z1gzSz1T0yJF+nLvM3rmNc=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftdoc</key>
 		<data>
-		yBw+x9r/skZcRwMz3+FutSer3Ek=
+		6f7hH3NhF2xZPyyVPGjzRwwP6gA=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftinterface</key>
 		<data>
-		xmlPTxxLNAE2ft9/sICNxDeRW8g=
+		VxeNcf7ABPZXpJyk7ViWskSo43o=
 		</data>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftinterface-e</key>
 		<data>
-		iWol2ZFIVhMgDNOi7Nh+MESrJqE=
+		H/7y+z1gzSz1T0yJF+nLvM3rmNc=
 		</data>
 		<key>xros-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -1146,199 +1162,203 @@
 		</data>
 		<key>xros-arm64/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>xros-arm64/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>xros-arm64/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>xros-arm64/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>xros-arm64/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>xros-arm64/Didomi.framework/web_sdk.html</key>
 		<data>
@@ -1346,27 +1366,27 @@
 		</data>
 		<key>xros-arm64/Didomi.framework/web_sdk_utilities.js</key>
 		<data>
-		xPC51rfkbAnOdBzqxjDc1ZJmBsc=
+		Ie5mxVrnC9dIMusUodvfzSiNCaw=
 		</data>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<data>
-		2rvDarl/DH58gvljQww3Ads85ws=
+		HEPvAJXaMRsEuz/iu5+0vnNr/gc=
 		</data>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<data>
-		bcANvla0snXs2Ibzg2aZAHMJ1vU=
+		4Ja3gXA5pLcoYZLIZ6bFq7OV5S8=
 		</data>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<data>
-		aKBqCx2FbTPrMagi2TQVvuH7QFk=
+		tvVuwwpZmqlEGi6YJ24VUcHJpqg=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<data>
-		OqdcRYAbSoaQkL+3oiWJDLz4z1M=
+		CC9Yko2G3Bd1P3ektzb18ivHdGc=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<data>
-		EN2QIUIX1vsg9UZA6g89/SBGUX8=
+		yfRqu/qrF9q4EJ2OUlHvRqmn1Ok=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Headers/DidomiVisionOS.h</key>
 		<data>
@@ -1374,55 +1394,55 @@
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Info.plist</key>
 		<data>
-		feiOekJrboLGlQr38XQvNpZ/TCg=
+		QMjf1zuhAaKBYgZG+QkYIYLslS4=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.abi.json</key>
 		<data>
-		j0Sx3fDvR6oCio8H8dJTmiEDvKY=
+		iEiixU0gWu3jTMhHFOisx/VDyGg=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.private.swiftinterface</key>
 		<data>
-		uEXtKCGefmoLOvL8iQRaglOZ3Rk=
+		PwTDlk2S5QZq21MTLBLQcvt/M/o=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.private.swiftinterface-e</key>
 		<data>
-		/Wa7X++tOiwJq7inHSyFomiMOoU=
+		Mr/ZMt2nWzdO8U82cVCkl7SFSJ8=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftdoc</key>
 		<data>
-		tDmR3/N25u9I+fFCLL/dIDsDz+Y=
+		OALpK/2CpSa4Tk01iowQP9o2NN0=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftinterface</key>
 		<data>
-		uEXtKCGefmoLOvL8iQRaglOZ3Rk=
+		PwTDlk2S5QZq21MTLBLQcvt/M/o=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftinterface-e</key>
 		<data>
-		/Wa7X++tOiwJq7inHSyFomiMOoU=
+		Mr/ZMt2nWzdO8U82cVCkl7SFSJ8=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.abi.json</key>
 		<data>
-		j0Sx3fDvR6oCio8H8dJTmiEDvKY=
+		iEiixU0gWu3jTMhHFOisx/VDyGg=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.private.swiftinterface</key>
 		<data>
-		LrtVkrLQu2H7Cm/dn4BePfmaPKs=
+		ZoZR2rv8rchOuQjUCdZKsV4McHo=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.private.swiftinterface-e</key>
 		<data>
-		tyChvqPD3qu/lHGNZt4K+1y7bGM=
+		lqMqXehIY1Kl0fUhzHHmZ9ao34A=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftdoc</key>
 		<data>
-		mFWcbjj6SXu6NhzrUdBZl2ks7D0=
+		3C2QZ38B00pwydaWbL7OD/DjnRk=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftinterface</key>
 		<data>
-		LrtVkrLQu2H7Cm/dn4BePfmaPKs=
+		ZoZR2rv8rchOuQjUCdZKsV4McHo=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftinterface-e</key>
 		<data>
-		tyChvqPD3qu/lHGNZt4K+1y7bGM=
+		lqMqXehIY1Kl0fUhzHHmZ9ao34A=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -1430,203 +1450,207 @@
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/_CodeSignature/CodeResources</key>
 		<data>
-		9bj8FJ4/hbe6aoloiroO4So7ZSc=
+		7qg8JpaLtfj9mprcXfpiSbonbYY=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<data>
-		XBxhbgAIBc/Gi/z45U8BuTZ5QnY=
+		ZpvNdovM+1CsMFeW/cVu9eFj1lI=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<data>
-		iVKwr4Wo4eSTNosstrEulvq7kGY=
+		043EpkdBB6ciiqRc6BKGjGZ9/+Y=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<data>
-		DZtO5XppIyM2Zh68p5ZEO3Ekch0=
+		osaGTmXKAiAsvVlFkGCo/DbcqQU=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<data>
-		ksAIDHdblJ46HuCRCmEc/5elPWE=
+		bfLZiQfCggntsmf5LIfdctzMTco=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<data>
-		eZyRcRnenyZFqZviIlupEjPBk1c=
+		1dOxUW2N1CFJ+9KtYSIK2Emt1eg=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<data>
-		25vTekAnK2zRxbYX85l5eU0uqi8=
+		kQKSfl+k4dpu7HjqiFFsuyrCacA=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<data>
-		7PPW+DlEcVG3qiqpF3xrWzurL6g=
+		kfbc9OaaB7RnrOzkPkxNKh79s4U=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<data>
-		Sv/oDbvj1OY1w0ocyQTjGA2+hO0=
+		B9o9WDAsxR/JXtrkppVm1iPfzB0=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<data>
-		HPreg2WnQu3a/bMWH06q6jMeZrM=
+		xTKftQMQ+QNzNkRJeB1yHu6u1H0=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<data>
-		GRs67PogTjF5BC44VLycsULZlTw=
+		p9CdJkaoSu1GmWEvRSyDIqj0UVk=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<data>
-		JBH09ryTgF3rf1CfIfqUDGa/4S4=
+		TBNrcCAM50GkGSDDmIu7UwQyQ9A=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<data>
-		/PAwOgTX0OBK+Drx0f/taQJZnPI=
+		0mYk+LAeWvg8aCXaDIWn1iFFf+4=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<data>
-		yOclbeQQYnaonQLtkRyqEJ/Q34s=
+		n7EM9nyArdAzYtFtyNEjE+8BWuI=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<data>
-		HKzpyPaporR9AhqH56HH1MUZli4=
+		+gmTwxnO21hAChXO/9d5FZj4xf0=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<data>
-		Twxa8vvhuP3ZxvGGqDW3PKs8cGg=
+		1P9DWL6i6hLtQw0sP3+h081D3Kc=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<data>
-		yqsCGdQ+C8UCJCTYtDTdXd4bBGw=
+		zSnAou8iBjVocP4rsIUDfayPdPY=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<data>
-		XiavWFNu6VZQyWbn7+xXemJnZi0=
+		f21YtimBNVpFofTFfa0n5E6lP/c=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<data>
-		fT5udVgY0pq5qCWEHzK9Vw7ge8Q=
+		n3c5rLRNSuuqnL1tXUZoeuQ2ioI=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<data>
-		Zon+wI7t25btZ3FVIe6XpoewBa0=
+		34XPcG+vCyeu6jhbpfan/ZlDVLY=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<data>
-		J9y5mTV8SA7jP0aKfpsz+Ga6P/A=
+		NDA127nw90O00bTGXPy/zuEY1v4=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<data>
-		JMz10m23hxDYlvVC7yyMp/FsrBg=
+		t5Xny9+OiNjoC7N1yhnj8tQAy4E=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<data>
-		BfZIstYyeDeeaTv2IbEMh9b6TEE=
+		nf8gs47NhCc0O17zwuIoCr0zPtk=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<data>
-		OMZULG5MM7YvOMBYNmazIdoiU10=
+		u9wtTmjvZLEDO5YddY11Q+jDmak=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<data>
-		dZ9y7QvAy5StVzY6NVUwKPy0BTs=
+		ECagJK3jtsqmgTcdvYuKJYIQYZU=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<data>
-		mNU+xjE9/ogjjovuF9FTVtJIbL8=
+		J578py1uY/1UGM7F8ecPbETvQfU=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<data>
-		DAfMzqHXkqbNxGoZnIUFj3AJ3P8=
+		ECLXeQ/0n/kxfQkXCXMziG8UGoc=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<data>
-		GcxoBZbhEZkF3YA/8URKFzxC/98=
+		mb6mnHHl/5EZoyIUlE/kxbg6gK8=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<data>
-		gw2z7f9DjtMNN07jVk34CVMUtME=
+		NP9+rDuTb6wkArnGHTd9aoUUibM=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<data>
-		GdGWupS3lH86L7i3a7S6DPhj5cI=
+		W9riS6kKUvayrAg5fACIjeLwP78=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<data>
-		aMmAhNqr/0MXER/NRLy0PAg/uFw=
+		9iI9nQj3UJxu5t6oTr74FxAmaAs=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<data>
-		VWrsIczeEGUwjjG18RvwHXbsPpE=
+		uJ60FrELayTgO49LcDbAarELzSA=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<data>
-		fFyjJY0AaDjmKOVsL8IAzPs/HOA=
+		Ef+lfVajVkSzwFZAfVC1aPaoGVA=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<data>
-		ugX3TqZnvaOAbf2DbVn8uDhANY8=
+		sRiRnUPlItLU3LomB9TT+9EFLp4=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<data>
-		GEXTIWBMp0iSS7qPcvMifqjz3dk=
+		5sznq54I6x/aMja3/sOK0FfUa0Y=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<data>
-		xbPC4JC0jxq8quM1pwLeMt+UOP0=
+		rzD+l+An7TXdHYKzoGs8iqaCl98=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<data>
-		obANIZAoYt7Tr3W88jLagjwSBkI=
+		ioj6ql0QXrFRRKHZcn1rzT5F9iI=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<data>
-		nUqjb7rHdm07yAWGBvuJFBx3ZDY=
+		G94v23RZ2DVr64+pDxsH/sMaKrI=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<data>
-		FOePe4RnHPTZ1yK9jpmn9VqAfaA=
+		PMUAssBEG2xPLD4mQpSjqouKwP8=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<data>
-		J9ZqLccjefjSJfzG4jSF9j+Whm8=
+		2PruPkZOUnTwgC5F/l5+WjN3Kjc=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<data>
-		KxyIhsPzdUay1q090Tk79tQ/tFU=
+		y280+DJFabyuafXYBmIWI2aZy8g=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<data>
-		k+kXnoQCx1O7kz4tIXxYM2QWMFo=
+		LG7hgd5zUjdOTDOLvkvPul5G97A=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<data>
-		XPxCdM+I2cfsZrB7yYujuRH1WNM=
+		PW7A/+iNovkcbV/R8brqrVnMbDU=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<data>
-		FTMDSJLmsJX/gBabDG0RI9vZkGE=
+		1Z69JQH24aLSQzJX5FbyZcDoOZ4=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<data>
-		i/CKUI7YfAx2XqGLHzj4I6+a6Kc=
+		m1Nrb5bpgbpAzzEL5dJMBSvxQwo=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<data>
-		O2zNg2m9c0VxWW6YtnPYhd405IA=
+		HQH8LLf3A3+jlBV4aa9DctyT4zw=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<data>
-		EA7IX2NUQNK9r/JF2S13o9IK/UU=
+		V3M9Sag1RDkJZANhiDeRZV51V5U=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<data>
-		eWWkSf0ZXCFNTb5lVsQxpvRntMc=
+		ROckx2QDdtK0QrnyypW5B4RmvEs=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<data>
-		9mLAESO0yQh5jNIQqXBNFBD50aI=
+		QVURvA7PacCak5UZWAuOdRVmNUA=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<data>
-		RIokUqcN7H4VM9kjXXUFZQPwQwg=
+		5VEgiy3QmLzTx3zNh66Pzk9OVTQ=
+		</data>
+		<key>xros-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<data>
+		WyVOXAwcLrvhIcgtd320vV8T4P8=
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/web_sdk.html</key>
 		<data>
@@ -1634,7 +1658,7 @@
 		</data>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/web_sdk_utilities.js</key>
 		<data>
-		xPC51rfkbAnOdBzqxjDc1ZJmBsc=
+		Ie5mxVrnC9dIMusUodvfzSiNCaw=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -1643,21 +1667,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			u1J2AGVposZTz9eMGnmn8kbXKxO0pA4TS2ABgdOJvXQ=
+			godz3q6mShcjuE4uOwywByIqo34ewiDfZ50rqjiDI/I=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Bl1w3Sa6v/0hC4lePCxtOHPC4D3jdVepSzVOPf48MMI=
+			3RW4EX0MBblaqQIFFrW8BENV0dKUkaBtVnc3qlHgLOU=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sYj9aPvVqCgI5kHyFKl0W1F7yVvrfeVBh4IrdBZRqsY=
+			3KXWDuANBOkvW2jCEjnjkpgEPDFgf6mMr5Qb4FuweY4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Headers/Didomi.h</key>
@@ -1671,56 +1695,56 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			CCb8DtK8/IIiQdYTZt6EkbYqooRPZfMQ/WXCSs4uHNk=
+			h8K7qP1FNsTB3nnH/x8tl4wOrozasCFEVV0jSKxS8j4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			P2JM0+c28DvPH+dQklafK7ciMWvQ/D3Hiwjpf3+kSQM=
+			CphSen+bPVN4GL/5AkvN8qXjuyTBecQDfHbGCtwT5bo=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iCCLPggko5VMPBeV+p70O5O0qbgr2G7NynbwXYPYYJ8=
+			MGho1kpjThEPIqFndHqzU70bIEZoFwvRXf/PvJXYigM=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nBcMfgFzSIWBjBFQqP6KlTdSz4JX8KgQKAIaFctqPfk=
+			OGwY6DvdJfY+E8fwhAvMys/Q4aBT+u3LJt4SG6hp6RE=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JHQ09cpZMoPNjt8wqbbyj5TfaFcUQCB7d+m/3ov0PKw=
+			Gkngqn5X6vBcn+znI6vkyOEqol/jRd8Z53WtyBs5n0s=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iCCLPggko5VMPBeV+p70O5O0qbgr2G7NynbwXYPYYJ8=
+			MGho1kpjThEPIqFndHqzU70bIEZoFwvRXf/PvJXYigM=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nBcMfgFzSIWBjBFQqP6KlTdSz4JX8KgQKAIaFctqPfk=
+			OGwY6DvdJfY+E8fwhAvMys/Q4aBT+u3LJt4SG6hp6RE=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Vum4sF7EO6kT9bYcIBxvs8dupp4ct3pYP/E5dtumnWs=
+			HyLzSqC6p9JgjsUABzT5jlzTivhrkFvM6J1VJ+rIHhs=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -1734,350 +1758,357 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sr-Latn.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qaXBtHp81skuspCQr6aGiNx8d6uodz8NdwMbU4iqHOA=
+			Rh/eHjAQg8vww78BoakjHCQzqQBpRVIr9KHrmIDlKsg=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>ios-arm64/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>ios-arm64/Didomi.framework/web_sdk.html</key>
@@ -2091,49 +2122,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xJjnbUYBprXhdsgqlEos/YQxmuwQkrOIyDhgEvjKu7k=
+			ddPVzJb+Bukzx+bgVAR/tL5BmKK2bLhH40KXa5nMG8w=
 			</data>
 		</dict>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			E+f43+PWT6oNh3QrsMDHkGtOZk55/eurTdRcLPLjC6s=
+			NLapO3L6c8286TEq4O+vrK81gLRdu43d/YYeh5Izfyw=
 			</data>
 		</dict>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4Amo+59YqpfoIZ4TBF+4/Og/bfe4eCkzohvYfVadWmw=
+			ejFlKw31b8GjaUv406FHwBJUkWodb2tD2tTj1KrTlu4=
 			</data>
 		</dict>
 		<key>ios-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			P3/6HnxLqyiqc/kA7PzrU23PIpPABvlBgT/QbJYvKOU=
+			vqHy8Aw2QIa/qILWYY4sGxr/dYXhuGaCuCI6s5/t8g4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			u1J2AGVposZTz9eMGnmn8kbXKxO0pA4TS2ABgdOJvXQ=
+			godz3q6mShcjuE4uOwywByIqo34ewiDfZ50rqjiDI/I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2yZYRgasQodRs/jjYA0zRj4l466RKcTKpdh2zw88JSk=
+			Zplfds/tsV10UWx03DUKAY+rXU/OyhL6yDp2MWVwAkA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2+OQ3ad9RUOzjvRier8BAhFg3y+aeBLbajFWS0nJnO4=
+			YH1z+u8UEUeix5e7v6kmwFnYOma3VO74hm+2ULcKEMM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi.h</key>
@@ -2147,98 +2178,98 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VEf2aeMoJMkqlN+OvRiqMybzfzzMkDp6bzDUdngcMhg=
+			4901ymwSmqPoN6m1ERk6n0OIkTmxHe5e/QRJyZnbaD4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NpKF2Q8hbtI9e3XvTWK7nqR7ucJe2yazrOIIHu0vnBo=
+			nK2scjkAgbm6GSaorRYxpk0pREuI4pSmxd49HuW/Lr4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IuEDZCUEmLrUOrGDcFedXwCBkHerV3fMWyVLnidU9lg=
+			T2ouAMAtJDnTcdxrLFjMgjjV5lM7ZtbpjdKUl0pVHUg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zvjNrrWClAnTF5vGxDbcC6dEwclY/38DCiAC2VNBdtQ=
+			mxsbM1ff0xoqEw7zBmXdTleIyqV5dOgJgW/8M32fE84=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lidRUWab80DaSkbrEu8XVkPZYoncPXbNRL4gSxHy1Wc=
+			0r2PMANlas3zPTMdjUch5sRtA2PZZc4xnlhaBZitILY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IuEDZCUEmLrUOrGDcFedXwCBkHerV3fMWyVLnidU9lg=
+			T2ouAMAtJDnTcdxrLFjMgjjV5lM7ZtbpjdKUl0pVHUg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-ios-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zvjNrrWClAnTF5vGxDbcC6dEwclY/38DCiAC2VNBdtQ=
+			mxsbM1ff0xoqEw7zBmXdTleIyqV5dOgJgW/8M32fE84=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NpKF2Q8hbtI9e3XvTWK7nqR7ucJe2yazrOIIHu0vnBo=
+			nK2scjkAgbm6GSaorRYxpk0pREuI4pSmxd49HuW/Lr4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FgyhCckOqidzFnXEYuhmZbTJI81MzytLp6t77sVc8cM=
+			jadUQ+HD0YG2G6A0u09BWSv953k9IVVrhNNCBSV3jaA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			32x58MgFJxU4nxxosVJfDDI/e8yNHox9Z51Cptv2+g8=
+			Mw9bc4vmEx/b6EVG8U4REmI91LhwX8J+0yGnGm5xyXk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Lo2CsRoSNBqZpXXttyff9ekqAG73DXOTa+AKVOqunos=
+			UIeGxO2cQdr9RjqgYucOcL2gjryXoEiuOGP8Lfr5YXU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FgyhCckOqidzFnXEYuhmZbTJI81MzytLp6t77sVc8cM=
+			jadUQ+HD0YG2G6A0u09BWSv953k9IVVrhNNCBSV3jaA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-ios-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			32x58MgFJxU4nxxosVJfDDI/e8yNHox9Z51Cptv2+g8=
+			Mw9bc4vmEx/b6EVG8U4REmI91LhwX8J+0yGnGm5xyXk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Vum4sF7EO6kT9bYcIBxvs8dupp4ct3pYP/E5dtumnWs=
+			HyLzSqC6p9JgjsUABzT5jlzTivhrkFvM6J1VJ+rIHhs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -2252,357 +2283,364 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3TEsEQ3i/o9Xe7LTYErxXTeUkL1UBp2HCtWw5GUaXlA=
+			DKYArd3BYvvL3ixuD/H5rBY/cYReXHh50LgUhOgP9lc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr-Latn.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qaXBtHp81skuspCQr6aGiNx8d6uodz8NdwMbU4iqHOA=
+			Rh/eHjAQg8vww78BoakjHCQzqQBpRVIr9KHrmIDlKsg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>ios-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>ios-arm64_x86_64-simulator/Didomi.framework/web_sdk.html</key>
@@ -2616,28 +2654,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xJjnbUYBprXhdsgqlEos/YQxmuwQkrOIyDhgEvjKu7k=
+			ddPVzJb+Bukzx+bgVAR/tL5BmKK2bLhH40KXa5nMG8w=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vQeUrg6tlW2bAu8b3KoKypE8QonSjX7uAuq40E41Q+Y=
+			vbyvhCXkrtDstDgxn8POrVdu0DoL5arUsQaXB71jTQ4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YQVAs1bYgAB5tokPcsiKH+UjY7W48sbfmQVE3PDh724=
+			0JV1YeGtbv/+/WrgHy5mQ3U/hk3fjQNdRFNHbG7bUms=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qrF6AtloTE1Og7/KiujW5LCFpZtn2RtaR7KBUPA21NA=
+			nSGji0b+kQLhNk2WOz6LVLjTGcRc2vTsB5l9NKY0cWY=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Headers/DidomiTV.h</key>
@@ -2651,56 +2689,56 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vI4aUtI5Gsu5qmmMgIIdeTw//VSNaCQbFu6THVEA7rU=
+			hhaniRCBs04Qp3BS6cvNS4MQq5Rp7D+WptTYbSC6zXk=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2G4XiGlN9vFuVZOqX54/YFqQjzoWKFDanblREY64IzE=
+			R2uSICm840IO9gbCI+nyUvmRUiMijnBralIY1hcoEF0=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GZUbvGooZtOnHDX0OGkgrUQDyZ+CkAD00HD9ImaRl50=
+			lgYyKxN3pN4AB8rWYZ1lD54PpC79AKAaPRwhVTl/To8=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y+qj/6bqTR4KN3KfPFKPB5Smu8sT/LJWGNRIAh+F/aA=
+			zx+RjStkfxOwfbOgaLcVoUDf6/WSJ/JwjqWTOvt27wM=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TUYc4K9rvisU/yOXR9gmKHxe4dS9S0wIc7vY4CVYDKg=
+			3f5VeF1fVm0Ya2MVcCpODQmRwrkxKkbtY5FEY4jWRtU=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GZUbvGooZtOnHDX0OGkgrUQDyZ+CkAD00HD9ImaRl50=
+			lgYyKxN3pN4AB8rWYZ1lD54PpC79AKAaPRwhVTl/To8=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y+qj/6bqTR4KN3KfPFKPB5Smu8sT/LJWGNRIAh+F/aA=
+			zx+RjStkfxOwfbOgaLcVoUDf6/WSJ/JwjqWTOvt27wM=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fHUx0Z6UjFPARMfzUcR6MqI/D04Y7YeWzexh0Fyb1Do=
+			EMF3FR4jr5qVZ5GucDLHZ5nIg4JA7suBnMcaDN20Ksc=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -2714,385 +2752,392 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>tvos-arm64/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>tvos-arm64/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fZ0oLFMR2OLtVkKty34nAckQy47VqTUjSW9gNABWxEY=
+			BCk/PAA2IkzNi0x7DxrQVPVMdsJU9eogayfRFxgjQ6g=
 			</data>
 		</dict>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fAAPBHlOX2CPyV3UFdQyVRlbYaArkzWhx95MBs5BVJw=
+			cx1IyJWVJ9oXd0V/x3RU9djUdUKi5tc0wfcr9gKzQ38=
 			</data>
 		</dict>
 		<key>tvos-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iCStCl/zWqy8lhLt4fodwOaBuQeXj1SNAPpX0aWeYnc=
+			ZRSPZVhhlnfcLy1Qc/Wyv6czFb/Sr03Im3LH5o0Kkhk=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vQeUrg6tlW2bAu8b3KoKypE8QonSjX7uAuq40E41Q+Y=
+			vbyvhCXkrtDstDgxn8POrVdu0DoL5arUsQaXB71jTQ4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VoyZNUiFYh8DB2dxiPiZ1vxzqOing9Al+gzKXk2Xudc=
+			J+aQMoJs6/oV+4+hnQRLfIwoOTZJhP/1zpAvMHUiSm8=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Headers/Didomi-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R9z2j5R9Df8GDtxRLKxEp6EHWl0jz3fPT1StspzAtNA=
+			J63uzFS3hRI+vUpx5mBOqdPbG3o6Kp5XeWkKCCxKhxM=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Headers/DidomiTV.h</key>
@@ -3106,98 +3151,98 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			eH6VhkXFeYeEVpx+ggC+46QuwUxtzNnbAA3MDfW1W7M=
+			7PFsAb6iOc1onpGDUUjLLe9y1ynM1LFf8+Y6e9Ytg9E=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vR2ZOPh7TvyNCNKu1zfUGvMRRed2Mp1RFc1QDe+FjI0=
+			+2uiMmExWrCT/ZH0npSQ/Wmy+TmtULLgxCrl+QEjmFI=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OtE/5mbpSgQ6qq3gsxqR+Hzw0x80A99KLeF0h02U5as=
+			8hE0W5n760Fxc7Yo8H6vT/jzpNFyTuVzp6hNI1LEIrw=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			snIOBESQbMyZ9oHliuZ4jh/P3rxGaa46+KYba9gauCQ=
+			xLTplpX4NJBv38DxlF9DpwoAoBSowJNFFgNUOhV2yrA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pG8zsKDbhDPeF8xnqzt6/yGZQoKyJ9MA0mfD6rFiYU4=
+			JgJwPgyO9qbFJ0IIG++hMle+XICaRbH9rxvi1IEzJwQ=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OtE/5mbpSgQ6qq3gsxqR+Hzw0x80A99KLeF0h02U5as=
+			8hE0W5n760Fxc7Yo8H6vT/jzpNFyTuVzp6hNI1LEIrw=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-tvos-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			snIOBESQbMyZ9oHliuZ4jh/P3rxGaa46+KYba9gauCQ=
+			xLTplpX4NJBv38DxlF9DpwoAoBSowJNFFgNUOhV2yrA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vR2ZOPh7TvyNCNKu1zfUGvMRRed2Mp1RFc1QDe+FjI0=
+			+2uiMmExWrCT/ZH0npSQ/Wmy+TmtULLgxCrl+QEjmFI=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			09GK5TJpPUB2Nddh8V1K7+7BsiIsD4MH8h+1qFagxZo=
+			aduXw1iPktOsrTW8q1dzCujiI0VU3KR24HRcLFoKm+I=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sx9KRwJajiWAkzKhi3h/Ky9wV2YwiUAU7xUc0vyBvuI=
+			5lSzYMbiwdu1jEDa0u9RRPw6Sz9NRDR56airOsw6G7E=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fRy39utGQCQp2AGC8hYZWwQYlqjZbe6m0mx3OQii2zE=
+			QiImLPBrADlZXHGN9N3AlGbMNdeRGHaKZgXP89Ibxes=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			09GK5TJpPUB2Nddh8V1K7+7BsiIsD4MH8h+1qFagxZo=
+			aduXw1iPktOsrTW8q1dzCujiI0VU3KR24HRcLFoKm+I=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sx9KRwJajiWAkzKhi3h/Ky9wV2YwiUAU7xUc0vyBvuI=
+			5lSzYMbiwdu1jEDa0u9RRPw6Sz9NRDR56airOsw6G7E=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fHUx0Z6UjFPARMfzUcR6MqI/D04Y7YeWzexh0Fyb1Do=
+			EMF3FR4jr5qVZ5GucDLHZ5nIg4JA7suBnMcaDN20Ksc=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -3211,364 +3256,371 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Eiyyf+5UZi0KDgXkwus+AJhXJQFqbqwU5zpLM/dVdqU=
+			d+MtVQraD2PrU3NIP0Sh3il+rFP/B7KwpmPxp65zzUI=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>tvos-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>tvos-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bCTcjTzwmighHOFGq/xAjNiPD1zQudEZlq2fg2Yz0hY=
+			5rowrd7m+I/jzkIa6U9UQ0peU4Ugblcdz5kmp4gNKCs=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A44jCYix62NYMSJbnfvbMFe1PLPjBrF3RyuXx6v/fzk=
+			YCLJD7zAJBCTjABegSVqPmKI0ssMCbuI12JgKq9oplk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Headers/DidomiVisionOS.h</key>
@@ -3582,49 +3634,49 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ACu+WxBY1mO3IGBVgbbzZiF1f8S0BwzX/qrX0FUF7L8=
+			wherLyQWbF7F6Xez6SYE2/958dKxtNLKSRKohsuWVeY=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qqytMw02GmVm4Dsn/rUyNaGkdzXMWihcP8hVC0ecpIw=
+			//F6bBnRDpi0tdDjuBTgNZTKbRvvYQe7VTRAMeRCwEU=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			H5FWhqvw5NJdcYwpyIWA+jlxNjv8emoVOHbQ3I+ZKBY=
+			v9Qie+B+8EUKzIP2edFQgPjHSIA5Dj4DIVF9nlcMyvk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			aChEMcKB/FHRexJlyYJxbNFm/uCPuIQJvtTwFdUVtls=
+			YDLllf1ZFDaunoEK3ihYEEVBWNKIws1+i5rfymU7RX8=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8tXKluGO1kp2+mmS75xNgOMCHyocJC93EvfxucVXsZg=
+			PcQwHmDJQX6eJ8rNF4VYQkMaeXWCkO5NwwJWTMlFzhA=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			H5FWhqvw5NJdcYwpyIWA+jlxNjv8emoVOHbQ3I+ZKBY=
+			v9Qie+B+8EUKzIP2edFQgPjHSIA5Dj4DIVF9nlcMyvk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			aChEMcKB/FHRexJlyYJxbNFm/uCPuIQJvtTwFdUVtls=
+			YDLllf1ZFDaunoEK3ihYEEVBWNKIws1+i5rfymU7RX8=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -3638,343 +3690,350 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>xros-arm64/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>xros-arm64/Didomi.framework/web_sdk.html</key>
@@ -3988,42 +4047,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xJjnbUYBprXhdsgqlEos/YQxmuwQkrOIyDhgEvjKu7k=
+			ddPVzJb+Bukzx+bgVAR/tL5BmKK2bLhH40KXa5nMG8w=
 			</data>
 		</dict>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ro3CvU/eNvY3/K7+pqbKes/fn/UVR5DXGtNOcqAdPOc=
+			Aci5HEs5mongrWt0j7a5OmQEgXwt0V+wt8Ug9R6rluI=
 			</data>
 		</dict>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/DWARF/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CPND3bwvhvalGih0B5y4iJHKm40y9WUBiEYP/1+hFkg=
+			TVi/KGN2/o9gkpdvz8DxzEpNQzOyagzaRrGmsviwZyY=
 			</data>
 		</dict>
 		<key>xros-arm64/dSYMs/Didomi.framework.dSYM/Contents/Resources/Relocations/aarch64/Didomi.yml</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sldRcfRm788+wh3MoLK5Z0m/d1m01KilG5zXnnb/pL0=
+			G6fK1VZs2YfqTccpJ6Lk5GSAv6IR0IEKu2B2rnh1aMQ=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bCTcjTzwmighHOFGq/xAjNiPD1zQudEZlq2fg2Yz0hY=
+			5rowrd7m+I/jzkIa6U9UQ0peU4Ugblcdz5kmp4gNKCs=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Didomi</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SsW5rYTI6i9c38QVVTnI67GhRnl10R3QnMvwvYvANk8=
+			cZpoQH9WR4kdz6LNiTNVWNew+t6McoFDrSw3c4yJ8+Q=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Headers/DidomiVisionOS.h</key>
@@ -4037,91 +4096,91 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fSeHLSM/TzRb+TZmjuoLCMnLMghuG9Hn5dD6XTNjyjo=
+			Wjy0q2AMPhwsbEaG3YRP36+HgY83T8R1Tzdd7rdXVdE=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QeWH6eCFEYDV+UB6e+DRuGfSyBDFnomYPb4l70wFNlI=
+			NKXTjIgBGHus8q/Uv85xO2SkTxKZilVN10ryTMFKeIc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ob2iEBlRqu2/02FSAj1olxTj4I0GmLDen42E6OfRDAU=
+			cHKjfB5MVkAmYB/34CdOvgOSkz+bOOWy2PUmBlk0dr4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+ONu6/h7dZL/Ub0X3T/DJ2sqUhJzVXm/t7zOYC5b+Dc=
+			iQ6RecoOvwIEXq/pvi6QB+M9sYGXnxh0IFc/mKk6Bw4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			187YGDPYVlJZ4W4VhMUdKEFwgnEYZgdqV8yxQp/q+GI=
+			YwzbIBWXuhSIyWiBjhTl84HnLFNc8xJZdeRbTWAbwKM=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ob2iEBlRqu2/02FSAj1olxTj4I0GmLDen42E6OfRDAU=
+			cHKjfB5MVkAmYB/34CdOvgOSkz+bOOWy2PUmBlk0dr4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/arm64-apple-xros-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+ONu6/h7dZL/Ub0X3T/DJ2sqUhJzVXm/t7zOYC5b+Dc=
+			iQ6RecoOvwIEXq/pvi6QB+M9sYGXnxh0IFc/mKk6Bw4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QeWH6eCFEYDV+UB6e+DRuGfSyBDFnomYPb4l70wFNlI=
+			NKXTjIgBGHus8q/Uv85xO2SkTxKZilVN10ryTMFKeIc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ALP3DOX3CFt6dZ46NZoUOCF2KyAVU0y8cVDqEzGl0qY=
+			h1R/iL9NQaBx9+rzBOddr3uaEkVq2BmtOj3kD3bsPfk=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.private.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			XkHzZlLyrM2XDOoqYHRA6UkasJDwrt+RPjoS0eSuclM=
+			znD9CJv11lgbpSKXS/blIvuDdWmPgqJBP+6CS9VMfM4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			opBF7Xbyf+5Zawc5x8FkFwzCdObu60RcdEbe48FTVWw=
+			EAn0GDSG5EMMB6/OPen5+MAm1ONx2QXRh6tu6KfVddo=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ALP3DOX3CFt6dZ46NZoUOCF2KyAVU0y8cVDqEzGl0qY=
+			h1R/iL9NQaBx9+rzBOddr3uaEkVq2BmtOj3kD3bsPfk=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/Modules/Didomi.swiftmodule/x86_64-apple-xros-simulator.swiftinterface-e</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			XkHzZlLyrM2XDOoqYHRA6UkasJDwrt+RPjoS0eSuclM=
+			znD9CJv11lgbpSKXS/blIvuDdWmPgqJBP+6CS9VMfM4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/PrivacyInfo.xcprivacy</key>
@@ -4135,350 +4194,357 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			oGLPNCU6r4W336lLm4YOB5UI0cS9jXwG4gVl+LuGiqo=
+			UFQ4EkQJnbzf3w6ofyySiEsfDhVH2fSD8Gme0q1ZfDM=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/dcs-encoder.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LF8EhQFXiQDcHoD8v61jcd2bTQ8t2orI6ANtheoFrC4=
+			F0DiS5xVu4HU8ZNlLLYX2iGk3/2PzT1pzWoulhMD2E4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_config_v3.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZUyLP9Uy6uuEKTBfBl3rxZcfMYKXN9o2cKQCyNaHOCM=
+			iojxIT9PBrh+Fh2K+ZP2dA8o8BWULiR+zSb6CmTJwDc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ar.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			SV5vWoHZxdvVWVaIRo2h1BFiSYuaD+jbtKvQrTkqMM4=
+			k73UYP7nnqvBuKGIijLgqP8iB5jrogciEJOFQOziNsQ=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_az-AZ.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IHtxiuw1GgcCbMJpRLu7uAmwsBaR4VEIKmW1rBCxL0=
+			cqRJ7G8h6942i0mbxtl0cdmOCs1HZUut2FnQ8DbE45I=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bg.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			12ak10Gtoi8AYvb6WGbddEM0I0Rtsirac2kKocjrsTw=
+			egXdjXluROdB+VgZVqfJMFx9XSNjuZlRQ6U7LU8ZsQI=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_bn-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kjbLoDuXVFtpys7Gih97PG11zZRkCaIDz+SVszABNfI=
+			DVPi5RwFU2IanmN5s4j/Le9wiAbqtuEEcFhv4OYdeAc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ca.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pvNg0m7J0PzmrCMcUKyjQTI56lk8gucFMt6AJC/WjWg=
+			nSCm0uFOVY2MpquSTvkB9T3LK8U/2yTvBeoT2IGS4UI=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_cs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WFvle7SDsgk2Cjt4gJNalsq0NpRwGi1ZR8aGAhNcNzE=
+			gKudKO33nlzaF9xmouVLGAejVaxcEdk1XknkSFbO6NU=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_da.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			keS8xYE+a/DACDF1+rutkVOpWeuz6aTXjlB9CHOYrDY=
+			5TDvvBTcHWLaHW+tPEVIB6v/XCtPbTDa5JUji+LJMaM=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_de.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2q1maBODxdzXx12TM+34fi6V3QGZd11n4NQb5XHUKUk=
+			7iBZCZE3WVhnv5bcfyC5yHWfpB2tZQyMwzSa1RxHJDs=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PkidDtpuR9tBKb+W6m0OdmWpDVW9DZtlvlPuXcyTkQs=
+			tTwWe3FDLM2x0PBPkgp6nMGHESRhudcD7Rz9iwmduTc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_es.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sy/cF7BO7c6ZFpCcnIWprFGYgT7/NK3KvT62oYTU4XA=
+			QD2+0kVReGUwZfO86XCZDbvidWpza/bTT8KkLyXG9ng=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_et.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4rHMufhglCll7TCQYOAkiVMv1teFxpjzL5P8u1AJKP4=
+			tq/12Wi2SE1N8StpW0oQilFNG8aRrtt+Kzc1MoI6lFY=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BfEhNTMO7xxHHlCt87aEIsxwBqdcsCcsqct4wEEdt/c=
+			wc0yZgsDK97BuVhncQb6zH0Rr3RDgHjeDDiPcqu2ksg=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fil.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sVvx8CXhMxDsKAbJODjPIG3zqELZKVGs4SFq8oIuOZo=
+			pEnbR9f/wTOOTpYomZTbO8K01UqBemXANUYQHfKDxKA=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_fr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hYdj870VVDJybnIoyTNtFKzHXgZujUtUEIdDc5T18A8=
+			wsG9ndLXq767fbRAoaEMJsK457zokp1viLmilNJ3eDM=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_he.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/yczoDpyGfLu3/r5f7JaoaG1GPRoU+HAPAif5om0vzU=
+			n7Oi4TzBb7QZGV8/8stzIHGHCoyt0b7rfjINclVGHXs=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hi-IN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			21jvikh2aHi3C7WddSt6Sl86qUidIe++cQ/BEAir6fU=
+			kYDvd7DIlDoaFUKjmUr9RBKeNnTmvzT0OYO7eL0wQwU=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			53MKSFev/w2FIRwBTQgGlgN9RhNgM6jg0Ajo7+KIS5w=
+			zBZ9qQrsap+iUAGkm5f8cJJGdStX7QGjwoYnLCtkhX4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_hu.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BvvjJieG4zAccI9cdH4L6oHWapPN9zBg7HLd6Pjus+Q=
+			j1ckAkhTY79WzKi2/xyu20AsKptyzGodr4B8dmT+6w4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_id.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hbPNO4U63MmUYhoB3WCQ8e7hFqaDQ3hj+i0adhcUCj8=
+			lWoKdAPI0fX9Szg4aLVCfwDe9BVAMawqYQ5unQcxlWs=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_it.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZnoVXifny9SWLQ2ICxvpn1l98kv3waNLz59LESNmDoE=
+			pjl9/IUh4iNJCjJdg074X9+m+4q3d6PIH6ijnx/fLF4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ja.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mxYYHzHBioMs+GD346uplE/0jXIpAMR3qxPGr3A82fA=
+			csbhDj4cH7zFutVMlQ41Rub9phOOY1Rq4MG2JYW+t/s=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ko.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91/7/sgSPnSojLPhxFytKgX1jCLtnY5U+Ud9WeJ7pJg=
+			bgczGekw0By/L6EQOBPfZ7LV6ev0ITjiq79OuyjYyMk=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lt.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yJJt3aph0cnPJCD+2lmNNiYWRJP+zuWJAGjwETgi/cU=
+			5Oxz+gzErrGKql1oGBwPyFKb7Uz/AWV21WVKo604tCA=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_lv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1CUf5tBM3OFXg6gUGC1y6wgdEC4x8O+CtXrv7Jy0sNo=
+			B2xn5J7UgmNyH0wt7aDWlNhQuj8KaVXsjnE6Y+sznXA=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_mk-MK.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gBTi3iiJnf5Lbtvl76QbCHdT1SaUVGnHHBsku8t0zIQ=
+			NyiTRYiSxQYs003V2WVLqR+IvhLWVicC7SXbnGkinj4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ms.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9vo/EEvKoEi6A+thRmqvO5DxU7Hjqra4roUlFdT/2g=
+			oxLPpuHlMbvrEY3Nc6D4o2s2jvX5npSnZxSPoKoTtQo=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_nl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2K/FoK7tW2uwDwWorkc1Dp7X3rM4WZBX2pU3+1CFHo4=
+			c/mYUil/DR7cbfldmUDceL3pyApRYVWq43mBfqaK6lo=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_no.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r7l7MrtBdXklwDhjpmpZ3xN4iM3IaJ5kSBpZ0kCNdDk=
+			WZiNd18m/sfk+3O7JLjOUD6i70IGNo+Bsnk5LGQIV4U=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Hr6QtoCZODo6z91jZ5EnLP7rcZbgXGNS4qZQ17+WpA=
+			PpvgSNiAUAnNVAHOKZLDAAG5ZNXlNk9/HQPllVBoLJw=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-BR.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ddBUNIbCM3eZIZ+/aOVpA7gBIiblQFmjxPLGRoxI4n8=
+			0qQU6xDGgwUsNItdm/Fvke1fqyDluBG9RP6WysOEwHA=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_pt-PT.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z9Gv94Kp3qZFaAz6oclPWHut96yAAq2aVUf39xLfuEk=
+			KMpWTNc5zpDtnxoYCiaefuEVROAbz3sO1LlEHaQGndc=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ro.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2do3l3gFuHHrBaknJZvl6QauuvOMvzegiuRUr4RD2vs=
+			iLk0v90FitwdW6jn+qTSMfpHhM+yNAIFcf0SblYuy3U=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7c/nkpu74v1+/RiLN6Gj5SgsyEH10PMbRK9kCvTSJZY=
+			58pZmVtGb1xnPKDoaMI2eJZ+ZXd7b/+yx76buD2PMVg=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJ+oC6eQxaMkuWJ9f/MyxRRr66h5Vjy5fItcx5XXQII=
+			eIon2WJO/vaz1PZ8ZxyXvA9VWIPh1x0bT0BxJFtO/f4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sl.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4vZCylqPYU4WU2CZPfVmROkS+m7UmqgL2Yvz7JOFZd8=
+			oiLn/LZrqwWHvGhLWwBvvlAWN2Zd7R6+OlK9tEAcA0k=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			c4mpZQZACCWJhsFDKXltWWFehkjPmtUX1oIBWo8J8wk=
+			KCe6hR2ywR/KaFZILFa20hRrIkixEg/YH3jXsPQSF4I=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sv.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wt5+elC6I0gJTNs63N8qWvB95JezroboibwFwkqa8Ak=
+			8oFH4z6nykVXXMX1cDu5AewgZ0QQBuWjWkASY3jSysM=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_sw.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			urbJgoDtQ6J+MlXkdgSmvR7wfGwv20a6qM9wyq8gCM0=
+			OV5Bw8I0Sp5cTY2prkKILv7LaX5qqWcW6B34OoQ6Rig=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_th.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WXMHubHnM5jB5p/00r5TAmkLBlDetgScJhrOGQk+TaY=
+			gLkoKLoGZxjR9/E5zdFcbjjjwFukN1tSUwatoVWNUks=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_tr.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Kfu8faq0vCkNIki9/5OIC7+eBA5s0A3Qngql/U3VCkM=
+			PU8luvTf0rwpiAyWz2oj3cy6XhCyr6+FcFyKHwc0X7k=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_uk.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			88twE7gD+57xyp/YSvaJ05zhF65ZlCsu9VYMe2e56Ak=
+			EQQJGfwJ9uL/z71AjeUswN6eDTKCxl3HPKCA29KbATg=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_vi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CpzTT+fXtAx7NwJR0mQEtNPWfZxtSR7yulOMKAc/p9Y=
+			XvijKZ0akzW5qah1hR6ZBT/koJyOPHkJM2Sdav9APPk=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-CN.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oDIXfRPKvEVdPfNhsrK0hjbUvBq7Leyjm59tD87N1LQ=
+			c1Jw3GwhTBssbg8tTrPzzxGKBqmQpck3jlYdJPGZLs4=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_iab_purposes_v3_zh-TW.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EM3SrBYOHLjTc5mC6y+dPhDM+qCg0N1cPGW7OXDC79I=
+			cQYC7Lx3vVwHcdTPwpOb8uKlUdXzaMO1YimN5egsBOk=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/didomi_master_config.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			xFLp53GcbZ/Rks/jWfgMmDQrClGFgA2lHs3pt5vJocg=
+			WmzlXBQ2gnCd0H3eUZQgO5idYz5Q68zQGQ+wxuwuSEQ=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/gpp.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KIjNH+SyC9+5svLFgFp1fvTtgH9pNVYCaoKkJKSqauA=
+			YMdZxJGYTQO0PGd+ka6qdTt/ZNf1yLLZtAgmE5boYiU=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/privacy-signals.js</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R20DCF1nldk1i79xvj8+ih8uGSVhK8O16Bzh/4hLtFQ=
+			cxH1wzPIyLd/NJYiuHKvHnldU7k/tVGPlkyJXZy/N/4=
+			</data>
+		</dict>
+		<key>xros-arm64_x86_64-simulator/Didomi.framework/rules-engine.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nRvOSi250qwAzPH93SqbZ0O87xO4tdXxUiHXWTh1/7I=
 			</data>
 		</dict>
 		<key>xros-arm64_x86_64-simulator/Didomi.framework/web_sdk.html</key>
@@ -4492,7 +4558,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xJjnbUYBprXhdsgqlEos/YQxmuwQkrOIyDhgEvjKu7k=
+			ddPVzJb+Bukzx+bgVAR/tL5BmKK2bLhH40KXa5nMG8w=
 			</data>
 		</dict>
 	</dict>

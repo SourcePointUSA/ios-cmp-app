@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
-// swift-module-flags: -target x86_64-apple-tvos11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-upcoming-feature ConciseMagicFile -enable-upcoming-feature ForwardTrailingClosures -enable-upcoming-feature StrictConcurrency -enable-upcoming-feature DeprecateApplicationMain -enable-upcoming-feature ImportObjcForwardDeclarations -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature IsolatedDefaultValues -enable-upcoming-feature GlobalConcurrency -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature ImplicitOpenExistentials -enable-upcoming-feature RegionBasedIsolation -enable-upcoming-feature DynamicActorIsolation -enable-upcoming-feature NonfrozenEnumExhaustivity -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature InternalImportsByDefault -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature ExistentialAny -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name Didomi
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-tvos15-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-upcoming-feature ConciseMagicFile -enable-upcoming-feature ForwardTrailingClosures -enable-upcoming-feature StrictConcurrency -enable-upcoming-feature DeprecateApplicationMain -enable-upcoming-feature ImportObjcForwardDeclarations -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature IsolatedDefaultValues -enable-upcoming-feature GlobalConcurrency -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature ImplicitOpenExistentials -enable-upcoming-feature RegionBasedIsolation -enable-upcoming-feature DynamicActorIsolation -enable-upcoming-feature NonfrozenEnumExhaustivity -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature InternalImportsByDefault -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature ExistentialAny -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name Didomi
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
 public import Foundation
 public import Swift
 public import UIKit
@@ -16,34 +16,38 @@ public import _SwiftConcurrencyShims
   @objc final public let userAuth: (any Didomi.UserAuth)?
   @objc deinit
 }
+@_hasMissingDesignatedInitializers @objc(DDMShowWidgetEvent) @objcMembers public class ShowWidgetEvent : ObjectiveC.NSObject {
+  @objc final public let widgetID: Swift.String?
+  @objc final public let layerName: Swift.String?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc(DDMHideWidgetEvent) @objcMembers public class HideWidgetEvent : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @objcMembers public class DidomiWidgetParameters : ObjectiveC.NSObject {
+  @objc public init(widgetID: Swift.String? = nil, layerName: Swift.String? = nil)
+  @objc convenience public init(widgetID: Swift.String?)
+  @objc deinit
+}
+extension Didomi.DidomiWidgetParameters : @unchecked Swift.Sendable {
+}
+@objc @objcMembers public class DidomiUserContext : ObjectiveC.NSObject {
+  @objc public init(attributes: [Swift.String : Swift.String]? = nil, variables: [Swift.String : Swift.String]? = nil)
+  @objc deinit
+}
 @objc @objcMembers public class DidomiUserParameters : ObjectiveC.NSObject {
-  #if compiler(>=5.3) && $NonescapableTypes
-  public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Swift.Bool? = nil)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
+  public init(userAuth: (any Didomi.UserAuth)? = nil, dcsUserAuth: Didomi.UserAuthParams? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Swift.Bool? = nil, userContext: Didomi.DidomiUserContext? = nil)
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Foundation.NSNumber)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, containerController: UIKit.UIViewController? = nil)
-  #endif
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class DidomiMultiUserParameters : Didomi.DidomiUserParameters {
-  #if compiler(>=5.3) && $NonescapableTypes
-  public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Swift.Bool? = nil, overrideMainStorage: Swift.Bool = true)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
+  public init(userAuth: (any Didomi.UserAuth)? = nil, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Swift.Bool? = nil, overrideMainStorage: Swift.Bool = true, userContext: Didomi.DidomiUserContext? = nil)
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Foundation.NSNumber, overrideMainStorage: Swift.Bool = true)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil, isUnderage: Foundation.NSNumber)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil, overrideMainStorage: Swift.Bool = true)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(userAuth: any Didomi.UserAuth, dcsUserAuth: Didomi.UserAuthParams? = nil, synchronizedUsers: [Didomi.UserAuthParams]? = nil, containerController: UIKit.UIViewController? = nil)
-  #endif
   @objc deinit
 }
 extension Didomi.DidomiUserParameters : @unchecked Swift.Sendable {
@@ -107,9 +111,9 @@ extension Didomi.DidomiMultiUserParameters : @unchecked Swift.Sendable {
   case consentChangedWithObject
   case onConsentUIReady
   case onConsentUIFinished
-  #if compiler(>=5.3) && $NonescapableTypes
+  case showWidget
+  case hideWidget
   public init?(rawValue: Swift.Int)
-  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -144,9 +148,7 @@ extension Didomi.CurrentUserStatus {
     @objc final public let id: Swift.String
     @objc public var enabled: Swift.Bool
     @objc public init(id: Swift.String, enabled: Swift.Bool)
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
     required public init(from decoder: any Swift.Decoder) throws
@@ -155,9 +157,7 @@ extension Didomi.CurrentUserStatus {
     @objc final public let id: Swift.String
     @objc public var enabled: Swift.Bool
     @objc public init(id: Swift.String, enabled: Swift.Bool)
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
     required public init(from decoder: any Swift.Decoder) throws
@@ -191,9 +191,7 @@ extension Didomi.CurrentUserStatus {
   case configFileError
   case invalidApiKey
   case errorLoadingUIResource
-  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
-  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -248,9 +246,7 @@ extension Didomi.DidomiErrorEvent : @unchecked Swift.Sendable {
   }
   public init(from decoder: any Swift.Decoder) throws
   public func encode(to encoder: any Swift.Encoder) throws
-  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
-  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -267,9 +263,7 @@ extension Didomi.DidomiErrorEvent : @unchecked Swift.Sendable {
   @objc final public let regulation: Didomi.Regulation
   @objc final public let didomiDCS: Swift.String
   required public init(from decoder: any Swift.Decoder) throws
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   @objc deinit
   public func encode(to encoder: any Swift.Encoder) throws
 }
@@ -280,9 +274,7 @@ extension Didomi.UserStatus {
     @objc final public let global: Didomi.UserStatus.IDs
     @objc final public let essential: Swift.Set<Swift.String>
     required public init(from decoder: any Swift.Decoder) throws
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
   }
@@ -295,9 +287,7 @@ extension Didomi.UserStatus {
     @objc final public let globalConsent: Didomi.UserStatus.IDs
     @objc final public let globalLegitimateInterest: Didomi.UserStatus.IDs
     required public init(from decoder: any Swift.Decoder) throws
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
   }
@@ -307,9 +297,7 @@ extension Didomi.UserStatus {
     @objc final public let enabled: Swift.Set<Swift.String>
     @objc final public let disabled: Swift.Set<Swift.String>
     required public init(from decoder: any Swift.Decoder) throws
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
   }
@@ -317,6 +305,7 @@ extension Didomi.UserStatus {
 public struct DataProcessingNamespaces : Swift.Decodable {
   public var num: Swift.Int?
   public var pub: Swift.Int?
+  public var sp: Swift.String?
   public init(from decoder: any Swift.Decoder) throws
 }
 extension Didomi.DataProcessingNamespaces : Swift.Equatable {
@@ -330,9 +319,7 @@ extension Didomi.DataProcessingNamespaces : Swift.Sendable {
     @available(*, deprecated, message: "SPI purposes are now displayed in Preferences screen.")
     case sensitivePersonalInformation = 1
     case vendors = 2
-    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
-    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -341,6 +328,12 @@ extension Didomi.DataProcessingNamespaces : Swift.Sendable {
   @objc public static let shared: Didomi.Didomi
   @objc weak public var viewProviderDelegate: (any Didomi.ViewProviderDelegate)?
   @objc public var applicableRegulation: Didomi.Regulation {
+    @objc get
+  }
+  @objc public var userCountryCode: Swift.String? {
+    @objc get
+  }
+  @objc public var userRegionCode: Swift.String? {
     @objc get
   }
   @objc override dynamic public init()
@@ -369,12 +362,8 @@ extension Didomi.DataProcessingNamespaces : Swift.Sendable {
   @objc public func isError() -> Swift.Bool
   @objc public func getRequiredPurposes() -> [Didomi.Purpose]
   @objc public func getRequiredVendors() -> [Didomi.Vendor]
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func getPurpose(purposeId: Swift.String) -> Didomi.Purpose?
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public func getVendor(vendorId: Swift.String) -> Didomi.Vendor?
-  #endif
   @objc public func getTotalVendorCount() -> Swift.Int
   @objc public func getIABVendorCount() -> Swift.Int
   @objc public func getNonIABVendorCount() -> Swift.Int
@@ -403,15 +392,14 @@ extension Didomi.Didomi {
   @objc dynamic public func isUserConsentStatusPartial() -> Swift.Bool
   @available(*, deprecated, message: "Use shouldUserStatusBeCollected() instead.")
   @objc dynamic public func isUserLegitimateInterestStatusPartial() -> Swift.Bool
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func showPreferences(controller: UIKit.UIViewController? = nil, view: Didomi.Didomi.Views = .purposes)
-  #endif
   @objc dynamic public func hidePreferences()
+  @objc dynamic public func showWidget(controller: UIKit.UIViewController? = nil, parameters: Didomi.DidomiWidgetParameters = DidomiWidgetParameters())
+  @objc dynamic public func hideWidget()
+  @objc dynamic public func isWidgetVisible(parameters: Didomi.DidomiWidgetParameters = DidomiWidgetParameters()) -> Swift.Bool
   @objc dynamic public func isPreferencesVisible() -> Swift.Bool
   @objc dynamic public func getTranslatedText(key: Swift.String) -> Swift.String
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getText(key: Swift.String) -> [Swift.String : Swift.String]?
-  #endif
   @objc dynamic public func setLogLevel(minLevel: Swift.UInt8)
   @objc dynamic public func setUser(_ parameters: Didomi.DidomiUserParameters)
   @available(*, deprecated, message: "Use setUser(DidomiUserParameters) instead.")
@@ -456,14 +444,10 @@ extension Didomi.Didomi {
   @available(*, deprecated, message: "Use getCurrentUserStatus() instead.")
   @objc dynamic public func getUserStatus() -> Didomi.UserStatus
   @objc dynamic public func getCurrentUserStatus() -> Didomi.CurrentUserStatus
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc dynamic public func getCurrentUserStatus(userAuth: any Didomi.UserAuth) -> Didomi.CurrentUserStatus?
-  #endif
   @objc dynamic public func setCurrentUserStatus(currentUserStatus: Didomi.CurrentUserStatus) -> Swift.Bool
   @objc dynamic public func openCurrentUserStatusTransaction() -> Didomi.CurrentUserStatusTransaction
-  #if compiler(>=5.3) && $NonescapableTypes
   public func setLocalProperty(key: Swift.String, value: Any?)
-  #endif
 }
 extension Didomi.Didomi : @unchecked Swift.Sendable {
 }
@@ -486,9 +470,7 @@ extension Didomi.LoadUserStatusResult {
     public var description: Swift.String {
       get
     }
-    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
-    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -504,9 +486,7 @@ extension Didomi.LoadUserStatusResult {
     public var description: Swift.String {
       get
     }
-    #if compiler(>=5.3) && $NonescapableTypes
     public init?(rawValue: Swift.Int)
-    #endif
     public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
@@ -526,9 +506,7 @@ extension Didomi.LoadUserStatusResult {
 }
 @objc public protocol UserAuth {
   @objc var id: Swift.String { get }
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
 }
 @_hasMissingDesignatedInitializers @objc public class UserAuthParams : ObjectiveC.NSObject, Didomi.UserAuth, Swift.Codable {
   required public init(from decoder: any Swift.Decoder) throws
@@ -536,9 +514,7 @@ extension Didomi.LoadUserStatusResult {
   public var algorithm: Swift.String
   public var secretID: Swift.String
   public var expiration: Foundation.TimeInterval?
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   @objc override dynamic public var hash: Swift.Int {
     @objc get
@@ -549,9 +525,7 @@ extension Didomi.LoadUserStatusResult {
   @objc public init(id: Swift.String)
   required public init(from decoder: any Swift.Decoder) throws
   @objc public var id: Swift.String
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   public func encode(to encoder: any Swift.Encoder) throws
   @objc override dynamic public var hash: Swift.Int {
     @objc get
@@ -564,43 +538,29 @@ extension Didomi.LoadUserStatusResult {
   required public init(from decoder: any Swift.Decoder) throws
   @objc public var initializationVector: Swift.String
   override public func encode(to encoder: any Swift.Encoder) throws
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   @objc override dynamic public var hash: Swift.Int {
     @objc get
   }
   @objc deinit
 }
 @objc @_hasMissingDesignatedInitializers @objcMembers public class UserAuthWithHashParams : Didomi.UserAuthParams {
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(id: Swift.String, algorithm: Swift.String, secretID: Swift.String, digest: Swift.String, salt: Swift.String? = nil)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc convenience public init(id: Swift.String, algorithm: Swift.String, secretID: Swift.String, digest: Swift.String, salt: Swift.String? = nil, legacyExpiration: Foundation.TimeInterval)
-  #endif
   required public init(from decoder: any Swift.Decoder) throws
   @objc public var salt: Swift.String?
   @objc public var digest: Swift.String
   override public func encode(to encoder: any Swift.Encoder) throws
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   @objc override dynamic public var hash: Swift.Int {
     @objc get
   }
   @objc deinit
 }
 @objc public class DidomiInitializeParameters : ObjectiveC.NSObject, @unchecked Swift.Sendable {
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false, handleConsentUIAutomatically: Swift.Bool)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(apiKey: Swift.String, localConfigurationPath: Swift.String? = nil, remoteConfigurationURL: Swift.String? = nil, providerID: Swift.String? = nil, disableDidomiRemoteConfig: Swift.Bool = false, languageCode: Swift.String? = nil, noticeID: Swift.String? = nil, countryCode: Swift.String? = nil, regionCode: Swift.String? = nil, isUnderage: Swift.Bool = false, sdkPath: Swift.String? = nil, apiPath: Swift.String? = nil)
-  #endif
   @objc deinit
 }
 @_inheritsConvenienceInitializers @objc(DDMEventListener) public class EventListener : ObjectiveC.NSObject {
@@ -651,6 +611,8 @@ extension Didomi.LoadUserStatusResult {
   @objc public var onPreferencesClickSPICategoryDisagree: (_ event: Didomi.EventType, _ categoryId: Swift.String?) -> Swift.Void
   @available(*, deprecated, message: "SPI purposes are now treated as other purposes, please use onPreferencesClickSaveChoices() instead.")
   @objc public var onPreferencesClickSPIPurposeSaveChoices: (_ event: Didomi.EventType) -> Swift.Void
+  @objc public var onShowWidget: (_ event: Didomi.ShowWidgetEvent) -> Swift.Void
+  @objc public var onHideWidget: (_ event: Didomi.HideWidgetEvent) -> Swift.Void
   @objc public var onSyncUserChanged: (_ event: Didomi.SyncUserChangedEvent) -> Swift.Void
   @available(*, deprecated, message: "Please use onSyncReady() instead")
   @objc public var onSyncDone: (_ event: Didomi.EventType, _ organizationUserId: Swift.String?) -> Swift.Void
@@ -668,9 +630,7 @@ extension Didomi.LoadUserStatusResult {
   case enable
   case disable
   case unknown
-  #if compiler(>=5.3) && $NonescapableTypes
   public init?(rawValue: Swift.Int)
-  #endif
   public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
@@ -678,9 +638,7 @@ extension Didomi.LoadUserStatusResult {
 }
 @objc @_Concurrency.MainActor @preconcurrency public class NoticeViewController : UIKit.UIViewController {
   @_Concurrency.MainActor @preconcurrency public init(noticeSkipped: Swift.Bool = false, didomi: Didomi.Didomi)
-  #if compiler(>=5.3) && $NonescapableTypes
   @_Concurrency.MainActor @preconcurrency @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
-  #endif
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidLoad()
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
   @_Concurrency.MainActor @preconcurrency @objc override dynamic public var preferredFocusEnvironments: [any UIKit.UIFocusEnvironment] {
@@ -701,22 +659,18 @@ extension Didomi.LoadUserStatusResult {
   @objc final public let specialFeatureIDs: Swift.Set<Swift.String>
   @objc final public let urls: [Didomi.Vendor.URL]?
   @objc final public let isIAB: Swift.Bool
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc public init(id: Swift.String, name: Swift.String, policyUrl: Swift.String? = nil, namespaces: Didomi.Vendor.Namespaces? = nil, purposeIDs: Swift.Set<Swift.String> = [], legIntPurposeIDs: Swift.Set<Swift.String> = [], featureIDs: Swift.Set<Swift.String> = [], flexiblePurposeIDs: Swift.Set<Swift.String> = [], specialPurposeIDs: Swift.Set<Swift.String> = [], specialFeatureIDs: Swift.Set<Swift.String> = [], urls: [Didomi.Vendor.URL]? = nil, isIAB: Swift.Bool)
-  #endif
-  #if compiler(>=5.3) && $NonescapableTypes
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   @objc deinit
   public func encode(to encoder: any Swift.Encoder) throws
 }
 extension Didomi.Vendor {
-  @_hasMissingDesignatedInitializers @objc(DDMVendorNamespaces) @objcMembers public class Namespaces : ObjectiveC.NSObject, Swift.Encodable {
+  @objc(DDMVendorNamespaces) @objcMembers public class Namespaces : ObjectiveC.NSObject, Swift.Encodable {
     @objc final public let iab2: Swift.String?
     final public let num: Swift.Int?
-    #if compiler(>=5.3) && $NonescapableTypes
+    @objc final public let sp: Swift.String?
+    public init(iab2: Swift.String? = nil, num: Swift.Int? = nil, sp: Swift.String? = nil)
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
   }
@@ -726,9 +680,7 @@ extension Didomi.Vendor {
     @objc final public let langID: Swift.String?
     @objc final public let privacy: Swift.String?
     @objc final public let legIntClaim: Swift.String?
-    #if compiler(>=5.3) && $NonescapableTypes
     @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-    #endif
     @objc deinit
     public func encode(to encoder: any Swift.Encoder) throws
   }
@@ -737,12 +689,21 @@ extension Didomi.Vendor {
   @objc final public let id: Swift.String
   @objc final public let name: Swift.String
   @objc final public let descriptionText: Swift.String
-  @objc public init(id: Swift.String = "", name: Swift.String = "", descriptionText: Swift.String = "")
-  #if compiler(>=5.3) && $NonescapableTypes
+  @objc final public let namespaces: Didomi.Purpose.Namespaces?
+  @objc public init(id: Swift.String = "", name: Swift.String = "", descriptionText: Swift.String = "", namespaces: Didomi.Purpose.Namespaces? = nil)
   @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
-  #endif
   @objc deinit
   public func encode(to encoder: any Swift.Encoder) throws
+}
+extension Didomi.Purpose {
+  @objc(DDMPurposeNamespaces) @objcMembers public class Namespaces : ObjectiveC.NSObject, Swift.Encodable {
+    final public let num: Swift.Int?
+    @objc final public let sp: Swift.String?
+    public init(num: Swift.Int? = nil, sp: Swift.String? = nil)
+    @objc override dynamic public func isEqual(_ object: Any?) -> Swift.Bool
+    @objc deinit
+    public func encode(to encoder: any Swift.Encoder) throws
+  }
 }
 extension Didomi.EventType : Swift.Equatable {}
 extension Didomi.EventType : Swift.Hashable {}
