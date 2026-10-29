@@ -32,12 +32,18 @@ class UserDefaultsViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
+        let copyButton = UIBarButtonItem(
+            title: "Copy",
+            style: .plain,
+            target: self,
+            action: #selector(copyButtonTapped)
+        )
         let shareButton = UIBarButtonItem(
             barButtonSystemItem: .action,
             target: self,
             action: #selector(shareButtonTapped)
         )
-        navigationItem.rightBarButtonItem = shareButton
+        navigationItem.rightBarButtonItems = [shareButton, copyButton]
     }
 
     private func setupTextView() {
@@ -52,7 +58,15 @@ class UserDefaultsViewController: UIViewController {
     }
 
     private func loadUserDefaults() {
-        allUserDefaultsData = UserDefaults.standard.dictionaryRepresentation()
+        let allData = UserDefaults.standard.dictionaryRepresentation()
+
+        // Filter to only include keys containing Didomi_*, IAB*, or sp.state
+        allUserDefaultsData = allData.filter { key, _ in
+            key.starts(with: "Didomi_") ||
+            key.starts(with: "IAB") ||
+            key == "sp.state"
+        }
+
         displayData()
     }
 
@@ -108,6 +122,29 @@ class UserDefaultsViewController: UIViewController {
         textView.text = displayText
     }
 
+    @objc private func copyButtonTapped() {
+        // Convert UserDefaults to JSON
+        guard let jsonData = try? JSONSerialization.data(
+            withJSONObject: convertToJSONCompatible(allUserDefaultsData),
+            options: [.prettyPrinted, .sortedKeys]
+        ), let jsonString = String(data: jsonData, encoding: .utf8) else {
+            showError("Failed to create JSON data")
+            return
+        }
+
+        // Copy to clipboard
+        UIPasteboard.general.string = jsonString
+
+        // Show confirmation
+        let alert = UIAlertController(
+            title: "Copied",
+            message: "UserDefaults JSON copied to clipboard",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     @objc private func shareButtonTapped() {
         // Convert UserDefaults to JSON
         guard let jsonData = try? JSONSerialization.data(
@@ -160,7 +197,13 @@ class UserDefaultsViewController: UIViewController {
             } else if let array = value as? [Any] {
                 result[key] = array
             } else if let string = value as? String {
-                result[key] = string
+                // Try to parse string as JSON first
+                if let data = string.data(using: .utf8),
+                   let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) {
+                    result[key] = jsonObject
+                } else {
+                    result[key] = string
+                }
             } else if let number = value as? NSNumber {
                 result[key] = number
             } else if let date = value as? Date {
