@@ -81,7 +81,15 @@ class UserDefaultsViewController: UIViewController {
                       let prettyString = String(data: jsonData, encoding: .utf8) {
                 displayText += "\(prettyString)\n\n"
             } else if let stringValue = value as? String {
-                displayText += "\(stringValue)\n\n"
+                // Try to parse as JSON and pretty-print
+                if let data = stringValue.data(using: .utf8),
+                   let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
+                   let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted, .sortedKeys]),
+                   let prettyString = String(data: prettyData, encoding: .utf8) {
+                    displayText += "\(prettyString)\n\n"
+                } else {
+                    displayText += "\(stringValue)\n\n"
+                }
             } else if let numberValue = value as? NSNumber {
                 displayText += "\(numberValue)\n\n"
             } else if let dateValue = value as? Date {
