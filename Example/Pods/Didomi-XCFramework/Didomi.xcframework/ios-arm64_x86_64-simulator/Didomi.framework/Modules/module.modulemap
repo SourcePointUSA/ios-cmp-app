@@ -7,5 +7,4 @@ framework module Didomi {
 
 module Didomi.Swift {
   header "Didomi-Swift.h"
-  requires objc
 }

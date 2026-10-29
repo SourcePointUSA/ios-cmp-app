@@ -7,11 +7,17 @@ var noticeDisplayed = false;
 
 /**
  * Initialize the SDK with the specified configuration
+ *
+ * `sdkPath` and `apiPath` override the base URLs the Web SDK uses to load its own static files
+ * (TCF disclosures, IAB vendor texts, UI assets) and to reach the API. They must be forwarded
+ * through the configuration because the Web SDK reads them from `window.didomiConfig`: passing
+ * `sdkURL` alone only changes where the SDK bundle itself is loaded from, leaving everything the
+ * bundle fetches afterwards pointing at the default Didomi domains.
  */
-function initSdk(config, gvl, sdkURL, languageCode, isUnderage) {
+function initSdk(config, gvl, sdkURL, languageCode, isUnderage, sdkPath, apiPath, userContext) {
   if (config) {
     // Set the global window configuration to the config object
-    window.didomiConfig = prepareConfigFromMobile(config, languageCode, isUnderage);
+    window.didomiConfig = prepareConfigFromMobile(config, languageCode, isUnderage, sdkPath, apiPath);
 
     // Set the location properties
     window.didomiCountry = extractCountryFromMobileConfig(config);
@@ -24,6 +30,12 @@ function initSdk(config, gvl, sdkURL, languageCode, isUnderage) {
       window.didomiConfig.app.vendors.iab
     ) {
       window.didomiConfig.app.vendors.iab.vendorList = prepareGVLFromMobile(gvl);
+    }
+
+    // Set userContext if provided
+    if (userContext) {
+      window.didomiConfig.user = window.didomiConfig.user || {};
+      window.didomiConfig.user.userContext = userContext;
     }
   }
 
@@ -91,6 +103,30 @@ function openNotice(userStatus, options) {
 }
 
 /**
+ * Open a widget.
+ * Widgets render their own layer (notice, purposes or vendors)
+ * Used when the WebView is opened to host a widget rather than the notice.
+ * @param {Object} userStatus user status to apply before showing the widget.
+ * @param {Object} [options] options for the widget, see [showWidget].
+ */
+function openWidget(userStatus, options) {
+  handleWebSDKEvents();
+  window.didomiOnReady = window.didomiOnReady || [];
+  window.didomiOnReady.push(function (Didomi) {
+    Didomi.reset(userStatus.user_id);
+    Didomi.setUserStatus(userStatus);
+    // Cleared here rather than upfront, as the deep link path does: while set, this flag hides a
+    // consent notice shown automatically by the Web SDK, which must not appear in a widget-only WebView.
+    initializationInProgress = false;
+    // `noticeDisplayed` is not set: closing the widget is reported with `widget.hidden`, which tears down
+    // the host WebView natively. Setting it would let the `notice.hidden` of a widget rendered by the Web
+    // SDK during initialization, delivered after this callback, tear down the host before the requested
+    // widget is shown.
+  });
+  showWidget(options);
+}
+
+/**
  * Listen to SDK events
  */
 function handleWebSDKEvents() {
@@ -100,8 +136,13 @@ function handleWebSDKEvents() {
       {
         event: 'api.error',
         listener: function ({ id, reason }) {
-          if (window.webkit && window.webkit.messageHandlers) {
-            window.webkit.messageHandlers.onError.postMessage(reason);
+          if (isIOS()) {
+            // `onError` is only registered by recent iOS SDK versions; log for debugging with older ones.
+            if (window.webkit.messageHandlers.onError) {
+              window.webkit.messageHandlers.onError.postMessage({ id: id, reason: reason });
+            } else {
+              console.error(id, reason);
+            }
           } else {
             androidInterface.onError(id, reason);
           }
@@ -165,7 +206,7 @@ function handleWebSDKEvents() {
       {
         event: 'notice.hidden',
         listener: function () {
-          if (noticeDisplayed && !Didomi.preferences.isVisible()) {
+          if (noticeDisplayed && !Didomi.preferences.isVisible() && !Didomi.notice.isVisible()) {
             if (isIOS()) {
               window.webkit.messageHandlers.noticeHidden.postMessage("");
             } else {
@@ -331,6 +372,41 @@ function handleWebSDKEvents() {
           }
         }
       },
+      {
+        event: "widget.shown",
+        listener: function (event) {
+          // While initializing, the Web SDK may render a widget on its own (consent required with a
+          // non-manual widget selected) and the `notice.shown` handler hides it right away. That
+          // transient widget must not be reported, or native would see a hide and tear down the
+          // WebView opened to host the widget requested by `openWidget`.
+          if (initializationInProgress) {
+            return;
+          }
+          var payload = {
+            widgetId: event && event.widgetId,
+            layerName: event && event.layerName
+          };
+          if (isIOS()) {
+            window.webkit.messageHandlers.widgetShown.postMessage(payload);
+          } else {
+            androidInterface.onWidgetShown(JSON.stringify(payload));
+          }
+        }
+      },
+      {
+        event: "widget.hidden",
+        listener: function () {
+          // See `widget.shown`: the hide of a widget rendered during initialization is not reported
+          if (initializationInProgress) {
+            return;
+          }
+          if (isIOS()) {
+            window.webkit.messageHandlers.widgetHidden.postMessage("");
+          } else {
+            androidInterface.onWidgetHidden();
+          }
+        }
+      },
     );
 }
 
@@ -341,6 +417,52 @@ function showPreferences() {
   window.didomiOnReady = window.didomiOnReady || [];
   window.didomiOnReady.push(function (Didomi) {
     Didomi.preferences.show();
+  });
+}
+
+/**
+ * Show a widget programmatically.
+ * The options are passed to the Web SDK as they are, so new widget options are supported without
+ * changing this bridge nor the native SDKs.
+ * @param {Object} [options] options for the widget, omitted properties are selected by the Web SDK.
+ * @param {string} [options.widgetId] ID of the widget to show, omitted for automatic selection by the Rules Engine.
+ * @param {string} [options.layerName] name of the layer at which the widget should open, omitted for the default layer.
+ */
+function showWidget(options) {
+  window.didomiOnReady = window.didomiOnReady || [];
+  window.didomiOnReady.push(function (Didomi) {
+    if (!Didomi.widgets || !Didomi.widgets.show) {
+      var reason = "widgets API is not available in this Web SDK version";
+      if (isIOS()) {
+        // `onError` is not a registered iOS message handler; log for debugging instead.
+        console.error(reason);
+      } else {
+        androidInterface.onError("widgets.show", reason);
+      }
+      return;
+    }
+    Didomi.widgets.show(options || {});
+  });
+}
+
+/**
+ * Hide the currently displayed widget programmatically.
+ * Unsaved changes are discarded (cancel semantics).
+ */
+function hideWidget() {
+  window.didomiOnReady = window.didomiOnReady || [];
+  window.didomiOnReady.push(function (Didomi) {
+    if (!Didomi.widgets || !Didomi.widgets.hide) {
+      var reason = "widgets API is not available in this Web SDK version";
+      if (isIOS()) {
+        // `onError` is not a registered iOS message handler; log for debugging instead.
+        console.error(reason);
+      } else {
+        androidInterface.onError("widgets.hide", reason);
+      }
+      return;
+    }
+    Didomi.widgets.hide();
   });
 }
 
@@ -443,7 +565,7 @@ function sanitizeID(id) {
 
 /**
  * Fix unescaped quotes.
- * Note: lookbehinds (`(?<=...)` or `(?<!...)`) are only supported from safari 17+ 
+ * Note: lookbehinds (`(?<=...)` or `(?<!...)`) are only supported from safari 17+
  * @param {string} text
  * @returns the sanitized text
  */
@@ -522,7 +644,7 @@ function isIOS() {
 
 /**
  * Extract the country from the mobile config.
- * @param {*} configFromMobile 
+ * @param {*} configFromMobile
  * @returns the country or null if not defined.
  */
 function extractCountryFromMobileConfig(configFromMobile) {
@@ -531,7 +653,7 @@ function extractCountryFromMobileConfig(configFromMobile) {
 
 /**
  * Extract the region from the mobile config.
- * @param {*} configFromMobile 
+ * @param {*} configFromMobile
  * @returns the region or null if not defined.
  */
 function extractRegionFromMobileConfig(configFromMobile) {
@@ -543,9 +665,11 @@ function extractRegionFromMobileConfig(configFromMobile) {
  * @param {*} configFromMobile Config provided by mobile.
  * @param {string} languageCode language code to be set in the Config.
  * @param {boolean} isUnderage whether the notice should be underage or not.
+ * @param {string} [sdkPath] base URL overriding where the Web SDK loads its static files from.
+ * @param {string} [apiPath] base URL overriding the API the Web SDK sends its requests to.
  * @returns Config with unneeded features disabled
  */
-function prepareConfigFromMobile(configFromMobile, languageCode, isUnderage) {
+function prepareConfigFromMobile(configFromMobile, languageCode, isUnderage, sdkPath, apiPath) {
   if (configFromMobile == null) {
     return null;
   }
@@ -580,6 +704,16 @@ function prepareConfigFromMobile(configFromMobile, languageCode, isUnderage) {
   if (isUnderage) {
     configFromMobile.user = configFromMobile.user || {};
     configFromMobile.user.isUnderage = isUnderage;
+  }
+
+  // Forward the base URL overrides so the Web SDK loads its own static files and reaches the API
+  // through the custom domain instead of the default Didomi ones.
+  if (typeof sdkPath === "string" && sdkPath) {
+    configFromMobile.sdkPath = sdkPath;
+  }
+
+  if (typeof apiPath === "string" && apiPath) {
+    configFromMobile.apiPath = apiPath;
   }
 
   return configFromMobile;
