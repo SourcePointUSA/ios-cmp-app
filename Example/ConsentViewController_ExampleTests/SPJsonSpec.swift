@@ -14,28 +14,28 @@ import Nimble
 import Quick
 
 class SPJsonSpec: QuickSpec {
-    let jsonSample = """
-    {
-        "arr": [1, "2", null],
-        "bool": true,
-        "double": 1.01,
-        "fake int": "1",
-        "int": 1,
-        "null": null,
-        "obj": {
-            "foo": "bar"
-        },
-        "string": "hello there"
-    }
-    """
-    var json: Any {
-        try! JSONSerialization.jsonObject(with: jsonSample.data(using: .utf8)!) // swiftlint:disable:this force_unwrapping
-    }
+    override class func spec() {
+        let jsonSample = """
+        {
+            "arr": [1, "2", null],
+            "bool": true,
+            "double": 1.01,
+            "fake int": "1",
+            "int": 1,
+            "null": null,
+            "obj": {
+                "foo": "bar"
+            },
+            "string": "hello there"
+        }
+        """
+        var json: Any {
+            try! JSONSerialization.jsonObject(with: jsonSample.data(using: .utf8)!) // swiftlint:disable:this force_unwrapping
+        }
 
-    override func spec() {
         describe("SPJson") {
             it("parses all primitive types of data") {
-                let spJson = try! SPJson(self.json)
+                let spJson = try! SPJson(json)
                 expect(spJson["string"]?.stringValue) == "hello there"
                 expect(spJson["fake int"]?.stringValue) == "1"
                 expect(spJson["double"]?.doubleValue) == 1.01
@@ -48,7 +48,7 @@ class SPJsonSpec: QuickSpec {
             }
 
             it("can be encoded to and decoded to JSON") {
-                let spJson = try! SPJson(self.json)
+                let spJson = try! SPJson(json)
                 let encoded = try! JSONEncoder().encodeResult(spJson).get()
                 let decoded = try! JSONDecoder().decode(SPJson.self, from: encoded).get()
                 expect(decoded["string"]?.stringValue) == "hello there"

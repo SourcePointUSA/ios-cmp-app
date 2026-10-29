@@ -27,6 +27,16 @@
 
 @implementation GULAppEnvironmentUtil
 
+static NSProcessInfo *gProcessInfo = nil;
+
++ (NSProcessInfo *)processInfo {
+  return gProcessInfo ?: [NSProcessInfo processInfo];
+}
+
++ (void)setProcessInfoForTest:(NSProcessInfo *)processInfo {
+  gProcessInfo = processInfo;
+}
+
 /// A key for the Info.plist to enable or disable checking if the App Store is running in a sandbox.
 /// This will affect your data integrity when using Firebase Analytics, as it will disable some
 /// necessary checks.
@@ -54,14 +64,7 @@ static BOOL HasEmbeddedMobileProvision(void) {
 #endif
 }
 
-+ (BOOL)isFromAppStore {
-  static dispatch_once_t isEncryptedOnce;
-  static BOOL isEncrypted = NO;
-
-  dispatch_once(&isEncryptedOnce, ^{
-    isEncrypted = IsAppEncrypted();
-  });
-
+static BOOL IsFromAppStore(void) {
   if ([GULAppEnvironmentUtil isSimulator]) {
     return NO;
   }
@@ -83,10 +86,10 @@ static BOOL HasEmbeddedMobileProvision(void) {
   // the iTunesMetadata.plist outside of the sandbox will be rejected by Apple.
   // If the app does not contain the embedded.mobileprovision which is stripped out by Apple when
   // the app is submitted to store, then it is highly likely that it is from Apple Store.
-  return isEncrypted && !HasEmbeddedMobileProvision();
+  return IsAppEncrypted() && !HasEmbeddedMobileProvision();
 }
 
-+ (BOOL)isAppStoreReceiptSandbox {
+static BOOL IsAppStoreReceiptSandbox(void) {
   // Since checking the App Store's receipt URL can be memory intensive, check the option in the
   // Info.plist if developers opted out of this check.
   id enableSandboxCheck =
@@ -99,6 +102,34 @@ static BOOL HasEmbeddedMobileProvision(void) {
   NSURL *appStoreReceiptURL = [NSBundle mainBundle].appStoreReceiptURL;
   NSString *appStoreReceiptFileName = appStoreReceiptURL.lastPathComponent;
   return [appStoreReceiptFileName isEqualToString:kFIRAIdentitySandboxReceiptFileName];
+}
+
++ (BOOL)isFromAppStore {
+  // The inputs (install source and bundle contents) can't change while the app is running, so
+  // compute the result once.
+  static dispatch_once_t isFromAppStoreOnce;
+  static BOOL isFromAppStore = NO;
+
+  dispatch_once(&isFromAppStoreOnce, ^{
+    isFromAppStore = IsFromAppStore();
+  });
+
+  return isFromAppStore;
+}
+
++ (BOOL)isAppStoreReceiptSandbox {
+  // `-[NSBundle appStoreReceiptURL]` makes a synchronous XPC call to the LaunchServices daemon,
+  // which can block the calling thread for seconds when the daemon is busy. The receipt can't
+  // change while the app is running, so compute the result once.
+  // See https://github.com/firebase/firebase-ios-sdk/issues/16726.
+  static dispatch_once_t isAppStoreReceiptSandboxOnce;
+  static BOOL isAppStoreReceiptSandbox = NO;
+
+  dispatch_once(&isAppStoreReceiptSandboxOnce, ^{
+    isAppStoreReceiptSandbox = IsAppStoreReceiptSandbox();
+  });
+
+  return isAppStoreReceiptSandbox;
 }
 
 + (BOOL)isSimulator {
@@ -197,7 +228,7 @@ static BOOL HasEmbeddedMobileProvision(void) {
   return [UIDevice currentDevice].systemVersion;
 #elif TARGET_OS_OSX || TARGET_OS_TV || TARGET_OS_WATCH || TARGET_OS_VISION
   // Assemble the systemVersion, excluding the patch version if it's 0.
-  NSOperatingSystemVersion osVersion = [NSProcessInfo processInfo].operatingSystemVersion;
+  NSOperatingSystemVersion osVersion = [self processInfo].operatingSystemVersion;
   NSMutableString *versionString = [[NSMutableString alloc]
       initWithFormat:@"%ld.%ld", (long)osVersion.majorVersion, (long)osVersion.minorVersion];
   if (osVersion.patchVersion != 0) {
@@ -246,8 +277,8 @@ static BOOL HasEmbeddedMobileProvision(void) {
 #elif TARGET_OS_IOS
   if (@available(iOS 14.0, *)) {
     // Early iOS 14 betas do not include isiOSAppOnMac (#6969)
-    applePlatform = ([[NSProcessInfo processInfo] respondsToSelector:@selector(isiOSAppOnMac)] &&
-                     [NSProcessInfo processInfo].isiOSAppOnMac)
+    applePlatform = ([[self processInfo] respondsToSelector:@selector(isiOSAppOnMac)] &&
+                     [self processInfo].isiOSAppOnMac)
                         ? @"ios_on_mac"
                         : @"ios";
   } else {

@@ -14,7 +14,7 @@ import Quick
 // swiftlint:disable force_try
 
 class SPCampaignEnvSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("SPCampaignEnv") {
             describe("Stage") {
                 it("has the raw value of 0") {

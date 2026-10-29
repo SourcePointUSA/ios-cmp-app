@@ -12,62 +12,57 @@ import Quick
 import XCTest
 
 class ObjCExampleAppUITests: QuickSpec {
-    var app: ExampleApp!
+    static var app: ExampleApp!
 
-    override func spec() {
+    override class func spec() {
         beforeSuite {
-            self.continueAfterFailure = false
-            self.app = ExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(30)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            app = ExampleApp()
+            Nimble.PollingDefaults.timeout = .seconds(30)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
+            Nimble.PollingDefaults.timeout = .seconds(1)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
-            self.app.relaunch(clean: true, resetAtt: true)
+            app.relaunch(clean: true, resetAtt: true)
         }
 
         func acceptAtt() {
-            expect(self.app.attPrePrompt.okButton).toEventually(showUp())
+            expect(app.attPrePrompt.okButton).toEventually(showUp())
             app.attPrePrompt.okButton.tap()
-            expect(self.app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
+            expect(app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
             app.attPrePrompt.attAlertAllowButton.tap()
         }
 
         // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
         // the ATT expectations run only once per test suite.
         func runAttScenario() {
-            if #available(iOS 15.0, *) {
+            if app.shouldRunAttScenario {
                 acceptAtt()
-            } else if app.shouldRunAttScenario {
-                if #available(iOS 14, *) {
-                    acceptAtt()
-                }
             }
         }
 
         it("Accept all through message") {
             runAttScenario()
-            expect(self.app.gdprMessage).toEventually(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.gdprMessage).to(disappear())
+            expect(app.gdprMessage).toEventually(showUp())
+            app.acceptAllButton.tap()
+            expect(app.gdprMessage).to(disappear())
 
-            expect(self.app.usnatMessage).toEventually(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.usnatMessage).to(disappear())
+            expect(app.usnatMessage).toEventually(showUp())
+            app.acceptAllButton.tap()
+            expect(app.usnatMessage).to(disappear())
 
-            expect(self.app.preferencesMessage).toEventually(showUp())
-            self.app.acceptAllButton.tap()
-            expect(self.app.preferencesMessage).to(disappear())
+            expect(app.preferencesMessage).toEventually(showUp())
+            app.acceptAllButton.tap()
+            expect(app.preferencesMessage).to(disappear())
 
-            expect(self.app.sdkStatus).toEventually(containText("Finished"))
+            expect(app.sdkStatus).toEventually(containText("Finished"))
 
-            self.app.relaunch()
-            expect(self.app.sdkStatus).toEventually(containText("Finished"))
+            app.relaunch()
+            expect(app.sdkStatus).toEventually(containText("Finished"))
         }
     }
 }

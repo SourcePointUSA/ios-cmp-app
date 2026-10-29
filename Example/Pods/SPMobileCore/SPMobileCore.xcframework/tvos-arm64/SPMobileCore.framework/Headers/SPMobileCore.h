@@ -4354,6 +4354,11 @@ __attribute__((swift_name("MessagesResponse.MessageMetaData")))
 - (NSString *)description __attribute__((swift_name("description()")));
 @property (readonly) SPMCMessagesResponseMessageMetaDataMessageCategory *categoryId __attribute__((swift_name("categoryId")));
 @property (readonly) int32_t messageId __attribute__((swift_name("messageId")));
+
+/**
+ * @note annotations
+ *   kotlinx.serialization.SerialName(value="prtnUUID")
+*/
 @property (readonly) NSString * _Nullable messagePartitionUUID __attribute__((swift_name("messagePartitionUUID")));
 @property (readonly) SPMCMessagesResponseMessageMetaDataMessageSubCategory *subCategoryId __attribute__((swift_name("subCategoryId")));
 @end

@@ -50,10 +50,10 @@ class URLSessionMock: SPURLSession {
 }
 
 class SimpleClientSpec: QuickSpec {
-    // swiftlint:disable:next force_unwrapping
-    let exampleRequest = URLRequest(url: URL(string: "http://example.com")!)
+    override class func spec() {
+        // swiftlint:disable:next force_unwrapping
+        let exampleRequest = URLRequest(url: URL(string: "http://example.com")!)
 
-    override func spec() {
         describe("init(timeoutAfter: TimeInterval)") {
             it("sets the timeout in its URLSession") {
                 let session = SimpleClient(timeoutAfter: 10.0).session as! URLSession
@@ -69,8 +69,8 @@ class SimpleClientSpec: QuickSpec {
                     logger: NoopLogger(),
                     urlSession: session
                 )
-                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
-                expect(session.dataTaskCalledWith) == self.exampleRequest
+                client.request(exampleRequest, apiCode: .EMPTY) { _ in }
+                expect(session.dataTaskCalledWith) == exampleRequest
             }
 
             it("calls resume on the result of the dataTask") {
@@ -84,7 +84,7 @@ class SimpleClientSpec: QuickSpec {
                     logger: NoopLogger(),
                     urlSession: session
                 )
-                client.request(self.exampleRequest, apiCode: .EMPTY) { _ in }
+                client.request(exampleRequest, apiCode: .EMPTY) { _ in }
                 expect(dataTaskResult.resumeWasCalled) == true
             }
 
@@ -101,7 +101,7 @@ class SimpleClientSpec: QuickSpec {
                         logger: NoopLogger(),
                         urlSession: session
                     )
-                    client.request(self.exampleRequest, apiCode: .EMPTY) { result = $0 }
+                    client.request(exampleRequest, apiCode: .EMPTY) { result = $0 }
                     expect(result).toEventuallyNot(beNil())
                 }
             }
@@ -118,7 +118,7 @@ class SimpleClientSpec: QuickSpec {
                         logger: NoopLogger(),
                         urlSession: session
                     )
-                    client.request(self.exampleRequest, apiCode: .EMPTY) { result in
+                    client.request(exampleRequest, apiCode: .EMPTY) { result in
                         switch result {
                         case .success: fail("call should fail")
 
@@ -137,7 +137,7 @@ class SimpleClientSpec: QuickSpec {
                     logger: NoopLogger(),
                     urlSession: URLSession.shared
                 )
-                client.request(self.exampleRequest, apiCode: .EMPTY) { result in
+                client.request(exampleRequest, apiCode: .EMPTY) { result in
                     switch result {
                     case .success: fail("call should fail")
 

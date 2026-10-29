@@ -12,7 +12,7 @@ import Nimble
 import Quick
 
 class MessageResponseSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         let messageResponse = """
         {
             "message": {

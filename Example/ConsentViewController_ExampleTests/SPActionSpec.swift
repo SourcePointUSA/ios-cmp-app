@@ -14,7 +14,7 @@ import Nimble
 import Quick
 
 class SPActionSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("SPAction") {
             it("publisherData is set to empty dictionary by default") {
                 expect(SPAction(type: .AcceptAll).publisherData) == [:]

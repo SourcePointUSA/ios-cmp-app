@@ -13,53 +13,53 @@ import Nimble
 import Quick
 
 class SPConsentSpec: QuickSpec {
-    let ccpaConsents = """
-        {
-            "applies": true,
-            "consents": {
-                "expirationDate": "2124-10-27T16:59:00.092Z",
-                "status": "rejectedNone",
-                "rejectedVendors": [],
-                "rejectedCategories": [],
-                "consentStatus": {},
-                "signedLspa": false
+    override class func spec() {
+        let ccpaConsents = """
+            {
+                "applies": true,
+                "consents": {
+                    "expirationDate": "2124-10-27T16:59:00.092Z",
+                    "status": "rejectedNone",
+                    "rejectedVendors": [],
+                    "rejectedCategories": [],
+                    "consentStatus": {},
+                    "signedLspa": false
+                }
             }
-        }
-    """
+        """
 
-    let gdprConsents = """
-        {
-            "applies": true,
-            "consents": {
-                "expirationDate": "2124-10-27T16:59:00.092Z",
-                "grants": {},
-                "TCData": {},
-                "euconsent": "",
-                "consentStatus": {}
+        let gdprConsents = """
+            {
+                "applies": true,
+                "consents": {
+                    "expirationDate": "2124-10-27T16:59:00.092Z",
+                    "grants": {},
+                    "TCData": {},
+                    "euconsent": "",
+                    "consentStatus": {}
+                }
             }
-        }
-    """
+        """
 
-    let usNatConsents = """
-        {
-            "applies": false,
-            "consents": {
+        let usNatConsents = """
+            {
                 "applies": false,
-                "dateCreated": "2124-10-27T16:59:00.092Z",
-                "expirationDate": "2124-10-27T16:59:00.092Z",
-                "consentStrings": [],
-                "categories": [],
-                "consentStatus": {},
-                "GPPData": {}
+                "consents": {
+                    "applies": false,
+                    "dateCreated": "2124-10-27T16:59:00.092Z",
+                    "expirationDate": "2124-10-27T16:59:00.092Z",
+                    "consentStrings": [],
+                    "categories": [],
+                    "consentStatus": {},
+                    "GPPData": {}
+                }
             }
-        }
-    """
+        """
 
-    override func spec() {
         describe("SPConsent") {
             describe("GDPR") {
                 it("can be decode from JSON") {
-                    expect(self.gdprConsents).to(decodeToValue(
+                    expect(gdprConsents).to(decodeToValue(
                         SPConsent<SPGDPRConsent>(consents: .empty(), applies: true)
                     ))
                 }
@@ -67,7 +67,7 @@ class SPConsentSpec: QuickSpec {
 
             describe("CCPA") {
                 it("can be decode from JSON") {
-                    expect(self.ccpaConsents).to(decodeToValue(
+                    expect(ccpaConsents).to(decodeToValue(
                         SPConsent<SPCCPAConsent>(consents: .empty(), applies: true)
                     ))
                 }
@@ -75,7 +75,7 @@ class SPConsentSpec: QuickSpec {
 
             describe("USNat") {
                 it("can be decode from JSON") {
-                    expect(self.usNatConsents).to(decodeToValue(
+                    expect(usNatConsents).to(decodeToValue(
                         SPConsent<SPUSNatConsent>(consents: .empty(), applies: false)
                     ))
                 }

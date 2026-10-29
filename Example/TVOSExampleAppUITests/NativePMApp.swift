@@ -72,40 +72,12 @@ class NativePMApp: XCUIApplication {
     let gdprMessage = GDPRMessage()
     let ccpaMessage = CCPAMessage()
 
-    var doNotSellMyPersonalInformation: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Do Not Sell My Personal Information").firstMatch
-    }
-
-    var category: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Purpose 1").firstMatch
-    }
-
-    var category2: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Purpose 2").firstMatch
-    }
-
     var storeAndAccessInformation: XCUIElement {
         tables.cells.containing(.staticText, identifier: "Store and/or access information on a device").firstMatch
     }
 
     var createPersonalisedAdsProfile: XCUIElement {
         tables.cells.containing(.staticText, identifier: "Create profiles for personalised advertising").firstMatch
-    }
-
-    var justpremiumBV: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Justpremium BV").firstMatch
-    }
-
-    var loopMe: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "LoopMe Limited").firstMatch
-    }
-
-    var googleCharts: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Google Charts").firstMatch
-    }
-
-    var gameAccounts: XCUIElement {
-        tables.cells.containing(.staticText, identifier: "Game Accounts").firstMatch
     }
 
     var acceptButton: XCUIElement {

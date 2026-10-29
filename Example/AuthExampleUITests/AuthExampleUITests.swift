@@ -12,40 +12,40 @@ import Quick
 import XCTest
 
 class AuthExampleUITests: QuickSpec {
-    var app: AuthExampleApp!
+    static var app: AuthExampleApp!
 
-    override func spec() {
+    override class func spec() {
         beforeSuite {
-            self.app = AuthExampleApp()
-            Nimble.AsyncDefaults.timeout = .seconds(20)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(100)
+            app = AuthExampleApp()
+            Nimble.PollingDefaults.timeout = .seconds(20)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
-            Nimble.AsyncDefaults.timeout = .seconds(1)
-            Nimble.AsyncDefaults.pollInterval = .milliseconds(10)
+            Nimble.PollingDefaults.timeout = .seconds(1)
+            Nimble.PollingDefaults.pollInterval = .milliseconds(10)
         }
 
         beforeEach {
-            self.app.relaunch(clean: true, resetAtt: true)
+            app.relaunch(clean: true, resetAtt: true)
         }
 
         func acceptGDPRMessage() {
-            expect(self.app.gdprMessage.messageTitle).toEventually(showUp())
-            self.app.gdprMessage.acceptButton.tap()
+            expect(app.gdprMessage.messageTitle).toEventually(showUp())
+            app.gdprMessage.acceptButton.tap()
         }
 
         func acceptCCPAMessage() {
-            expect(self.app.ccpaMessage.messageTitle).toEventually(showUp())
-            self.app.ccpaMessage.acceptButton.tap()
+            expect(app.ccpaMessage.messageTitle).toEventually(showUp())
+            app.ccpaMessage.acceptButton.tap()
         }
 
         func waitForSdkToFinish() {
-            expect(self.app.sdkStatusLabel).toEventually(containText("Finished"))
+            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
         }
 
         func navigateToWebView() {
-            self.app.webViewButton.tap()
+            app.webViewButton.tap()
         }
 
         it("Accepting all via native screen should prevent messages from showing on the webview screen") {
@@ -53,7 +53,7 @@ class AuthExampleUITests: QuickSpec {
             acceptCCPAMessage()
             waitForSdkToFinish()
             navigateToWebView()
-            expect(self.app.webViewOnConsentReadyCalls.count).toEventually(equal(2))
+            expect(app.webViewOnConsentReadyCalls.count).toEventually(equal(2))
         }
     }
 }

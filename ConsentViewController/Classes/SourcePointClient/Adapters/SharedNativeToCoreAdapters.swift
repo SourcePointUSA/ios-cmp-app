@@ -32,7 +32,7 @@ extension KotlinFloat {
 extension SPError {
     func toCore() -> CoreSPError {
         return CoreSPError(
-            code: String(code),
+            code: spCode,
             description: description,
             cause: nil,
             campaignType: campaignType.toCore()

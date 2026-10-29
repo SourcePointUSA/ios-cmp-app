@@ -15,7 +15,7 @@ import Quick
 // swiftlint:disable force_try force_unwrapping
 
 class SPDateSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         func dateFromString(_ date: String) -> Date? {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

@@ -16,7 +16,7 @@ class QueryParamEncodableSpec: QuickSpec {
         let foo = "bar"
     }
 
-    override func spec() {
+    override class func spec() {
         it("should encode to a stringified json object") {
             let mockData = MockMetaData()
             expect(mockData.stringified) == "{\"foo\":\"bar\"}"

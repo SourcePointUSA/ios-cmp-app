@@ -13,52 +13,42 @@ import Nimble
 import Quick
 
 class SourcePointClientSpec: QuickSpec {
-    let propertyId = 123
-    let accountId = 1
-    let propertyName = try! SPPropertyName("test")
-    let authID = "auth id"
-    var campaign: SPCampaign { SPCampaign(targetingParams: [:]) }
-    var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
-    var gdprProfile: SPConsent<SPGDPRConsent> { SPConsent<SPGDPRConsent>(
-        consents: SPGDPRConsent.empty(),
-        applies: true
-    )}
-    var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
-    var wrapperHost: String {
-        Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
-    }
+    override class func spec() {
+        let propertyId = 123
+        let accountId = 1
+        let propertyName = try! SPPropertyName("test")
+        var campaign: SPCampaign { SPCampaign(targetingParams: [:]) }
+        var campaigns: SPCampaigns { SPCampaigns(gdpr: campaign) }
+        var gdprProfile: SPConsent<SPGDPRConsent> { SPConsent<SPGDPRConsent>(
+            consents: SPGDPRConsent.empty(),
+            applies: true
+        )}
+        var profile: SPUserData { SPUserData(gdpr: gdprProfile) }
+        var wrapperHost: String {
+            Constants.prod ? "cdn.privacy-mgmt.com" : "preprod-cdn.privacy-mgmt.com"
+        }
 
-    func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
-        accountId: accountId,
-        propertyName: propertyName,
-        propertyId: propertyId,
-        campaignEnv: .Public,
-        client: client
-    )}
-
-    override func spec() {
-        var client: SourcePointClient!
-        var httpClient: MockHttp!
-        var mockedResponse: Data?
+        func getClient(_ client: MockHttp) -> SourcePointClient { SourcePointClient(
+            accountId: accountId,
+            propertyName: propertyName,
+            propertyId: propertyId,
+            campaignEnv: .Public,
+            client: client
+        )}
 
         beforeSuite {
             // changing AsyncDefaults make the test suite pass in CI due to slow CI environment
-            AsyncDefaults.timeout = .seconds(20)
-            AsyncDefaults.pollInterval = .milliseconds(100)
+            PollingDefaults.timeout = .seconds(20)
+            PollingDefaults.pollInterval = .milliseconds(100)
         }
 
         afterSuite {
             // changing AsyncDefaults back to defaults after suite is done
-            AsyncDefaults.timeout = .seconds(1)
-            AsyncDefaults.pollInterval = .milliseconds(10)
+            PollingDefaults.timeout = .seconds(1)
+            PollingDefaults.pollInterval = .milliseconds(10)
         }
 
         describe("SourcePointClient") {
-            beforeEach {
-                mockedResponse = "{\"url\": \"https://notice.sp-prod.net/?message_id=59706\"}".data(using: .utf8)
-                httpClient = MockHttp(success: mockedResponse)
-                client = self.getClient(httpClient)
-            }
 
             describe("parseResponse") {
                 it("returns a failure Result if the result it receives is a failure") {

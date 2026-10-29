@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'ConsentViewController'
-  s.version = '7.12.7-rc.3'
+  s.version = '7.12.11'
   s.summary = 'SourcePoint\'s ConsentViewController to handle privacy consents.'
   s.static_framework = true
   s.homepage = 'https://www.sourcepoint.com'
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.dependency 'Didomi-XCFramework', '2.45.0'
   ## uncomment to use local version of Didomi SDK
   # s.vendored_frameworks = 'Didomi.xcframework' 
-  s.dependency 'SPMobileCore', '0.1.13'
+  s.dependency 'SPMobileCore', '0.1.17'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'
   s.tvos.deployment_target = '12.0'
@@ -36,6 +36,7 @@ Pod::Spec.new do |s|
   }
   s.pod_target_xcconfig = {
     'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES',
-    'DEFINES_MODULE' => 'YES'
+    'DEFINES_MODULE' => 'YES',
+    'OTHER_SWIFT_FLAGS[config=Debug]' => '$(inherited) -enable-testing'
   }
 end
