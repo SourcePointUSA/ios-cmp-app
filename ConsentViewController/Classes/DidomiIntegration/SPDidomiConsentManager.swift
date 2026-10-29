@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import Didomi
 
-typealias DidomiEventListener = EventListener
-typealias DidomiEventType = EventType
 typealias DidomiUserStatus = CurrentUserStatus
 
 @objcMembers open class SPDidomiConsentManager: NSObject, SPSDK {
