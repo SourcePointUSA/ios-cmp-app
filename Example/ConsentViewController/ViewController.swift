@@ -75,6 +75,12 @@ class ViewController: UIViewController {
         updateUI()
     }
 
+    @IBAction func onLoadMessagesTap(_ sender: Any) {
+        sdkStatus = .running
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
+        updateUI()
+    }
+
     @IBAction func onGDPRPrivacyManagerTap(_ sender: Any) {
         consentManager.loadGDPRPrivacyManager(withId: config.gdprPmId!)
     }
