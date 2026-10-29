@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         preferenceCenterId: "1306779"
     ))}()
 
-    lazy var consentManager: SPSDK = { SPConsentManager(
+    lazy var consentManager: SPDidomiConsentManager = { SPDidomiConsentManager(
         accountId: config.accountId,
         propertyId: config.propertyId,
         propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         sdkStatus = .running
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
+        consentManager.didomiUIController = self
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
@@ -69,8 +70,12 @@ class ViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
     }
 
+    @IBAction func onLoadMessagesTap(_ sender: Any) {
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
+    }
+
     @IBAction func onClearConsentTap(_ sender: Any) {
-        SPConsentManager.clearAllData()
+        SPDidomiConsentManager.clearAllData()
         myVendorAccepted = .Unknown
         updateUI()
     }
@@ -119,6 +124,7 @@ class ViewController: UIViewController {
 // MARK: - SPDelegate implementation
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
+        print("onSPUIReady")
         present(controller, animated: true)
     }
 
@@ -129,6 +135,7 @@ extension ViewController: SPDelegate {
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
+        print("onSPUIFinished")
         updateUI()
         dismiss(animated: true)
     }

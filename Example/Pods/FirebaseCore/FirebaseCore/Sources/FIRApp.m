@@ -139,6 +139,16 @@ static FIRApp *sDefaultApp;
   if (!name || !options) {
     [NSException raise:kFirebaseCoreErrorDomain format:@"Neither name nor options can be nil."];
   }
+
+  // Pre-cache the locale and calendar to prevent a race condition with C++ dependencies
+  // that temporarily mutate the global POSIX C locale during initialization.
+  // See https://github.com/firebase/firebase-ios-sdk/issues/16542
+  static dispatch_once_t localeCacheOnceToken;
+  dispatch_once(&localeCacheOnceToken, ^{
+    (void)[NSLocale currentLocale];
+    (void)[NSCalendar currentCalendar];
+    (void)[NSCalendar autoupdatingCurrentCalendar];
+  });
   if (name.length == 0) {
     [NSException raise:kFirebaseCoreErrorDomain format:@"Name cannot be empty."];
   }
@@ -446,26 +456,6 @@ static FIRApp *sDefaultApp;
   [[NSNotificationCenter defaultCenter] postNotificationName:kFIRAppReadyToConfigureSDKNotification
                                                       object:self
                                                     userInfo:appInfoDict];
-}
-
-+ (NSError *)errorForMissingOptions {
-  NSDictionary *errorDict = @{
-    NSLocalizedDescriptionKey :
-        @"Unable to parse GoogleService-Info.plist in order to configure services.",
-    NSLocalizedRecoverySuggestionErrorKey :
-        @"Check formatting and location of GoogleService-Info.plist."
-  };
-  return [NSError errorWithDomain:kFirebaseCoreErrorDomain code:-100 userInfo:errorDict];
-}
-
-+ (NSError *)errorForInvalidAppID {
-  NSDictionary *errorDict = @{
-    NSLocalizedDescriptionKey : @"Unable to validate Google App ID",
-    NSLocalizedRecoverySuggestionErrorKey :
-        @"Check formatting and location of GoogleService-Info.plist or GoogleAppID set in the "
-        @"customized options."
-  };
-  return [NSError errorWithDomain:kFirebaseCoreErrorDomain code:-101 userInfo:errorDict];
 }
 
 + (BOOL)isDefaultAppConfigured {
@@ -852,16 +842,7 @@ static FIRApp *sDefaultApp;
 #elif TARGET_OS_OSX
   NSNotificationName notificationName = NSApplicationDidBecomeActiveNotification;
 #elif TARGET_OS_WATCH
-  // TODO(ncooke3): Remove when minimum supported watchOS version is watchOS 7.0.
-  // On watchOS 7.0+, heartbeats are logged when the watch app becomes active.
-  // On watchOS 6.0, heartbeats are logged when the Firebase app is configuring.
-  // While it does not cover all use cases, logging when the Firebase app is
-  // configuring is done because watchOS lifecycle notifications are a
-  // watchOS 7.0+ feature.
-  NSNotificationName notificationName = kFIRAppReadyToConfigureSDKNotification;
-  if (@available(watchOS 7.0, *)) {
-    notificationName = WKApplicationDidBecomeActiveNotification;
-  }
+  NSNotificationName notificationName = WKApplicationDidBecomeActiveNotification;
 #endif
 
   [[NSNotificationCenter defaultCenter] addObserver:self

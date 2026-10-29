@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import <objc/runtime.h>
 
 #import "GoogleUtilities/Network/Public/GoogleUtilities/GULNetworkURLSession.h"
 
@@ -26,6 +27,48 @@
                                     NSURLSessionDataDelegate,
                                     NSURLSessionDownloadDelegate,
                                     NSURLSessionTaskDelegate>
+@end
+
+@interface GULNetworkURLSessionWeakHolder : NSObject
+@property(nonatomic, weak) GULNetworkURLSession *session;
+@end
+
+@implementation GULNetworkURLSessionWeakHolder
+@end
+
+@interface GULNetworkURLSession (Private)
++ (NSMutableDictionary<NSString *, GULNetworkURLSessionWeakHolder *> *)sessionIDToFetcherMap;
++ (NSLock *)sessionIDToFetcherMapReadWriteLock;
+@end
+
+@interface GULSessionDeallocTracker : NSObject
+@property(nonatomic, copy) NSString *sessionID;
+@property(nonatomic, strong) GULNetworkURLSessionWeakHolder *holder;
+- (instancetype)initWithSessionID:(NSString *)sessionID
+                           holder:(GULNetworkURLSessionWeakHolder *)holder;
+@end
+
+@implementation GULSessionDeallocTracker
+- (instancetype)initWithSessionID:(NSString *)sessionID
+                           holder:(GULNetworkURLSessionWeakHolder *)holder {
+  self = [super init];
+  if (self) {
+    NSParameterAssert(sessionID);
+    _sessionID = [sessionID copy];
+    _holder = holder;
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [[GULNetworkURLSession sessionIDToFetcherMapReadWriteLock] lock];
+  GULNetworkURLSessionWeakHolder *currentDictionaryHolder =
+      [[GULNetworkURLSession sessionIDToFetcherMap] objectForKey:_sessionID];
+  if (currentDictionaryHolder == _holder) {
+    [[GULNetworkURLSession sessionIDToFetcherMap] removeObjectForKey:_sessionID];
+  }
+  [[GULNetworkURLSession sessionIDToFetcherMapReadWriteLock] unlock];
+}
 @end
 
 @implementation GULNetworkURLSession {
@@ -294,23 +337,24 @@
   GULNetworkURLSessionCompletionHandler handler = _completionHandler;
   _completionHandler = nil;
 
-  if (task.response) {
-    // The following assertion should always be true for HTTP requests, see https://goo.gl/gVLxT7.
-    NSAssert([task.response isKindOfClass:[NSHTTPURLResponse class]], @"URL response must be HTTP");
-
+  NSHTTPURLResponse *HTTPResponse = nil;
+  if ([task.response isKindOfClass:[NSHTTPURLResponse class]]) {
+    HTTPResponse = (NSHTTPURLResponse *)task.response;
     // The server responded so ignore the error created by the system.
     error = nil;
   } else if (!error) {
-    error = [[NSError alloc]
-        initWithDomain:kGULNetworkErrorDomain
-                  code:GULErrorCodeNetworkInvalidResponse
-              userInfo:@{kGULNetworkErrorContext : @"Network Error: Empty network response"}];
+    // Responses to HTTP(S) requests should always be HTTP responses, but a non-HTTP response is
+    // possible, e.g. when a custom `NSURLProtocol` intercepts the request. Report it as an error
+    // instead of handing callers an object that doesn't respond to `NSHTTPURLResponse` methods.
+    // If the system reported an error, it is passed through unchanged.
+    NSString *context = task.response ? @"Network Error: Response is not HTTP"
+                                      : @"Network Error: Empty network response";
+    error = [[NSError alloc] initWithDomain:kGULNetworkErrorDomain
+                                       code:GULErrorCodeNetworkInvalidResponse
+                                   userInfo:@{kGULNetworkErrorContext : context}];
   }
 
-  [self callCompletionHandler:handler
-                 withResponse:(NSHTTPURLResponse *)task.response
-                         data:_downloadedData
-                        error:error];
+  [self callCompletionHandler:handler withResponse:HTTPResponse data:_downloadedData error:error];
 
   // Remove the temp file to avoid trashing devices with lots of temp files.
   [self removeTempItemAtURL:_uploadingFileURL];
@@ -395,11 +439,16 @@
       }
 
       if (errorRef) {
+        // `_request.URL` may be nil; fall back to the task's URL, and avoid inserting nil into an
+        // array literal, which would throw.
+        NSURL *requestURL = self->_request.URL ?: task.originalRequest.URL;
         [self->_loggerDelegate
             GULNetwork_logWithLevel:kGULNetworkLogLevelError
                         messageCode:kGULNetworkMessageCodeURLSession008
                             message:@"Cannot evaluate server trust. Error, host"
-                           contexts:@[ @((int)CFErrorGetCode(errorRef)), self->_request.URL ]];
+                           contexts:@[
+                             @((int)CFErrorGetCode(errorRef)), requestURL ?: [NSNull null]
+                           ]];
         CFRelease(errorRef);
       }
 
@@ -552,12 +601,12 @@
 /// When reading and writing from/to the session map, don't use this method directly.
 /// To avoid thread safety issues, use one of the helper methods at the bottom of the
 /// file: setSessionInFetcherMap:forSessionID:, sessionFromFetcherMapForSessionID:
-+ (NSMapTable<NSString *, GULNetworkURLSession *> *)sessionIDToFetcherMap {
-  static NSMapTable *sessionIDToFetcherMap;
++ (NSMutableDictionary<NSString *, GULNetworkURLSessionWeakHolder *> *)sessionIDToFetcherMap {
+  static NSMutableDictionary *sessionIDToFetcherMap;
 
   static dispatch_once_t sessionMapOnceToken;
   dispatch_once(&sessionMapOnceToken, ^{
-    sessionIDToFetcherMap = [NSMapTable strongToWeakObjectsMapTable];
+    sessionIDToFetcherMap = [[NSMutableDictionary alloc] init];
   });
   return sessionIDToFetcherMap;
 }
@@ -671,10 +720,21 @@
 
 #pragma mark - Helper Methods
 
+static const void *kGULSessionTrackerKey = &kGULSessionTrackerKey;
+
 + (void)setSessionInFetcherMap:(GULNetworkURLSession *)session forSessionID:(NSString *)sessionID {
+  if (!sessionID) {
+    return;
+  }
+
+  // Retain the old tracker until the lock is released. If it deallocates inside the lock,
+  // its -dealloc method will attempt to re-acquire the lock, resulting in a deadlock.
+  NS_VALID_UNTIL_END_OF_SCOPE GULSessionDeallocTracker *oldTrackerToReleaseOutsideLock = nil;
+
   [[self sessionIDToFetcherMapReadWriteLock] lock];
-  GULNetworkURLSession *existingSession =
+  GULNetworkURLSessionWeakHolder *holder =
       [[[self class] sessionIDToFetcherMap] objectForKey:sessionID];
+  GULNetworkURLSession *existingSession = holder.session;
   if (existingSession) {
     if (session) {
       NSString *message = [NSString stringWithFormat:@"Discarding session: %@", existingSession];
@@ -682,10 +742,21 @@
                                                     messageCode:kGULNetworkMessageCodeURLSession019
                                                         message:message];
     }
+    oldTrackerToReleaseOutsideLock =
+        objc_getAssociatedObject(existingSession, kGULSessionTrackerKey);
+    objc_setAssociatedObject(existingSession, kGULSessionTrackerKey, nil,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [existingSession->_URLSession finishTasksAndInvalidate];
   }
   if (session) {
-    [[[self class] sessionIDToFetcherMap] setObject:session forKey:sessionID];
+    GULNetworkURLSessionWeakHolder *newHolder = [[GULNetworkURLSessionWeakHolder alloc] init];
+    newHolder.session = session;
+    [[[self class] sessionIDToFetcherMap] setObject:newHolder forKey:sessionID];
+
+    GULSessionDeallocTracker *tracker =
+        [[GULSessionDeallocTracker alloc] initWithSessionID:sessionID holder:newHolder];
+    objc_setAssociatedObject(session, kGULSessionTrackerKey, tracker,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
   } else {
     [[[self class] sessionIDToFetcherMap] removeObjectForKey:sessionID];
   }
@@ -693,8 +764,13 @@
 }
 
 + (nullable GULNetworkURLSession *)sessionFromFetcherMapForSessionID:(NSString *)sessionID {
+  if (!sessionID) {
+    return nil;
+  }
   [[self sessionIDToFetcherMapReadWriteLock] lock];
-  GULNetworkURLSession *session = [[[self class] sessionIDToFetcherMap] objectForKey:sessionID];
+  GULNetworkURLSessionWeakHolder *holder =
+      [[[self class] sessionIDToFetcherMap] objectForKey:sessionID];
+  GULNetworkURLSession *session = holder.session;
   [[self sessionIDToFetcherMapReadWriteLock] unlock];
   return session;
 }

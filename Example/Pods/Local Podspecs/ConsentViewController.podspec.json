@@ -18,6 +18,9 @@
   "swift_versions": "5.1",
   "source_files": "ConsentViewController/Classes/**/*",
   "dependencies": {
+    "Didomi-XCFramework": [
+      "2.53.1"
+    ],
     "SPMobileCore": [
       "0.1.17"
     ]
