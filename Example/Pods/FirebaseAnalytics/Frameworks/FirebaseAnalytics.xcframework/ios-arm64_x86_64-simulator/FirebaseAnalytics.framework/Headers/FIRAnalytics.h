@@ -7,8 +7,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// The top level Firebase Analytics singleton that provides methods for logging events and setting
-/// user properties. See <a href="http://goo.gl/gz8SLz">the developer guides</a> for general
-/// information on using Firebase Analytics in your apps.
+/// user properties. See <a href="https://firebase.google.com/docs/analytics">the developer
+/// guides</a> for general information on using Firebase Analytics in your apps.
 ///
 /// @note The Analytics SDK uses SQLite to persist events and other app-specific data. Calling
 ///     certain thread-unsafe global SQLite methods like `sqlite3_shutdown()` can result in
@@ -20,7 +20,8 @@ NS_SWIFT_NAME(Analytics)
 /// the same parameters. Up to 500 event names are supported. Using predefined events and/or
 /// parameters is recommended for optimal reporting.
 ///
-/// The following event names are reserved and cannot be used:
+/// The following event names are reserved - events with these names will be dropped, and instead an
+/// error event will be logged:
 /// <ul>
 ///     <li>ad_activeview</li>
 ///     <li>ad_click</li>
@@ -44,7 +45,6 @@ NS_SWIFT_NAME(Analytics)
 ///     <li>firebase_campaign</li>
 ///     <li>first_open</li>
 ///     <li>first_visit</li>
-///     <li>in_app_purchase</li>
 ///     <li>notification_dismiss</li>
 ///     <li>notification_foreground</li>
 ///     <li>notification_open</li>

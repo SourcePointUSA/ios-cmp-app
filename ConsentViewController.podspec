@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.source_files = 'ConsentViewController/Classes/**/*'
   s.dependency 'Didomi-XCFramework', '2.45.0'
   ## uncomment to use local version of Didomi SDK
-  # s.vendored_frameworks = 'Didomi.xcframework'
+  # s.vendored_frameworks = 'Didomi.xcframework' 
   s.dependency 'SPMobileCore', '0.1.17'
   s.ios.deployment_target = '10.0'
   s.ios.exclude_files = 'ConsentViewController/Classes/Views/tvOS'

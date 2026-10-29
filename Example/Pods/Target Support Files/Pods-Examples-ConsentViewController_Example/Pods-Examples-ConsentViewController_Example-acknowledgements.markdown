@@ -78,7 +78,7 @@ SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2018 Paolo Musolino
+Copyright (c) 2026 Paolo Musolino
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
