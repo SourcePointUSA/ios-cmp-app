@@ -38,12 +38,13 @@ class UserDefaultsViewController: UIViewController {
             target: self,
             action: #selector(copyButtonTapped)
         )
-        let shareButton = UIBarButtonItem(
-            barButtonSystemItem: .action,
+        let importButton = UIBarButtonItem(
+            title: "Import",
+            style: .plain,
             target: self,
-            action: #selector(shareButtonTapped)
+            action: #selector(importButtonTapped)
         )
-        navigationItem.rightBarButtonItems = [shareButton, copyButton]
+        navigationItem.rightBarButtonItems = [importButton, copyButton]
     }
 
     private func setupTextView() {
@@ -145,39 +146,76 @@ class UserDefaultsViewController: UIViewController {
         present(alert, animated: true)
     }
 
-    @objc private func shareButtonTapped() {
-        // Convert UserDefaults to JSON
-        guard let jsonData = try? JSONSerialization.data(
-            withJSONObject: convertToJSONCompatible(allUserDefaultsData),
-            options: [.prettyPrinted, .sortedKeys]
-        ) else {
-            showError("Failed to create JSON data")
+    @objc private func importButtonTapped() {
+        let alert = UIAlertController(
+            title: "Import UserDefaults",
+            message: "Paste JSON data below:",
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { textField in
+            textField.placeholder = "Paste JSON here"
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+        }
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        alert.addAction(UIAlertAction(title: "Import", style: .default) { [weak self, weak alert] _ in
+            guard let self = self,
+                  let jsonString = alert?.textFields?.first?.text,
+                  !jsonString.isEmpty else {
+                self?.showError("No JSON data provided")
+                return
+            }
+
+            self.importJSON(jsonString)
+        })
+
+        present(alert, animated: true)
+    }
+
+    private func importJSON(_ jsonString: String) {
+        guard let data = jsonString.data(using: .utf8),
+              let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
+              let jsonDict = jsonObject as? [String: Any] else {
+            showError("Invalid JSON format")
             return
         }
 
-        // Create temporary file
-        let fileName = "UserDefaults_\(Date().timeIntervalSince1970).json"
-        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-
-        do {
-            try jsonData.write(to: tempURL)
-
-            // Present share sheet
-            let activityViewController = UIActivityViewController(
-                activityItems: [tempURL],
-                applicationActivities: nil
-            )
-
-            // For iPad support
-            if let popoverController = activityViewController.popoverPresentationController {
-                popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        // Store each key-value pair in UserDefaults
+        for (key, value) in jsonDict {
+            if let dict = value as? [String: Any] {
+                // If value is a dictionary, convert it to JSON string
+                if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: []),
+                   let jsonString = String(data: jsonData, encoding: .utf8) {
+                    UserDefaults.standard.set(jsonString, forKey: key)
+                }
+            } else if let array = value as? [Any] {
+                // If value is an array, convert it to JSON string
+                if let jsonData = try? JSONSerialization.data(withJSONObject: array, options: []),
+                   let jsonString = String(data: jsonData, encoding: .utf8) {
+                    UserDefaults.standard.set(jsonString, forKey: key)
+                }
+            } else {
+                // For primitives (strings, numbers, bools), store directly
+                UserDefaults.standard.set(value, forKey: key)
             }
-
-            present(activityViewController, animated: true)
-
-        } catch {
-            showError("Failed to export data: \(error.localizedDescription)")
         }
+
+        UserDefaults.standard.synchronize()
+
+        // Reload the data
+        loadUserDefaults()
+
+        // Show success message
+        let successAlert = UIAlertController(
+            title: "Success",
+            message: "Imported \(jsonDict.count) key(s) to UserDefaults",
+            preferredStyle: .alert
+        )
+        successAlert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(successAlert, animated: true)
     }
 
     private func convertToJSONCompatible(_ dict: [String: Any]) -> [String: Any] {
