@@ -208,6 +208,9 @@ class UserDefaultsViewController: UIViewController {
         // Reload the data
         loadUserDefaults()
 
+        // Post notification to inform other view controllers that data was imported
+        NotificationCenter.default.post(name: NSNotification.Name("UserDefaultsDataImported"), object: nil)
+
         // Show success message
         let successAlert = UIAlertController(
             title: "Success",
