@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nav-root-controller">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <accessibilityOverrides/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="nav-root-scene">
+            <objects>
+                <navigationController id="nav-root-controller" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nav-bar">
+                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="root-segue"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nav-first-responder" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-800" y="62"/>
+        </scene>
+        <!--Example App-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,19 +35,19 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="oRm-6q-XKe">
-                                <rect key="frame" x="0.0" y="82" width="414" height="732"/>
+                                <rect key="frame" x="0.0" y="109" width="414" height="678"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-8K-y3h" userLabel="IDFA Stack View">
-                                        <rect key="frame" x="164.5" y="0.0" width="85" height="49"/>
+                                        <rect key="frame" x="164.5" y="0.0" width="85" height="41"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDFA:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZe-Wk-Thj">
-                                                <rect key="frame" x="0.0" y="0.0" width="64.5" height="49"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="64.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eyw-Oc-Mos">
-                                                <rect key="frame" x="72.5" y="0.0" width="12.5" height="49"/>
+                                                <rect key="frame" x="72.5" y="0.0" width="12.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -40,16 +55,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LZQ-WU-A3m" userLabel="Custom Vendor Stack View">
-                                        <rect key="frame" x="128.5" y="57" width="157" height="49"/>
+                                        <rect key="frame" x="128.5" y="49" width="157" height="41"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Vendor:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Xw-c5-k3p">
-                                                <rect key="frame" x="0.0" y="0.0" width="136.5" height="49"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="136.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpu-Yh-muK">
-                                                <rect key="frame" x="144.5" y="0.0" width="12.5" height="49"/>
+                                                <rect key="frame" x="144.5" y="0.0" width="12.5" height="41"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="customVendorLabel"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <nil key="textColor"/>
@@ -58,7 +73,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qIY-t5-3jC">
-                                        <rect key="frame" x="119" y="114" width="176" height="49"/>
+                                        <rect key="frame" x="119" y="98" width="176" height="41"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Accept My Vendor"/>
                                         <connections>
@@ -66,7 +81,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSM-XT-D2z" userLabel="Delete My Vendor Button">
-                                        <rect key="frame" x="122" y="171" width="170" height="48.5"/>
+                                        <rect key="frame" x="122" y="147" width="170" height="41"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Delete My Vendor"/>
                                         <connections>
@@ -74,7 +89,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="240" verticalHuggingPriority="240" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kal-fZ-4TM">
-                                        <rect key="frame" x="96" y="227.5" width="222" height="49"/>
+                                        <rect key="frame" x="96" y="196" width="222" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="GDPR Privacy Manager"/>
@@ -83,7 +98,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf6-CW-8f5">
-                                        <rect key="frame" x="71.5" y="284.5" width="271" height="49"/>
+                                        <rect key="frame" x="71.5" y="245" width="271" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="CPPA Privacy Manager"/>
@@ -92,7 +107,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G5b-My-ziW" userLabel="UsNatPM Button">
-                                        <rect key="frame" x="71.5" y="341.5" width="271" height="49"/>
+                                        <rect key="frame" x="71.5" y="294" width="271" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="USNat Privacy Manager"/>
@@ -101,7 +116,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gZl-3h-2VP" userLabel="GlobalCmpPM Button">
-                                        <rect key="frame" x="71.5" y="398.5" width="271" height="49"/>
+                                        <rect key="frame" x="71.5" y="343" width="271" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="GlobalCmp Privacy Manager"/>
@@ -110,7 +125,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XI-VR-QYN" userLabel="PreferencesPM Button">
-                                        <rect key="frame" x="71.5" y="455.5" width="271" height="49"/>
+                                        <rect key="frame" x="71.5" y="392" width="271" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Preference Center"/>
@@ -119,17 +134,17 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOd-un-8BK" userLabel="Local Data">
-                                        <rect key="frame" x="145" y="512.5" width="124.5" height="48.5"/>
+                                        <rect key="frame" x="145" y="441" width="124.5" height="41"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Local Data">
                                             <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="ek9-iH-xEJ" kind="presentation" id="T6j-6s-wuU"/>
+                                            <segue destination="user-defaults-vc" kind="show" id="T6j-6s-wuU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NqR-fe-FML" userLabel="Network Calls">
-                                        <rect key="frame" x="140.5" y="569" width="133" height="49"/>
+                                        <rect key="frame" x="140.5" y="490" width="133" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="privacySettingsButton"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <state key="normal" title="Network Calls"/>
@@ -138,7 +153,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Jg-eO-F1M">
-                                        <rect key="frame" x="158" y="626" width="98" height="49"/>
+                                        <rect key="frame" x="153.5" y="539" width="107" height="41"/>
                                         <accessibility key="accessibilityConfiguration" identifier="clearConsentButton"/>
                                         <state key="normal" title="Clear Consent">
                                             <color key="titleColor" systemColor="systemRedColor"/>
@@ -147,17 +162,27 @@
                                             <action selector="onClearConsentTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="z83-uH-nwW"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="load-messages-btn" userLabel="Load Messages Button">
+                                        <rect key="frame" x="153.5" y="588" width="107" height="41"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="loadMessagesButton"/>
+                                        <state key="normal" title="Load Messages">
+                                            <color key="titleColor" systemColor="systemBlueColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onLoadMessagesTap:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="load-msg-action"/>
+                                        </connections>
+                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="g5a-lI-d30" userLabel="SDK Status Stack View">
-                                        <rect key="frame" x="183" y="683" width="48" height="49"/>
+                                        <rect key="frame" x="183" y="637" width="48" height="41"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g30-Pp-9ci" userLabel="SDKStatusStaticLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="33.5" height="49"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="33.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crH-rO-M9j" userLabel="SDKStatusValueLabel">
-                                                <rect key="frame" x="41.5" y="0.0" width="6.5" height="49"/>
+                                                <rect key="frame" x="41.5" y="0.0" width="6.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -176,11 +201,13 @@
                                     <constraint firstItem="6XI-VR-QYN" firstAttribute="width" secondItem="gZl-3h-2VP" secondAttribute="width" id="Jht-3W-Syr"/>
                                     <constraint firstItem="GSM-XT-D2z" firstAttribute="height" secondItem="qIY-t5-3jC" secondAttribute="height" id="KJb-aS-UuL"/>
                                     <constraint firstItem="6XI-VR-QYN" firstAttribute="height" secondItem="gZl-3h-2VP" secondAttribute="height" id="Mue-ny-IrA"/>
+                                    <constraint firstItem="load-messages-btn" firstAttribute="height" secondItem="0Jg-eO-F1M" secondAttribute="height" id="R52-hw-bhf"/>
                                     <constraint firstItem="YOd-un-8BK" firstAttribute="height" secondItem="Cf6-CW-8f5" secondAttribute="height" id="dUP-K0-43r"/>
                                     <constraint firstItem="LZQ-WU-A3m" firstAttribute="height" secondItem="cK6-8K-y3h" secondAttribute="height" id="grK-VN-GOY"/>
                                     <constraint firstItem="gZl-3h-2VP" firstAttribute="width" secondItem="G5b-My-ziW" secondAttribute="width" id="m1j-ee-TXv"/>
                                     <constraint firstItem="Kal-fZ-4TM" firstAttribute="height" secondItem="cK6-8K-y3h" secondAttribute="height" id="nPO-ql-KAF"/>
                                     <constraint firstItem="G5b-My-ziW" firstAttribute="height" secondItem="Cf6-CW-8f5" secondAttribute="height" id="uES-Q5-w4P"/>
+                                    <constraint firstItem="load-messages-btn" firstAttribute="width" secondItem="0Jg-eO-F1M" secondAttribute="width" id="yom-Qm-Vjf"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -193,6 +220,7 @@
                             <constraint firstItem="oRm-6q-XKe" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="tuY-q9-kiE"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Example App" id="main-nav-item"/>
                     <connections>
                         <outlet property="acceptMyVendorButton" destination="qIY-t5-3jC" id="Le4-0P-YqM"/>
                         <outlet property="ccpaPMButton" destination="Cf6-CW-8f5" id="P14-cj-ZZy"/>
@@ -210,20 +238,17 @@
             </objects>
             <point key="canvasLocation" x="104.34782608695653" y="61.956521739130437"/>
         </scene>
-        <!--Local Data View Controller-->
+        <!--User Defaults View Controller-->
         <scene sceneID="Ymq-p2-nb9">
             <objects>
-                <viewController id="ek9-iH-xEJ" customClass="JSONLocalDataViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="user-defaults-vc" customClass="UserDefaultsViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MiA-pU-jv1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="HkW-9R-Cjy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="KvW-MN-FFa"/>
-                    <connections>
-                        <outlet property="containerView" destination="MiA-pU-jv1" id="DUs-5A-oHr"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-bM-t3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -234,8 +259,11 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.53333333333333333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

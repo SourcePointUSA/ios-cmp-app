@@ -63,6 +63,14 @@ class ViewController: UIViewController {
         myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
+
+        // Listen for UserDefaults import notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUserDefaultsImported),
+            name: NSNotification.Name("UserDefaultsDataImported"),
+            object: nil
+        )
     }
 
     @IBAction func onNetworkCallsTap(_ sender: Any) {
@@ -72,6 +80,24 @@ class ViewController: UIViewController {
     @IBAction func onClearConsentTap(_ sender: Any) {
         SPConsentManager.clearAllData()
         myVendorAccepted = .Unknown
+
+        // Recreate consent manager to clear in-memory state
+        consentManager = SPConsentManager(
+            accountId: config.accountId,
+            propertyId: config.propertyId,
+            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
+            campaigns: config.campaigns,
+            language: config.language ?? .BrowserDefault,
+            delegate: self
+        )
+
+        sdkStatus = .notStarted
+        updateUI()
+    }
+
+    @IBAction func onLoadMessagesTap(_ sender: Any) {
+        sdkStatus = .running
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
 
@@ -113,6 +139,29 @@ class ViewController: UIViewController {
                 self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
                 self.updateUI()
             }
+    }
+
+    @objc private func handleUserDefaultsImported() {
+        // Re-initialize the consent manager to pick up imported data
+        consentManager = SPConsentManager(
+            accountId: config.accountId,
+            propertyId: config.propertyId,
+            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
+            campaigns: config.campaigns,
+            language: config.language ?? .BrowserDefault,
+            delegate: self
+        )
+
+        // Reset vendor status since we have new data
+        myVendorAccepted = .Unknown
+
+        // Update UI to reflect the new state
+        sdkStatus = .notStarted
+        updateUI()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
