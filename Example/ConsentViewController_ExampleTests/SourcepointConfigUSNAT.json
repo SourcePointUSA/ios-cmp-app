@@ -1,0 +1,260 @@
+{
+  "app": {
+    "name": "SP Example App",
+    "privacyPolicyURL": "https://your-app.com/privacy-policy",
+    "vendors": {
+      "iab": {
+        "all": false,
+        "version": 2
+      },
+      "custom": []
+    },
+    "customPurposes": [
+      {
+        "id": "65a6a785cc78fac48ab34e65",
+        "name": {
+          "en": "Targeted Advertising"
+        },
+        "description": {
+          "en": "Use precise geolocation data and actively scan device characteristics for identification."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e65"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e6a",
+        "name": {
+          "en": "Sale of Personal Information"
+        },
+        "description": {
+          "en": "Sell or share personal information for targeted advertising."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e6a"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e6f",
+        "name": {
+          "en": "Sharing of Personal Information"
+        },
+        "description": {
+          "en": "Share personal information with third parties."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e6f"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e74",
+        "name": {
+          "en": "Sensitive Data Processing"
+        },
+        "description": {
+          "en": "Process sensitive personal information."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e74"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e79",
+        "name": {
+          "en": "Geolocation Data"
+        },
+        "description": {
+          "en": "Collect and process precise geolocation data."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e79"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e7e",
+        "name": {
+          "en": "Biometric Data"
+        },
+        "description": {
+          "en": "Process biometric information."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e7e"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e83",
+        "name": {
+          "en": "Genetic Data"
+        },
+        "description": {
+          "en": "Process genetic information."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e83"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e88",
+        "name": {
+          "en": "Health Data"
+        },
+        "description": {
+          "en": "Process health and medical information."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e88"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e8d",
+        "name": {
+          "en": "Financial Data"
+        },
+        "description": {
+          "en": "Process financial account information."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e8d"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e92",
+        "name": {
+          "en": "Social Security Number"
+        },
+        "description": {
+          "en": "Process government-issued identifiers."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e92"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e97",
+        "name": {
+          "en": "Children Data"
+        },
+        "description": {
+          "en": "Process information about children."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e97"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e9c",
+        "name": {
+          "en": "Personal Communications"
+        },
+        "description": {
+          "en": "Process contents of email, text messages, and communications."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e9c"
+        }
+      },
+      {
+        "id": "648c9c48e17a3c7a82360c54",
+        "name": {
+          "en": "Racial or Ethnic Origin"
+        },
+        "description": {
+          "en": "Process information revealing racial or ethnic origin."
+        },
+        "namespaces": {
+          "sp": "648c9c48e17a3c7a82360c54"
+        }
+      }
+    ]
+  },
+  "notice": {
+    "enable": true,
+    "position": "popup",
+    "content": {
+      "title": {
+        "en": "US Privacy Notice"
+      },
+      "notice": {
+        "en": "This is a USNAT Notice loaded by the Didomi SDK."
+      },
+      "dismiss": {
+        "en": "Accept All"
+      },
+      "deny": {
+        "en": "Reject All"
+      },
+      "learnMore": {
+        "en": "Show Options"
+      }
+    },
+    "denyOptions": {
+      "button": "secondary",
+      "cross": true
+    },
+    "denyAppliesToLI": false
+  },
+  "theme": {
+    "color": "#3F51B5"
+  },
+  "languages": {
+    "enabled": ["en"],
+    "default": "en"
+  },
+  "preferences": {
+    "categories": [
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e65"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e6a"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e6f"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e74"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e79"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e7e"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e83"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e88"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e8d"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e92"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e97"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e9c"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "648c9c48e17a3c7a82360c54"
+      }
+    ]
+  }
+}
