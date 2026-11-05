@@ -134,7 +134,7 @@
                                             <fontDescription key="titleFontDescription" style="UICTFontTextStyleFootnote"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="ek9-iH-xEJ" kind="presentation" id="T6j-6s-wuU"/>
+                                            <segue destination="nav-userdefaults" kind="presentation" id="T6j-6s-wuU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NqR-fe-FML" userLabel="Network Calls">
@@ -221,36 +221,39 @@
             </objects>
             <point key="canvasLocation" x="104.34782608695653" y="61.956521739130437"/>
         </scene>
-        <!--Local Data View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="nav-scene-userdefaults">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nav-userdefaults" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nav-bar-userdefaults">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ek9-iH-xEJ" kind="relationship" relationship="rootViewController" id="nav-segue-userdefaults"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nav-first-responder" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="900" y="62"/>
+        </scene>
+        <!--UserDefaults Data-->
         <scene sceneID="Ymq-p2-nb9">
             <objects>
-                <viewController id="ek9-iH-xEJ" customClass="JSONLocalDataViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ek9-iH-xEJ" customClass="UserDefaultsViewController" customModule="SPGDPRExampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MiA-pU-jv1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abc-de-fgh">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="HkW-9R-Cjy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="abc-de-fgh" firstAttribute="top" secondItem="MiA-pU-jv1" secondAttribute="top" id="con-1"/>
-                            <constraint firstItem="abc-de-fgh" firstAttribute="leading" secondItem="HkW-9R-Cjy" secondAttribute="leading" id="con-2"/>
-                            <constraint firstItem="abc-de-fgh" firstAttribute="trailing" secondItem="HkW-9R-Cjy" secondAttribute="trailing" id="con-3"/>
-                            <constraint firstItem="abc-de-fgh" firstAttribute="bottom" secondItem="MiA-pU-jv1" secondAttribute="bottom" id="con-4"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="KvW-MN-FFa"/>
-                    <connections>
-                        <outlet property="containerView" destination="abc-de-fgh" id="DUs-5A-oHr"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="UserDefaults Data" id="KvW-MN-FFa"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-bM-t3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="62"/>
+            <point key="canvasLocation" x="1700" y="62"/>
         </scene>
     </scenes>
     <resources>

@@ -179,6 +179,7 @@
 		82745F80309CC0AD009197D8 /* SourcepointConfigUSNAT.json in Resources */ = {isa = PBXBuildFile; fileRef = 82745F7E309CC0AD009197D8 /* SourcepointConfigUSNAT.json */; };
 		82745F83309CC0BA009197D8 /* SourcepointConfigUSNAT.json in Resources */ = {isa = PBXBuildFile; fileRef = 82745F82309CC0BA009197D8 /* SourcepointConfigUSNAT.json */; };
 		82745F84309CC0BA009197D8 /* SourcepointConfigCCPA.json in Resources */ = {isa = PBXBuildFile; fileRef = 82745F81309CC0BA009197D8 /* SourcepointConfigCCPA.json */; };
+		82745F88309CC8A1009197D8 /* UserDefaultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82745F87309CC8A1009197D8 /* UserDefaultsViewController.swift */; };
 		8277C33C22BBD22C00F1607F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8277C33B22BBD22C00F1607F /* HomeViewController.swift */; };
 		82813A6A248A69F000521571 /* SPCampaignEnvSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */; };
 		828AD5582981231A008B4F1E /* CCPAConsentStatusSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */; };
@@ -325,7 +326,6 @@
 		82CD6F7F2B59CB0700CAD663 /* SPJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B312F5D2ABC504000B62E23 /* SPJson.swift */; };
 		82CDDBEF2EAF9840005B0ECF /* TVUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82CDDBEE2EAF9840005B0ECF /* TVUIKit.framework */; };
 		82CFB3EF2A431D89002B0EF2 /* SPCCPAConsentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */; };
-		82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */; };
 		82D6CE222B8CD186004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */; };
 		82D6CE2E2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */; };
 		82D6CE2F2B8CE171004677E9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */; };
@@ -683,6 +683,7 @@
 		82745F7E309CC0AD009197D8 /* SourcepointConfigUSNAT.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SourcepointConfigUSNAT.json; sourceTree = "<group>"; };
 		82745F81309CC0BA009197D8 /* SourcepointConfigCCPA.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SourcepointConfigCCPA.json; sourceTree = "<group>"; };
 		82745F82309CC0BA009197D8 /* SourcepointConfigUSNAT.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SourcepointConfigUSNAT.json; sourceTree = "<group>"; };
+		82745F87309CC8A1009197D8 /* UserDefaultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsViewController.swift; sourceTree = "<group>"; };
 		8277C33B22BBD22C00F1607F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		82813A69248A69F000521571 /* SPCampaignEnvSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCampaignEnvSpec.swift; sourceTree = "<group>"; };
 		828AD5572981231A008B4F1E /* CCPAConsentStatusSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCPAConsentStatusSpec.swift; sourceTree = "<group>"; };
@@ -776,7 +777,6 @@
 		82CD6E9D2B59CA2C00CAD663 /* SPUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPUserDefaults.swift; sourceTree = "<group>"; };
 		82CDDBEE2EAF9840005B0ECF /* TVUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVUIKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS18.0.sdk/System/Library/Frameworks/TVUIKit.framework; sourceTree = DEVELOPER_DIR; };
 		82CFB3EE2A431D89002B0EF2 /* SPCCPAConsentSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPCCPAConsentSpec.swift; sourceTree = "<group>"; };
-		82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLocalDataViewController.swift; sourceTree = "<group>"; };
 		82D6CE212B8CD186004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		82D6CE2D2B8CE171004677E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		82D8447A2B7AA5AE0069714D /* SourcepointFirebaseDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SourcepointFirebaseDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1458,7 +1458,7 @@
 				AA6090504D3B45F9BBF0E490 /* SceneDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				8225BAAF298BF0E300C2E5FA /* Config.swift */,
-				82CFDE302924057500F86A69 /* JSONLocalDataViewController.swift */,
+				82745F87309CC8A1009197D8 /* UserDefaultsViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -4033,9 +4033,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				82745F88309CC8A1009197D8 /* UserDefaultsViewController.swift in Sources */,
 				8225BAB0298BF0E300C2E5FA /* Config.swift in Sources */,
 				8225BAB2298BF1F200C2E5FA /* Statuses.swift in Sources */,
-				82CFDE312924057500F86A69 /* JSONLocalDataViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				576F59DDE1314D6AA8369EDB /* SceneDelegate.swift in Sources */,
 			);

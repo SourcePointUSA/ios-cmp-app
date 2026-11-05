@@ -65,19 +65,60 @@ class ViewController: UIViewController {
         consentManager.didomiUIController = self
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
+
+        // Listen for UserDefaults import notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUserDefaultsImported),
+            name: NSNotification.Name("UserDefaultsDataImported"),
+            object: nil
+        )
     }
 
     @IBAction func onNetworkCallsTap(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "wormholy_fire"), object: nil)
     }
 
-    @IBAction func onLoadMessagesTap(_ sender: Any) {
-        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
+    @IBAction func onClearConsentTap(_ sender: Any) {
+        clearConsentUserDefaults()
+
+        sdkStatus = .notStarted
+        updateUI()
     }
 
-    @IBAction func onClearConsentTap(_ sender: Any) {
-        SPDidomiConsentManager.clearAllData()
-        myVendorAccepted = .Unknown
+    /// Clears all consent-related keys from UserDefaults
+    /// Removes keys starting with "IAB_", containing "didomi" (case-insensitive), or starting with "sp"
+    private func clearConsentUserDefaults() {
+        let userDefaults = UserDefaults.standard
+        let allKeys = userDefaults.dictionaryRepresentation().keys
+
+        let keysToRemove = allKeys.filter { key in
+            let lowercaseKey = key.lowercased()
+            return key.contains("IAB") || lowercaseKey.contains("didomi") || lowercaseKey.hasPrefix("sp")
+        }
+
+        print("Clearing \(keysToRemove.count) UserDefaults keys:")
+        for key in keysToRemove {
+            print("  - \(key)")
+            userDefaults.removeObject(forKey: key)
+        }
+
+        userDefaults.synchronize()
+        print("UserDefaults cleared successfully")
+    }
+
+    @IBAction func onLoadMessagesTap(_ sender: Any) {
+        print("onLoadMessagesTap")
+        sdkStatus = .running
+        consentManager = SPDidomiConsentManager(
+            accountId: config.accountId,
+            propertyId: config.propertyId,
+            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
+            campaigns: config.campaigns,
+            language: config.language ?? .BrowserDefault,
+            delegate: self
+        )
+        consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
 
@@ -119,6 +160,29 @@ class ViewController: UIViewController {
                 self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
                 self.updateUI()
             }
+    }
+
+    @objc private func handleUserDefaultsImported() {
+        // Re-initialize the consent manager to pick up imported data
+        consentManager = SPDidomiConsentManager(
+            accountId: config.accountId,
+            propertyId: config.propertyId,
+            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
+            campaigns: config.campaigns,
+            language: config.language ?? .BrowserDefault,
+            delegate: self
+        )
+
+        // Reset vendor status since we have new data
+        myVendorAccepted = .Unknown
+
+        // Update UI to reflect the new state
+        sdkStatus = .notStarted
+        updateUI()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

@@ -113,25 +113,33 @@ typealias DidomiUserStatus = CurrentUserStatus
             }
         }
         didomiEventListener.onAction = { [weak self] action in
-            if let strongSelf = self, let didomiUIController = strongSelf.didomiUIController {
-                strongSelf.appDelegate?.onAction(action, from: didomiUIController)
+            DispatchQueue.main.async {
+                if let strongSelf = self, let didomiUIController = strongSelf.didomiUIController {
+                    strongSelf.appDelegate?.onAction(action, from: didomiUIController)
+                }
             }
         }
         didomiEventListener.onConsentChanged = { [weak self] in
-            if let strongSelf = self, strongSelf.isConsentUIReady {
-                strongSelf.appDelegate?.onConsentReady?(userData: strongSelf.userData)
+            DispatchQueue.main.async {
+                if let strongSelf = self, strongSelf.isConsentUIReady {
+                    strongSelf.appDelegate?.onConsentReady?(userData: strongSelf.userData)
+                }
             }
         }
         didomiEventListener.onConsentUIReady = { [weak self] viewController in
-            if let strongSelf = self {
-                strongSelf.isConsentUIReady = true
-                strongSelf.appDelegate?.onSPUIReady(viewController)
+            DispatchQueue.main.async {
+                if let strongSelf = self {
+                    strongSelf.isConsentUIReady = true
+                    strongSelf.appDelegate?.onSPUIReady(viewController)
+                }
             }
         }
         didomiEventListener.onConsentUIFinished = { [weak self] viewController in
-            if let strongSelf = self {
-                strongSelf.appDelegate?.onSPUIFinished(viewController)
-                strongSelf.appDelegate?.onSPFinished?(userData: strongSelf.userData)
+            DispatchQueue.main.async {
+                if let strongSelf = self {
+                    strongSelf.appDelegate?.onSPUIFinished(viewController)
+                    strongSelf.appDelegate?.onSPFinished?(userData: strongSelf.userData)
+                }
             }
         }
         Didomi.shared.addEventListener(listener: didomiEventListener.didomiEventListener)
@@ -160,8 +168,11 @@ typealias DidomiUserStatus = CurrentUserStatus
         // Check if user status should be collected (only call after ready event)
         if !Didomi.shared.shouldUserStatusBeCollected() {
             // If user status collection is not needed, call callbacks immediately
-            appDelegate?.onConsentReady?(userData: userData)
-            appDelegate?.onSPFinished?(userData: userData)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.appDelegate?.onConsentReady?(userData: self.userData)
+                self.appDelegate?.onSPFinished?(userData: self.userData)
+            }
             return
         }
 
@@ -241,7 +252,9 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     public func onError(_ error: SPError) {
         OSLogger.standard.end("MessageFlow")
-        appDelegate?.onError?(error: error)
+        DispatchQueue.main.async { [weak self] in
+            self?.appDelegate?.onError?(error: error)
+        }
     }
 
     public func finished(_ vcFinished: UIViewController) {}
