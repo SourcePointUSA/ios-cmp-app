@@ -186,24 +186,21 @@ class UserDefaultsViewController: UIViewController {
         // Store each key-value pair in UserDefaults
         for (key, value) in jsonDict {
             if let dict = value as? [String: Any] {
-                // If value is a dictionary, convert it to JSON string
-                if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: []),
-                   let jsonString = String(data: jsonData, encoding: .utf8) {
-                    UserDefaults.standard.set(jsonString, forKey: key)
+                // For sp.state and similar keys, store as Data (binary) not String
+                // This is required for Didomi SDK to properly detect and migrate Sourcepoint data
+                if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: []) {
+                    UserDefaults.standard.set(jsonData, forKey: key)
                 }
             } else if let array = value as? [Any] {
-                // If value is an array, convert it to JSON string
-                if let jsonData = try? JSONSerialization.data(withJSONObject: array, options: []),
-                   let jsonString = String(data: jsonData, encoding: .utf8) {
-                    UserDefaults.standard.set(jsonString, forKey: key)
+                // Store arrays as Data too
+                if let jsonData = try? JSONSerialization.data(withJSONObject: array, options: []) {
+                    UserDefaults.standard.set(jsonData, forKey: key)
                 }
             } else {
                 // For primitives (strings, numbers, bools), store directly
                 UserDefaults.standard.set(value, forKey: key)
             }
         }
-
-        UserDefaults.standard.synchronize()
 
         // Reload the data
         loadUserDefaults()

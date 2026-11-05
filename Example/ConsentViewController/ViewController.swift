@@ -78,10 +78,36 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onClearConsentTap(_ sender: Any) {
-        SPConsentManager.clearAllData()
-        myVendorAccepted = .Unknown
+        clearConsentUserDefaults()
 
-        // Recreate consent manager to clear in-memory state
+        sdkStatus = .notStarted
+        updateUI()
+    }
+
+    /// Clears all consent-related keys from UserDefaults
+    /// Removes keys starting with "IAB_", containing "didomi" (case-insensitive), or starting with "sp"
+    private func clearConsentUserDefaults() {
+        let userDefaults = UserDefaults.standard
+        let allKeys = userDefaults.dictionaryRepresentation().keys
+
+        let keysToRemove = allKeys.filter { key in
+            let lowercaseKey = key.lowercased()
+            return key.contains("IAB") || lowercaseKey.contains("didomi") || lowercaseKey.hasPrefix("sp")
+        }
+
+        print("Clearing \(keysToRemove.count) UserDefaults keys:")
+        for key in keysToRemove {
+            print("  - \(key)")
+            userDefaults.removeObject(forKey: key)
+        }
+
+        userDefaults.synchronize()
+        print("UserDefaults cleared successfully")
+    }
+
+    @IBAction func onLoadMessagesTap(_ sender: Any) {
+        print("onLoadMessagesTap")
+        sdkStatus = .running
         consentManager = SPConsentManager(
             accountId: config.accountId,
             propertyId: config.propertyId,
@@ -90,13 +116,6 @@ class ViewController: UIViewController {
             language: config.language ?? .BrowserDefault,
             delegate: self
         )
-
-        sdkStatus = .notStarted
-        updateUI()
-    }
-
-    @IBAction func onLoadMessagesTap(_ sender: Any) {
-        sdkStatus = .running
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
