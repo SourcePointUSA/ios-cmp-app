@@ -42,7 +42,8 @@ class ViewController: UIViewController {
         propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
         campaigns: config.campaigns,
         language: config.language ?? .BrowserDefault,
-        delegate: self
+        delegate: self,
+        configFileName: "SourcepointConfigGDPR"
     )}()
 
     @IBOutlet var sdkStatusLabel: UILabel!

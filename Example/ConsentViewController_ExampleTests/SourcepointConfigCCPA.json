@@ -1,0 +1,50 @@
+{
+  "app": {
+    "name": "SP Example App",
+    "privacyPolicyURL": "https://your-app.com/privacy-policy",
+    "vendors": {
+      "iab": {
+        "all": false,
+        "version": 2
+      },
+      "custom": []
+    },
+    "customPurposes": []
+  },
+  "notice": {
+    "enable": true,
+    "position": "popup",
+    "content": {
+      "title": {
+        "en": "CCPA Privacy Notice"
+      },
+      "notice": {
+        "en": "This is a CCPA Notice loaded by the Didomi SDK."
+      },
+      "dismiss": {
+        "en": "Accept All"
+      },
+      "deny": {
+        "en": "Do Not Sell or Share My Personal Information"
+      },
+      "learnMore": {
+        "en": "Show Options"
+      }
+    },
+    "denyOptions": {
+      "button": "secondary",
+      "cross": true
+    },
+    "denyAppliesToLI": false
+  },
+  "theme": {
+    "color": "#3F51B5"
+  },
+  "languages": {
+    "enabled": ["en"],
+    "default": "en"
+  },
+  "preferences": {
+    "categories": []
+  }
+}

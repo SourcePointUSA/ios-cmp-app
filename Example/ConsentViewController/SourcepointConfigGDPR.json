@@ -1,0 +1,266 @@
+{
+    "app": {
+      "name": "SP Example App",
+      "privacyPolicyURL": "https://your-app.com/privacy-policy",
+      "vendors": {
+        "iab": {
+            "all": false,
+            "version": 2
+        },
+        "custom": [
+          {
+            "id": "5e7ced57b8e05c485246cce0",
+            "didomiId": "5e7ced57b8e05c485246cce0",
+            "name": "Vendor Name",
+            "policyUrl": "https://vendor-policy-url.com",
+            "purposeIds": [
+              "60b65857619abe242bed971e",
+              "608bad95d08d3112188e0e29",
+              "608bad95d08d3112188e0e36",
+              "608bad96d08d3112188e0e59"
+            ],
+            "legIntPurposeIds": [],
+            "namespaces": {
+              "sp": "5e7ced57b8e05c485246cce0"
+            }
+          },
+          {
+            "id": "5e7e1298b8e05c4854221be9",
+            "didomiId": "5e7e1298b8e05c4854221be9",
+            "name": "Google Inc.",
+            "policyUrl": "https://business.safety.google/privacy/",
+            "purposeIds": [
+              "65c4a19739cd2b04ba0cb4a6",
+              "65c4a19739cd2b04ba0cb4b0",
+              "65c4a19739cd2b04ba0cb4ba",
+              "65c4a19739cd2b04ba0cb49c"
+            ],
+            "legIntPurposeIds": [],
+            "namespaces": {
+              "sp": "5e7e1298b8e05c4854221be9"
+            }
+          },
+          {
+            "id": "5f1b2fbeb8e05c306f2a1eb9",
+            "didomiId": "5f1b2fbeb8e05c306f2a1eb9",
+            "name": "QuarticON",
+            "policyUrl": "https://quarticon.com/privacy",
+            "purposeIds": [
+              "608bad95d08d3112188e0e29"
+            ],
+            "legIntPurposeIds": [
+              "608bad95d08d3112188e0e2f"
+            ],
+            "namespaces": {
+              "sp": "5f1b2fbeb8e05c306f2a1eb9"
+            }
+          },
+          {
+            "id": "5ff4d000a228633ac048be41",
+            "didomiId": "5ff4d000a228633ac048be41",
+            "name": "Game Accounts",
+            "policyUrl": "https://game-accounts.com/privacy",
+            "purposeIds": [
+              "608bad95d08d3112188e0e36"
+            ],
+            "legIntPurposeIds": [],
+            "namespaces": {
+              "sp": "5ff4d000a228633ac048be41"
+            }
+          }
+        ]
+      },
+      "customPurposes": [
+        {
+          "id": "608bad95d08d3112188e0e29",
+          "name": {
+            "en": "Store and/or access information on a device"
+          },
+          "description": {
+            "en": "Store and/or access information on a device description.",
+            "es": "Almacenar y/o acceder a información en un dispositivo descripción."
+          },
+          "namespaces": {
+            "sp": "608bad95d08d3112188e0e29"
+          }
+        },
+        {
+          "id": "608bad95d08d3112188e0e36",
+          "name": {
+            "en": "Create profiles for personalised advertising"
+          },
+          "description": {
+            "en": "Create profiles for personalised advertising description.",
+            "es": "Crear perfiles para publicidad personalizada descripción."
+          },
+          "namespaces": {
+            "sp": "608bad95d08d3112188e0e36"
+          }
+        },
+        {
+          "id": "608bad96d08d3112188e0e59",
+          "name": {
+            "en": "Understand audiences through statistics or combinations of data from different sources"
+          },
+          "description": {
+            "en": "Understand audiences through statistics or combinations of data from different sources description.",
+            "es": "Comprender audiencias a través de estadísticas o combinaciones de datos de diferentes fuentes descripción."
+          },
+          "namespaces": {
+            "sp": "608bad96d08d3112188e0e59"
+          }
+        },
+        {
+          "id": "60b65857619abe242bed971e",
+          "name": {
+            "en": "Our Custom Purpose"
+          },
+          "description": {
+            "en": "Custom purpose for specific data processing activities."
+          },
+          "namespaces": {
+            "sp": "60b65857619abe242bed971e"
+          }
+        },
+        {
+          "id": "65c4a19739cd2b04ba0cb49c",
+          "name": {
+            "en": "GCM Analytics Storage"
+          },
+          "description": {
+            "en": "Google Consent Mode analytics storage purpose."
+          },
+          "namespaces": {
+            "sp": "65c4a19739cd2b04ba0cb49c"
+          }
+        },
+        {
+          "id": "65c4a19739cd2b04ba0cb4a6",
+          "name": {
+            "en": "GCM Ad Storage"
+          },
+          "description": {
+            "en": "Google Consent Mode ad storage purpose."
+          },
+          "namespaces": {
+            "sp": "65c4a19739cd2b04ba0cb4a6"
+          }
+        },
+        {
+          "id": "65c4a19739cd2b04ba0cb4b0",
+          "name": {
+            "en": "GCM Ad User Data"
+          },
+          "description": {
+            "en": "Google Consent Mode ad user data purpose."
+          },
+          "namespaces": {
+            "sp": "65c4a19739cd2b04ba0cb4b0"
+          }
+        },
+        {
+          "id": "65c4a19739cd2b04ba0cb4ba",
+          "name": {
+            "en": "GCM Ad Personalization"
+          },
+          "description": {
+            "en": "Google Consent Mode ad personalization purpose."
+          },
+          "namespaces": {
+            "sp": "65c4a19739cd2b04ba0cb4ba"
+          }
+        },
+        {
+          "id": "608bad95d08d3112188e0e2f",
+          "name": {
+            "en": "Use limited data to select advertising"
+          },
+          "description": {
+            "en": "Use limited data to select advertising description.",
+            "es": "Usar datos limitados para seleccionar publicidad descripción."
+          },
+          "namespaces": {
+            "sp": "608bad95d08d3112188e0e2f"
+          }
+        }
+      ]
+    },
+    "notice": {
+      "enable": true,
+      "position": "popup",
+      "content": {
+        "title": {
+          "en": "GDPR Message",
+          "es": "Mensaje GDPR"
+        },
+        "notice": {
+          "en": "This is a GDPR Message loaded by the Didomi SDK.",
+          "es": "Este es un mensaje de GDPR cargado por el SDK de Didomi."
+        },
+        "dismiss": {
+          "en": "Accept All",
+          "es": "Aceptar todo"
+        },
+        "deny": {
+          "en": "Reject All",
+          "es": "Rechazar todo"
+        },
+        "learnMore": {
+          "en": "Show Options",
+          "es": "Mostrar opciones"
+        }
+      },
+      "denyOptions": {
+        "button": "secondary",
+        "cross": true
+      },
+      "denyAppliesToLI": true
+    },
+    "theme": {
+      "color": "#3F51B5"
+    },
+    "languages": {
+      "enabled": ["en", "es"],
+      "default": "en"
+    },
+    "preferences": {
+      "categories": [
+        {
+          "type": "purpose",
+          "purposeId": "608bad95d08d3112188e0e29"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "608bad95d08d3112188e0e36"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "608bad96d08d3112188e0e59"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "60b65857619abe242bed971e"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "65c4a19739cd2b04ba0cb49c"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "65c4a19739cd2b04ba0cb4a6"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "65c4a19739cd2b04ba0cb4b0"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "65c4a19739cd2b04ba0cb4ba"
+        },
+        {
+          "type": "purpose",
+          "purposeId": "608bad95d08d3112188e0e2f"
+        }
+      ]
+    }
+  }

@@ -44,20 +44,63 @@ typealias DidomiUserStatus = CurrentUserStatus
     private var isDidomiReady = false
     private var pendingLoadMessage = false
 
-    required public init(
+    // Required initializer from SPSDK protocol
+    required convenience public init(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: SPPropertyName,
+        campaigns: SPCampaigns,
+        language: SPMessageLanguage,
+        delegate: SPDelegate?
+    ) {
+        self.init(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            language: language,
+            delegate: delegate,
+            configFileName: nil
+        )
+    }
+
+    public init(
         accountId: Int,
         propertyId: Int,
         propertyName: SPPropertyName,
         campaigns: SPCampaigns,
         language: SPMessageLanguage,
         delegate: SPDelegate?,
+        configFileName: String?
     ) {
         super.init()
+        setupDidomi(
+            accountId: accountId,
+            propertyId: propertyId,
+            propertyName: propertyName,
+            campaigns: campaigns,
+            language: language,
+            delegate: delegate,
+            configFileName: configFileName
+        )
+    }
+
+    // Common setup method
+    private func setupDidomi(
+        accountId: Int,
+        propertyId: Int,
+        propertyName: SPPropertyName,
+        campaigns: SPCampaigns,
+        language: SPMessageLanguage,
+        delegate: SPDelegate?,
+        configFileName: String?
+    ) {
         appDelegate = delegate
         Didomi.shared.initialize(DidomiInitializeParameters(
             accountId: accountId,
             propertyId: propertyId,
-            propertyName: propertyName.rawValue
+            propertyName: propertyName.rawValue,
+            configFileName: configFileName
         ))
         Didomi.shared.onReady { [weak self] in
             guard let strongSelf = self else { return }
@@ -122,7 +165,6 @@ typealias DidomiUserStatus = CurrentUserStatus
             return
         }
 
-        // TODO: We'll need to think of a way to get the controller back from DDM SDK
         if let didomiUIController {
             Didomi.shared.setupUI(containerController: didomiUIController)
         }
@@ -210,13 +252,22 @@ typealias DidomiUserStatus = CurrentUserStatus
 // MARK: Didomi's stubbing
 
 extension DidomiInitializeParameters {
-    convenience init(accountId: Int, propertyId: Int, propertyName: String) {
-        // TODO: The new implementation of the SDK will require apiKey and noticeID
-        self.init(
-            apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-            noticeID: "BVP3EcHb",
-            handleConsentUIAutomatically: false
-        )
+    convenience init(accountId: Int, propertyId: Int, propertyName: String, configFileName: String? = nil) {
+        if let configFileName = configFileName {
+            self.init(
+                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
+                localConfigurationPath: configFileName,
+                disableDidomiRemoteConfig: true,
+                noticeID: "BVP3EcHb",
+                handleConsentUIAutomatically: false
+            )
+        } else {
+            self.init(
+                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
+                noticeID: "BVP3EcHb",
+                handleConsentUIAutomatically: false
+            )
+        }
     }
 }
 

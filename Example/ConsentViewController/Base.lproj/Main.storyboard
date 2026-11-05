@@ -228,12 +228,24 @@
                     <view key="view" contentMode="scaleToFill" id="MiA-pU-jv1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="abc-de-fgh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="848"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="HkW-9R-Cjy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="abc-de-fgh" firstAttribute="top" secondItem="MiA-pU-jv1" secondAttribute="top" id="con-1"/>
+                            <constraint firstItem="abc-de-fgh" firstAttribute="leading" secondItem="HkW-9R-Cjy" secondAttribute="leading" id="con-2"/>
+                            <constraint firstItem="abc-de-fgh" firstAttribute="trailing" secondItem="HkW-9R-Cjy" secondAttribute="trailing" id="con-3"/>
+                            <constraint firstItem="abc-de-fgh" firstAttribute="bottom" secondItem="MiA-pU-jv1" secondAttribute="bottom" id="con-4"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KvW-MN-FFa"/>
                     <connections>
-                        <outlet property="containerView" destination="MiA-pU-jv1" id="DUs-5A-oHr"/>
+                        <outlet property="containerView" destination="abc-de-fgh" id="DUs-5A-oHr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOq-bM-t3z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
