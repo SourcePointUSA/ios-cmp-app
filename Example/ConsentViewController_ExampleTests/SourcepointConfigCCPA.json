@@ -1,4 +1,7 @@
 {
+  "regulation": {
+    "name": "cpra"
+  },
   "app": {
     "name": "SP Example App",
     "privacyPolicyURL": "https://your-app.com/privacy-policy",
