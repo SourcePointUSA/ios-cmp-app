@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import Didomi
 
-typealias DidomiEventListener = EventListener
-typealias DidomiEventType = EventType
 typealias DidomiUserStatus = CurrentUserStatus
 
 @objcMembers open class SPDidomiConsentManager: NSObject, SPSDK {
@@ -284,151 +282,288 @@ extension DidomiInitializeParameters {
     }
 }
 
-class SPDidomiEventListener {
-    var onConsentUIReady: (_ vc: UIViewController) -> Void = { _ in }
-    var onConsentUIFinished: (_ vc: UIViewController) -> Void = { _ in }
-    var onAction: (_ action: SPAction) -> Void = { _ in }
-    var onError: (_ error: SPError) -> Void = { _ in }
-    var onConsentChanged: () -> Void = { }
-
-    public var didomiEventListener = DidomiEventListener()
-
-    lazy var defaultEventListenerLambda: (_ event: DidomiEventType) -> Void = { [weak self] eventType in
-        print("DidomiEventType \(eventType)")
-        switch eventType {
-        case .noticeClickAgree, .preferencesClickAgreeToAll: // TODO: add .preferencesClickAgreeToAllVendors, .preferencesClickAgreeToAllPurposes ?
-            self?.onAction(SPAction(type: .AcceptAll))
-        case .noticeClickDisagree, .preferencesClickDisagreeToAll: // TODO: add .preferencesClickDisagreeToAllVendors, .preferencesClickDisagreeToAllPurposes ?
-            self?.onAction(SPAction(type: .RejectAll))
-        case .preferencesClickSaveChoices: // TODO: add .preferencesClickVendorSaveChoices ?
-            self?.onAction(SPAction(type: .SaveAndExit))
-        default: return
-        }
-    }
-
-    init() {
-        // TODO: remove listeners that are not used in the SP code
-        didomiEventListener.onShowNotice = defaultEventListenerLambda
-        didomiEventListener.onHideNotice = defaultEventListenerLambda
-        didomiEventListener.onShowPreferences = defaultEventListenerLambda
-        didomiEventListener.onHidePreferences = defaultEventListenerLambda
-        didomiEventListener.onConsentUIReady = { [weak self] event in
-            if let vc = event?.viewController {
-                self?.onConsentUIReady(vc)
-            }
-        }
-        didomiEventListener.onConsentUIFinished = { [weak self] event in
-            if let vc = event?.viewController {
-                self?.onConsentUIFinished(vc)
-            }
-        }
-
-        didomiEventListener.onNoticeClickAgree = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickAgreeToAll = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickAgreeToAllVendors = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickAgreeToAllPurposes = defaultEventListenerLambda
-        didomiEventListener.onNoticeClickDisagree = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickDisagreeToAll = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickDisagreeToAllVendors = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickDisagreeToAllPurposes = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickSaveChoices = defaultEventListenerLambda
-        didomiEventListener.onPreferencesClickVendorSaveChoices = defaultEventListenerLambda
-        didomiEventListener.onNoticeClickMoreInfo = defaultEventListenerLambda
-        didomiEventListener.onNoticeClickViewVendors = defaultEventListenerLambda
-        didomiEventListener.onError = { [weak self] errorEvent in
-            self?.onError(SPError(error: SPDidomiError(errorEvent)))
-        }
-        didomiEventListener.onConsentChanged = { [weak self] _ in
-            self?.onConsentChanged()
-        }
-    }
-}
-
-struct SPDidomiError: Error {
-    var debugDescription: String?
-
-    init(_ didomiErrorEvent: DidomiErrorEvent) {
-        debugDescription = """
-            DidomiErrorEvent(
-                -type: \(didomiErrorEvent.type),
-                -descriptionText: \(didomiErrorEvent.descriptionText)
-            )
-        """
-    }
-}
-
-extension DidomiEventType: @retroactive CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .ready: return ".ready"
-        case .showNotice: return ".showNotice"
-        case .hideNotice: return ".hideNotice"
-        case .showPreferences: return ".showPreferences"
-        case .hidePreferences: return ".hidePreferences"
-        case .noticeClickAgree: return ".noticeClickAgree"
-        case .preferencesClickAgreeToAll: return ".preferencesClickAgreeToAll"
-        case .preferencesClickAgreeToAllVendors: return ".preferencesClickAgreeToAllVendors"
-        case .preferencesClickAgreeToAllPurposes: return ".preferencesClickAgreeToAllPurposes"
-        case .noticeClickDisagree: return ".noticeClickDisagree"
-        case .preferencesClickDisagreeToAll: return ".preferencesClickDisagreeToAll"
-        case .preferencesClickDisagreeToAllVendors: return ".preferencesClickDisagreeToAllVendors"
-        case .preferencesClickDisagreeToAllPurposes: return ".preferencesClickDisagreeToAllPurposes"
-        case .preferencesClickSaveChoices: return ".preferencesClickSaveChoices"
-        case .preferencesClickVendorSaveChoices: return ".preferencesClickVendorSaveChoices"
-        case .noticeClickMoreInfo: return ".noticeClickMoreInfo"
-        case .noticeClickViewVendors: return ".noticeClickViewVendors"
-        case .consentChanged: return ".consentChanged"
-        case .integrationError: return ".error"
-        case .noticeClickPrivacyPolicy: return ".noticeClickPrivacyPolicy"
-        case .preferencesClickResetAllPurposes: return ".preferencesClickResetAllPurposes"
-        case .preferencesClickPurposeAgree: return ".preferencesClickPurposeAgree"
-        case .preferencesClickPurposeDisagree: return ".preferencesClickPurposeDisagree"
-        case .preferencesClickCategoryAgree: return ".preferencesClickCategoryAgree"
-        case .preferencesClickCategoryDisagree: return ".preferencesClickCategoryDisagree"
-        case .preferencesClickViewVendors: return ".preferencesClickViewVendors"
-        case .preferencesClickViewPurposes: return ".preferencesClickViewPurposes"
-        case .preferencesClickVendorAgree: return ".preferencesClickVendorAgree"
-        case .preferencesClickVendorDisagree: return ".preferencesClickVendorDisagree"
-        case .syncUserChanged: return ".syncUserChanged"
-        case .syncDone: return ".syncDone"
-        case .syncReady: return ".syncReady"
-        case .syncError: return ".syncError"
-        case .languageUpdated: return ".languageUpdated"
-        case .languageUpdateFailed: return ".languageUpdateFailed"
-        case .noticeClickViewSPIPurposes: return ".noticeClickViewSPIPurposes"
-        case .preferencesClickViewSPIPurposes: return ".preferencesClickViewSPIPurposes"
-        case .preferencesClickSPIPurposeAgree: return ".preferencesClickSPIPurposeAgree"
-        case .preferencesClickSPIPurposeDisagree: return ".preferencesClickSPIPurposeDisagree"
-        case .preferencesClickSPICategoryAgree: return ".preferencesClickSPICategoryAgree"
-        case .preferencesClickSPICategoryDisagree: return ".preferencesClickSPICategoryDisagree"
-        case .preferencesClickSPIPurposeSaveChoices: return ".preferencesClickSPIPurposeSaveChoices"
-        case .dcsSignatureReady: return ".dcsSignatureReady"
-        case .dcsSignatureError: return ".dcsSignatureError"
-        @unknown default:
-            fatalError()
-        }
-    }
-}
-
 extension DidomiUserStatus {
     // TODO: provide all legislation consents from DDM
     /// With SP, developers get an object `SPUserData` with all legislation consents, regardless if they apply to the current geolocation or not.
     /// We might have to implement a way on DDM to get that for all legislations, not only the "current".
     func toSourcepoint() -> SPUserData {
         var gdpr: SPConsent<SPGDPRConsent>? = nil
-        var ccpa: SPConsent<SPCCPAConsent>? = nil // TODO: can we remove support to ccpa?
+        var ccpa: SPConsent<SPCCPAConsent>? = nil
         var usnat: SPConsent<SPUSNatConsent>? = nil
-        var preferences: SPConsent<SPPreferencesConsent>? = nil // TODO: does DDM support something like Preferences?
+        var preferences: SPConsent<SPPreferencesConsent>? = nil
         var globalcmp: SPConsent<SPGlobalCmpConsent>? = nil
 
         switch regulation {
             case .gdpr:
-                gdpr = SPConsent(consents: .empty(), applies: true)
+                gdpr = SPConsent(consents: mapToGDPRConsent(), applies: true)
             case .cpra:
-                ccpa = SPConsent(consents: .empty(), applies: true)
+                ccpa = SPConsent(consents: mapToCCPAConsent(), applies: true)
+                usnat = SPConsent(consents: mapToUSNatConsent(), applies: true)
             default: break
         }
 
         return SPUserData(gdpr: gdpr, ccpa: ccpa, usnat: usnat, globalcmp: globalcmp, preferences: preferences)
+    }
+
+    // Build a lookup dictionary of vendors from Didomi SDK
+    private static func buildVendorLookup() -> [String: Vendor] {
+        let requiredVendors = Didomi.shared.getRequiredVendors()
+        var lookup: [String: Vendor] = [:]
+
+        for vendor in requiredVendors {
+            lookup[vendor.id] = vendor
+        }
+
+        return lookup
+    }
+
+    // swiftlint:disable function_body_length cyclomatic_complexity
+    private func mapToGDPRConsent() -> SPGDPRConsent {
+        var vendorGrants: SPGDPRVendorGrants = [:]
+        var acceptedVendors: [String] = []
+        var acceptedCategories: [String] = []
+        var acceptedLegIntVendors: [String] = []
+        var acceptedLegIntCategories: [String] = []
+        var acceptedSpecialFeatures: [String] = []
+
+        // Build vendor lookup from Didomi SDK
+        let vendorLookup = DidomiUserStatus.buildVendorLookup()
+
+        // Map vendors
+        for (vendorId, vendorStatus) in vendors where vendorStatus.enabled {
+            // Get vendor from Didomi SDK
+            let vendor = vendorLookup[vendorId]
+            let spVendorId = vendor?.namespaces?.sp ?? vendorId
+
+            // Build purpose grants for this vendor
+            var purposeGrants: SPGDPRPurposeGrants = [:]
+            var allPurposesGranted = true
+
+            if let vendor = vendor {
+                // Map consent purposes
+                for purposeId in vendor.purposeIDs {
+                    if let purposeStatus = purposes[purposeId],
+                       let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
+                       let spPurposeId = purpose.namespaces?.sp {
+                        purposeGrants[spPurposeId] = purposeStatus.enabled
+                        if !purposeStatus.enabled {
+                            allPurposesGranted = false
+                        }
+                    } else {
+                        allPurposesGranted = false
+                    }
+                }
+
+                // Map legitimate interest purposes
+                for purposeId in vendor.legIntPurposeIDs {
+                    if let purposeStatus = purposes[purposeId],
+                       let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
+                       let spPurposeId = purpose.namespaces?.sp {
+                        purposeGrants[spPurposeId] = purposeStatus.enabled
+                        if !purposeStatus.enabled {
+                            allPurposesGranted = false
+                        }
+                        if purposeStatus.enabled {
+                            if !acceptedLegIntCategories.contains(spPurposeId) {
+                                acceptedLegIntCategories.append(spPurposeId)
+                            }
+                        }
+                    } else {
+                        allPurposesGranted = false
+                    }
+                }
+
+                // Check for legitimate interest vendors
+                if !vendor.legIntPurposeIDs.isEmpty {
+                    acceptedLegIntVendors.append(spVendorId)
+                }
+
+                // Map special features
+                for specialFeatureId in vendor.specialFeatureIDs {
+                    if !acceptedSpecialFeatures.contains(specialFeatureId) {
+                        acceptedSpecialFeatures.append(specialFeatureId)
+                    }
+                }
+            }
+
+            vendorGrants[spVendorId] = SPGDPRVendorGrant(
+                granted: allPurposesGranted,
+                purposeGrants: purposeGrants
+            )
+
+            acceptedVendors.append(spVendorId)
+        }
+
+        // Read TC string directly from UserDefaults since Didomi doesn't expose it from migration
+        let tcString = UserDefaults.standard.string(forKey: "IABTCF_TCString") ?? ""
+
+        // Map purposes/categories
+        for (purposeId, purposeStatus) in purposes where purposeStatus.enabled {
+            guard let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
+                  let spPurposeId = purpose.namespaces?.sp else {
+                continue
+            }
+
+            if !acceptedCategories.contains(spPurposeId) {
+                acceptedCategories.append(spPurposeId)
+            }
+        }
+
+        return SPGDPRConsent(
+            uuid: userID.isEmpty ? nil : userID,
+            vendorGrants: vendorGrants,
+            euconsent: tcString,
+            tcfData: nil,
+            childPmId: nil,
+            dateCreated: parseDateString(created),
+            expirationDate: parseDateString(updated).addingYears(1),
+            applies: true,
+            consentStatus: ConsentStatus(),
+            webConsentPayload: nil,
+            googleConsentMode: nil,
+            acceptedLegIntCategories: acceptedLegIntCategories,
+            acceptedLegIntVendors: acceptedLegIntVendors,
+            acceptedVendors: acceptedVendors,
+            acceptedCategories: acceptedCategories,
+            acceptedSpecialFeatures: acceptedSpecialFeatures
+        )
+    }
+    // swiftlint:enable function_body_length
+
+    private func mapToCCPAConsent() -> SPCCPAConsent {
+        var rejectedVendors: [String] = []
+        var rejectedCategories: [String] = []
+
+        // Map rejected vendors (those with enabled=false)
+        for (vendorId, vendorStatus) in vendors where !vendorStatus.enabled {
+            guard let vendor = Didomi.shared.getVendor(vendorId: vendorId),
+                  let spVendorId = vendor.namespaces?.sp else {
+                continue
+            }
+            rejectedVendors.append(spVendorId)
+        }
+
+        // Map rejected purposes/categories (those with enabled=false)
+        for (purposeId, purposeStatus) in purposes where !purposeStatus.enabled {
+            guard let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
+                  let spPurposeId = purpose.namespaces?.sp else {
+                continue
+            }
+            rejectedCategories.append(spPurposeId)
+        }
+
+        // Determine status
+        let totalVendors = vendors.count
+        let totalPurposes = purposes.count
+        let status: CCPAConsentStatus
+
+        if rejectedVendors.isEmpty && rejectedCategories.isEmpty {
+            status = .RejectedNone
+        } else if rejectedVendors.count == totalVendors && rejectedCategories.count == totalPurposes {
+            status = .RejectedAll
+        } else {
+            status = .RejectedSome
+        }
+
+        return SPCCPAConsent(
+            uuid: userID.isEmpty ? nil : userID,
+            status: status,
+            rejectedVendors: rejectedVendors,
+            rejectedCategories: rejectedCategories,
+            signedLspa: false,
+            childPmId: nil,
+            applies: true,
+            dateCreated: parseDateString(created),
+            expirationDate: parseDateString(updated).addingYears(1),
+            consentStatus: ConsentStatus(),
+            webConsentPayload: nil,
+            GPPData: parseGPPData()
+        )
+    }
+
+    private func mapToUSNatConsent() -> SPUSNatConsent {
+        var vendorsList: [SPConsentable] = []
+        var categoriesList: [SPConsentable] = []
+
+        // Map vendors
+        for (vendorId, vendorStatus) in vendors {
+            guard let vendor = Didomi.shared.getVendor(vendorId: vendorId),
+                  let spVendorId = vendor.namespaces?.sp else {
+                continue
+            }
+            vendorsList.append(SPConsentable(id: spVendorId, consented: vendorStatus.enabled))
+        }
+
+        // Map purposes/categories
+        for (purposeId, purposeStatus) in purposes {
+            guard let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
+                  let spPurposeId = purpose.namespaces?.sp else {
+                continue
+            }
+            categoriesList.append(SPConsentable(id: spPurposeId, consented: purposeStatus.enabled))
+        }
+
+        // Parse consent strings from GPP data
+        let consentStrings = parseConsentStrings()
+
+        return SPUSNatConsent(
+            uuid: userID.isEmpty ? nil : userID,
+            applies: true,
+            dateCreated: parseDateString(created),
+            expirationDate: parseDateString(updated).addingYears(1),
+            consentStrings: consentStrings,
+            webConsentPayload: nil,
+            categories: categoriesList,
+            vendors: vendorsList,
+            consentStatus: ConsentStatus(),
+            GPPData: parseGPPData()
+        )
+    }
+
+    // Helper methods
+    private func parseDateString(_ dateString: String) -> SPDate {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        if let date = formatter.date(from: dateString) {
+            return SPDate(date: date)
+        }
+        return SPDate.now()
+    }
+
+    private func parseGPPData() -> SPJson {
+        // Parse GPP string into JSON structure
+        // Note: SPJson is provided by SPMobileCore framework
+        // For Didomi integration, GPP data is managed internally by Didomi SDK
+        // and exposed via the gppString property on CurrentUserStatus
+        return SPJson()
+    }
+
+    private func parseConsentStrings() -> [SPUSNatConsent.ConsentString] {
+        // Extract consent strings from GPP data
+        // This is a placeholder implementation - the actual parsing may be more complex
+        var consentStrings: [SPUSNatConsent.ConsentString] = []
+
+        if !gppString.isEmpty {
+            // Add a generic consent string - in a real implementation, this would parse the GPP string
+            consentStrings.append(SPUSNatConsent.ConsentString(
+                sectionId: 7, // CPRA section
+                sectionName: "uspca",
+                consentString: gppString
+            ))
+        }
+
+        return consentStrings
+    }
+}
+
+// Helper extension for SPDate
+private extension SPDate {
+    func addingYears(_ years: Int) -> SPDate {
+        let calendar = Calendar.current
+        if let newDate = calendar.date(byAdding: .year, value: years, to: self.date) {
+            return SPDate(date: newDate)
+        }
+        return self
     }
 }
