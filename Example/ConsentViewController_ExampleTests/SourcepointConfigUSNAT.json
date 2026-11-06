@@ -10,7 +10,63 @@
         "all": false,
         "version": 2
       },
-      "custom": []
+      "custom": [
+        {
+          "id": "5e37fc3e56a5e60e003a7120",
+          "didomiId": "5e37fc3e56a5e60e003a7120",
+          "name": {
+            "en": "Example Vendor 1"
+          },
+          "policyUrl": "https://example-vendor-1.com/privacy",
+          "namespaces": {
+            "sp": "5e37fc3e56a5e60e003a7120"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e65",
+            "65a6a785cc78fac48ab34e6a"
+          ],
+          "legIntPurposeIds": []
+        },
+        {
+          "id": "602f88b0a228631ff1133d19",
+          "didomiId": "602f88b0a228631ff1133d19",
+          "name": {
+            "en": "Example Vendor 2"
+          },
+          "policyUrl": "https://example-vendor-2.com/privacy",
+          "namespaces": {
+            "sp": "602f88b0a228631ff1133d19"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e6f",
+            "65a6a785cc78fac48ab34e74"
+          ],
+          "legIntPurposeIds": []
+        },
+        {
+          "id": "5e71706f69966540e4554efd",
+          "didomiId": "5e71706f69966540e4554efd",
+          "name": {
+            "en": "Example Vendor 3"
+          },
+          "policyUrl": "https://example-vendor-3.com/privacy",
+          "namespaces": {
+            "sp": "5e71706f69966540e4554efd"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e79",
+            "65a6a785cc78fac48ab34e7e",
+            "65a6a785cc78fac48ab34e83",
+            "65a6a785cc78fac48ab34e88",
+            "65a6a785cc78fac48ab34e8d",
+            "65a6a785cc78fac48ab34e92",
+            "65a6a785cc78fac48ab34e97",
+            "65a6a785cc78fac48ab34e9c",
+            "648c9c48e17a3c7a82360c54"
+          ],
+          "legIntPurposeIds": []
+        }
+      ]
     },
     "customPurposes": [
       {

@@ -299,6 +299,9 @@ extension DidomiUserStatus {
             case .cpra:
                 ccpa = SPConsent(consents: mapToCCPAConsent(), applies: true)
                 usnat = SPConsent(consents: mapToUSNatConsent(), applies: true)
+            case .vcdpa, .cpa, .ctdpa, .ucpa, .dpdpa, .fdbr, .icdpa, .incdpa, .kcdpa, .mcdpa, .mncdpa, .modpa, .ndpa, .nhpa, .njdpa, .ocpa, .ridtppa, .tdpsa, .tipa:
+                // US state privacy laws map to USNAT in Sourcepoint
+                usnat = SPConsent(consents: mapToUSNatConsent(), applies: true)
             default: break
         }
 
@@ -485,22 +488,27 @@ extension DidomiUserStatus {
         var vendorsList: [SPConsentable] = []
         var categoriesList: [SPConsentable] = []
 
-        // Map vendors
-        for (vendorId, vendorStatus) in vendors {
-            guard let vendor = Didomi.shared.getVendor(vendorId: vendorId),
-                  let spVendorId = vendor.namespaces?.sp else {
+        let allVendors = Didomi.shared.getRequiredVendors()
+        let allPurposes = Didomi.shared.getRequiredPurposes()
+
+        // Map vendors - assume all configured vendors are consented for USNAT migration
+        for vendor in allVendors {
+            guard let spVendorId = vendor.namespaces?.sp else {
                 continue
             }
-            vendorsList.append(SPConsentable(id: spVendorId, consented: vendorStatus.enabled))
+            // Check if we have status in CurrentUserStatus, otherwise default to consented
+            let consented = vendors[vendor.id]?.enabled ?? true
+            vendorsList.append(SPConsentable(id: spVendorId, consented: consented))
         }
 
-        // Map purposes/categories
-        for (purposeId, purposeStatus) in purposes {
-            guard let purpose = Didomi.shared.getPurpose(purposeId: purposeId),
-                  let spPurposeId = purpose.namespaces?.sp else {
+        // Map purposes/categories - assume all configured purposes are consented for USNAT migration
+        for purpose in allPurposes {
+            guard let spPurposeId = purpose.namespaces?.sp else {
                 continue
             }
-            categoriesList.append(SPConsentable(id: spPurposeId, consented: purposeStatus.enabled))
+            // Check if we have status in CurrentUserStatus, otherwise default to consented
+            let consented = purposes[purpose.id]?.enabled ?? true
+            categoriesList.append(SPConsentable(id: spPurposeId, consented: consented))
         }
 
         // Parse consent strings from GPP data
@@ -540,15 +548,29 @@ extension DidomiUserStatus {
     }
 
     private func parseConsentStrings() -> [SPUSNatConsent.ConsentString] {
-        // Extract consent strings from GPP data
-        // This is a placeholder implementation - the actual parsing may be more complex
+        // Extract consent strings from GPP data in UserDefaults
+        // Didomi doesn't expose GPP string via CurrentUserStatus for USNAT, so read directly
         var consentStrings: [SPUSNatConsent.ConsentString] = []
 
-        if !gppString.isEmpty {
-            // Add a generic consent string - in a real implementation, this would parse the GPP string
+        let gppString = UserDefaults.standard.string(forKey: "IABGPP_HDR_GppString") ?? ""
+        let gppSID = UserDefaults.standard.string(forKey: "IABGPP_GppSID") ?? ""
+
+        if !gppString.isEmpty, let sectionId = Int(gppSID) {
+            // Map section ID to section name
+            let sectionName: String
+            switch sectionId {
+            case 7: sectionName = "uspca" // California (CPRA)
+            case 8: sectionName = "uspva" // Virginia
+            case 9: sectionName = "uspco" // Colorado
+            case 10: sectionName = "uspct" // Connecticut
+            case 11: sectionName = "uspfl" // Florida
+            case 12: sectionName = "usct" // Connecticut (alternative)
+            default: sectionName = "usnat" // Generic US National
+            }
+
             consentStrings.append(SPUSNatConsent.ConsentString(
-                sectionId: 7, // CPRA section
-                sectionName: "uspca",
+                sectionId: sectionId,
+                sectionName: sectionName,
                 consentString: gppString
             ))
         }

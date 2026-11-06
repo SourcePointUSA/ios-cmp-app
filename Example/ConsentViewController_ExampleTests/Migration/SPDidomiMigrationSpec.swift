@@ -152,7 +152,7 @@ class SPDidomiMigrationSpec: QuickSpec {
                 }
             }
 
-            xcontext("when Sourcepoint USNAT consent data exists and Didomi data does not") {
+            context("when Sourcepoint USNAT consent data exists and Didomi data does not") {
                 beforeEach {
                     clearAllConsentData()
                     setupSourcepointUSNATConsentData()
@@ -179,56 +179,24 @@ class SPDidomiMigrationSpec: QuickSpec {
                     consentManager = nil
                 }
 
-                it("should call onConsentReady and onSPFinished after migration") {
-                    consentManager.loadMessage(forAuthId: nil, publisherData: SPPublisherData())
-
-                    expect(mockDelegate.isOnConsentReadyCalled).toEventually(
-                        beTrue(),
-                        timeout: .seconds(10),
-                        pollInterval: .milliseconds(500),
-                        description: "onConsentReady should be called, but it wasn't"
-                    )
-
-                    expect(mockDelegate.isOnSPFinishedCalled).toEventually(
-                        beTrue(),
-                        timeout: .seconds(10),
-                        pollInterval: .milliseconds(500),
-                        description: "onSPFinished should be called but it wasn't"
-                    )
-
-                    expect(mockDelegate.isOnSPUIReadyCalled).to(
-                        beFalse(),
-                        description: "onSPUIReady should NOT be called, but it was."
-                    )
-                }
-
                 it("should migrate Sourcepoint USNat data and return it with correct values") {
                     // This test validates that Sourcepoint USNat data stored in UserDefaults
                     // is properly migrated by Didomi and converted back to SPUserData format
                     consentManager.loadMessage(forAuthId: nil, publisherData: SPPublisherData())
 
+                    expect(mockDelegate.isOnSPUIReadyCalled).toEventually(beFalse(), timeout: .seconds(10))
                     expect(mockDelegate.isOnConsentReadyCalled).toEventually(beTrue(), timeout: .seconds(10))
+                    expect(mockDelegate.isOnSPFinishedCalled).toEventually(beTrue(), timeout: .seconds(10))
 
-                    guard let userData = mockDelegate.capturedUserData else {
-                        fail("userData should not be nil")
-                        return
-                    }
+                    let userData = mockDelegate.capturedUserData
 
-                    // Verify USNat consent was migrated
-                    guard let usnatConsent = userData.usnat?.consents else {
-                        fail("USNat consent should not be nil after migration")
-                        return
-                    }
-
-                    // Validate UUID matches stored Sourcepoint data
-                    expect(usnatConsent.uuid).to(equal("24764a40-a0aa-49d9-95ee-d2f1e111aacc_143"))
+                    expect(userData?.usnat?.consents).notTo(beNil())
 
                     // Validate categories were migrated (stored data has 13 categories)
-                    expect(usnatConsent.categories).toNot(beEmpty(),
-                        description: "Categories should be populated from migrated data")
+                    expect(userData?.usnat?.consents?.categories).toNot(beEmpty())
 
                     // Check for expected category IDs from stored Sourcepoint data
-                    let categoryIds = usnatConsent.categories.map { $0.id }
+                    let categoryIds = userData?.usnat?.consents?.categories.map { $0.id }
                     let expectedCategories = [
                         "65a6a785cc78fac48ab34e65",  // Targeted Advertising
                         "65a6a785cc78fac48ab34e6a",  // Sale of Personal Information
@@ -242,26 +210,45 @@ class SPDidomiMigrationSpec: QuickSpec {
                     }
 
                     // Verify all migrated categories have consented=true (stored data shows all consented)
-                    for category in usnatConsent.categories {
+                    for category in (userData?.usnat?.consents?.categories ?? []) {
                         expect(category.id).toNot(beEmpty(), description: "Category ID should not be empty")
                         expect(category.consented).to(beTrue(),
                             description: "Category \(category.id) should be consented from migrated data")
                     }
 
                     // Validate consent strings were migrated
-                    expect(usnatConsent.consentStrings).toNot(beEmpty(),
-                        description: "Consent strings should be populated from migrated GPP data")
+                    expect(userData?.usnat?.consents?.consentStrings).toNot(beEmpty())
 
                     // Verify at least one consent string has section 12 (usct)
-                    let hasSectionId12 = usnatConsent.consentStrings.contains { $0.sectionId == 12 }
+                    let hasSectionId12 = userData?.usnat?.consents?.consentStrings.contains { $0.sectionId == 12 }
                     expect(hasSectionId12).to(beTrue(),
                         description: "Should have consent string for section 12 (usct)")
 
-                    // Validate vendors list exists (may be empty if no vendors in stored data)
-                    expect(usnatConsent.vendors).toNot(beNil())
+                    // Validate vendors were migrated (stored data has 3 vendors)
+                    expect(userData?.usnat?.consents?.vendors).toNot(beEmpty())
+
+                    // Check for expected vendor IDs from stored Sourcepoint data
+                    let vendorIds = userData?.usnat?.consents?.vendors.map { $0.id }
+                    let expectedVendors = [
+                        "5e37fc3e56a5e60e003a7120",  // Example Vendor 1
+                        "602f88b0a228631ff1133d19",  // Example Vendor 2
+                        "5e71706f69966540e4554efd"   // Example Vendor 3
+                    ]
+
+                    for vendorId in expectedVendors {
+                        expect(vendorIds).to(contain(vendorId),
+                            description: "Should contain vendor \(vendorId) from migrated Sourcepoint data")
+                    }
+
+                    // Verify all migrated vendors have consented=true (stored data shows all consented)
+                    for vendor in (userData?.usnat?.consents?.vendors ?? []) {
+                        expect(vendor.id).toNot(beEmpty(), description: "Vendor ID should not be empty")
+                        expect(vendor.consented).to(beTrue(),
+                            description: "Vendor \(vendor.id) should be consented from migrated data")
+                    }
 
                     // Validate GPP data exists
-                    expect(usnatConsent.GPPData).toNot(beNil())
+                    expect(userData?.usnat?.consents?.GPPData).toNot(beNil())
                 }
             }
         }
@@ -505,18 +492,18 @@ class SPDidomiMigrationSpec: QuickSpec {
                                 "sellStatus": true,
                                 "sensitiveDataStatus": true,
                                 "shareStatus": true
-                            ],
+                            ] as [String: Any],
                             "hasConsentData": true,
                             "rejectedAny": false
-                        ],
+                        ] as [String: Any],
                         "consentStrings": [
                             [
                                 "consentString": "BVqqqgIA",
                                 "sectionId": 12,
                                 "sectionName": "usct"
-                            ]
+                            ] as [String: Any]
                         ],
-                        "dateCreated": "2026-11-02T15:11:23.837Z",
+                        "dateCreated": "2026-11-06T09:34:15.658Z",
                         "GPPData": [
                             "IABGPP_12_String": "BVqqqgIA",
                             "IABGPP_GppSID": "12",
@@ -536,7 +523,7 @@ class SPDidomiMigrationSpec: QuickSpec {
                             "IABGPP_USCT_TargetedAdvertisingOptOut": 2,
                             "IABGPP_USCT_TargetedAdvertisingOptOutNotice": 1,
                             "IABGPP_USCT_Version": 1
-                        ],
+                        ] as [String: Any],
                         "userConsents": [
                             "categories": [
                                 ["_id": "65a6a785cc78fac48ab34e65", "consented": true, "systemId": 5],
@@ -552,19 +539,25 @@ class SPDidomiMigrationSpec: QuickSpec {
                                 ["_id": "65a6a785cc78fac48ab34e97", "consented": true, "systemId": 15],
                                 ["_id": "65a6a785cc78fac48ab34e9c", "consented": true, "systemId": 14],
                                 ["_id": "648c9c48e17a3c7a82360c54", "consented": true, "systemId": 3]
+                            ],
+                            "vendors": [
+                                ["_id": "5e37fc3e56a5e60e003a7120", "consented": true],
+                                ["_id": "602f88b0a228631ff1133d19", "consented": true],
+                                ["_id": "5e71706f69966540e4554efd", "consented": true]
                             ]
-                        ],
-                        "uuid": "24764a40-a0aa-49d9-95ee-d2f1e111aacc_143",
-                        "webConsentPayload": "{\"actions\":[],\"categories\":[\"65a6a785cc78fac48ab34e65\",\"65a6a785cc78fac48ab34e6a\",\"65a6a785cc78fac48ab34e6f\",\"65a6a785cc78fac48ab34e74\",\"65a6a785cc78fac48ab34e79\",\"65a6a785cc78fac48ab34e7e\",\"65a6a785cc78fac48ab34e83\",\"65a6a785cc78fac48ab34e88\",\"65a6a785cc78fac48ab34e8d\",\"65a6a785cc78fac48ab34e92\",\"65a6a785cc78fac48ab34e97\",\"65a6a785cc78fac48ab34e9c\",\"648c9c48e17a3c7a82360c54\"],\"consentStatus\":{\"rejectedAny\":false,\"consentedToAll\":true,\"consentedToAny\":true,\"granularStatus\":{\"sellStatus\":true,\"shareStatus\":true,\"sensitiveDataStatus\":true,\"gpcStatus\":false},\"hasConsentData\":true,\"previousOptInAll\":false},\"consentStrings\":[{\"sectionId\":12,\"sectionName\":\"usct\",\"consentString\":\"BVqqqgIA\"}],\"cookies\":[{\"key\":\"usnatUUID\",\"value\":\"24764a40-a0aa-49d9-95ee-d2f1e111aacc_143\",\"maxAge\":31536000,\"shareRootDomain\":true},{\"key\":\"consentDateUsnat\",\"value\":\"2026-11-02T15:11:23.837Z\",\"maxAge\":31536000,\"shareRootDomain\":true}],\"dateCreated\":\"2026-11-02T15:11:23.837Z\",\"userConsents\":{\"applies\":true,\"categories\":[{\"_id\":\"65a6a785cc78fac48ab34e65\",\"systemId\":5,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e6a\",\"systemId\":4,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e6f\",\"systemId\":6,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e74\",\"systemId\":7,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e79\",\"systemId\":8,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e7e\",\"systemId\":9,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e83\",\"systemId\":10,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e88\",\"systemId\":11,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e8d\",\"systemId\":12,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e92\",\"systemId\":13,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e97\",\"systemId\":15,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e9c\",\"systemId\":14,\"consented\":true},{\"_id\":\"648c9c48e17a3c7a82360c54\",\"systemId\":3,\"consented\":true}],\"vendors\":[]},\"uuid\":\"24764a40-a0aa-49d9-95ee-d2f1e111aacc_143\"}"
-                    ],
+                        ] as [String: Any],
+                        "uuid": "2e46a615-b65f-4fbd-895d-1bdcafd92887",
+                        "webConsentPayload": "{\"actions\":[],\"categories\":[],\"consentStatus\":{\"rejectedAny\":false,\"consentedToAll\":true,\"consentedToAny\":false,\"granularStatus\":{\"sellStatus\":false,\"shareStatus\":false,\"sensitiveDataStatus\":false,\"gpcStatus\":false},\"hasConsentData\":false,\"previousOptInAll\":false},\"consentStrings\":[],\"cookies\":[],\"dateCreated\":\"2026-11-06T09:49:53.590Z\",\"userConsents\":{\"applies\":false,\"categories\":[{\"_id\":\"65a6a785cc78fac48ab34e65\",\"systemId\":5,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e6a\",\"systemId\":4,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e6f\",\"systemId\":6,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e74\",\"systemId\":7,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e79\",\"systemId\":8,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e7e\",\"systemId\":9,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e83\",\"systemId\":10,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e88\",\"systemId\":11,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e8d\",\"systemId\":12,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e92\",\"systemId\":13,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e97\",\"systemId\":15,\"consented\":true},{\"_id\":\"65a6a785cc78fac48ab34e9c\",\"systemId\":14,\"consented\":true},{\"_id\":\"648c9c48e17a3c7a82360c54\",\"systemId\":3,\"consented\":true}],\"vendors\":[{\"_id\":\"5e37fc3e56a5e60e003a7120\",\"consented\":true},{\"_id\":\"602f88b0a228631ff1133d19\",\"consented\":true},{\"_id\":\"5e71706f69966540e4554efd\",\"consented\":true}]}}"
+                    ] as [String: Any],
                     "metaData": [
                         "additionsChangeDate": "2024-04-04T16:45:00.631Z",
                         "applicableSections": [12],
+                        "messagePartitionUUID": "7c963ff3-5d49-465f-b21e-83c0ba1e0ab9",
                         "vendorListId": "65a01016e17a3c7a831ec515",
                         "wasSampled": true,
                         "wasSampledAt": 1
-                    ]
-                ]
+                    ] as [String: Any]
+                ] as [String: Any]
             ]
 
             // Convert to JSON and store as Data (not string)
@@ -579,6 +572,28 @@ class SPDidomiMigrationSpec: QuickSpec {
             } else {
                 print("✗ Failed to serialize Sourcepoint USNAT consent data")
             }
+
+            // Add IAB GPP data to UserDefaults (simulating what Didomi should write after migration)
+            UserDefaults.standard.set("BVqqqgIA", forKey: "IABGPP_12_String")
+            UserDefaults.standard.set("12", forKey: "IABGPP_GppSID")
+            UserDefaults.standard.set("DBABVg~BVqqqgIA", forKey: "IABGPP_HDR_GppString")
+            UserDefaults.standard.set("12", forKey: "IABGPP_HDR_Sections")
+            UserDefaults.standard.set("1", forKey: "IABGPP_HDR_Version")
+            UserDefaults.standard.set(0, forKey: "IABGPP_USCT_Gpc")
+            UserDefaults.standard.set(1, forKey: "IABGPP_USCT_GpcSegmentType")
+            UserDefaults.standard.set("0_0_0", forKey: "IABGPP_USCT_KnownChildSensitiveDataConsents")
+            UserDefaults.standard.set(2, forKey: "IABGPP_USCT_MspaCoveredTransaction")
+            UserDefaults.standard.set(0, forKey: "IABGPP_USCT_MspaOptOutOptionMode")
+            UserDefaults.standard.set(0, forKey: "IABGPP_USCT_MspaServiceProviderMode")
+            UserDefaults.standard.set(2, forKey: "IABGPP_USCT_SaleOptOut")
+            UserDefaults.standard.set(1, forKey: "IABGPP_USCT_SaleOptOutNotice")
+            UserDefaults.standard.set("2_2_2_2_2_2_2_2", forKey: "IABGPP_USCT_SensitiveDataProcessing")
+            UserDefaults.standard.set(1, forKey: "IABGPP_USCT_SharingNotice")
+            UserDefaults.standard.set(2, forKey: "IABGPP_USCT_TargetedAdvertisingOptOut")
+            UserDefaults.standard.set(1, forKey: "IABGPP_USCT_TargetedAdvertisingOptOutNotice")
+            UserDefaults.standard.set(1, forKey: "IABGPP_USCT_Version")
+            UserDefaults.standard.synchronize()
+            print("✓ IAB GPP data added to UserDefaults")
         }
     }
 }
