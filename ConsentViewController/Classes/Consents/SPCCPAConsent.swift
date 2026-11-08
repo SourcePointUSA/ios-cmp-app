@@ -108,7 +108,10 @@ extension SPUSPString {
     public var rejectedVendors, rejectedCategories: [String]
 
     /// the US Privacy String as described by the IAB
-    public var uspstring: String { ccpaString.string }
+    public var uspstring: String { uspStringOverride ?? ccpaString.string }
+
+    /// A US Privacy String provided by an external source (eg. Didomi), takes precedence over the one computed from `status`
+    var uspStringOverride: String?
 
     /// that's the internal Sourcepoint id we give to this consent profile
     public var uuid: String?
@@ -165,8 +168,10 @@ extension SPUSPString {
         expirationDate: SPDate,
         consentStatus: ConsentStatus = ConsentStatus(),
         webConsentPayload: SPWebConsentPayload? = nil,
-        GPPData: SPJson = SPJson()
+        GPPData: SPJson = SPJson(),
+        uspStringOverride: String? = nil
     ) {
+        self.uspStringOverride = uspStringOverride
         self.uuid = uuid
         self.status = status
         self.rejectedVendors = rejectedVendors
@@ -222,7 +227,8 @@ extension SPUSPString {
             expirationDate: expirationDate,
             consentStatus: consentStatus,
             webConsentPayload: webConsentPayload,
-            GPPData: GPPData
+            GPPData: GPPData,
+            uspStringOverride: uspStringOverride
         )
     }
 

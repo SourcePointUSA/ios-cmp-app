@@ -257,7 +257,9 @@
     "color": "#3F51B5"
   },
   "languages": {
-    "enabled": ["en"],
+    "enabled": [
+      "en"
+    ],
     "default": "en"
   },
   "preferences": {
@@ -315,5 +317,26 @@
         "purposeId": "648c9c48e17a3c7a82360c54"
       }
     ]
+  },
+  "integrations": {
+    "gpp": {
+      "version": 1,
+      "sections": [
+        {
+          "id": 7,
+          "name": "usnat",
+          "fields": {
+            "SensitiveDataProcessing": [
+              {
+                "type": "purposes",
+                "ids": [
+                  "65a6a785cc78fac48ab34e65"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
   }
 }
