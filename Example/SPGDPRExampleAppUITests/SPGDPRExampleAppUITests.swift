@@ -127,6 +127,19 @@ class SPGDPRExampleAppUITests: QuickSpec {
             }
         }
 
+        it("Clearing the consent resets the statuses, and loading the messages shows the notice again") {
+            launchClean(.gdpr)
+            showNotice(for: .gdpr)
+            app.notice.acceptButton.tap()
+            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+
+            app.clearConsentButton.tap()
+            expect(app.sdkStatusLabel).toEventually(containText("Not Started"))
+            expect(app.customVendorLabel).toEventually(containText("Unknown"))
+            app.loadMessagesButton.tap()
+            showNotice(for: .gdpr)
+        }
+
         it("Consenting and Deleting custom vendor persist after relaunch") {
             launchClean(.gdpr)
             showNotice(for: .gdpr)

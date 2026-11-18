@@ -125,6 +125,14 @@ class ExampleApp: XCUIApplication {
         buttons["Accept My Vendor"].firstMatch
     }
 
+    var clearConsentButton: XCUIElement {
+        buttons["clearConsentButton"]
+    }
+
+    var loadMessagesButton: XCUIElement {
+        buttons["Load Messages"].firstMatch
+    }
+
     var sdkStatusLabel: XCUIElement {
         staticTexts["sdkStatusLabel"]
     }

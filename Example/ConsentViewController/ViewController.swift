@@ -14,7 +14,6 @@ import UIKit
 class ViewController: UIViewController {
     var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    var myVendorAccepted: VendorStatus = .Unknown
 
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
@@ -73,6 +72,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onClearConsentTap(_ sender: Any) {
+        // Didomi is running and keeps the user's choices in memory, so the stored data alone isn't enough
+        SPDidomiConsentManager.clearAllData()
         AppDelegate.clearConsentUserDefaults()
 
         sdkStatus = .notStarted
@@ -110,8 +111,7 @@ class ViewController: UIViewController {
         consentManager.customConsentGDPR(
             vendors: [config.myVendorId],
             categories: config.myPurposesId,
-            legIntCategories: []) { consents in
-                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+            legIntCategories: []) { _ in
                 self.updateUI()
             }
     }
@@ -120,8 +120,7 @@ class ViewController: UIViewController {
         consentManager.deleteCustomConsentGDPR(
             vendors: [config.myVendorId],
             categories: config.myPurposesId,
-            legIntCategories: []) { consents in
-                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+            legIntCategories: []) { _ in
                 self.updateUI()
             }
     }
@@ -129,9 +128,6 @@ class ViewController: UIViewController {
     @objc private func handleUserDefaultsImported() {
         // Re-initialize the consent manager to pick up imported data
         consentManager = makeConsentManager()
-
-        // Reset vendor status since we have new data
-        myVendorAccepted = .Unknown
 
         // Update UI to reflect the new state
         sdkStatus = .notStarted
@@ -167,9 +163,6 @@ extension ViewController: SPDelegate {
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
-        myVendorAccepted = VendorStatus(
-            fromBool: userData.gdpr?.consents?.vendorGrants[config.myVendorId]?.granted
-        )
         updateUI()
     }
 
@@ -207,8 +200,9 @@ extension ViewController {
     }
 
     func updateMyVendorUI() {
-        myVendorAcceptedLabel.text = myVendorAccepted.rawValue
-        switch myVendorAccepted {
+        let status = VendorStatus(fromBool: consentManager.userData.gdpr?.consents?.vendorGrants[config.myVendorId]?.granted)
+        myVendorAcceptedLabel.text = status.rawValue
+        switch status {
             case .Unknown:
                 myVendorAcceptedLabel.textColor = .systemGray
                 acceptMyVendorButton.isEnabled = false

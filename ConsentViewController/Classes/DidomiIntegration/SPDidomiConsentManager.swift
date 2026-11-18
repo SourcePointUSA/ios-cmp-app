@@ -465,14 +465,18 @@ extension DidomiUserStatus {
         var preferences: SPConsent<SPPreferencesConsent>? = nil
         var globalcmp: SPConsent<SPGlobalCmpConsent>? = nil
 
+        // Until the user makes a choice (new user or cleared consent), Didomi reports every vendor and purpose as disabled.
+        // That's not the user's choice, so it's reported as no consent data, same as Sourcepoint does.
+        let hasConsent = !shouldUserStatusBeCollected()
+
         switch regulation {
             case .gdpr:
-                gdpr = SPConsent(consents: mapToGDPRConsent(), applies: true)
+                gdpr = SPConsent(consents: hasConsent ? mapToGDPRConsent() : .empty(), applies: true)
             case .ccpa:
-                ccpa = SPConsent(consents: mapToCCPAConsent(), applies: true)
+                ccpa = SPConsent(consents: hasConsent ? mapToCCPAConsent() : .empty(), applies: true)
             case .vcdpa, .cpra, .cpa, .ctdpa, .ucpa, .dpdpa, .fdbr, .icdpa, .incdpa, .kcdpa, .mcdpa, .mncdpa, .modpa, .ndpa, .nhpa, .njdpa, .ocpa, .ridtppa, .tdpsa, .tipa:
                 // US state privacy laws (CPRA included) map to USNAT in Sourcepoint
-                usnat = SPConsent(consents: mapToUSNatConsent(), applies: true)
+                usnat = SPConsent(consents: hasConsent ? mapToUSNatConsent() : .empty(), applies: true)
             default: break
         }
 
