@@ -29,13 +29,12 @@
         "value" : "NO"
       }
     ],
-    "maximumTestRepetitions" : 10,
+    "maximumTestRepetitions" : 3,
     "targetForVariableExpansion" : {
       "containerPath" : "container:ConsentViewController.xcodeproj",
       "identifier" : "607FACCF1AFB9204008FA782",
       "name" : "ConsentViewController_Example"
-    },
-    "testRepetitionMode" : "retryOnFailure"
+    }
   },
   "testTargets" : [
     {

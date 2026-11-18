@@ -33,6 +33,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Configuration
 
+    /// Wipes everything the Didomi SDK (and the legacy SP SDK) persists in UserDefaults.
+    /// Done synchronously at launch, before Didomi is initialized, so the next run starts without consent.
+    /// Removes keys containing "IAB", containing "didomi" (case-insensitive) or starting with "sp".
+    static func clearConsentUserDefaults() {
+        let userDefaults = UserDefaults.standard
+        userDefaults.dictionaryRepresentation().keys.filter { key in
+            let lowercaseKey = key.lowercased()
+            return key.contains("IAB") || lowercaseKey.contains("didomi") || lowercaseKey.hasPrefix("sp")
+        }.forEach { userDefaults.removeObject(forKey: $0) }
+        userDefaults.synchronize()
+    }
+
     func resetStoredConfig() {
         Config.Keys.allCases.forEach { UserDefaults.standard.removeObject(forKey: $0.rawValue) }
     }
@@ -58,8 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         if CommandLine.arguments.contains("-cleanAppsData") {
-            SPConsentManager.clearAllData()
-            SPConsentManager.shouldCallErrorMetrics = false
+            AppDelegate.clearConsentUserDefaults()
         }
 
         resetStoredConfig()

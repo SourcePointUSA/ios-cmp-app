@@ -1,4 +1,10 @@
 {
+  "regulation": {
+    "name": "ccpa",
+    "ccpa": {
+      "lspa": true
+    }
+  },
   "app": {
     "name": "SP Example App",
     "privacyPolicyURL": "https://your-app.com/privacy-policy",
@@ -7,28 +13,272 @@
         "all": false,
         "version": 2
       },
-      "custom": []
+      "custom": [
+        {
+          "id": "5e37fc3e56a5e60e003a7120",
+          "didomiId": "5e37fc3e56a5e60e003a7120",
+          "name": {
+            "en": "Example Vendor 1"
+          },
+          "policyUrl": "https://example-vendor-1.com/privacy",
+          "namespaces": {
+            "sp": "5e37fc3e56a5e60e003a7120"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e65",
+            "65a6a785cc78fac48ab34e6a"
+          ],
+          "legIntPurposeIds": []
+        },
+        {
+          "id": "602f88b0a228631ff1133d19",
+          "didomiId": "602f88b0a228631ff1133d19",
+          "name": {
+            "en": "Example Vendor 2"
+          },
+          "policyUrl": "https://example-vendor-2.com/privacy",
+          "namespaces": {
+            "sp": "602f88b0a228631ff1133d19"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e6f",
+            "65a6a785cc78fac48ab34e74"
+          ],
+          "legIntPurposeIds": []
+        },
+        {
+          "id": "5e71706f69966540e4554efd",
+          "didomiId": "5e71706f69966540e4554efd",
+          "name": {
+            "en": "Example Vendor 3"
+          },
+          "policyUrl": "https://example-vendor-3.com/privacy",
+          "namespaces": {
+            "sp": "5e71706f69966540e4554efd"
+          },
+          "purposeIds": [
+            "65a6a785cc78fac48ab34e79",
+            "65a6a785cc78fac48ab34e7e",
+            "65a6a785cc78fac48ab34e83",
+            "65a6a785cc78fac48ab34e88",
+            "65a6a785cc78fac48ab34e8d",
+            "65a6a785cc78fac48ab34e92",
+            "65a6a785cc78fac48ab34e97",
+            "65a6a785cc78fac48ab34e9c",
+            "648c9c48e17a3c7a82360c54"
+          ],
+          "legIntPurposeIds": []
+        }
+      ]
     },
-    "customPurposes": []
+    "customPurposes": [
+      {
+        "id": "65a6a785cc78fac48ab34e65",
+        "name": {
+          "en": "Targeted Advertising",
+          "es": "Publicidad dirigida"
+        },
+        "description": {
+          "en": "Use precise geolocation data and actively scan device characteristics for identification.",
+          "es": "Usar datos de geolocalización precisos y analizar activamente las características del dispositivo para su identificación."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e65"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e6a",
+        "name": {
+          "en": "Sale of Personal Information",
+          "es": "Venta de información personal"
+        },
+        "description": {
+          "en": "Sell or share personal information for targeted advertising.",
+          "es": "Vender o compartir información personal para publicidad dirigida."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e6a"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e6f",
+        "name": {
+          "en": "Sharing of Personal Information",
+          "es": "Compartición de información personal"
+        },
+        "description": {
+          "en": "Share personal information with third parties.",
+          "es": "Compartir información personal con terceros."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e6f"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e74",
+        "name": {
+          "en": "Sensitive Data Processing",
+          "es": "Procesamiento de datos sensibles"
+        },
+        "description": {
+          "en": "Process sensitive personal information.",
+          "es": "Procesar información personal sensible."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e74"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e79",
+        "name": {
+          "en": "Geolocation Data",
+          "es": "Datos de geolocalización"
+        },
+        "description": {
+          "en": "Collect and process precise geolocation data.",
+          "es": "Recopilar y procesar datos de geolocalización precisos."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e79"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e7e",
+        "name": {
+          "en": "Biometric Data",
+          "es": "Datos biométricos"
+        },
+        "description": {
+          "en": "Process biometric information.",
+          "es": "Procesar información biométrica."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e7e"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e83",
+        "name": {
+          "en": "Genetic Data",
+          "es": "Datos genéticos"
+        },
+        "description": {
+          "en": "Process genetic information.",
+          "es": "Procesar información genética."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e83"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e88",
+        "name": {
+          "en": "Health Data",
+          "es": "Datos de salud"
+        },
+        "description": {
+          "en": "Process health and medical information.",
+          "es": "Procesar información médica y de salud."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e88"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e8d",
+        "name": {
+          "en": "Financial Data",
+          "es": "Datos financieros"
+        },
+        "description": {
+          "en": "Process financial account information.",
+          "es": "Procesar información de cuentas financieras."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e8d"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e92",
+        "name": {
+          "en": "Social Security Number",
+          "es": "Número de seguro social"
+        },
+        "description": {
+          "en": "Process government-issued identifiers.",
+          "es": "Procesar identificadores emitidos por el gobierno."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e92"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e97",
+        "name": {
+          "en": "Children Data",
+          "es": "Datos de menores"
+        },
+        "description": {
+          "en": "Process information about children.",
+          "es": "Procesar información sobre menores."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e97"
+        }
+      },
+      {
+        "id": "65a6a785cc78fac48ab34e9c",
+        "name": {
+          "en": "Personal Communications",
+          "es": "Comunicaciones personales"
+        },
+        "description": {
+          "en": "Process contents of email, text messages, and communications.",
+          "es": "Procesar el contenido de correos electrónicos, mensajes de texto y comunicaciones."
+        },
+        "namespaces": {
+          "sp": "65a6a785cc78fac48ab34e9c"
+        }
+      },
+      {
+        "id": "648c9c48e17a3c7a82360c54",
+        "name": {
+          "en": "Racial or Ethnic Origin",
+          "es": "Origen racial o étnico"
+        },
+        "description": {
+          "en": "Process information revealing racial or ethnic origin.",
+          "es": "Procesar información que revela el origen racial o étnico."
+        },
+        "namespaces": {
+          "sp": "648c9c48e17a3c7a82360c54"
+        }
+      }
+    ]
   },
   "notice": {
     "enable": true,
     "position": "popup",
     "content": {
       "title": {
-        "en": "CCPA Privacy Notice"
+        "en": "CCPA Privacy Notice",
+        "es": "Aviso de privacidad de CCPA"
       },
       "notice": {
-        "en": "This is a CCPA Notice loaded by the Didomi SDK."
+        "en": "This is a CCPA Notice loaded by the Didomi SDK.",
+        "es": "Este es un aviso de CCPA cargado por el SDK de Didomi."
       },
       "dismiss": {
-        "en": "Accept All"
+        "en": "Accept All",
+        "es": "Aceptar todo"
       },
       "deny": {
-        "en": "Do Not Sell or Share My Personal Information"
+        "en": "Do Not Sell or Share My Personal Information",
+        "es": "No vender ni compartir mi información personal"
       },
       "learnMore": {
-        "en": "Show Options"
+        "en": "Show Options",
+        "es": "Mostrar opciones"
       }
     },
     "denyOptions": {
@@ -41,10 +291,124 @@
     "color": "#3F51B5"
   },
   "languages": {
-    "enabled": ["en"],
+    "enabled": [
+      "en",
+      "es"
+    ],
     "default": "en"
   },
   "preferences": {
-    "categories": []
+    "categories": [
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e65"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e6a"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e6f"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e74"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e79"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e7e"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e83"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e88"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e8d"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e92"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e97"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "65a6a785cc78fac48ab34e9c"
+      },
+      {
+        "type": "purpose",
+        "purposeId": "648c9c48e17a3c7a82360c54"
+      }
+    ],
+    "enableAllButtons": true
+  },
+  "integrations": {
+    "gpp": {
+      "version": 1,
+      "sections": [
+        {
+          "id": 8,
+          "name": "usca",
+          "fields": {
+            "SaleOptOutNotice": {
+              "type": "constant",
+              "value": true,
+              "transformer": "gppDefaultStatus"
+            },
+            "SharingOptOutNotice": {
+              "type": "constant",
+              "value": true,
+              "transformer": "gppDefaultStatus"
+            },
+            "SensitiveDataLimitUseNotice": {
+              "type": "constant",
+              "value": true,
+              "transformer": "gppDefaultStatus"
+            },
+            "SaleOptOut": {
+              "type": "purposes",
+              "ids": [
+                "65a6a785cc78fac48ab34e65",
+                "65a6a785cc78fac48ab34e6a"
+              ],
+              "transformer": "gppReverseDefaultStatus"
+            },
+            "SharingOptOut": {
+              "type": "purposes",
+              "ids": [
+                "65a6a785cc78fac48ab34e6a",
+                "65a6a785cc78fac48ab34e6f"
+              ],
+              "transformer": "gppReverseDefaultStatus"
+            },
+            "MspaCoveredTransaction": {
+              "type": "constant",
+              "value": true,
+              "transformer": "gppDefaultStatus"
+            },
+            "MspaServiceProviderMode": {
+              "type": "constant",
+              "value": false
+            },
+            "MspaOptOutOptionMode": {
+              "type": "constant",
+              "value": true
+            }
+          }
+        }
+      ]
+    }
   }
 }
