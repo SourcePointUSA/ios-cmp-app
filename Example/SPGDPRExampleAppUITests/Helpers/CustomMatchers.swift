@@ -86,18 +86,18 @@ public func beDisabled() -> Matcher<XCUIElement> {
     }
 }
 
-/// A Nimble matcher that succeeds when an XCUIElement is disabled
+/// A Nimble matcher that succeeds when a Didomi toggle (`TriStateSwitch`) is on. Its value is "Enabled".
 public func beToggledOn() -> Matcher<XCUIElement> {
     Matcher.simple("beToggledOn") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return MatcherStatus(bool: actual.value as? String == "1")
+        return MatcherStatus(bool: actual.value as? String == "Enabled")
     }
 }
 
-/// A Nimble matcher that succeeds when an XCUIElement is disabled
+/// A Nimble matcher that succeeds when a Didomi toggle (`TriStateSwitch`) is off. Its value is "Disabled".
 public func beToggledOff() -> Matcher<XCUIElement> {
     Matcher.simple("beToggledOff") { actualExpression in
         guard let actual = try actualExpression.evaluate() else { return .fail }
-        return MatcherStatus(bool: actual.value as? String != "1")
+        return MatcherStatus(bool: actual.value as? String == "Disabled")
     }
 }

@@ -45,14 +45,6 @@ import Foundation
     @objc var privacyManagerTab: SPPrivacyManagerTab { get set }
     @objc var messageLanguage: SPMessageLanguage { get set }
     @objc var userData: SPUserData { get }
-    @objc init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?
-    )
     @objc static func clearAllData()
     @objc func loadMessage(forAuthId authId: String?, publisherData: [String: String]?)
     @objc(loadMessageForAuthId:spPublisherData:) func loadMessage(forAuthId authId: String?, publisherData: SPPublisherData?)
@@ -73,24 +65,6 @@ import Foundation
 }
 
 public extension SPSDK {
-    init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage = .BrowserDefault,
-        delegate: SPDelegate?
-    ) {
-        self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            campaigns: campaigns,
-            language: language,
-            delegate: delegate
-        )
-    }
-
     func loadMessage(forAuthId authId: String? = nil, pubData: SPPublisherData? = [:]) {
         loadMessage(forAuthId: authId, publisherData: pubData)
     }

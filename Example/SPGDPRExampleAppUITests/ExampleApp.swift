@@ -26,9 +26,13 @@ extension XCUIApplication: App {
         if #available(iOS 15.0, *), resetAtt {
             resetAuthorizationStatus(for: .userTracking)
         }
-        clean ?
-            launchArguments.append("-cleanAppsData") :
+        // A clean launch starts from scratch, so arguments of previous launches don't leak into it.
+        // Non-clean launches (relaunch to check persistence) keep the previous ones.
+        if clean {
+            launchArguments = ["-cleanAppsData"]
+        } else {
             launchArguments.removeAll { $0 == "-cleanAppsData" }
+        }
         args.forEach { key, value in
             launchArguments.append("-\(key)=\(value)")
         }
@@ -36,118 +40,81 @@ extension XCUIApplication: App {
     }
 }
 
-class FirstLayerMessage: XCUIApplication {
-    var messageTitle: XCUIElement { staticTexts["Message Title"].firstMatch }
-    var acceptButton: XCUIElement { buttons["Accept All"].firstMatch }
-    var rejectButton: XCUIElement { buttons["Reject All"].firstMatch }
-    var showOptionsButton: XCUIElement { buttons["Show Options"].firstMatch }
+extension XCUIApplication {
+    /// Didomi's views expose the same accessibility identifier on different element types
+    /// depending on the iOS version, so we look the identifier up regardless of the type.
+    func element(_ id: String) -> XCUIElement {
+        descendants(matching: .any).matching(identifier: id).firstMatch
+    }
 }
 
-class PreferencesFirstLayerMessage: FirstLayerMessage {
-    override var acceptButton: XCUIElement { buttons["Accept"].firstMatch }
+/// The campaign (regulation) the example app loads. Didomi shows one notice per `loadMessage`,
+/// so each test picks the campaign it wants to exercise with the `-campaign=<name>` launch argument.
+enum Campaign: String, CaseIterable {
+    case gdpr, ccpa, usnat
+
+    /// Text of the notice title configured in the example app's local Didomi config.
+    var noticeTitle: String {
+        switch self {
+            case .gdpr: return "GDPR Message"
+            case .ccpa: return "CCPA Privacy Notice"
+            case .usnat: return "US Privacy Notice"
+        }
+    }
+
+    var spanishNoticeTitle: String {
+        switch self {
+            case .gdpr: return "Mensaje GDPR"
+            case .ccpa: return "Aviso de privacidad de CCPA"
+            case .usnat: return "Aviso de privacidad de EE. UU."
+        }
+    }
 }
 
 class ExampleApp: XCUIApplication {
-    class GDPRPrivacyManager: XCUIApplication {
-        private var container: XCUIElement {
-            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'GDPR Privacy Manager'")).firstMatch
-        }
+    class Notice {
+        let app: XCUIApplication
+        init(app: XCUIApplication) { self.app = app }
 
-        var messageTitle: XCUIElement {
-            container
-        }
+        var view: XCUIElement { app.element("notice_view") }
+        var title: XCUIElement { app.element("notice_title") }
+        var acceptButton: XCUIElement { app.element("notice_agree_button") }
+        var rejectButton: XCUIElement { app.element("notice_disagree_button") }
+        var showOptionsButton: XCUIElement { app.element("notice_learn_more_button") }
+    }
 
-        var purposesTab: XCUIElement {
-            staticTexts.containing(NSPredicate(format: "label CONTAINS[cd] 'PURPOSES'")).firstMatch
-        }
+    class Preferences {
+        let app: XCUIApplication
+        init(app: XCUIApplication) { self.app = app }
 
+        var view: XCUIElement { app.element("purposes_view") }
+        var closeButton: XCUIElement { app.element("purposes_close") }
+        var saveButton: XCUIElement { app.element("didomi_toolbar_save_button") }
+        var acceptAllButton: XCUIElement { app.element("didomi_toolbar_agree_to_all_button") }
+        var rejectAllButton: XCUIElement { app.element("didomi_toolbar_disagree_to_all_button") }
+        var bulkActionToggle: XCUIElement { app.buttons["purposes_bulk_action_root"].firstMatch }
+        var firstToggle: XCUIElement { app.descendants(matching: .any)["purpose_toggle_0"] }
+
+        /// Toggles currently visible on screen (cells scrolled out or covered by the toolbar are not refreshed by Didomi
+        /// until they are shown). Their `value` is "Enabled", "Disabled" or "Unspecified".
         var purposeToggles: [XCUIElement] {
-            (0..<container.switches.count).map {
-                container.switches.element(boundBy: $0)
-            }
-        }
-
-        var acceptAllButton: XCUIElement {
-            container.buttons["Accept All"].firstMatch
-        }
-
-        var rejectAllButton: XCUIElement {
-            container.buttons["Reject All"].firstMatch
-        }
-
-        var saveAndExitButton: XCUIElement {
-            container.buttons["Save & Exit"].firstMatch
-        }
-
-        var cancelButton: XCUIElement {
-            container.buttons["Cancel"].firstMatch
+            let toggles = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier BEGINSWITH 'purpose_toggle_'")
+            )
+            return (0..<toggles.count).map { toggles.element(boundBy: $0) }.filter { $0.isHittable }
         }
     }
 
-    class GDPRMessage: FirstLayerMessage {
-        override var messageTitle: XCUIElement {
-            staticTexts["GDPR Message"].firstMatch
+    lazy var notice = Notice(app: self)
+    lazy var preferences = Preferences(app: self)
+
+    /// The Privacy Manager button of the campaign being tested.
+    func privacyManagerButton(for campaign: Campaign) -> XCUIElement {
+        switch campaign {
+            case .gdpr: return buttons["GDPR Privacy Manager"].firstMatch
+            case .ccpa: return buttons["CPPA Privacy Manager"].firstMatch
+            case .usnat: return buttons["USNat Privacy Manager"].firstMatch
         }
-
-        var spanishMessageTitle: XCUIElement {
-            staticTexts["Mensaje GDPR"]
-        }
-    }
-
-    class USNatMessage: FirstLayerMessage {
-        override var messageTitle: XCUIElement {
-            staticTexts["USNat Message"].firstMatch
-        }
-    }
-
-    class CCPAMessage: FirstLayerMessage {
-        override var messageTitle: XCUIElement {
-            staticTexts["CCPA Message"].firstMatch
-        }
-    }
-
-    class PreferencesMessage: PreferencesFirstLayerMessage {
-        override var messageTitle: XCUIElement {
-            staticTexts["We've updated our terms"].firstMatch
-        }
-    }
-
-    class GlobalCMPMessage: FirstLayerMessage {
-        override var messageTitle: XCUIElement {
-            staticTexts["Global CMP Message"].firstMatch
-        }
-    }
-
-    class ATTPrePrompt: XCUIApplication {
-        private let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-
-        private var container: XCUIElement {
-            webViews.containing(NSPredicate(format: "label CONTAINS[cd] 'ATT pre-prompt'")).firstMatch
-        }
-
-        var okButton: XCUIElement {
-            container.buttons["Bring it on"].firstMatch
-        }
-
-        private var attAlert: XCUIElement {
-            system.alerts.containing(NSPredicate(format: "label CONTAINS[cd] 'track you'")).firstMatch
-        }
-
-        var attAlertAllowButton: XCUIElement {
-            attAlert.buttons["Allow"].firstMatch
-        }
-    }
-
-    let gdprMessage = GDPRMessage()
-    let ccpaMessage = CCPAMessage()
-    let usnatMessage = USNatMessage()
-    let preferencesMessage = PreferencesMessage()
-    let globalCmpMessage = GlobalCMPMessage()
-    let gdprPM = GDPRPrivacyManager()
-    let attPrePrompt = ATTPrePrompt()
-
-    var gdprPrivacyManagerButton: XCUIElement {
-        buttons["GDPR Privacy Manager"].firstMatch
     }
 
     var deleteCustomVendorsButton: XCUIElement {
@@ -158,10 +125,12 @@ class ExampleApp: XCUIApplication {
         buttons["Accept My Vendor"].firstMatch
     }
 
-    var shouldRunAttScenario: Bool {
-        // Unfortunately querying for `ATTrackingManager.trackingAuthorizationStatus` during tests is not reliable.
-        // So we rely on the app's IDFA status label in order to decide if the ATT scenario should be tested or not.
-        staticTexts["unknown"].exists
+    var clearConsentButton: XCUIElement {
+        buttons["clearConsentButton"]
+    }
+
+    var loadMessagesButton: XCUIElement {
+        buttons["Load Messages"].firstMatch
     }
 
     var sdkStatusLabel: XCUIElement {

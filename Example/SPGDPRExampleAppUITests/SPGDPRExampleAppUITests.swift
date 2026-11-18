@@ -13,33 +13,25 @@ import Nimble
 import Quick
 import XCTest
 
+/// The example app loads a single campaign per launch (Didomi shows one notice per `loadMessage`).
+/// The campaign is chosen with the `-campaign=<gdpr|ccpa|usnat>` launch argument.
 class SPGDPRExampleAppUITests: QuickSpec {
     static var app: ExampleApp!
 
-    static func acceptAtt() {
-        expect(app.attPrePrompt.okButton).toEventually(showUp())
-        app.attPrePrompt.okButton.tap()
-        expect(app.attPrePrompt.attAlertAllowButton).toEventually(showUp())
-        app.attPrePrompt.attAlertAllowButton.tap()
+    static func launchClean(_ campaign: Campaign, args: [String: Any] = [:]) {
+        app.relaunch(clean: true, args: ["campaign": campaign.rawValue].merging(args) { _, new in new })
     }
 
-    static func acceptAll(onMessage message: FirstLayerMessage) {
-        expect(message.messageTitle).toEventually(showUp())
-        message.acceptButton.tap()
+    static func showNotice(for campaign: Campaign) {
+        expect(app.notice.title).toEventually(showUp())
+        expect(app.notice.title).toEventually(containText(campaign.noticeTitle))
     }
 
-    static func showGDPRPMViaFirstLayerMessage() {
-        expect(app.gdprMessage.messageTitle).toEventually(showUp())
-        app.gdprMessage.showOptionsButton.tap()
-        expect(app.gdprPM.messageTitle).toEventually(showUp())
-    }
-
-    // We are unable to reset ATT permissions on iOS < 15 so we need to make sure
-    // the ATT expectations run only once per test suite.
-    static func runAttScenario() {
-        if app.shouldRunAttScenario {
-            acceptAtt()
-        }
+    static func showPreferencesViaNotice(for campaign: Campaign) {
+        showNotice(for: campaign)
+        app.notice.showOptionsButton.tap()
+        expect(app.preferences.view).toEventually(showUp())
+        expect(app.preferences.firstToggle).toEventually(showUp())
     }
 
     override class func spec() {
@@ -54,58 +46,104 @@ class SPGDPRExampleAppUITests: QuickSpec {
             Nimble.PollingDefaults.pollInterval = .milliseconds(10)
         }
 
-        it("Accept all through 1st layer messages") {
-            app.relaunch(clean: true, resetAtt: true, args: ["ccpa": false])
-            runAttScenario()
-            acceptAll(onMessage: app.gdprMessage)
-//            acceptAll(onMessage: app.ccpaMessage)
-            acceptAll(onMessage: app.usnatMessage)
-            acceptAll(onMessage: app.globalCmpMessage)
-            acceptAll(onMessage: app.preferencesMessage)
-            expect(app.gdprPrivacyManagerButton).toEventually(showUp())
-            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
-            app.relaunch()
-            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+        Campaign.allCases.forEach { campaign in
+            describe("\(campaign.rawValue) campaign") {
+                it("Accept all through the notice") {
+                    launchClean(campaign)
+                    showNotice(for: campaign)
+                    app.notice.acceptButton.tap()
+                    expect(app.privacyManagerButton(for: campaign)).toEventually(beEnabled())
+                    expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                    app.relaunch()
+                    expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                    expect(app.notice.view.exists).to(beFalse())
+                }
+
+                it("Reject all through the notice") {
+                    launchClean(campaign)
+                    showNotice(for: campaign)
+                    if campaign == .ccpa {
+                        // Didomi never renders a "disagree" action on CCPA notices, only "Show Options".
+                        app.notice.showOptionsButton.tap()
+                        expect(app.preferences.rejectAllButton).toEventually(showUp())
+                        app.preferences.rejectAllButton.tap()
+                    } else {
+                        app.notice.rejectButton.tap()
+                    }
+                    expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                    app.relaunch()
+                    expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                    expect(app.notice.view.exists).to(beFalse())
+                }
+
+                it("Shows a translated message") {
+                    launchClean(campaign, args: ["language": SPMessageLanguage.Spanish.rawValue])
+                    expect(app.notice.title).toEventually(showUp())
+                    expect(app.notice.title).toEventually(containText(campaign.spanishNoticeTitle))
+                }
+            }
         }
 
-        it("Accepting All toggles all toggles on PM") {
-            app.relaunch(clean: true, resetAtt: false, args: ["ccpa": false, "att": false, "usnat": false, "preferences": false, "globalcmp": false])
-            acceptAll(onMessage: app.gdprMessage)
+        describe("gdpr campaign preferences") {
+            it("Accepting All toggles all toggles on PM") {
+                launchClean(.gdpr)
+                showNotice(for: .gdpr)
+                app.notice.acceptButton.tap()
 
-            expect(app.gdprPrivacyManagerButton).toEventually(showUp())
-            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
-            app.gdprPrivacyManagerButton.tap()
-            expect(app.gdprPM).toEventually(showUp())
-            expect(app.gdprPM.purposeToggles).toEventually(allPass(beToggledOn()))
+                expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                app.privacyManagerButton(for: .gdpr).tap()
+                expect(app.preferences.firstToggle).toEventually(showUp())
+                expect(app.preferences.purposeToggles).toEventually(allPass(beToggledOn()))
 
-            app.gdprPM.rejectAllButton.tap()
-            expect(app.gdprPrivacyManagerButton).toEventually(showUp())
-            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
-            app.gdprPrivacyManagerButton.tap()
-            expect(app.gdprPM).toEventually(showUp())
-            expect(app.gdprPM.purposeToggles).toEventually(allPass(beToggledOff()))
+                // With consent already given, Didomi replaces "agree/disagree to all" by a bulk toggle.
+                app.preferences.bulkActionToggle.tap()
+                expect(app.preferences.purposeToggles).toEventually(allPass(beToggledOff()))
+                app.preferences.saveButton.tap()
+                expect(app.privacyManagerButton(for: .gdpr)).toEventually(beEnabled())
+                expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                app.privacyManagerButton(for: .gdpr).tap()
+                expect(app.preferences.firstToggle).toEventually(showUp())
+                expect(app.preferences.purposeToggles).toEventually(allPass(beToggledOff()))
+            }
+
+            it("Accept all through 2nd layer") {
+                launchClean(.gdpr)
+                showPreferencesViaNotice(for: .gdpr)
+                app.preferences.acceptAllButton.tap()
+                expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                app.relaunch()
+                expect(app.sdkStatusLabel).toEventually(containText("Finished"))
+                expect(app.notice.view.exists).to(beFalse())
+            }
+
+            it("Dismissing 2nd layer returns to first layer message") {
+                launchClean(.gdpr)
+                showPreferencesViaNotice(for: .gdpr)
+                app.preferences.closeButton.tap()
+                expect(app.preferences.view).toEventually(disappear())
+                showNotice(for: .gdpr)
+                // The notice is still on screen, so the SDK is not finished
+                expect(app.sdkStatusLabel).toNever(containText("Finished"), until: .seconds(2))
+            }
         }
 
-        it("Accept all through 2nd layer") {
-            app.relaunch(clean: true, resetAtt: true, args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
-            showGDPRPMViaFirstLayerMessage()
-            app.gdprPM.acceptAllButton.tap()
+        it("Clearing the consent resets the statuses, and loading the messages shows the notice again") {
+            launchClean(.gdpr)
+            showNotice(for: .gdpr)
+            app.notice.acceptButton.tap()
             expect(app.sdkStatusLabel).toEventually(containText("Finished"))
-            app.relaunch()
-            expect(app.sdkStatusLabel).toEventually(containText("Finished"))
-        }
 
-        it("Dismissing 2nd layer returns to first layer message") {
-            app.relaunch(clean: true, resetAtt: true, args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
-            showGDPRPMViaFirstLayerMessage()
-            app.gdprPM.cancelButton.tap()
-            expect(app.gdprMessage.messageTitle).toEventually(showUp())
+            app.clearConsentButton.tap()
+            expect(app.sdkStatusLabel).toEventually(containText("Not Started"))
+            expect(app.customVendorLabel).toEventually(containText("Unknown"))
+            app.loadMessagesButton.tap()
+            showNotice(for: .gdpr)
         }
 
         it("Consenting and Deleting custom vendor persist after relaunch") {
-            app.relaunch(clean: true, resetAtt: true, args: ["att": true, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
-            runAttScenario()
-            acceptAll(onMessage: app.gdprMessage)
+            launchClean(.gdpr)
+            showNotice(for: .gdpr)
+            app.notice.acceptButton.tap()
 
             expect(app.sdkStatusLabel).toEventually(containText("Finished"))
             expect(app.deleteCustomVendorsButton).toEventually(beEnabled())
@@ -113,7 +151,7 @@ class SPGDPRExampleAppUITests: QuickSpec {
             app.deleteCustomVendorsButton.tap()
             expect(app.customVendorLabel).toEventually(containText("Rejected"))
 
-            app.relaunch(args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
+            app.relaunch()
 
             expect(app.deleteCustomVendorsButton).toEventually(beDisabled())
             expect(app.acceptCustomVendorsButton).toEventually(beEnabled())
@@ -122,25 +160,11 @@ class SPGDPRExampleAppUITests: QuickSpec {
             app.acceptCustomVendorsButton.tap()
             expect(app.customVendorLabel).toEventually(containText("Accepted"))
 
-            app.relaunch(args: ["att": false, "ccpa": false, "usnat": false, "preferences": false, "globalcmp": false])
+            app.relaunch()
 
             expect(app.deleteCustomVendorsButton).toEventually(beEnabled())
             expect(app.acceptCustomVendorsButton).toEventually(beDisabled())
             expect(app.customVendorLabel).toEventually(containText("Accepted"))
-        }
-
-        it("Shows a translated message") {
-            app.relaunch(clean: true, resetAtt: false, args: [
-                "gdpr": true,
-                "att": false,
-                "ccpa": false,
-                "usnat": false,
-                "preferences": false,
-                "globalcmp": false,
-                "language": SPMessageLanguage.Spanish.rawValue
-            ])
-            expect(app.sdkStatusLabel).toEventually(containText("Running"))
-            expect(app.gdprMessage.spanishMessageTitle).toEventually(showUp())
         }
     }
 }

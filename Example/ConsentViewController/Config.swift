@@ -9,21 +9,47 @@
 import ConsentViewController
 import Foundation
 
+/// Didomi shows the notice of a single regulation per `loadMessage` call, so the example app
+/// runs one campaign at a time. It's picked at launch with the `-campaign=<gdpr|ccpa|usnat>` argument.
+enum ExampleCampaign: String, CaseIterable {
+    case gdpr, ccpa, usnat
+
+    /// Name of the local Didomi config (bundled json) used for this campaign.
+    var configFileName: String {
+        switch self {
+            case .gdpr: return "SourcepointConfigGDPR"
+            case .ccpa: return "SourcepointConfigCCPA"
+            case .usnat: return "SourcepointConfigUSNAT"
+        }
+    }
+}
+
 struct Config {
     enum Keys: String, CaseIterable {
-        case accountId, propertyId, propertyName,
-             gdpr, ccpa, usnat, preferences, globalcmp, att, language, gdprPmId,
-             ccpaPmId, usnatPmId, globalcmpPmId, preferenceCenterId
+        case accountId, propertyId, propertyName, campaign, language,
+             gdprPmId, ccpaPmId, usnatPmId
     }
 
     let accountId, propertyId: Int
     let propertyName: String
-    let campaigns: SPCampaigns
-    let gdprPmId, ccpaPmId, usnatPmId, globalcmpPmId, preferenceCenterId: String?
+    let campaign: ExampleCampaign
+    let gdprPmId, ccpaPmId, usnatPmId: String?
     var language: SPMessageLanguage?
+
+    let didomiApiKey = "eea5ad63-29d4-4552-9dac-2edebe1fe518"
+    let didomiNoticeId = "BVP3EcHb"
 
     let myVendorId = "5ff4d000a228633ac048be41"
     let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
+
+    var campaigns: SPCampaigns {
+        SPCampaigns(
+            gdpr: campaign == .gdpr ? SPCampaign() : nil,
+            ccpa: campaign == .ccpa ? SPCampaign() : nil,
+            usnat: campaign == .usnat ? SPCampaign() : nil,
+            environment: .Public
+        )
+    }
 }
 
 extension Config {
@@ -32,43 +58,10 @@ extension Config {
         accountId = (values["accountId"] as? NSString)?.integerValue ?? defaults.accountId
         propertyId = (values["propertyId"] as? NSString)?.integerValue ?? defaults.propertyId
         propertyName = values["propertyName"] as? String ?? defaults.propertyName
+        campaign = (values["campaign"] as? String).flatMap { ExampleCampaign(rawValue: $0.lowercased()) } ?? defaults.campaign
         gdprPmId = defaults.gdprPmId
         ccpaPmId = defaults.ccpaPmId
         usnatPmId = defaults.usnatPmId
-        globalcmpPmId = defaults.globalcmpPmId
-        preferenceCenterId = defaults.preferenceCenterId
-        if let langArg = values["language"] as? String,
-            let langEnum = SPMessageLanguage(rawValue: langArg) {
-            language = langEnum
-        } else {
-            language = defaults.language
-        }
-        
-        let gdprArg = (values["gdpr"] as? NSString)?.boolValue
-        let ccpaArg = (values["ccpa"] as? NSString)?.boolValue
-        let usnatArg = (values["usnat"] as? NSString)?.boolValue
-        let attArg = (values["att"] as? NSString)?.boolValue
-        let preferencesArg = (values["preferences"] as? NSString)?.boolValue
-        let globalcmpArg = (values["globalcmp"] as? NSString)?.boolValue
-
-        campaigns = SPCampaigns(
-            gdpr: gdprArg == nil ? defaults.campaigns.gdpr :
-                gdprArg == true ? SPCampaign(
-                // sets the withoutBrowserDefault targeting param so we can test a message
-                // without the browser default settings enabled (otherwise, setting the language
-                // param has no effect).
-                targetingParams: language != nil ? ["withoutBrowserDefault": "true"] : [:]
-            ) : nil,
-            ccpa: ccpaArg == nil ? defaults.campaigns.ccpa :
-                ccpaArg == true ? SPCampaign() : nil,
-            usnat: usnatArg == nil ? defaults.campaigns.usnat :
-                usnatArg == true ? SPCampaign() : nil,
-            ios14: attArg == nil ? defaults.campaigns.ios14 :
-                attArg == true ? SPCampaign() : nil,
-            globalcmp: globalcmpArg == nil ? defaults.campaigns.globalcmp :
-                globalcmpArg == true ? SPCampaign() : nil,
-            preferences: preferencesArg == nil ? defaults.campaigns.preferences :
-                preferencesArg == true ? SPCampaign() : nil
-        )
+        language = (values["language"] as? String).flatMap { SPMessageLanguage(rawValue: $0) } ?? defaults.language
     }
 }

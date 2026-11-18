@@ -206,15 +206,6 @@ class SPDidomiMigrationSpec: QuickSpec {
         }
 
         describe("Didomi SDK Sourcepoint Consent Migration") {
-            let accountId = 22
-            let propertyId = 16893
-            let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
-            let campaigns = SPCampaigns(
-                gdpr: SPCampaign(),
-                ccpa: SPCampaign(),
-                usnat: SPCampaign()
-            )
-
             let scenarios = [
                 MigrationScenario(name: "GDPR accept all", config: "SourcepointConfigGDPR", setup: setupSourcepointGDPRConsentData, dateCreated: "2026-11-02T15:19:01.957Z") { verifyGDPR($0, accepted: true) },
                 MigrationScenario(name: "GDPR reject all", config: "SourcepointConfigGDPR", setup: setupSourcepointGDPRRejectAllConsentData, dateCreated: "2026-11-06T10:53:08.816Z") { verifyGDPR($0, accepted: false) },
@@ -239,13 +230,11 @@ class SPDidomiMigrationSpec: QuickSpec {
 
                         mockDelegate = MockDidomiDelegate()
                         consentManager = SPDidomiConsentManager(
-                            accountId: accountId,
-                            propertyId: propertyId,
-                            propertyName: propertyName,
-                            campaigns: campaigns,
+                            apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
+                            noticeId: "BVP3EcHb",
                             language: .BrowserDefault,
-                            delegate: mockDelegate,
-                            configFileName: scenario.config
+                            configFileName: scenario.config,
+                            delegate: mockDelegate
                         )
                     }
 
@@ -259,7 +248,6 @@ class SPDidomiMigrationSpec: QuickSpec {
 
                     it("migrates without showing a notice and calls onConsentReady and onSPFinished with the migrated userData") {
                         consentManager.loadMessage(forAuthId: nil, publisherData: SPPublisherData())
-
                         expect(mockDelegate.count(.consentReady)).toEventually(equal(1), timeout: .seconds(10))
                         expect(mockDelegate.count(.finished)).toEventually(equal(1), timeout: .seconds(10))
 
@@ -800,10 +788,12 @@ class MockDidomiDelegate: SPDelegate {
     private var _events: [Event] = []
     private var _consentReadyUserData: SPUserData?
     private var _finishedUserData: SPUserData?
+    private var _actions: [SPAction] = []
 
     var events: [Event] { lock.sync { _events } }
     var consentReadyUserData: SPUserData? { lock.sync { _consentReadyUserData } }
     var finishedUserData: SPUserData? { lock.sync { _finishedUserData } }
+    var actions: [SPAction] { lock.sync { _actions } }
 
     func count(_ event: Event) -> Int {
         lock.sync { _events.filter { $0 == event }.count }
@@ -818,7 +808,10 @@ class MockDidomiDelegate: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        lock.sync { _events.append(.action) }
+        lock.sync {
+            _events.append(.action)
+            _actions.append(action)
+        }
     }
 
     func onSPUIFinished(_ controller: UIViewController) {

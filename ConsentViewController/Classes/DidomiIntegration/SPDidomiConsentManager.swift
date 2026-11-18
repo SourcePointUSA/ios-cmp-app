@@ -14,15 +14,22 @@ typealias DidomiUserStatus = CurrentUserStatus
 @objcMembers open class SPDidomiConsentManager: NSObject, SPSDK {
     public static var VERSION: String = SPConsentManager.VERSION
 
+    /// If `true`, all consent data is removed when an error happens.
     public var cleanUserDataOnError = false
 
-    public var messageTimeoutInSeconds: TimeInterval = 0.0
+    /// How long (in seconds) the SDK waits, after `loadMessage`, for the consent UI to be ready (or for the SDK to find out
+    /// no UI is needed) before calling `SPDelegate.onError`. Same as in the legacy SDK, it defaults to 30 seconds.
+    /// A value equal to or lower than 0 disables the timeout.
+    public var messageTimeoutInSeconds: TimeInterval = SPConsentManager.DefaultTimeout
 
     public var privacyManagerTab: SPPrivacyManagerTab = .Default
 
     public var messageLanguage: SPMessageLanguage = .BrowserDefault
 
-    public var userData: SPUserData { Didomi.shared.getCurrentUserStatus().toSourcepoint() }
+    public var userData: SPUserData {
+        // Didomi reports an error if its consent state is read before it is ready
+        Didomi.shared.isReady() ? Didomi.shared.getCurrentUserStatus().toSourcepoint() : SPUserData()
+    }
 
     public var gdprApplies: Bool { userData.gdpr?.applies ?? false }
 
@@ -34,92 +41,100 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     var didomiEventListener = SPDidomiEventListener()
 
-    public weak var didomiUIController: UIViewController?
+    /// Didomi requires a container controller to build the notice and the preferences, even if it doesn't present them.
+    /// The wrapper forwards Didomi's view controllers to `SPDelegate.onSPUIReady` and the host is responsible for presenting them,
+    /// so this one is never displayed.
+    private lazy var didomiContainerController = UIViewController()
+    /// The last consent UI Didomi reported, the one the user's actions come from
+    private weak var currentUIController: UIViewController?
 
     weak var appDelegate: SPDelegate?
 
-    private var isConsentUIReady = false
+    // The state below is only read and written on the main queue
     private var isDidomiReady = false
-    private var pendingLoadMessage = false
+    private var pendingLoadMessage: (authId: String?, loadId: Int)?
+    /// Identifies the current `loadMessage` call. Callbacks of a previous (superseded or timed out) load are ignored.
+    private var loadId = 0
+    /// `true` from `loadMessage` until it is known if a message is needed. Consent changes in the meantime (e.g. the
+    /// consent synced from another device) are reported by that decision, not as separate `onConsentReady` calls.
+    private var isDecidingMessage = false
+    private var publisherData: SPPublisherData = [:]
+    private var syncedAuthId: String?
+    private var syncListener: EventListener?
+    private var messageTimeoutWorkItem: DispatchWorkItem?
+    /// The consent UIs (notice, preferences, ...) Didomi reported, to know when none is left on screen
+    private var shownUIs: [WeakController] = []
+    /// The UI the host was asked to present (`onSPUIReady`). Didomi can show more UIs on top of it (e.g. the preferences
+    /// over the notice), those are presented and dismissed by the SDK, so the host only deals with one UI at a time.
+    private weak var rootUIController: UIViewController?
+    private var nestedUIs: [WeakController] = []
+    private var finishWorkItem: DispatchWorkItem?
 
-    // Required initializer from SPSDK protocol
-    required convenience public init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?
-    ) {
-        self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            campaigns: campaigns,
-            language: language,
-            delegate: delegate,
-            configFileName: nil
-        )
+    private struct WeakController {
+        weak var controller: UIViewController?
     }
 
     public init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?,
-        configFileName: String?
+        apiKey: String,
+        noticeId: String,
+        language: SPMessageLanguage = .BrowserDefault,
+        configFileName: String?,
+        delegate: SPDelegate?
     ) {
         super.init()
         setupDidomi(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            campaigns: campaigns,
+            parameters: DidomiInitializeParameters(
+                apiKey: apiKey,
+                noticeId: noticeId,
+                configFileName: configFileName,
+                languageCode: language.rawValue.isEmpty ? nil : language.rawValue
+            ),
             language: language,
-            delegate: delegate,
-            configFileName: configFileName
+            delegate: delegate
         )
     }
 
-    // Common setup method
-    private func setupDidomi(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?,
-        configFileName: String?
-    ) {
-        appDelegate = delegate
-        Didomi.shared.initialize(DidomiInitializeParameters(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName.rawValue,
-            configFileName: configFileName
-        ))
-        Didomi.shared.onReady { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.isDidomiReady = true
+    deinit {
+        messageTimeoutWorkItem?.cancel()
+        finishWorkItem?.cancel()
+        if let syncListener {
+            Didomi.shared.removeEventListener(listener: syncListener)
+        }
+        Didomi.shared.removeEventListener(listener: didomiEventListener.didomiEventListener)
+    }
 
-            // If loadMessage was called before ready, process it now
-            if strongSelf.pendingLoadMessage {
-                strongSelf.pendingLoadMessage = false
-                strongSelf.checkAndProceedWithConsent()
+    // Common setup method
+    private func setupDidomi(parameters: DidomiInitializeParameters, language: SPMessageLanguage, delegate: SPDelegate?) {
+        appDelegate = delegate
+        messageLanguage = language
+        Didomi.shared.initialize(parameters)
+        // Didomi calls this on its own thread
+        Didomi.shared.onReady { [weak self] in
+            DispatchQueue.main.async {
+                guard let strongSelf = self else { return }
+                strongSelf.isDidomiReady = true
+
+                // If loadMessage was called before ready, process it now
+                if let pending = strongSelf.pendingLoadMessage {
+                    strongSelf.pendingLoadMessage = nil
+                    strongSelf.proceedLoadingMessage(authId: pending.authId, loadId: pending.loadId)
+                }
             }
         }
         didomiEventListener.onAction = { [weak self] action in
             DispatchQueue.main.async {
-                if let strongSelf = self, let didomiUIController = strongSelf.didomiUIController {
-                    strongSelf.appDelegate?.onAction(action, from: didomiUIController)
+                // Actions only come from a consent UI
+                if let strongSelf = self, let controller = strongSelf.currentUIController {
+                    // Same as in the legacy SDK, the publisher data given to `loadMessage` goes along with the user's actions
+                    // (the host can still add to it in `onAction`).
+                    action.publisherData = strongSelf.publisherData.mapValues { $0.stringValue }
+                    strongSelf.appDelegate?.onAction(action, from: controller)
                 }
             }
         }
         didomiEventListener.onConsentChanged = { [weak self] in
             DispatchQueue.main.async {
-                if let strongSelf = self, strongSelf.isConsentUIReady {
+                if let strongSelf = self, strongSelf.isDidomiReady, !strongSelf.isDecidingMessage {
                     strongSelf.appDelegate?.onConsentReady?(userData: strongSelf.userData)
                 }
             }
@@ -127,18 +142,19 @@ typealias DidomiUserStatus = CurrentUserStatus
         didomiEventListener.onConsentUIReady = { [weak self] viewController in
             DispatchQueue.main.async {
                 if let strongSelf = self {
-                    strongSelf.isConsentUIReady = true
-                    strongSelf.appDelegate?.onSPUIReady(viewController)
+                    strongSelf.cancelMessageTimeout()
+                    strongSelf.finishWorkItem?.cancel()
+                    strongSelf.consentUIReady(viewController)
                 }
             }
         }
         didomiEventListener.onConsentUIFinished = { [weak self] viewController in
             DispatchQueue.main.async {
-                if let strongSelf = self {
-                    strongSelf.appDelegate?.onSPUIFinished(viewController)
-                    strongSelf.appDelegate?.onSPFinished?(userData: strongSelf.userData)
-                }
+                self?.consentUIFinished(viewController)
             }
+        }
+        didomiEventListener.onError = { [weak self] error in
+            self?.onError(error)
         }
         Didomi.shared.addEventListener(listener: didomiEventListener.didomiEventListener)
     }
@@ -153,84 +169,171 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         OSLogger.standard.begin("MessageFlow")
-
-        // Wait for Didomi to be ready before checking shouldUserStatusBeCollected
-        if isDidomiReady {
-            checkAndProceedWithConsent()
-        } else {
-            pendingLoadMessage = true
+        let publisherData = publisherData ?? [:]
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.loadId += 1
+            self.publisherData = publisherData
+            self.shownUIs = []
+            self.finishWorkItem?.cancel()
+            self.removeSyncListener()
+            self.isDecidingMessage = true
+            self.startMessageTimeout()
+            // Wait for Didomi to be ready before checking shouldUserStatusBeCollected
+            if self.isDidomiReady {
+                self.proceedLoadingMessage(authId: authId, loadId: self.loadId)
+            } else {
+                self.pendingLoadMessage = (authId, self.loadId)
+            }
         }
+    }
+
+    /// Didomi's equivalent to Sourcepoint's `authId` is the organization user ID. Setting it makes Didomi sync the
+    /// user's consent across devices, so the consent given on another device is applied (and no notice shown).
+    private func proceedLoadingMessage(authId: String?, loadId: Int) {
+        guard loadId == self.loadId else { return }
+        guard let authId, !authId.isEmpty, authId != syncedAuthId else {
+            return checkAndProceedWithConsent()
+        }
+        // The need for a notice is only known once the user's consent was synced
+        let listener = EventListener()
+        let onSynced = { [weak self] in
+            DispatchQueue.main.async {
+                guard let self, loadId == self.loadId else { return }
+                self.removeSyncListener()
+                self.syncedAuthId = authId
+                self.checkAndProceedWithConsent()
+            }
+        }
+        listener.onSyncReady = { _ in onSynced() }
+        listener.onSyncError = { _, _ in onSynced() }
+        syncListener = listener
+        Didomi.shared.addEventListener(listener: listener)
+        Didomi.shared.setUser(DidomiUserParameters(userAuth: UserAuthWithoutParams(id: authId)))
+    }
+
+    private func removeSyncListener() {
+        if let syncListener {
+            Didomi.shared.removeEventListener(listener: syncListener)
+        }
+        syncListener = nil
     }
 
     private func checkAndProceedWithConsent() {
         // Check if user status should be collected (only call after ready event)
         if !Didomi.shared.shouldUserStatusBeCollected() {
             // If user status collection is not needed, call callbacks immediately
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.appDelegate?.onConsentReady?(userData: self.userData)
-                self.appDelegate?.onSPFinished?(userData: self.userData)
-            }
+            cancelMessageTimeout()
+            isDecidingMessage = false
+            appDelegate?.onConsentReady?(userData: userData)
+            appDelegate?.onSPFinished?(userData: userData)
             return
         }
 
-        if let didomiUIController {
-            Didomi.shared.setupUI(containerController: didomiUIController)
+        isDecidingMessage = false
+        Didomi.shared.setupUI(containerController: didomiContainerController)
+    }
+
+    private func consentUIReady(_ controller: UIViewController) {
+        currentUIController = controller
+        shownUIs.append(WeakController(controller: controller))
+        if let root = rootUIController, root.isShowing {
+            guard root !== controller else { return }
+            nestedUIs.append(WeakController(controller: controller))
+            var presenter = root
+            while let presented = presenter.presentedViewController, presented !== controller { presenter = presented }
+            presenter.present(controller, animated: true)
+        } else {
+            rootUIController = controller
+            nestedUIs = []
+            appDelegate?.onSPUIReady(controller)
         }
     }
 
+    private func consentUIFinished(_ controller: UIViewController) {
+        if nestedUIs.contains(where: { $0.controller === controller }) {
+            // Didomi dismisses some of its UIs by itself (e.g. the preferences once the user consents)
+            if controller.isShowing { controller.dismiss(animated: true) }
+        } else {
+            appDelegate?.onSPUIFinished(controller)
+        }
+        scheduleFinish()
+    }
+
+    /// The notice can show the preferences on top of it, and Didomi can report UIs as finished in a different number and order
+    /// than they were shown. So the SDK is finished when, after the last UI finished event, no consent UI is on screen anymore.
+    private func scheduleFinish(attempt: Int = 0) {
+        finishWorkItem?.cancel()
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            self.shownUIs.removeAll { $0.controller == nil }
+            let isShowingUI = self.shownUIs.contains { $0.controller?.isShowing == true }
+            if isShowingUI {
+                // Maybe the host is yet to dismiss it. A UI that is still there afterwards means the user is still in it.
+                if attempt < Self.finishCheckRetries { self.scheduleFinish(attempt: attempt + 1) }
+                return
+            }
+            self.shownUIs = []
+            self.appDelegate?.onSPFinished?(userData: self.userData)
+        }
+        finishWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
+    }
+
+    private static let finishCheckRetries = 4
+
+    // MARK: Message timeout
+
+    private func startMessageTimeout() {
+        cancelMessageTimeout()
+        guard messageTimeoutInSeconds > 0 else { return }
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            // The load is over: anything that comes in for it later (Didomi getting ready, a sync) is ignored
+            self.loadId += 1
+            self.pendingLoadMessage = nil
+            self.isDecidingMessage = false
+            self.removeSyncListener()
+            self.onError(RenderingAppTimeoutError())
+        }
+        messageTimeoutWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + messageTimeoutInSeconds, execute: workItem)
+    }
+
+    private func cancelMessageTimeout() {
+        messageTimeoutWorkItem?.cancel()
+        messageTimeoutWorkItem = nil
+    }
+
+    // MARK: Privacy Managers
+    // Didomi has a single preferences screen per regulation, so the ids and the tab are ignored.
+
     public func loadGDPRPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        OSLogger.standard.begin("MessageFlow")
-        Didomi.shared.showPreferences()
+        showPreferences()
     }
 
     public func loadCCPAPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        OSLogger.standard.begin("MessageFlow")
-        Didomi.shared.showPreferences()
+        showPreferences()
     }
 
     public func loadUSNatPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        OSLogger.standard.begin("MessageFlow")
-        Didomi.shared.showPreferences()
+        showPreferences()
     }
 
     public func loadGlobalCmpPrivacyManager(withId id: String, tab: SPPrivacyManagerTab = .Default, useGroupPmIfAvailable: Bool = false) {
-        OSLogger.standard.begin("MessageFlow")
-        Didomi.shared.showPreferences()
+        showPreferences()
     }
 
     public func loadPreferenceCenter(withId id: String) {
+        showPreferences()
+    }
+
+    private func showPreferences() {
         OSLogger.standard.begin("MessageFlow")
-        Didomi.shared.showPreferences()
+        Didomi.shared.showPreferences(controller: didomiContainerController)
     }
 
-    public func customConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        // TODO: we'll need a way to convert SP ids into DDM ids.
-        Didomi.shared.setUserStatus(
-            enabledConsentPurposeIds: Set<String>(),
-            disabledConsentPurposeIds: Set<String>(),
-            enabledLIPurposeIds: Set<String>(),
-            disabledLIPurposeIds: Set<String>(),
-            enabledConsentVendorIds: Set<String>(),
-            disabledConsentVendorIds: Set<String>(),
-            enabledLIVendorIds: Set<String>(),
-            disabledLIVendorIds: Set<String>()
-        )
-    }
-
-    public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
-        // TODO: we'll need a way to convert SP ids into DDM ids.
-        Didomi.shared.setUserStatus(
-            enabledConsentPurposeIds: Set<String>(),
-            disabledConsentPurposeIds: Set<String>(),
-            enabledLIPurposeIds: Set<String>(),
-            disabledLIPurposeIds: Set<String>(),
-            enabledConsentVendorIds: Set<String>(),
-            disabledConsentVendorIds: Set<String>(),
-            enabledLIVendorIds: Set<String>(),
-            disabledLIVendorIds: Set<String>()
-        )
-    }
+    // MARK: Message handling
 
     public func rejectAll(campaignType: SPCampaignType) {
         Didomi.shared.setUserDisagreeToAll()
@@ -245,13 +348,20 @@ typealias DidomiUserStatus = CurrentUserStatus
     }
 
     public func onMessageInactivityTimeout() {
-        // TODO: implement this on DDM
+        DispatchQueue.main.async { [weak self] in
+            self?.appDelegate?.onMessageInactivityTimeout?()
+        }
     }
 
     public func onError(_ error: SPError) {
         OSLogger.standard.end("MessageFlow")
         DispatchQueue.main.async { [weak self] in
-            self?.appDelegate?.onError?(error: error)
+            guard let self else { return }
+            if self.cleanUserDataOnError {
+                Self.clearAllData()
+            }
+            self.cancelMessageTimeout()
+            self.appDelegate?.onError?(error: error)
         }
     }
 
@@ -260,25 +370,114 @@ typealias DidomiUserStatus = CurrentUserStatus
     public func action(_ action: SPAction, from controller: UIViewController) {}
 }
 
+private extension UIViewController {
+    var isShowing: Bool { presentingViewController != nil && !isBeingDismissed }
+}
+
+// MARK: Custom consent
+
+extension SPDidomiConsentManager {
+    public func customConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
+        updateCustomConsentGDPR(
+            granted: true,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            handler: handler
+        )
+    }
+
+    public func deleteCustomConsentGDPR(vendors: [String], categories: [String], legIntCategories: [String], handler: @escaping (SPGDPRConsent) -> Void) {
+        updateCustomConsentGDPR(
+            granted: false,
+            vendors: vendors,
+            categories: categories,
+            legIntCategories: legIntCategories,
+            handler: handler
+        )
+    }
+
+    /// Grants (or revokes) consent to the given Sourcepoint vendors and categories on top of the user's current consent.
+    /// Ids Didomi doesn't know are left untouched.
+    private func updateCustomConsentGDPR(
+        granted: Bool,
+        vendors: [String],
+        categories: [String],
+        legIntCategories: [String],
+        handler: @escaping (SPGDPRConsent) -> Void
+    ) {
+        // Didomi calls this on its own thread. On the main queue, calls are applied one after the other.
+        Didomi.shared.onReady {
+            DispatchQueue.main.async {
+                let purposes = Didomi.shared.getRequiredPurposes().map { ($0.id, $0.namespaces?.sp) }
+                let purposeIds = Self.didomiIds(forSourcepointIds: categories, in: purposes)
+                let legIntPurposeIds = Self.didomiIds(forSourcepointIds: legIntCategories, in: purposes)
+
+                // The vendors' public ids don't have the prefix Didomi uses internally for custom vendors ("c:"),
+                // but the ids `setUserStatus` takes do. Vendors without an IAB id are custom.
+                let requiredVendors = Didomi.shared.getRequiredVendors()
+                let vendorIds = Set(
+                    Self.didomiIds(forSourcepointIds: vendors, in: requiredVendors.map { ($0.id, $0.namespaces?.sp) }).map { id in
+                        requiredVendors.first { $0.id == id }?.namespaces?.iab2 == nil ? "c:\(id)" : id
+                    }
+                )
+
+                // `setUserStatus(...)` replaces the user's whole choices with the ids it receives. So, to add to (or remove
+                // from) the existing consent, we start from the current choices and only change the given ids.
+                let current = Didomi.shared.getUserStatus()
+                func applying(_ ids: Set<String>, enabled: Set<String>, disabled: Set<String>) -> (enabled: Set<String>, disabled: Set<String>) {
+                    granted ? (enabled.union(ids), disabled.subtracting(ids)) : (enabled.subtracting(ids), disabled.union(ids))
+                }
+                let consentPurposes = applying(purposeIds, enabled: current.purposes.consent.enabled, disabled: current.purposes.consent.disabled)
+                let legIntPurposes = applying(legIntPurposeIds, enabled: current.purposes.legitimateInterest.enabled, disabled: current.purposes.legitimateInterest.disabled)
+                let consentVendors = applying(vendorIds, enabled: current.vendors.consent.enabled, disabled: current.vendors.consent.disabled)
+                Didomi.shared.setUserStatus(
+                    enabledConsentPurposeIds: consentPurposes.enabled,
+                    disabledConsentPurposeIds: consentPurposes.disabled,
+                    enabledLIPurposeIds: legIntPurposes.enabled,
+                    disabledLIPurposeIds: legIntPurposes.disabled,
+                    enabledConsentVendorIds: consentVendors.enabled,
+                    disabledConsentVendorIds: consentVendors.disabled,
+                    enabledLIVendorIds: current.vendors.legitimateInterest.enabled,
+                    disabledLIVendorIds: current.vendors.legitimateInterest.disabled
+                )
+                handler(Didomi.shared.getCurrentUserStatus().toSourcepoint().gdpr?.consents ?? SPGDPRConsent.empty())
+            }
+        }
+    }
+
+    /// Translates Sourcepoint ids into Didomi ids. `candidates` are pairs of (Didomi id, Sourcepoint id).
+    /// Didomi entities that have no Sourcepoint namespace are matched by their own id.
+    static func didomiIds(forSourcepointIds spIds: [String], in candidates: [(didomiId: String, spId: String?)]) -> Set<String> {
+        let wanted = Set(spIds)
+        return Set(candidates.filter { wanted.contains($0.spId ?? $0.didomiId) }.map { $0.didomiId })
+    }
+}
+
+extension AnyEncodable {
+    /// `SPAction.publisherData` is a `[String: String]`, so non-string values are converted to their textual representation.
+    var stringValue: String {
+        switch value {
+            case .none: return ""
+            case .some(let string as String): return string
+            case .some(let other): return "\(other)"
+        }
+    }
+}
+
 // MARK: Didomi's stubbing
 
 extension DidomiInitializeParameters {
-    convenience init(accountId: Int, propertyId: Int, propertyName: String, configFileName: String? = nil) {
-        if let configFileName = configFileName {
-            self.init(
-                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-                localConfigurationPath: configFileName,
-                disableDidomiRemoteConfig: true,
-                noticeID: "BVP3EcHb",
-                handleConsentUIAutomatically: false
-            )
-        } else {
-            self.init(
-                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-                noticeID: "BVP3EcHb",
-                handleConsentUIAutomatically: false
-            )
-        }
+    convenience init(apiKey: String, noticeId: String, configFileName: String?, languageCode: String?) {
+        self.init(
+            apiKey: apiKey,
+            localConfigurationPath: configFileName,
+            // Didomi's remote config is only skipped when a local config is provided
+            disableDidomiRemoteConfig: configFileName != nil,
+            languageCode: languageCode,
+            noticeID: noticeId,
+            handleConsentUIAutomatically: false
+        )
     }
 }
 
@@ -293,14 +492,18 @@ extension DidomiUserStatus {
         var preferences: SPConsent<SPPreferencesConsent>? = nil
         var globalcmp: SPConsent<SPGlobalCmpConsent>? = nil
 
+        // Until the user makes a choice (new user or cleared consent), Didomi reports every vendor and purpose as disabled.
+        // That's not the user's choice, so it's reported as no consent data, same as Sourcepoint does.
+        let hasConsent = !shouldUserStatusBeCollected()
+
         switch regulation {
             case .gdpr:
-                gdpr = SPConsent(consents: mapToGDPRConsent(), applies: true)
+                gdpr = SPConsent(consents: hasConsent ? mapToGDPRConsent() : .empty(), applies: true)
             case .ccpa:
-                ccpa = SPConsent(consents: mapToCCPAConsent(), applies: true)
+                ccpa = SPConsent(consents: hasConsent ? mapToCCPAConsent() : .empty(), applies: true)
             case .vcdpa, .cpra, .cpa, .ctdpa, .ucpa, .dpdpa, .fdbr, .icdpa, .incdpa, .kcdpa, .mcdpa, .mncdpa, .modpa, .ndpa, .nhpa, .njdpa, .ocpa, .ridtppa, .tdpsa, .tipa:
                 // US state privacy laws (CPRA included) map to USNAT in Sourcepoint
-                usnat = SPConsent(consents: mapToUSNatConsent(), applies: true)
+                usnat = SPConsent(consents: hasConsent ? mapToUSNatConsent() : .empty(), applies: true)
             default: break
         }
 
@@ -425,11 +628,12 @@ extension DidomiUserStatus {
             consentStatus: gdprConsentStatus(vendorLookup: vendorLookup, consentPurposeIds: consentPurposeIds),
             webConsentPayload: nil,
             googleConsentMode: nil,
-            acceptedLegIntCategories: acceptedLegIntCategories,
-            acceptedLegIntVendors: acceptedLegIntVendors,
-            acceptedVendors: acceptedVendors,
-            acceptedCategories: acceptedCategories,
-            acceptedSpecialFeatures: acceptedSpecialFeatures
+            // The statuses come in dictionaries, so the lists are sorted to have the same output every time
+            acceptedLegIntCategories: acceptedLegIntCategories.sorted(),
+            acceptedLegIntVendors: acceptedLegIntVendors.sorted(),
+            acceptedVendors: acceptedVendors.sorted(),
+            acceptedCategories: acceptedCategories.sorted(),
+            acceptedSpecialFeatures: acceptedSpecialFeatures.sorted()
         )
     }
     // swiftlint:enable function_body_length
@@ -480,8 +684,9 @@ extension DidomiUserStatus {
         return SPCCPAConsent(
             uuid: userID.isEmpty ? nil : userID,
             status: status,
-            rejectedVendors: rejectedVendors,
-            rejectedCategories: rejectedCategories,
+            // The statuses come in dictionaries, so the lists are sorted to have the same output every time
+            rejectedVendors: rejectedVendors.sorted(),
+            rejectedCategories: rejectedCategories.sorted(),
             signedLspa: uspString.map { $0.count == 4 && $0.last == "Y" } ?? false,
             childPmId: nil,
             applies: true,

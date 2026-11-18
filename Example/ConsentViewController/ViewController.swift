@@ -14,37 +14,28 @@ import UIKit
 class ViewController: UIViewController {
     var sdkStatus: SDKStatus = .notStarted
     var idfaStatus: SPIDFAStatus { SPIDFAStatus.current() }
-    var myVendorAccepted: VendorStatus = .Unknown
 
     lazy var config = { Config(fromStorageWithDefaults: Config(
         accountId: 22,
         propertyId: 16893,
         propertyName: "mobile.multicampaign.demo",
-        campaigns: SPCampaigns(
-            gdpr: SPCampaign(),
-            ccpa: SPCampaign(),
-            usnat: SPCampaign(),
-            ios14: SPCampaign(),
-            globalcmp: SPCampaign(),
-            preferences: SPCampaign(),
-            environment: .Public
-        ),
+        campaign: .gdpr,
         gdprPmId: "488393",
         ccpaPmId: "509688",
-        usnatPmId: "988851",
-        globalcmpPmId: "1323762",
-        preferenceCenterId: "1306779"
+        usnatPmId: "988851"
     ))}()
 
-    lazy var consentManager: SPDidomiConsentManager = { SPDidomiConsentManager(
-        accountId: config.accountId,
-        propertyId: config.propertyId,
-        propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-        campaigns: config.campaigns,
-        language: config.language ?? .BrowserDefault,
-        delegate: self,
-        configFileName: "SourcepointConfigGDPR"
-    )}()
+    lazy var consentManager: SPDidomiConsentManager = makeConsentManager()
+
+    func makeConsentManager() -> SPDidomiConsentManager {
+        SPDidomiConsentManager(
+            apiKey: config.didomiApiKey,
+            noticeId: config.didomiNoticeId,
+            language: config.language ?? .BrowserDefault,
+            configFileName: config.campaign.configFileName,
+            delegate: self
+        )
+    }
 
     @IBOutlet var sdkStatusLabel: UILabel!
     @IBOutlet var idfaStatusLabel: UILabel!
@@ -62,7 +53,8 @@ class ViewController: UIViewController {
         sdkStatus = .running
         sdkStatusLabel.accessibilityIdentifier = "sdkStatusLabel"
         myVendorAcceptedLabel.accessibilityIdentifier = "customVendorLabel"
-        consentManager.didomiUIController = self
+        globalcmpPMButton.isHidden = true
+        preferencesPMButton.isHidden = true
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
 
@@ -80,44 +72,17 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onClearConsentTap(_ sender: Any) {
-        clearConsentUserDefaults()
+        // Didomi is running and keeps the user's choices in memory, so the stored data alone isn't enough
+        SPDidomiConsentManager.clearAllData()
+        AppDelegate.clearConsentUserDefaults()
 
         sdkStatus = .notStarted
         updateUI()
     }
 
-    /// Clears all consent-related keys from UserDefaults
-    /// Removes keys starting with "IAB_", containing "didomi" (case-insensitive), or starting with "sp"
-    private func clearConsentUserDefaults() {
-        let userDefaults = UserDefaults.standard
-        let allKeys = userDefaults.dictionaryRepresentation().keys
-
-        let keysToRemove = allKeys.filter { key in
-            let lowercaseKey = key.lowercased()
-            return key.contains("IAB") || lowercaseKey.contains("didomi") || lowercaseKey.hasPrefix("sp")
-        }
-
-        print("Clearing \(keysToRemove.count) UserDefaults keys:")
-        for key in keysToRemove {
-            print("  - \(key)")
-            userDefaults.removeObject(forKey: key)
-        }
-
-        userDefaults.synchronize()
-        print("UserDefaults cleared successfully")
-    }
-
     @IBAction func onLoadMessagesTap(_ sender: Any) {
         print("onLoadMessagesTap")
         sdkStatus = .running
-        consentManager = SPDidomiConsentManager(
-            accountId: config.accountId,
-            propertyId: config.propertyId,
-            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-            campaigns: config.campaigns,
-            language: config.language ?? .BrowserDefault,
-            delegate: self
-        )
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
         updateUI()
     }
@@ -135,19 +100,18 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onGlobalCmpPrivacyManagerTap(_ sender: Any) {
-        consentManager.loadGlobalCmpPrivacyManager(withId: config.globalcmpPmId!)
+        consentManager.loadGlobalCmpPrivacyManager(withId: "")
     }
 
     @IBAction func onPreferenceCenterTap(_ sender: Any) {
-        consentManager.loadPreferenceCenter(withId: config.preferenceCenterId!)
+        consentManager.loadPreferenceCenter(withId: "")
     }
 
     @IBAction func onAcceptMyVendorTap(_ sender: Any) {
         consentManager.customConsentGDPR(
             vendors: [config.myVendorId],
             categories: config.myPurposesId,
-            legIntCategories: []) { consents in
-                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+            legIntCategories: []) { _ in
                 self.updateUI()
             }
     }
@@ -156,25 +120,14 @@ class ViewController: UIViewController {
         consentManager.deleteCustomConsentGDPR(
             vendors: [config.myVendorId],
             categories: config.myPurposesId,
-            legIntCategories: []) { consents in
-                self.myVendorAccepted = VendorStatus(fromBool: consents.vendorGrants[self.config.myVendorId]?.granted)
+            legIntCategories: []) { _ in
                 self.updateUI()
             }
     }
 
     @objc private func handleUserDefaultsImported() {
         // Re-initialize the consent manager to pick up imported data
-        consentManager = SPDidomiConsentManager(
-            accountId: config.accountId,
-            propertyId: config.propertyId,
-            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-            campaigns: config.campaigns,
-            language: config.language ?? .BrowserDefault,
-            delegate: self
-        )
-
-        // Reset vendor status since we have new data
-        myVendorAccepted = .Unknown
+        consentManager = makeConsentManager()
 
         // Update UI to reflect the new state
         sdkStatus = .notStarted
@@ -207,9 +160,6 @@ extension ViewController: SPDelegate {
 
     func onConsentReady(userData: SPUserData) {
         print("onConsentReady:", userData)
-        myVendorAccepted = VendorStatus(
-            fromBool: userData.gdpr?.consents?.vendorGrants[config.myVendorId]?.granted
-        )
         updateUI()
     }
 
@@ -231,13 +181,7 @@ extension ViewController {
     func updateUI() {
         updateIDFAStatusLabel()
         updateMyVendorUI()
-        updatePMButtons(
-            ccpaApplies: consentManager.ccpaApplies,
-            gdprApplies: consentManager.gdprApplies,
-            usnatApplies: consentManager.usnatApplies,
-            globalcmpApplies: consentManager.globalcmpApplies,
-            isPreferencesCampaignPresent: config.campaigns.preferences != nil
-        )
+        updatePMButtons()
         updateSDKStatusLabel()
     }
 
@@ -253,8 +197,9 @@ extension ViewController {
     }
 
     func updateMyVendorUI() {
-        myVendorAcceptedLabel.text = myVendorAccepted.rawValue
-        switch myVendorAccepted {
+        let status = VendorStatus(fromBool: consentManager.userData.gdpr?.consents?.vendorGrants[config.myVendorId]?.granted)
+        myVendorAcceptedLabel.text = status.rawValue
+        switch status {
             case .Unknown:
                 myVendorAcceptedLabel.textColor = .systemGray
                 acceptMyVendorButton.isEnabled = false
@@ -272,12 +217,11 @@ extension ViewController {
         }
     }
 
-    func updatePMButtons(ccpaApplies: Bool, gdprApplies: Bool, usnatApplies: Bool, globalcmpApplies: Bool, isPreferencesCampaignPresent: Bool) {
-        gdprPMButton.isEnabled = gdprApplies
-        ccpaPMButton.isEnabled = ccpaApplies
-        usnatPMButton.isEnabled = usnatApplies
-        globalcmpPMButton.isEnabled = globalcmpApplies
-        preferencesPMButton.isEnabled = isPreferencesCampaignPresent
+    func updatePMButtons() {
+        let isReady = sdkStatus == .finished
+        gdprPMButton.isEnabled = isReady && config.campaign == .gdpr
+        ccpaPMButton.isEnabled = isReady && config.campaign == .ccpa
+        usnatPMButton.isEnabled = isReady && config.campaign == .usnat
     }
 
     func updateSDKStatusLabel() {
