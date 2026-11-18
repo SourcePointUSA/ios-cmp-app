@@ -248,7 +248,6 @@ class SPDidomiMigrationSpec: QuickSpec {
 
                     it("migrates without showing a notice and calls onConsentReady and onSPFinished with the migrated userData") {
                         consentManager.loadMessage(forAuthId: nil, publisherData: SPPublisherData())
-
                         expect(mockDelegate.count(.consentReady)).toEventually(equal(1), timeout: .seconds(10))
                         expect(mockDelegate.count(.finished)).toEventually(equal(1), timeout: .seconds(10))
 
@@ -789,10 +788,12 @@ class MockDidomiDelegate: SPDelegate {
     private var _events: [Event] = []
     private var _consentReadyUserData: SPUserData?
     private var _finishedUserData: SPUserData?
+    private var _actions: [SPAction] = []
 
     var events: [Event] { lock.sync { _events } }
     var consentReadyUserData: SPUserData? { lock.sync { _consentReadyUserData } }
     var finishedUserData: SPUserData? { lock.sync { _finishedUserData } }
+    var actions: [SPAction] { lock.sync { _actions } }
 
     func count(_ event: Event) -> Int {
         lock.sync { _events.filter { $0 == event }.count }
@@ -807,7 +808,10 @@ class MockDidomiDelegate: SPDelegate {
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
-        lock.sync { _events.append(.action) }
+        lock.sync {
+            _events.append(.action)
+            _actions.append(action)
+        }
     }
 
     func onSPUIFinished(_ controller: UIViewController) {
