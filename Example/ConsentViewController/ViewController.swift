@@ -37,13 +37,11 @@ class ViewController: UIViewController {
     ))}()
 
     lazy var consentManager: SPDidomiConsentManager = { SPDidomiConsentManager(
-        accountId: config.accountId,
-        propertyId: config.propertyId,
-        propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-        campaigns: config.campaigns,
+        apiKey: config.didomiApiKey,
+        noticeId: config.didomiNoticeId,
         language: config.language ?? .BrowserDefault,
-        delegate: self,
-        configFileName: "SourcepointConfigGDPR"
+        configFileName: "SourcepointConfigGDPR",
+        delegate: self
     )}()
 
     @IBOutlet var sdkStatusLabel: UILabel!
@@ -111,11 +109,10 @@ class ViewController: UIViewController {
         print("onLoadMessagesTap")
         sdkStatus = .running
         consentManager = SPDidomiConsentManager(
-            accountId: config.accountId,
-            propertyId: config.propertyId,
-            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-            campaigns: config.campaigns,
+            apiKey: config.didomiApiKey,
+            noticeId: config.didomiNoticeId,
             language: config.language ?? .BrowserDefault,
+            configFileName: nil,
             delegate: self
         )
         consentManager.loadMessage(forAuthId: nil, publisherData: ["foo": AnyEncodable(99)])
@@ -165,11 +162,10 @@ class ViewController: UIViewController {
     @objc private func handleUserDefaultsImported() {
         // Re-initialize the consent manager to pick up imported data
         consentManager = SPDidomiConsentManager(
-            accountId: config.accountId,
-            propertyId: config.propertyId,
-            propertyName: try! SPPropertyName(config.propertyName), // swiftlint:disable:this force_try
-            campaigns: config.campaigns,
+            apiKey: config.didomiApiKey,
+            noticeId: config.didomiNoticeId,
             language: config.language ?? .BrowserDefault,
+            configFileName: nil,
             delegate: self
         )
 

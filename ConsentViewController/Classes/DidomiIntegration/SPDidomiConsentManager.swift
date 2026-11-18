@@ -42,64 +42,29 @@ typealias DidomiUserStatus = CurrentUserStatus
     private var isDidomiReady = false
     private var pendingLoadMessage = false
 
-    // Required initializer from SPSDK protocol
-    required convenience public init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?
-    ) {
-        self.init(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            campaigns: campaigns,
-            language: language,
-            delegate: delegate,
-            configFileName: nil
-        )
-    }
-
     public init(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?,
-        configFileName: String?
+        apiKey: String,
+        noticeId: String,
+        language: SPMessageLanguage = .BrowserDefault,
+        configFileName: String?,
+        delegate: SPDelegate?
     ) {
         super.init()
         setupDidomi(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName,
-            campaigns: campaigns,
-            language: language,
-            delegate: delegate,
-            configFileName: configFileName
+            parameters: DidomiInitializeParameters(
+                apiKey: apiKey,
+                noticeId: noticeId,
+                configFileName: configFileName,
+                languageCode: language.rawValue.isEmpty ? nil : language.rawValue
+            ),
+            delegate: delegate
         )
     }
 
     // Common setup method
-    private func setupDidomi(
-        accountId: Int,
-        propertyId: Int,
-        propertyName: SPPropertyName,
-        campaigns: SPCampaigns,
-        language: SPMessageLanguage,
-        delegate: SPDelegate?,
-        configFileName: String?
-    ) {
+    private func setupDidomi(parameters: DidomiInitializeParameters, delegate: SPDelegate?) {
         appDelegate = delegate
-        Didomi.shared.initialize(DidomiInitializeParameters(
-            accountId: accountId,
-            propertyId: propertyId,
-            propertyName: propertyName.rawValue,
-            configFileName: configFileName
-        ))
+        Didomi.shared.initialize(parameters)
         Didomi.shared.onReady { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.isDidomiReady = true
@@ -263,22 +228,16 @@ typealias DidomiUserStatus = CurrentUserStatus
 // MARK: Didomi's stubbing
 
 extension DidomiInitializeParameters {
-    convenience init(accountId: Int, propertyId: Int, propertyName: String, configFileName: String? = nil) {
-        if let configFileName = configFileName {
-            self.init(
-                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-                localConfigurationPath: configFileName,
-                disableDidomiRemoteConfig: true,
-                noticeID: "BVP3EcHb",
-                handleConsentUIAutomatically: false
-            )
-        } else {
-            self.init(
-                apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
-                noticeID: "BVP3EcHb",
-                handleConsentUIAutomatically: false
-            )
-        }
+    convenience init(apiKey: String, noticeId: String, configFileName: String?, languageCode: String?) {
+        self.init(
+            apiKey: apiKey,
+            localConfigurationPath: configFileName,
+            // Didomi's remote config is only skipped when a local config is provided
+            disableDidomiRemoteConfig: configFileName != nil,
+            languageCode: languageCode,
+            noticeID: noticeId,
+            handleConsentUIAutomatically: false
+        )
     }
 }
 

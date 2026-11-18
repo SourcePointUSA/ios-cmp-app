@@ -206,15 +206,6 @@ class SPDidomiMigrationSpec: QuickSpec {
         }
 
         describe("Didomi SDK Sourcepoint Consent Migration") {
-            let accountId = 22
-            let propertyId = 16893
-            let propertyName = try! SPPropertyName("mobile.multicampaign.demo")
-            let campaigns = SPCampaigns(
-                gdpr: SPCampaign(),
-                ccpa: SPCampaign(),
-                usnat: SPCampaign()
-            )
-
             let scenarios = [
                 MigrationScenario(name: "GDPR accept all", config: "SourcepointConfigGDPR", setup: setupSourcepointGDPRConsentData, dateCreated: "2026-11-02T15:19:01.957Z") { verifyGDPR($0, accepted: true) },
                 MigrationScenario(name: "GDPR reject all", config: "SourcepointConfigGDPR", setup: setupSourcepointGDPRRejectAllConsentData, dateCreated: "2026-11-06T10:53:08.816Z") { verifyGDPR($0, accepted: false) },
@@ -239,13 +230,11 @@ class SPDidomiMigrationSpec: QuickSpec {
 
                         mockDelegate = MockDidomiDelegate()
                         consentManager = SPDidomiConsentManager(
-                            accountId: accountId,
-                            propertyId: propertyId,
-                            propertyName: propertyName,
-                            campaigns: campaigns,
+                            apiKey: "eea5ad63-29d4-4552-9dac-2edebe1fe518",
+                            noticeId: "BVP3EcHb",
                             language: .BrowserDefault,
-                            delegate: mockDelegate,
-                            configFileName: scenario.config
+                            configFileName: scenario.config,
+                            delegate: mockDelegate
                         )
                     }
 

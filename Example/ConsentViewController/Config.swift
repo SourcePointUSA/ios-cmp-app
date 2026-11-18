@@ -22,6 +22,9 @@ struct Config {
     let gdprPmId, ccpaPmId, usnatPmId, globalcmpPmId, preferenceCenterId: String?
     var language: SPMessageLanguage?
 
+    let didomiApiKey = "eea5ad63-29d4-4552-9dac-2edebe1fe518"
+    let didomiNoticeId = "BVP3EcHb"
+
     let myVendorId = "5ff4d000a228633ac048be41"
     let myPurposesId = ["608bad95d08d3112188e0e36", "608bad95d08d3112188e0e2f"]
 }
