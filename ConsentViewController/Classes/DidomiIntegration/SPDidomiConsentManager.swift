@@ -16,7 +16,10 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     public var cleanUserDataOnError = false
 
-    public var messageTimeoutInSeconds: TimeInterval = 0.0
+    /// How long (in seconds) the SDK waits, after `loadMessage`, for the consent UI to be ready (or for the SDK to find out
+    /// no UI is needed) before calling `SPDelegate.onError`. Same as in the legacy SDK, it defaults to 30 seconds.
+    /// A value equal to or lower than 0 disables the timeout.
+    public var messageTimeoutInSeconds: TimeInterval = SPConsentManager.DefaultTimeout
 
     public var privacyManagerTab: SPPrivacyManagerTab = .Default
 
@@ -41,6 +44,7 @@ typealias DidomiUserStatus = CurrentUserStatus
     private var isConsentUIReady = false
     private var isDidomiReady = false
     private var pendingLoadMessage = false
+    private var messageTimeoutWorkItem: DispatchWorkItem?
 
     public init(
         apiKey: String,
@@ -59,6 +63,10 @@ typealias DidomiUserStatus = CurrentUserStatus
             ),
             delegate: delegate
         )
+    }
+
+    deinit {
+        messageTimeoutWorkItem?.cancel()
     }
 
     // Common setup method
@@ -92,6 +100,7 @@ typealias DidomiUserStatus = CurrentUserStatus
         didomiEventListener.onConsentUIReady = { [weak self] viewController in
             DispatchQueue.main.async {
                 if let strongSelf = self {
+                    strongSelf.cancelMessageTimeout()
                     strongSelf.isConsentUIReady = true
                     strongSelf.appDelegate?.onSPUIReady(viewController)
                 }
@@ -118,6 +127,9 @@ typealias DidomiUserStatus = CurrentUserStatus
 
     public func loadMessage(forAuthId authId: String? = nil, publisherData: SPPublisherData? = [:]) {
         OSLogger.standard.begin("MessageFlow")
+        DispatchQueue.main.async { [weak self] in
+            self?.startMessageTimeout()
+        }
 
         // Wait for Didomi to be ready before checking shouldUserStatusBeCollected
         if isDidomiReady {
@@ -133,6 +145,7 @@ typealias DidomiUserStatus = CurrentUserStatus
             // If user status collection is not needed, call callbacks immediately
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.cancelMessageTimeout()
                 self.appDelegate?.onConsentReady?(userData: self.userData)
                 self.appDelegate?.onSPFinished?(userData: self.userData)
             }
@@ -213,9 +226,32 @@ typealias DidomiUserStatus = CurrentUserStatus
         // TODO: implement this on DDM
     }
 
+    // MARK: Message timeout
+
+    // Main queue only
+    private func startMessageTimeout() {
+        cancelMessageTimeout()
+        guard messageTimeoutInSeconds > 0 else { return }
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            // The load is over: a message that would be needed once Didomi is ready is not shown for it
+            self.pendingLoadMessage = false
+            self.onError(RenderingAppTimeoutError())
+        }
+        messageTimeoutWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + messageTimeoutInSeconds, execute: workItem)
+    }
+
+    // Main queue only
+    private func cancelMessageTimeout() {
+        messageTimeoutWorkItem?.cancel()
+        messageTimeoutWorkItem = nil
+    }
+
     public func onError(_ error: SPError) {
         OSLogger.standard.end("MessageFlow")
         DispatchQueue.main.async { [weak self] in
+            self?.cancelMessageTimeout()
             self?.appDelegate?.onError?(error: error)
         }
     }
