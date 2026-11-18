@@ -143,8 +143,7 @@ class ViewController: UIViewController {
 extension ViewController: SPDelegate {
     func onSPUIReady(_ controller: UIViewController) {
         print("onSPUIReady")
-        // Didomi may present its preferences on top of the notice, so we always present from the top-most controller.
-        topMostViewController().present(controller, animated: true)
+        present(controller, animated: true)
     }
 
     func onAction(_ action: SPAction, from controller: UIViewController) {
@@ -156,9 +155,7 @@ extension ViewController: SPDelegate {
     func onSPUIFinished(_ controller: UIViewController) {
         print("onSPUIFinished")
         updateUI()
-        if controller.presentingViewController != nil {
-            controller.dismiss(animated: true)
-        }
+        dismiss(animated: true)
     }
 
     func onConsentReady(userData: SPUserData) {
@@ -229,16 +226,6 @@ extension ViewController {
 
     func updateSDKStatusLabel() {
         sdkStatusLabel.text = sdkStatus.rawValue
-    }
-}
-
-extension UIViewController {
-    func topMostViewController() -> UIViewController {
-        var top = self
-        while let presented = top.presentedViewController {
-            top = presented
-        }
-        return top
     }
 }
 

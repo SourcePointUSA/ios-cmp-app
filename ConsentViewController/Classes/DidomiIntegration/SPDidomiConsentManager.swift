@@ -62,8 +62,12 @@ typealias DidomiUserStatus = CurrentUserStatus
     private var syncedAuthId: String?
     private var syncListener: EventListener?
     private var messageTimeoutWorkItem: DispatchWorkItem?
-    /// The consent UIs (notice, preferences, ...) Didomi asked the host to show
+    /// The consent UIs (notice, preferences, ...) Didomi reported, to know when none is left on screen
     private var shownUIs: [WeakController] = []
+    /// The UI the host was asked to present (`onSPUIReady`). Didomi can show more UIs on top of it (e.g. the preferences
+    /// over the notice), those are presented and dismissed by the SDK, so the host only deals with one UI at a time.
+    private weak var rootUIController: UIViewController?
+    private var nestedUIs: [WeakController] = []
     private var finishWorkItem: DispatchWorkItem?
 
     private struct WeakController {
@@ -140,18 +144,13 @@ typealias DidomiUserStatus = CurrentUserStatus
                 if let strongSelf = self {
                     strongSelf.cancelMessageTimeout()
                     strongSelf.finishWorkItem?.cancel()
-                    strongSelf.currentUIController = viewController
-                    strongSelf.shownUIs.append(WeakController(controller: viewController))
-                    strongSelf.appDelegate?.onSPUIReady(viewController)
+                    strongSelf.consentUIReady(viewController)
                 }
             }
         }
         didomiEventListener.onConsentUIFinished = { [weak self] viewController in
             DispatchQueue.main.async {
-                if let strongSelf = self {
-                    strongSelf.appDelegate?.onSPUIFinished(viewController)
-                    strongSelf.scheduleFinish()
-                }
+                self?.consentUIFinished(viewController)
             }
         }
         didomiEventListener.onError = { [weak self] error in
@@ -235,6 +234,32 @@ typealias DidomiUserStatus = CurrentUserStatus
         Didomi.shared.setupUI(containerController: didomiContainerController)
     }
 
+    private func consentUIReady(_ controller: UIViewController) {
+        currentUIController = controller
+        shownUIs.append(WeakController(controller: controller))
+        if let root = rootUIController, root.isShowing {
+            guard root !== controller else { return }
+            nestedUIs.append(WeakController(controller: controller))
+            var presenter = root
+            while let presented = presenter.presentedViewController, presented !== controller { presenter = presented }
+            presenter.present(controller, animated: true)
+        } else {
+            rootUIController = controller
+            nestedUIs = []
+            appDelegate?.onSPUIReady(controller)
+        }
+    }
+
+    private func consentUIFinished(_ controller: UIViewController) {
+        if nestedUIs.contains(where: { $0.controller === controller }) {
+            // Didomi dismisses some of its UIs by itself (e.g. the preferences once the user consents)
+            if controller.isShowing { controller.dismiss(animated: true) }
+        } else {
+            appDelegate?.onSPUIFinished(controller)
+        }
+        scheduleFinish()
+    }
+
     /// The notice can show the preferences on top of it, and Didomi can report UIs as finished in a different number and order
     /// than they were shown. So the SDK is finished when, after the last UI finished event, no consent UI is on screen anymore.
     private func scheduleFinish(attempt: Int = 0) {
@@ -242,9 +267,7 @@ typealias DidomiUserStatus = CurrentUserStatus
         let workItem = DispatchWorkItem { [weak self] in
             guard let self else { return }
             self.shownUIs.removeAll { $0.controller == nil }
-            let isShowingUI = self.shownUIs.contains {
-                $0.controller?.presentingViewController != nil && $0.controller?.isBeingDismissed == false
-            }
+            let isShowingUI = self.shownUIs.contains { $0.controller?.isShowing == true }
             if isShowingUI {
                 // Maybe the host is yet to dismiss it. A UI that is still there afterwards means the user is still in it.
                 if attempt < Self.finishCheckRetries { self.scheduleFinish(attempt: attempt + 1) }
@@ -345,6 +368,10 @@ typealias DidomiUserStatus = CurrentUserStatus
     public func finished(_ vcFinished: UIViewController) {}
     public func loaded(_ controller: UIViewController) {}
     public func action(_ action: SPAction, from controller: UIViewController) {}
+}
+
+private extension UIViewController {
+    var isShowing: Bool { presentingViewController != nil && !isBeingDismissed }
 }
 
 // MARK: Custom consent
