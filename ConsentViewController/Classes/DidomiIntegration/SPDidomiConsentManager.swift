@@ -494,16 +494,26 @@ extension DidomiUserStatus {
 
         // Until the user makes a choice (new user or cleared consent), Didomi reports every vendor and purpose as disabled.
         // That's not the user's choice, so it's reported as no consent data, same as Sourcepoint does.
-        let hasConsent = !shouldUserStatusBeCollected()
+        let hasConsent = !Didomi.shared.shouldUserStatusBeCollected()
 
         switch regulation {
             case .gdpr:
                 gdpr = SPConsent(consents: hasConsent ? mapToGDPRConsent() : .empty(), applies: true)
+                // Without TCF or GPP, the consent of a user can come from Global CMP, so it's reported there as well
+                if hasConsent && isGDPROnly {
+                    globalcmp = SPConsent(consents: mapToGlobalCmpConsent(), applies: true)
+                }
             case .ccpa:
                 ccpa = SPConsent(consents: hasConsent ? mapToCCPAConsent() : .empty(), applies: true)
             case .vcdpa, .cpra, .cpa, .ctdpa, .ucpa, .dpdpa, .fdbr, .icdpa, .incdpa, .kcdpa, .mcdpa, .mncdpa, .modpa, .ndpa, .nhpa, .njdpa, .ocpa, .ridtppa, .tdpsa, .tipa:
                 // US state privacy laws (CPRA included) map to USNAT in Sourcepoint
                 usnat = SPConsent(consents: hasConsent ? mapToUSNatConsent() : .empty(), applies: true)
+                // Without GPP, the consent of a user can come from Global CMP, so it's reported there as well
+                if hasConsent && isUSOnly {
+                    globalcmp = SPConsent(consents: mapToGlobalCmpConsent(), applies: true)
+                }
+            case .custom:
+                globalcmp = SPConsent(consents: hasConsent ? mapToGlobalCmpConsent() : .empty(), applies: true)
             default: break
         }
 
@@ -627,7 +637,7 @@ extension DidomiUserStatus {
             applies: true,
             consentStatus: gdprConsentStatus(vendorLookup: vendorLookup, consentPurposeIds: consentPurposeIds),
             webConsentPayload: nil,
-            googleConsentMode: nil,
+            // `googleConsentMode` stays nil: Didomi pushes the Google Consent Mode values to Firebase by itself
             // The statuses come in dictionaries, so the lists are sorted to have the same output every time
             acceptedLegIntCategories: acceptedLegIntCategories.sorted(),
             acceptedLegIntVendors: acceptedLegIntVendors.sorted(),
@@ -696,6 +706,20 @@ extension DidomiUserStatus {
             webConsentPayload: nil,
             GPPData: parseGPPData(),
             uspStringOverride: uspString
+        )
+    }
+
+    // MARK: Notices without a framework
+
+    private func mapToGlobalCmpConsent() -> SPGlobalCmpConsent {
+        let usnat = mapToUSNatConsent()
+        return SPGlobalCmpConsent(
+            uuid: usnat.uuid,
+            applies: true,
+            dateCreated: usnat.dateCreated,
+            expirationDate: usnat.expirationDate,
+            userConsents: SPGlobalCmpConsent.UserConsents(vendors: usnat.vendors, categories: usnat.categories),
+            consentStatus: usnat.consentStatus
         )
     }
 
